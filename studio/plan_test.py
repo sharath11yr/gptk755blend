@@ -32,21 +32,23 @@ dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=d
 
 # 2. Licensed 3D model from Sketchfab
 H = {"Authorization": f"Token {os.environ['SKETCHFAB_API_TOKEN']}"}
-res = []
-for q in ("titanic", "titanic ship", "ocean liner", "steamship"):  # most specific first
-    r = httpx.get("https://api.sketchfab.com/v3/search", timeout=60, follow_redirects=True,
-                  headers={"User-Agent": "GetYrStudio/1.0"}, params={
-                      "type": "models", "q": q, "downloadable": "true", "count": 24})
-    log("Sketchfab search", q, r.status_code, r.text[:150] if r.status_code != 200 else "")
-    if r.status_code == 200 and r.content:
-        res += r.json().get("results", [])
-    if len(res) >= 10:
+LICENCES = {"cc0": "CC0 Public Domain", "by": "CC Attribution", "by-sa": "CC Attribution-ShareAlike"}
+ok, seen = [], set()
+for q in ("titanic", "titanic ship", "ocean liner", "steamship"):
+    for lic, label in LICENCES.items():  # only licences that allow commercial use
+        r = httpx.get("https://api.sketchfab.com/v3/search", timeout=60, follow_redirects=True,
+                      headers={"User-Agent": "GetYrStudio/1.0"}, params={
+                          "type": "models", "q": q, "downloadable": "true", "license": lic,
+                          "count": 24})
+        for m in (r.json().get("results", []) if r.status_code == 200 and r.content else []):
+            faces = m.get("faceCount") or 0
+            if m["uid"] not in seen and faces < 1_500_000:
+                seen.add(m["uid"]); m["_licence"] = label; ok.append(m)
+    log("Sketchfab search", q, "->", len(ok), "licensed models so far")
+    if len(ok) >= 8:
         break
-res.sort(key=lambda m: -(m.get("likeCount") or 0))
-ok = [m for m in res if (m.get("license") or {}).get("label", "").startswith(("CC Attribution", "CC0"))
-      and not any(x in m["license"]["label"] for x in ("NonCommercial", "NoDerivs"))
-      and 2_000 < (m.get("faceCount") or 0) < 1_500_000]
-log("Candidates:", [(m["name"], m["license"]["label"], m.get("faceCount")) for m in ok[:5]])
+ok.sort(key=lambda m: -(m.get("likeCount") or 0))
+log("Candidates:", [(m["name"], m["_licence"], m.get("faceCount")) for m in ok[:6]])
 for m in ok:
     try:
         d = httpx.get(f"https://api.sketchfab.com/v3/models/{m['uid']}/download", headers=H,
@@ -57,7 +59,7 @@ for m in ok:
         zipfile.ZipFile(io.BytesIO(httpx.get(url, timeout=300).content)).extractall(OUT / "model")
         (OUT / "credit.txt").write_text(
             f'3D model: "{m["name"]}" by {m["user"]["displayName"]} '
-            f'({m["license"]["label"]}) - https://sketchfab.com/3d-models/{m["uid"]}\n')
+            f'({m["_licence"]}) - https://sketchfab.com/3d-models/{m["uid"]}\n')
         log("Using model:", m["name"], "by", m["user"]["displayName"])
         break
     except Exception as exc:
