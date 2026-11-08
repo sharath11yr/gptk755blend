@@ -1,0 +1,67 @@
+name: Scene test (Titanic)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["studio/**", ".github/workflows/scene-test.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      frames: ${{ steps.p.outputs.frames }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg && pip install httpx edge-tts
+      - id: p
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          SKETCHFAB_API_TOKEN: ${{ secrets.SKETCHFAB_API_TOKEN }}
+        run: python studio/plan_test.py assets >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with: {name: assets, path: assets/, retention-days: 1}
+
+  render:   # 10 computers render 10 parts of the video at the same time
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix: {chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: {name: assets, path: assets}
+      - name: Install Blender 4.2 LTS
+        run: |
+          sudo apt-get update && sudo apt-get install -y libxi6 libxxf86vm1 libxfixes3 libxrender1 libgl1 libxkbcommon0 libsm6
+          curl -sL https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz | tar -xJ -C /opt
+      - run: /opt/blender-4.2.3-linux-x64/blender -b -noaudio -P studio/build_scene.py -- ${{ matrix.chunk }} 10 ${{ needs.plan.outputs.frames }} assets
+      - uses: actions/upload-artifact@v4
+        with: {name: "frames-${{ matrix.chunk }}", path: assets/frames/, retention-days: 1}
+
+  assemble:
+    needs: [plan, render]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {name: assets, path: assets}
+      - uses: actions/download-artifact@v4
+        with: {pattern: "frames-*", path: frames, merge-multiple: true}
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - name: Make the video (narration + GetYr Studio branding)
+        run: |
+          D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 assets/narration.mp3)
+          F=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
+          ffmpeg -y -framerate 24 -i frames/f_%04d.jpg -i assets/narration.mp3 \
+            -vf "drawtext=fontfile=$F:text='GetYr_Studio':fontsize=22:fontcolor=white@0.5:x=w-tw-30:y=h-th-24,drawtext=fontfile=$F:text='Travel through history with GetYr Studio':fontsize=40:fontcolor=white:box=1:boxcolor=black@0.4:boxborderw=16:x=(w-tw)/2:y=h*0.78:enable='gte(t,$D-2.5)'" \
+            -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k titanic_test.mp4
+          cp assets/narration.txt assets/credit.txt . 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        with: {name: titanic-test-video, path: "titanic_test.mp4\nnarration.txt\ncredit.txt", retention-days: 3}
