@@ -15,7 +15,52 @@ sc.view_settings.view_transform = "AgX"; sc.view_settings.look = "AgX - Medium H
 # Ship: import, scale to ~60 m long, sit in the water
 files = glob.glob(f"{assets}/model/**/*.gltf", recursive=True) + glob.glob(f"{assets}/model/**/*.glb", recursive=True)
 before = set(bpy.data.objects)
-bpy.ops.import_scene.gltf(filepath=files[0])
+
+def mat(name, rgb, rough=0.5, emit=0):
+    m = bpy.data.materials.new(name); m.use_nodes = True
+    b = m.node_tree.nodes["Principled BSDF"]
+    b.inputs["Base Color"].default_value = (*rgb, 1); b.inputs["Roughness"].default_value = rough
+    if emit:
+        b.inputs["Emission Color"].default_value = (*rgb, 1); b.inputs["Emission Strength"].default_value = emit
+    return m
+
+def box(loc, size, m, bevel=0.0):
+    bpy.ops.mesh.primitive_cube_add(location=loc); o = bpy.context.object
+    o.scale = (size[0] / 2, size[1] / 2, size[2] / 2); o.data.materials.append(m)
+    if bevel:
+        o.modifiers.new("b", "BEVEL").width = bevel
+    return o
+
+def procedural_ship():
+    """A simple Titanic-like liner: black hull, white decks, 4 buff funnels, 2 masts, lit portholes."""
+    black, white = mat("hull", (0.02, 0.02, 0.02), 0.4), mat("deck", (0.8, 0.78, 0.72))
+    red, buff = mat("keel", (0.25, 0.03, 0.02)), mat("funnel", (0.75, 0.5, 0.2), 0.6)
+    glow = mat("windows", (1.0, 0.75, 0.4), 0.5, 6)
+    hull = box((0, 0, 3), (60, 6.6, 6), black, 0.4)
+    bm = hull.modifiers.new("taper", "SIMPLE_DEFORM"); bm.deform_method = "TAPER"
+    bm.deform_axis = "X"; bm.factor = 0.0
+    box((0, 0, 0.6), (59, 6.5, 1.2), red)
+    box((0, 0, 6.6), (46, 6.0, 1.2), white); box((-1, 0, 7.8), (36, 5.2, 1.2), white)
+    box((2, 0, 9.0), (8, 4.5, 1.0), white)  # bridge
+    for i in range(40):  # two rows of lit portholes each side
+        for y in (3.31, -3.31):
+            for z in (4.2, 5.2):
+                box((-27 + i * 1.35, y, z), (0.35, 0.05, 0.3), glow)
+    for i, x in enumerate((-12, -4, 4, 12)):
+        bpy.ops.mesh.primitive_cylinder_add(radius=1.1, depth=7, location=(x - 2, 0, 11.8))
+        f = bpy.context.object; f.scale.x = 1.35; f.rotation_euler.y = math.radians(-8)
+        f.data.materials.append(buff)
+        bpy.ops.mesh.primitive_cylinder_add(radius=1.12, depth=1.2, location=(x - 2.5, 0, 15.0))
+        t = bpy.context.object; t.scale.x = 1.35; t.rotation_euler.y = math.radians(-8)
+        t.data.materials.append(black)
+    for x in (24, -26):
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.18, depth=20, location=(x, 0, 16))
+        bpy.context.object.data.materials.append(black)
+
+if files:
+    bpy.ops.import_scene.gltf(filepath=files[0])
+else:
+    procedural_ship()
 new = [o for o in bpy.data.objects if o not in before]
 root = bpy.data.objects.new("ship", None); sc.collection.objects.link(root)
 for o in new:

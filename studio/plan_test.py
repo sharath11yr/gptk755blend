@@ -77,7 +77,7 @@ for m in ok:
     except Exception as exc:
         log("Model failed:", m["name"], exc)
 else:
-    sys.exit("No usable licensed Titanic model found")
+    log("No Sketchfab model - Blender will build the ship itself (procedural)")
 
 # 3. Night sky (Poly Haven, CC0) - optional
 try:
