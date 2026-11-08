@@ -30,54 +30,15 @@ dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=d
                             "csv=p=0", str(OUT / "narration.mp3")], capture_output=True,
                            text=True, check=True).stdout)
 
-# 2. Licensed 3D model from Sketchfab
-H = {"Authorization": f"Token {os.environ['SKETCHFAB_API_TOKEN']}"}
-LICENCES = {"cc0": "CC0 Public Domain", "by": "CC Attribution", "by-sa": "CC Attribution-ShareAlike"}
-ok, seen = [], set()
-for q in ("titanic", "titanic ship", "ocean liner", "steamship"):
-    for lic, label in LICENCES.items():  # only licences that allow commercial use
-        r = None
-        for endpoint in ("models", "search"):  # /v3/models answers at once; search may say 202
-            for attempt in range(6):
-                params = {"q": q, "downloadable": "true", "license": lic, "count": 24}
-                if endpoint == "search":
-                    params["type"] = "models"
-                r = httpx.get(f"https://api.sketchfab.com/v3/{endpoint}", timeout=60,
-                              follow_redirects=True, params=params,
-                              headers={**H, "User-Agent": "GetYrStudio/1.0"})
-                if r.status_code == 202 or (r.status_code == 200 and not r.content):
-                    time.sleep(3)  # "still preparing" - ask again
-                    continue
-                break
-            if r.status_code == 200 and r.content and r.json().get("results"):
-                break
-        log("  ", q, lic, r.status_code, (r.text[:120] if r.status_code != 200 else ""))
-        for m in (r.json().get("results", []) if r.status_code == 200 and r.content else []):
-            faces = m.get("faceCount") or 0
-            if m["uid"] not in seen and faces < 1_500_000:
-                seen.add(m["uid"]); m["_licence"] = label; ok.append(m)
-    log("Sketchfab search", q, "->", len(ok), "licensed models so far")
-    if len(ok) >= 8:
-        break
-ok.sort(key=lambda m: -(m.get("likeCount") or 0))
-log("Candidates:", [(m["name"], m["_licence"], m.get("faceCount")) for m in ok[:6]])
-for m in ok:
-    try:
-        d = httpx.get(f"https://api.sketchfab.com/v3/models/{m['uid']}/download", headers=H,
-                      timeout=60, follow_redirects=True).json()
-        url = (d.get("gltf") or {}).get("url")
-        if not url:
-            continue
-        zipfile.ZipFile(io.BytesIO(httpx.get(url, timeout=300).content)).extractall(OUT / "model")
-        (OUT / "credit.txt").write_text(
-            f'3D model: "{m["name"]}" by {m["user"]["displayName"]} '
-            f'({m["_licence"]}) - https://sketchfab.com/3d-models/{m["uid"]}\n')
-        log("Using model:", m["name"], "by", m["user"]["displayName"])
-        break
-    except Exception as exc:
-        log("Model failed:", m["name"], exc)
+# 2. A real Titanic model, found and checked automatically (Objaverse / NASA + vision check)
+sys.path.insert(0, str(Path(__file__).parent))
+import asset_finder
+got = asset_finder.find(OUT / "model", "the RMS Titanic, an Olympic-class ocean liner with four funnels",
+                        "April 1912, North Atlantic", ["titanic", "ship", "liner", "olympic", "1912"])
+if got:
+    (OUT / "credit.txt").write_text(got["credit"] + "\n")
 else:
-    log("No Sketchfab model - Blender will build the ship itself (procedural)")
+    log("No real model found - Blender will build the ship itself")
 
 # 3. Night sky (Poly Haven, CC0) - optional
 try:
