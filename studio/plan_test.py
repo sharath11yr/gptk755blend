@@ -1,7 +1,7 @@
 """Titanic test - step 1: narration (NVIDIA LLM + free Edge voice), a licensed 3D model
 (Sketchfab, commercial-use licences only) and a night-sky HDRI (Poly Haven, CC0).
 Prints frames=<n> for the render jobs."""
-import json, math, os, subprocess, sys, zipfile, io
+import json, math, os, subprocess, sys, time, zipfile, io
 from pathlib import Path
 import httpx
 
@@ -36,10 +36,22 @@ LICENCES = {"cc0": "CC0 Public Domain", "by": "CC Attribution", "by-sa": "CC Att
 ok, seen = [], set()
 for q in ("titanic", "titanic ship", "ocean liner", "steamship"):
     for lic, label in LICENCES.items():  # only licences that allow commercial use
-        r = httpx.get("https://api.sketchfab.com/v3/search", timeout=60, follow_redirects=True,
-                      headers={"User-Agent": "GetYrStudio/1.0"}, params={
-                          "type": "models", "q": q, "downloadable": "true", "license": lic,
-                          "count": 24})
+        r = None
+        for endpoint in ("models", "search"):  # /v3/models answers at once; search may say 202
+            for attempt in range(6):
+                params = {"q": q, "downloadable": "true", "license": lic, "count": 24}
+                if endpoint == "search":
+                    params["type"] = "models"
+                r = httpx.get(f"https://api.sketchfab.com/v3/{endpoint}", timeout=60,
+                              follow_redirects=True, params=params,
+                              headers={**H, "User-Agent": "GetYrStudio/1.0"})
+                if r.status_code == 202 or (r.status_code == 200 and not r.content):
+                    time.sleep(3)  # "still preparing" - ask again
+                    continue
+                break
+            if r.status_code == 200 and r.content and r.json().get("results"):
+                break
+        log("  ", q, lic, r.status_code, (r.text[:120] if r.status_code != 200 else ""))
         for m in (r.json().get("results", []) if r.status_code == 200 and r.content else []):
             faces = m.get("faceCount") or 0
             if m["uid"] not in seen and faces < 1_500_000:
