@@ -12,7 +12,7 @@ log = lambda *a: print(*a, file=sys.stderr)
 prompt = ("Write a 110-130 word cinematic documentary narration, present tense, for a scene: "
           "RMS Titanic sailing across the calm, freezing North Atlantic on the night of 14 April "
           "1912, moments before the iceberg. Only well-established historical facts (date, place, "
-          "speed about 22 knots, around 2,200 people aboard, the moonless calm night). No people "
+          "speed about 22 knots, around 2,200 people aboard, a calm, moonless night with a sky full of bright stars and a flat sea). No people "
           "speak. End with: 'Travel through history with GetYr Studio.' Return only the narration.")
 r = httpx.post("https://integrate.api.nvidia.com/v1/chat/completions", timeout=300,
                headers={"Authorization": f"Bearer {os.environ['NVIDIA_API_KEY']}"},
@@ -32,9 +32,17 @@ dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=d
 
 # 2. Licensed 3D model from Sketchfab
 H = {"Authorization": f"Token {os.environ['SKETCHFAB_API_TOKEN']}"}
-res = httpx.get("https://api.sketchfab.com/v3/search", timeout=60, headers=H, params={
-    "type": "models", "q": "titanic ship", "downloadable": "true", "count": 24,
-    "sort_by": "-likeCount"}).json().get("results", [])
+res = []
+for q in ("titanic", "titanic ship", "ocean liner", "steamship"):  # most specific first
+    r = httpx.get("https://api.sketchfab.com/v3/search", timeout=60, follow_redirects=True,
+                  headers={"User-Agent": "GetYrStudio/1.0"}, params={
+                      "type": "models", "q": q, "downloadable": "true", "count": 24})
+    log("Sketchfab search", q, r.status_code, r.text[:150] if r.status_code != 200 else "")
+    if r.status_code == 200 and r.content:
+        res += r.json().get("results", [])
+    if len(res) >= 10:
+        break
+res.sort(key=lambda m: -(m.get("likeCount") or 0))
 ok = [m for m in res if (m.get("license") or {}).get("label", "").startswith(("CC Attribution", "CC0"))
       and not any(x in m["license"]["label"] for x in ("NonCommercial", "NoDerivs"))
       and 2_000 < (m.get("faceCount") or 0) < 1_500_000]
@@ -42,7 +50,7 @@ log("Candidates:", [(m["name"], m["license"]["label"], m.get("faceCount")) for m
 for m in ok:
     try:
         d = httpx.get(f"https://api.sketchfab.com/v3/models/{m['uid']}/download", headers=H,
-                      timeout=60).json()
+                      timeout=60, follow_redirects=True).json()
         url = (d.get("gltf") or {}).get("url")
         if not url:
             continue
