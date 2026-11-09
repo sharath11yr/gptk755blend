@@ -34,7 +34,8 @@ dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=d
 sys.path.insert(0, str(Path(__file__).parent))
 import asset_finder
 got = asset_finder.find(OUT / "model", "the RMS Titanic, an Olympic-class ocean liner with four funnels",
-                        "April 1912, North Atlantic", ["titanic", "ship", "liner", "olympic", "1912"])
+                        "April 1912, North Atlantic", ["titanic", "ship", "liner", "olympic", "1912", "rms"],
+                        must=r"ship|liner|boat|vessel|rms|steamer|olympic|1912")
 if got:
     (OUT / "credit.txt").write_text(got["credit"] + "\n")
 else:

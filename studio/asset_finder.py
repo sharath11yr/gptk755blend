@@ -77,7 +77,12 @@ def build_index() -> None:
     log("Index ready:", n, "commercially usable models")
 
 
-def search(keywords: list[str], limit: int = 12) -> list[dict]:
+BAN = (r"lego|minecraft|toy|cartoon|low ?poly|lowpoly|stylized|chibi|\bkit\b|star ?ship|starship|"
+       r"space|sci-?fi|scifi|futur|alien|wreck|ruin|game ready asset pack|fantasy|anime|"
+       r"robot|mech|cyber|etherliner|planet|galaxy|meme|funny")
+
+
+def search(keywords: list[str], limit: int = 16, must: str = "") -> list[dict]:
     kws = [k.lower() for k in keywords]
     main = kws[0]
     hits = []
@@ -88,8 +93,10 @@ def search(keywords: list[str], limit: int = 12) -> list[dict]:
             score = sum(3 if k in name else 1 for k in kws if k in text)
             if main not in text or score < 3:
                 continue
-            if re.search(r"lego|minecraft|toy|cartoon|low ?poly|lowpoly|stylized|chibi|kit", text):
-                score -= 4
+            if must and not re.search(must, text):
+                continue
+            if re.search(BAN, text):
+                continue
             hits.append((score + min(r["k"], 200) / 40 + min(r["f"], 400_000) / 200_000, r))
     hits.sort(key=lambda x: -x[0])
     return [r for _, r in hits[:limit]]
@@ -119,38 +126,62 @@ def preview(glb: Path, png: Path) -> bool:
     return png.exists()
 
 
-def judge(png: Path, what: str, period: str) -> float:
-    img = base64.b64encode(png.read_bytes()).decode()
-    q = (f"This is a render of a 3D model. We need: {what}. Period/context: {period}. "
-         "Rate 0-10 how well it fits a realistic cinematic documentary: is it the right "
-         "object, historically accurate for that period, detailed and realistic (not a toy, "
-         "cartoon, low-poly or broken mesh)? Reply only JSON: {\"score\": <0-10>, \"why\": \"...\"}")
-    for model in ("meta/llama-3.2-90b-vision-instruct", "meta/llama-3.2-11b-vision-instruct",
-                  "microsoft/phi-3.5-vision-instruct"):
+def _vision(img: str, question: str) -> str:
+    for model in ("meta/llama-3.2-90b-vision-instruct", "meta/llama-3.2-11b-vision-instruct"):
         try:
             r = httpx.post("https://integrate.api.nvidia.com/v1/chat/completions", timeout=180,
                            headers={"Authorization": f"Bearer {os.environ['NVIDIA_API_KEY']}"},
-                           json={"model": model, "max_tokens": 300, "temperature": 0.1,
+                           json={"model": model, "max_tokens": 300, "temperature": 0.0,
                                  "messages": [{"role": "user", "content": [
-                                     {"type": "text", "text": q},
+                                     {"type": "text", "text": question},
                                      {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{img}"}}]}]})
             r.raise_for_status()
-            txt = r.json()["choices"][0]["message"]["content"]
-            m = re.search(r'"score"\s*:\s*([0-9.]+)', txt) or re.search(r"([0-9.]+)\s*/\s*10", txt)
-            log("  vision", model.split("/")[1], "->", txt.strip()[:200])
-            if m:
-                return float(m.group(1))
+            return r.json()["choices"][0]["message"]["content"]
         except Exception as exc:
             log("  vision model failed:", model, str(exc)[:200])
-    return -1.0  # no judge available: fall back to search ranking
+    return ""
 
 
-def find(out: Path, what: str, period: str, keywords: list[str], tries: int = 6) -> dict | None:
+def judge(png: Path, what: str, period: str) -> float:
+    """Two steps so the name can't fool it: 1) describe the picture with NO hint of what we
+    want, 2) a text-only check of that description against what we need."""
+    img = base64.b64encode(png.read_bytes()).decode()
+    desc = _vision(img, "Describe exactly what object is shown in this 3D render: what kind of "
+                   "thing it is, its era/style (historical, modern, sci-fi, fantasy), its shape, "
+                   "how many funnels/chimneys/masts/engines it has, whether it looks intact or "
+                   "broken, and whether it looks realistic and detailed or like a toy/low-poly. "
+                   "Be literal; do not guess names.")
+    if not desc:
+        return -1.0
+    log("  seen:", desc.strip().replace("\n", " ")[:300])
+    try:
+        r = httpx.post("https://integrate.api.nvidia.com/v1/chat/completions", timeout=180,
+                       headers={"Authorization": f"Bearer {os.environ['NVIDIA_API_KEY']}"},
+                       json={"model": "nvidia/nemotron-3.5-lightning-30b-a3b", "max_tokens": 200,
+                             "temperature": 0.0, "chat_template_kwargs": {"thinking": False, "enable_thinking": False},
+                             "messages": [{"role": "user", "content":
+                                 f"We need: {what} ({period}). An observer who did not know this "
+                                 f"described a 3D model as:\n{desc}\n\nScore 0-10 how well the "
+                                 "described object matches what we need for a realistic historical "
+                                 "documentary. Anything sci-fi, futuristic, a spaceship, a wreck, "
+                                 "a toy or the wrong kind of object scores 0-1. Reply only JSON: "
+                                 '{"score": <0-10>, "why": "..."}'}]})
+        r.raise_for_status()
+        txt = r.json()["choices"][0]["message"]["content"]
+        log("  verdict:", txt.strip()[:200])
+        m = re.search(r'"score"\s*:\s*([0-9.]+)', txt)
+        return float(m.group(1)) if m else -1.0
+    except Exception as exc:
+        log("  verdict failed:", exc)
+        return -1.0
+
+
+def find(out: Path, what: str, period: str, keywords: list[str], tries: int = 10, must: str = "") -> dict | None:
     out.mkdir(parents=True, exist_ok=True)
     build_index()
     cands = nasa(keywords) if any(k in " ".join(keywords).lower() for k in
                                   ("apollo", "saturn", "shuttle", "rover", "iss", "lunar", "hubble")) else []
-    cands += search(keywords)
+    cands += search(keywords, must=must)
     log("Candidates:", [(c["n"], c["l"], c.get("k")) for c in cands[:tries]])
     best, best_score = None, -99.0
     for i, c in enumerate(cands[:tries]):
@@ -164,13 +195,14 @@ def find(out: Path, what: str, period: str, keywords: list[str], tries: int = 6)
         if not preview(glb, png):
             continue
         score = judge(png, what, period)
-        score = score if score >= 0 else 5 - i * 0.5  # no vision: keep search order
+        if score < 0:
+            continue  # never trust an unchecked model
         log(f"{c['n']}: score {score}")
         if score > best_score:
             best, best_score = (c, glb, png), score
         if score >= 8.5:
             break
-    if not best or best_score < 4:
+    if not best or best_score < 7:
         log("No model good enough (best score", best_score, ")")
         return None
     c, glb, png = best

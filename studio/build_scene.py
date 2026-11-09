@@ -145,6 +145,14 @@ if files:
     mn = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     mx = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     size = mx - mn
+    if size.z > max(size.x, size.y):  # stored standing up: lay it down
+        holder.rotation_euler.x = math.pi / 2 if size.y < size.x else 0
+        holder.rotation_euler.y = 0 if size.y < size.x else math.pi / 2
+        bpy.context.view_layer.update()
+        pts = [o.matrix_world @ Vector(c) for o in new if o.type == "MESH" for c in o.bound_box]
+        mn = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
+        mx = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
+        size = mx - mn
     if size.y > size.x:  # make the ship point along +X
         holder.rotation_euler.z = math.pi / 2
     s = 60 / max(size); holder.scale = (s, s, s)
