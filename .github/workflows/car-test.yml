@@ -1,0 +1,65 @@
+name: Car chase test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["studio/car_scene.py", ".github/workflows/car-test.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: sudo apt-get update && sudo apt-get install -y libxi6 libxxf86vm1 libxfixes3 libxrender1 libgl1 libxkbcommon0 libsm6 && pip install httpx
+      - run: curl -sL https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz | tar -xJ -C /opt
+      - uses: actions/cache@v4
+        with: {path: cache, key: objaverse-index-v1}
+      - env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          BLENDER: /opt/blender-4.2.3-linux-x64/blender
+        run: |
+          python studio/asset_finder.py assets/model "a realistic, detailed modern sports car (complete car body with wheels)" \
+            "modern day, photorealistic film" car "sports car" supercar coupe realistic
+      - uses: actions/upload-artifact@v4
+        with: {name: car-assets, path: assets/, retention-days: 1}
+
+  render:
+    needs: model
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix: {chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: {name: car-assets, path: assets}
+      - run: |
+          sudo apt-get update && sudo apt-get install -y libxi6 libxxf86vm1 libxfixes3 libxrender1 libgl1 libxkbcommon0 libsm6
+          curl -sL https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz | tar -xJ -C /opt
+      - run: /opt/blender-4.2.3-linux-x64/blender -b -noaudio -P studio/car_scene.py -- ${{ matrix.chunk }} 10 288 assets
+      - uses: actions/upload-artifact@v4
+        with: {name: "car-frames-${{ matrix.chunk }}", path: assets/frames/, retention-days: 1}
+
+  assemble:
+    needs: render
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {name: car-assets, path: assets}
+      - uses: actions/download-artifact@v4
+        with: {pattern: "car-frames-*", path: frames, merge-multiple: true}
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: |
+          ffmpeg -y -framerate 24 -i frames/f_%04d.jpg \
+            -vf "colorbalance=rs=-0.08:bs=0.1:rh=0.1:bh=-0.08,eq=contrast=1.08:saturation=1.05,vignette=PI/4,noise=alls=7:allf=t,pad=iw:ih*1.0:0:0,drawbox=y=0:w=iw:h=ih*0.12:color=black:t=fill,drawbox=y=ih*0.88:w=iw:h=ih*0.12:color=black:t=fill" \
+            -c:v libx264 -crf 17 -pix_fmt yuv420p car_test.mp4
+          cp assets/model/credit.txt assets/model/model_preview.png . 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        with: {name: car-test-video, path: "car_test.mp4\ncredit.txt\nmodel_preview.png", retention-days: 3}
