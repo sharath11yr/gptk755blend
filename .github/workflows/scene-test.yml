@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["studio/**", ".github/workflows/scene-test.yml"]
+    paths: ["studio/**", "!studio/film/**", ".github/workflows/scene-test.yml"]
 
 permissions:
   contents: read
