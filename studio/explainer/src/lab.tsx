@@ -372,8 +372,10 @@ export const FormulaLab: React.FC<any> = ({ formula, terms = [], example = [] })
   const f = useCurrentFrame(); const { u } = useU();
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: "0 8%" }}>
-      <div style={{ fontFamily: MONO, color: L.amber, fontSize: 92 * u, fontWeight: 700, opacity: fade(f, 4), transform: `scale(${interpolate(f, [0, 30], [1.12, 1], { extrapolateRight: "clamp" })})` }}>{formula}</div>
-      <div style={{ display: "flex", gap: 40 * u, marginTop: 40 * u, flexWrap: "wrap", justifyContent: "center" }}>
+      {String(formula).split(/\s{3,}|\n/).map((line: string, i: number, all: string[]) => { const longest = Math.max(...all.map((x) => x.length));
+        const fs = Math.min(92, Math.floor(1500 / Math.max(10, longest) / 0.62));
+        return <div key={i} style={{ fontFamily: MONO, color: L.amber, fontSize: fs * u, fontWeight: 700, whiteSpace: "nowrap", lineHeight: 1.25, opacity: fade(f, 4 + i * 10), transform: `scale(${interpolate(f, [0, 30], [1.12, 1], { extrapolateRight: "clamp" })})` }}>{line}</div>; })}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 * u, marginTop: 40 * u }}>
         {terms.map(([k, v]: string[], i: number) => <div key={i} style={{ fontFamily: MONO, fontSize: 28 * u, color: L.text, opacity: fade(f, 16 + i * 9) }}>
           <span style={{ color: L.cyan, fontWeight: 700 }}>{k}</span> = {v}</div>)}
       </div>

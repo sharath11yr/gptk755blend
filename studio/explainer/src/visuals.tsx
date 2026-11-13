@@ -92,28 +92,42 @@ export const ScreenScene: React.FC<any> = ({ dur, app = "App", menu = ["File", "
 // steps: [{highlight: [ids], note}] shown one after another.
 export const DiagramScene: React.FC<any> = ({ dur, title, parts = [], arrows = [], steps = [] }) => {
   const f = useCurrentFrame(); const { u } = useU();
-  const by: Record<string, any> = Object.fromEntries(parts.map((p: any) => [p.id, p]));
   const n = Math.max(1, steps.length); const per = (dur - 16) / n; const k = Math.min(n - 1, Math.max(0, Math.floor((f - 10) / per)));
   const hot: string[] = steps[k]?.highlight || [];
-  const X = (v: number) => 80 + (v / 100) * 1440, Y = (v: number) => 120 + (v / 100) * 600;
+  // box geometry: width from the text, kept fully inside the frame
+  const geo: Record<string, any> = {};
+  for (const p of parts) {
+    const fs = p.label.length > 38 ? 24 : p.label.length > 28 ? 27 : 30;
+    const w = p.shape === "circle" ? 156 : Math.min(1500, Math.max(180, p.label.length * fs * 0.6 + 56)); const h = p.shape === "circle" ? 156 : 96;
+    const x = Math.min(1600 - 24 - w / 2, Math.max(24 + w / 2, 80 + (p.x / 100) * 1440)); const y = 120 + (p.y / 100) * 600;
+    geo[p.id] = { ...p, x, y, w, h, fs };
+  }
+  // where a line from the centre towards (dx,dy) leaves the box, plus a small gap
+  const edge = (g: any, dx: number, dy: number) => {
+    const L2 = Math.hypot(dx, dy) || 1, ux = dx / L2, uy = dy / L2;
+    if (g.shape === "circle") return [g.x + ux * (g.w / 2 + 12), g.y + uy * (g.h / 2 + 12)];
+    const t = Math.min(Math.abs(ux) > 1e-6 ? (g.w / 2) / Math.abs(ux) : 1e9, Math.abs(uy) > 1e-6 ? (g.h / 2) / Math.abs(uy) : 1e9) + 12;
+    return [g.x + ux * t, g.y + uy * t];
+  };
   return (
     <AbsoluteFill>
       {title && <div style={{ position: "absolute", top: "10%", width: "100%", textAlign: "center", fontFamily: MONO, color: L.cyan, fontSize: 30 * u, letterSpacing: 4 * u }}>{title.toUpperCase()}</div>}
       <svg viewBox="0 0 1600 840" width="100%" height="100%">
-        <defs><marker id="arr" viewBox="0 0 10 10" refX={9} refY={5} markerWidth={7} markerHeight={7} orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={L.wire} /></marker></defs>
-        {arrows.map(([a, b, lab]: any[], i: number) => { const A = by[a], B = by[b]; if (!A || !B) return null;
+        <defs>{[L.wire, L.amber].map((c, i) => <marker key={i} id={`arr${i}`} viewBox="0 0 10 10" refX={10} refY={5} markerWidth={6} markerHeight={6} orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill={c} /></marker>)}</defs>
+        {arrows.map(([a, b, lab]: any[], i: number) => { const A = geo[a], B = geo[b]; if (!A || !B) return null;
           const on = hot.includes(a) && hot.includes(b); const p = prog(f, 6 + i * 6, 26 + i * 6);
-          const dx = X(B.x) - X(A.x), dy = Y(B.y) - Y(A.y), L2 = Math.hypot(dx, dy) || 1;
-          const pad = (q: any) => (q.shape === "circle" ? 86 : Math.min(Math.abs(dx) / L2 > 0.5 ? Math.max(180, q.label.length * 17) / 2 + 10 : 58, 160));
-          const sx = X(A.x) + (dx / L2) * pad(A), sy = Y(A.y) + (dy / L2) * pad(A), ex = X(B.x) - (dx / L2) * pad(B), ey = Y(B.y) - (dy / L2) * pad(B);
-          const x1 = sx, y1 = sy, x2 = sx + (ex - sx) * p, y2 = sy + (ey - sy) * p;
-          return <g key={i}><line x1={x1} y1={y1} x2={x2} y2={y2} stroke={on ? L.amber : L.wire} strokeWidth={on ? 7 : 4} markerEnd="url(#arr)" />
-            {lab && <text x={(X(A.x) + X(B.x)) / 2} y={(Y(A.y) + Y(B.y)) / 2 - 14} textAnchor="middle" fill={on ? L.amber : L.dim} fontFamily={MONO} fontSize={24}>{lab}</text>}</g>; })}
-        {parts.map((p: any, i: number) => { const on = hot.includes(p.id); const x = X(p.x), y = Y(p.y); const w = Math.max(180, p.label.length * 17);
+          const [sx, sy] = edge(A, B.x - A.x, B.y - A.y); const [ex, ey] = edge(B, A.x - B.x, A.y - B.y);
+          const x2 = sx + (ex - sx) * p, y2 = sy + (ey - sy) * p;
+          const L2 = Math.hypot(ex - sx, ey - sy) || 1; let nx = -(ey - sy) / L2, ny = (ex - sx) / L2; if (ny > 0) { nx = -nx; ny = -ny; }
+          const mx = (sx + ex) / 2 + nx * 30, my = (sy + ey) / 2 + ny * 30; const lw = String(lab || "").length * 15 + 20;
+          return <g key={i}><line x1={sx} y1={sy} x2={x2} y2={y2} stroke={on ? L.amber : L.wire} strokeWidth={on ? 6 : 4} markerEnd={p > 0.95 ? `url(#arr${on ? 1 : 0})` : undefined} />
+            {lab && p > 0.6 && <g><rect x={mx - lw / 2} y={my - 20} width={lw} height={36} rx={8} fill={L.bg0} opacity={0.92} />
+              <text x={mx} y={my + 8} textAnchor="middle" fill={on ? L.amber : L.dim} fontFamily={MONO} fontSize={24}>{lab}</text></g>}</g>; })}
+        {parts.map((p: any, i: number) => { const g = geo[p.id]; const on = hot.includes(p.id);
           return <g key={p.id} opacity={fade(f, i * 4)}>
-            {p.shape === "circle" ? <circle cx={x} cy={y} r={78} fill={on ? `${L.amber}33` : L.panel} stroke={on ? L.amber : L.cyan} strokeWidth={on ? 7 : 4} />
-              : <rect x={x - w / 2} y={y - 48} width={w} height={96} rx={p.shape === "pill" ? 48 : 16} fill={on ? `${L.amber}33` : L.panel} stroke={on ? L.amber : L.cyan} strokeWidth={on ? 7 : 4} />}
-            <text x={x} y={y + 10} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>{p.label}</text></g>; })}
+            {g.shape === "circle" ? <circle cx={g.x} cy={g.y} r={g.w / 2} fill={on ? `${L.amber}33` : L.panel} stroke={on ? L.amber : L.cyan} strokeWidth={on ? 7 : 4} />
+              : <rect x={g.x - g.w / 2} y={g.y - g.h / 2} width={g.w} height={g.h} rx={g.shape === "pill" ? 48 : 16} fill={on ? `${L.amber}33` : L.panel} stroke={on ? L.amber : L.cyan} strokeWidth={on ? 7 : 4} />}
+            <text x={g.x} y={g.y + g.fs / 3} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={g.fs} fontWeight={800}>{p.label}</text></g>; })}
       </svg>
       {steps[k]?.note && <div style={{ position: "absolute", bottom: "8%", width: "100%", textAlign: "center", fontFamily: SANS, fontWeight: 600, fontSize: 36 * u, color: L.text,
         opacity: fade((f - 10) % per, 0, 6) }}>{steps[k].note}</div>}
