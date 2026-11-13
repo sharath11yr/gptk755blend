@@ -1,0 +1,636 @@
+{
+ "title": "The Resistor - Network Theory Part 1",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Resistor",
+ "cover": "The Resistor Explained",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  7,
+  13
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 1 · The resistor",
+   "narration": "Welcome back to the Network Theory course. In the last part, we learned that every material opposes the flow of current a little, and we called that opposition resistance. In this part, we meet the component that is built to give exactly that opposition: the resistor. We will open it up and see what is inside, learn how to read its value from its coloured stripes, understand why it gets hot, see the different kinds of resistors, and find out where they are used in the devices around you.",
+   "kicker": "NETWORK THEORY · PART 1",
+   "title": "THE RESISTOR",
+   "subtitle": "Inside, colour code, power rating and real uses"
+  },
+  {
+   "type": "dc",
+   "chapter": "1.1 · Why we need resistors",
+   "narration": "Watch this circuit. A twelve volt battery pushes current through one resistor of one hundred ohms. The ammeter shows one hundred and twenty milliamps. Now notice the resistor glowing warmer. It is doing two jobs at once: it is controlling how much current flows, and it is turning some electrical energy into heat. Without it, the battery would push a dangerously large current. Controlling current is the most common reason we put a resistor in a circuit.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    100
+   ],
+   "show": [
+    "current",
+    "heat"
+   ]
+  },
+  {
+   "type": "resistor",
+   "chapter": "1.2 · What is inside",
+   "narration": "So what does a resistor look like on the inside? Let's build one, layer by layer. First come the two metal leads, the legs we solder to the circuit board. They are fixed into metal end caps. Between the caps sits a small ceramic rod. Ceramic is an insulator, so current cannot pass through it. Now watch: a very thin layer of carbon is coated around the rod. This carbon film is the actual resistance. Next, a machine cuts a spiral groove into the film. The spiral makes the path for current longer and narrower, and the longer and narrower the path, the higher the resistance. That is how factories set the exact value. Finally, a protective coating covers everything, and the colour stripes are painted on top.",
+   "mode": "cutaway"
+  },
+  {
+   "type": "inside",
+   "chapter": "1.2 · What is inside",
+   "narration": "Now let's zoom into that carbon film while current flows. See the electrons drifting from left to right? Notice how often they crash into the atoms. Every collision slows them down and hands some of their energy to the atoms, which start to shake harder. Shaking atoms means the material gets warmer. So a resistor does not destroy electricity. It converts electrical energy into heat, and it limits how fast the charge can flow.",
+   "mode": "resistor"
+  },
+  {
+   "type": "diagram",
+   "chapter": "1.3 · The resistor symbol",
+   "narration": "In circuit diagrams we never draw the real component. We use a symbol. There are two symbols for a resistor, and you will see both in books. The zigzag line is the American style. The plain rectangle is the international style used in Europe and in many Indian textbooks. Both mean exactly the same thing. Next to the symbol we write its name, like R one, and its value, like one kilo-ohm.",
+   "title": "Two symbols, one resistor",
+   "parts": [
+    {
+     "id": "z",
+     "label": "Zigzag (American, ANSI)",
+     "x": 25,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Rectangle (International, IEC)",
+     "x": 75,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "m",
+     "label": "Same meaning: label R1, value 1 kΩ",
+     "x": 50,
+     "y": 80
+    }
+   ],
+   "arrows": [
+    [
+     "z",
+     "m",
+     ""
+    ],
+    [
+     "b",
+     "m",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "z"
+     ],
+     "note": "American style"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "International style"
+    },
+    {
+     "highlight": [
+      "z",
+      "b",
+      "m"
+     ],
+     "note": "Both mean a resistor"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "1.4 · Resistance and its unit",
+   "narration": "Resistance tells us how many volts are needed to push one ampere through a component. That is why resistance R equals voltage V divided by current I. Its unit is the ohm, written with the Greek letter omega. One ohm means one volt pushes one ampere. Real resistors range from less than one ohm to millions of ohms, so we use short forms: one kilo-ohm is one thousand ohms, and one mega-ohm is one million ohms.",
+   "formula": "R = V / I",
+   "terms": [
+    [
+     "R",
+     "resistance, in ohms (Ω)"
+    ],
+    [
+     "V",
+     "voltage across it, in volts"
+    ],
+    [
+     "I",
+     "current through it, in amperes"
+    ]
+   ],
+   "example": [
+    "1 kΩ = 1,000 Ω",
+    "1 MΩ = 1,000,000 Ω"
+   ]
+  },
+  {
+   "type": "ohm",
+   "chapter": "1.4 · Resistance and its unit",
+   "narration": "Watch what happens when we slowly raise the voltage across two resistors and plot the current. For each resistor, the points fall on a perfectly straight line. Double the voltage, and the current doubles. Notice that the bigger resistor gives a flatter line: for the same voltage, it allows less current. A component that gives a straight line like this is called linear, and that is exactly what a good resistor is.",
+   "r": [
+    100,
+    200
+   ],
+   "vmax": 12
+  },
+  {
+   "type": "resistor",
+   "chapter": "1.5 · The colour code",
+   "narration": "Resistors are tiny, so instead of printing numbers, makers paint coloured stripes. Let's read one, band by band. Hold the resistor so the gold band is on the right. The first band, brown, is the first digit: one. The second band, black, is the second digit: zero. So far we have one zero, that is ten. The third band, red, is the multiplier: it means multiply by one hundred, or add two zeros. Ten times one hundred gives one thousand ohms. The last band, gold, is the tolerance: plus or minus five percent. So this resistor is one kilo-ohm, plus or minus five percent.",
+   "mode": "bands",
+   "bands": [
+    "brown",
+    "black",
+    "red",
+    "gold"
+   ]
+  },
+  {
+   "type": "steps",
+   "chapter": "1.5 · The colour code",
+   "narration": "Here are the ten colours and their digits, in order. Black zero, brown one, red two, orange three, yellow four, green five, blue six, violet seven, grey eight, white nine. The same numbers are used for the multiplier: black means multiply by one, brown by ten, red by one hundred, and so on. Two extra colours appear only near the end: gold and silver. As a multiplier, gold means divide by ten and silver means divide by one hundred. As a tolerance, gold is five percent and silver is ten percent.",
+   "title": "Colour → digit",
+   "items": [
+    "Black 0 · Brown 1 · Red 2 · Orange 3 · Yellow 4",
+    "Green 5 · Blue 6 · Violet 7 · Grey 8 · White 9",
+    "Multiplier: ×10 to the power of that digit",
+    "Gold: ×0.1 or ±5% · Silver: ×0.01 or ±10%"
+   ]
+  },
+  {
+   "type": "resistor",
+   "chapter": "1.5 · The colour code",
+   "narration": "Let's read another one together. Yellow is four. Violet is seven. That gives forty seven. The third band is orange, which means multiply by one thousand, or add three zeros. Forty seven thousand ohms, which we write as forty seven kilo-ohms. And gold again means plus or minus five percent. Try it yourself next time you open an old radio or a charger: you can now read every resistor inside.",
+   "mode": "bands",
+   "bands": [
+    "yellow",
+    "violet",
+    "orange",
+    "gold"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "1.6 · Tolerance",
+   "narration": "What does plus or minus five percent really mean? No factory can make every resistor exactly perfect. Tolerance tells you how far the real value may be from the printed value. For a one kilo-ohm resistor with five percent tolerance, five percent of one thousand is fifty. So the real value can be anywhere from nine hundred and fifty ohms to one thousand and fifty ohms. For most circuits that is fine. Where accuracy matters, like measuring instruments, we use one percent resistors or better.",
+   "formula": "Range = R ± (tolerance × R)",
+   "terms": [
+    [
+     "R",
+     "printed value"
+    ],
+    [
+     "tolerance",
+     "±5% (gold), ±10% (silver), ±1% (brown)"
+    ]
+   ],
+   "example": [
+    "1 kΩ ±5% → 950 Ω to 1050 Ω"
+   ]
+  },
+  {
+   "type": "resistor",
+   "chapter": "1.6 · Tolerance",
+   "narration": "Precise resistors usually have five bands instead of four. The only difference is that there are three digits before the multiplier. Watch: brown one, black zero, black zero, that is one hundred. The fourth band, brown, is the multiplier: times ten. One hundred times ten is one thousand ohms again. The last band, brown, is the tolerance: plus or minus one percent. Same one kilo-ohm, but five times more accurate.",
+   "mode": "bands",
+   "bands": [
+    "brown",
+    "black",
+    "black",
+    "brown",
+    "brown"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "1.7 · Power rating",
+   "narration": "We have seen that a resistor turns electrical energy into heat. But how much heat can it survive? Watch this circuit as the voltage rises from three to fifteen volts across a one hundred ohm resistor. The current grows, and the glow grows much faster. When the voltage doubles, the current doubles too, so the heat becomes four times bigger. If the heat is more than the resistor can get rid of, it overheats, changes value, and can even burn. This limit is called the power rating.",
+   "mode": "series",
+   "v": 3,
+   "v_to": 15,
+   "r": [
+    100
+   ],
+   "show": [
+    "current",
+    "heat"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "1.7 · Power rating",
+   "narration": "Power is the rate at which energy is turned into heat, measured in watts. Power equals voltage times current. Using Ohm's law, we can also write it as current squared times resistance, or voltage squared divided by resistance. Notice the squares: that is why doubling the current makes four times the heat. For example, twelve volts across one hundred ohms gives one hundred and twenty milliamps, and the power is twelve times zero point one two, which is one point four four watts.",
+   "formula": "P = V × I = I²R = V²/R",
+   "terms": [
+    [
+     "P",
+     "power turned into heat, in watts (W)"
+    ],
+    [
+     "V",
+     "voltage across the resistor"
+    ],
+    [
+     "I",
+     "current through it"
+    ],
+    [
+     "R",
+     "resistance"
+    ]
+   ],
+   "example": [
+    "12 V across 100 Ω → I = 0.12 A",
+    "P = 12 × 0.12 = 1.44 W"
+   ]
+  },
+  {
+   "type": "bars",
+   "chapter": "1.7 · Power rating",
+   "narration": "So every resistor has a power rating printed in its datasheet. The tiny surface mount resistors inside your phone handle about one eighth of a watt or less. The common through-hole resistors used in student projects are a quarter watt. Bigger ones handle half a watt, one watt, and the big wire-wound resistors handle five watts or more. A safe habit: choose a resistor rated at least two times the power it will actually dissipate. In our example of one point four four watts, a quarter watt resistor would burn, so we would use a three or five watt resistor.",
+   "title": "Typical power ratings",
+   "unit": "W",
+   "items": [
+    [
+     "Tiny SMD (phones)",
+     0.125
+    ],
+    [
+     "Standard (projects)",
+     0.25
+    ],
+    [
+     "Medium",
+     0.5
+    ],
+    [
+     "Large",
+     1
+    ],
+    [
+     "Wire-wound",
+     5
+    ]
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "1.8 · Types of resistors",
+   "narration": "Now that we know what resistors do, let's meet the main types. Fixed resistors have one value that never changes. Carbon film resistors are cheap and used everywhere. Metal film resistors are more accurate and produce less electrical noise, so they are used in audio and measuring circuits. Wire-wound resistors use a coil of special wire and handle large power, like in power supplies. And surface mount resistors are tiny rectangles soldered directly onto boards, which is what fills every phone and laptop.",
+   "title": "Fixed resistors",
+   "parts": [
+    {
+     "id": "c",
+     "label": "Carbon film: cheap, general use",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "m",
+     "label": "Metal film: accurate, low noise",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "w",
+     "label": "Wire-wound: high power",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "s",
+     "label": "SMD: tiny, inside phones",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Everyday circuits"
+    },
+    {
+     "highlight": [
+      "m"
+     ],
+     "note": "Audio and instruments"
+    },
+    {
+     "highlight": [
+      "w"
+     ],
+     "note": "Power supplies, heaters"
+    },
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": "Phones, laptops"
+    }
+   ]
+  },
+  {
+   "type": "resistor",
+   "chapter": "1.9 · Variable resistors",
+   "narration": "Sometimes we want to change the resistance by hand. That is a variable resistor, also called a potentiometer, or pot. Look inside: there is a curved track of resistive material, and a sliding contact called the wiper presses on it. Turn the knob and watch the wiper move along the track. The more track between the terminals, the higher the resistance. See the lamp: as the resistance goes up, the current falls and the lamp gets dimmer. Turn it back, and it brightens again. Volume knobs on speakers and amplifiers, and the brightness control on old lamp dimmers, work on this idea.",
+   "mode": "pot",
+   "r": 10000
+  },
+  {
+   "type": "diagram",
+   "chapter": "1.10 · Special resistors",
+   "narration": "Some resistors change by themselves, and that makes them sensors. A light dependent resistor, or LDR, has high resistance in darkness and low resistance in bright light. Automatic street lights use it to switch on at dusk. A thermistor changes with temperature. The most common kind, called NTC, has lower resistance when it gets hotter. Your phone battery and digital thermometers use thermistors to measure temperature. The circuit simply watches the resistance change and knows how bright or how hot it is.",
+   "title": "Resistors that sense",
+   "parts": [
+    {
+     "id": "l",
+     "label": "LDR: light ↑ → resistance ↓",
+     "x": 25,
+     "y": 38,
+     "shape": "pill"
+    },
+    {
+     "id": "t",
+     "label": "NTC thermistor: heat ↑ → resistance ↓",
+     "x": 75,
+     "y": 38,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Street lights, camera exposure",
+     "x": 25,
+     "y": 78
+    },
+    {
+     "id": "b",
+     "label": "Battery packs, thermometers",
+     "x": 75,
+     "y": 78
+    }
+   ],
+   "arrows": [
+    [
+     "l",
+     "a",
+     ""
+    ],
+    [
+     "t",
+     "b",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "l",
+      "a"
+     ],
+     "note": "Senses light"
+    },
+    {
+     "highlight": [
+      "t",
+      "b"
+     ],
+     "note": "Senses temperature"
+    }
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "1.11 · Resistors at work",
+   "narration": "Let's see a resistor doing its most famous job: protecting an LED. A small LED wants about twenty milliamps. Connected straight to a nine volt battery, far too much current would flow and the LED would burn instantly. Here, a four hundred and fifty ohm resistor allows exactly twenty milliamps from nine volts. In a real LED circuit the LED itself uses about two volts, so we would pick about three hundred and fifty ohms instead, but the idea is the same: the resistor sets the current.",
+   "mode": "series",
+   "v": 9,
+   "r": [
+    450
+   ],
+   "show": [
+    "current"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "1.11 · Resistors at work",
+   "narration": "Resistors are everywhere. They limit current, like for LEDs. They divide voltage, which we will study in detail when we reach series circuits. They set the operating point of transistors in amplifiers. They make heat on purpose in heaters and irons. And as LDRs and thermistors, they act as sensors. Open any electronic device and you will find more resistors than any other component.",
+   "title": "Where resistors work",
+   "parts": [
+    {
+     "id": "r",
+     "label": "RESISTOR",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Limit current (LEDs)",
+     "x": 18,
+     "y": 22
+    },
+    {
+     "id": "b",
+     "label": "Divide voltage",
+     "x": 82,
+     "y": 22
+    },
+    {
+     "id": "c",
+     "label": "Bias transistors",
+     "x": 18,
+     "y": 80
+    },
+    {
+     "id": "d",
+     "label": "Make heat (heaters)",
+     "x": 82,
+     "y": 80
+    },
+    {
+     "id": "e",
+     "label": "Sense light & heat",
+     "x": 50,
+     "y": 90
+    }
+   ],
+   "arrows": [
+    [
+     "r",
+     "a",
+     ""
+    ],
+    [
+     "r",
+     "b",
+     ""
+    ],
+    [
+     "r",
+     "c",
+     ""
+    ],
+    [
+     "r",
+     "d",
+     ""
+    ],
+    [
+     "r",
+     "e",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "r",
+      "a"
+     ],
+     "note": "Current limiting"
+    },
+    {
+     "highlight": [
+      "r",
+      "b"
+     ],
+     "note": "Voltage dividing"
+    },
+    {
+     "highlight": [
+      "r",
+      "c"
+     ],
+     "note": "Biasing"
+    },
+    {
+     "highlight": [
+      "r",
+      "d"
+     ],
+     "note": "Heating"
+    },
+    {
+     "highlight": [
+      "r",
+      "e"
+     ],
+     "note": "Sensing"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it all together. A resistor opposes current and turns electrical energy into heat. Inside, a carbon or metal film on a ceramic rod, with a spiral cut, sets its value. Its value is read from colour bands, and the last band gives the tolerance. Its power rating tells how much heat it can survive, using P equals V times I. And it comes as fixed, variable, and sensing types.",
+   "title": "The resistor in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Opposes current → heat",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Film + spiral sets value",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Colour code + tolerance",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Power rating: P = V × I",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "A resistor only turns energy into heat. But what if a component could store electrical energy and give it back later? That is the capacitor, and it is our next part. We will watch charge pile up on its plates, see it charge and discharge, and find it inside every phone, camera flash and power supply.",
+   "title": "NEXT: THE CAPACITOR",
+   "lines": [
+    "Opposes current",
+    "Colour code",
+    "Power rating",
+    "Fixed, variable, sensing"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "The Resistor Explained from Zero: Inside, Colour Code, Power Rating & Uses | Network Theory #2",
+  "description": "Network Theory from absolute zero - Part 2: the resistor.\n- What is inside a resistor (ceramic core, carbon film, spiral cut)\n- Why it gets hot: electrons colliding with atoms\n- Resistor symbols (ANSI and IEC)\n- Reading the 4-band and 5-band colour code\n- Tolerance explained\n- Power rating: P = VI = I²R = V²/R\n- Types: carbon film, metal film, wire-wound, SMD, potentiometer, LDR, thermistor\n- Real uses: LED current limiting, voltage dividers, biasing, heaters, sensors\n\nPrevious: What is electricity. Next: The capacitor.\n\n#NetworkTheory #Resistor #ECE #BasicElectronics #ColourCode",
+  "tags": [
+   "resistor",
+   "resistor colour code",
+   "what is a resistor",
+   "power rating",
+   "potentiometer",
+   "ldr",
+   "thermistor",
+   "network theory",
+   "basic electronics",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
