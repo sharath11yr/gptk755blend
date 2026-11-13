@@ -27,7 +27,7 @@ export const THEMES: Record<string, any> = {
 const LIGHT: Record<string, any> = {
   ece: { bg0: "#f7fafc", bg1: "#e3eef6", grid: "rgba(20,90,150,0.07)", grid2: "rgba(20,90,150,0.16)", cyan: "#0077b6", amber: "#d96c00",
     green: "#0a9b55", red: "#d62828", text: "#0d1b2a", dim: "#5c6f80", wire: "#34495e", off: "#b9c6d2", electron: "#0096c7" },
-  cse: { bg0: "#faf8ff", bg1: "#ebe4fb", grid: "rgba(106,63,214,0.07)", grid2: "rgba(106,63,214,0.16)", cyan: "#6a3fd6", amber: "#0f9d58",
+  cse: { bg0: "#ffffff", bg1: "#ffffff", grid: "rgba(106,63,214,0.05)", grid2: "rgba(106,63,214,0.10)", cyan: "#6a3fd6", amber: "#0f9d58",
     green: "#0f9d58", red: "#d6336c", text: "#1b1530", dim: "#6f6890", wire: "#4a4270", off: "#d2cbe8", electron: "#7b5cff" },
   cyber: { bg0: "#f4faf6", bg1: "#dff1e6", grid: "rgba(0,120,80,0.06)", grid2: "rgba(0,120,80,0.14)", cyan: "#00875a", amber: "#d62828",
     green: "#00875a", red: "#d62828", text: "#0b1f15", dim: "#557563", wire: "#2d4a3b", off: "#bdd4c6", electron: "#00a86b" },
@@ -39,6 +39,8 @@ for (const k of Object.keys(THEMES)) {
   THEMES[k + "-dark"] = THEMES[k];
   THEMES[k] = { ...THEMES[k], ...LIGHT[k], dark: false, panel: "rgba(255,255,255,0.92)", hi: "rgba(0,0,0,0.06)", shadow: "none" };
 }
+// CYBERSEC stays dark: pure black terminal look
+THEMES.cyber = { ...THEMES["cyber-dark"], bg0: "#000000", bg1: "#07110b" };
 export const L: any = { ...THEMES.ece };
 export const setTheme = (name?: string) => Object.assign(L, THEMES[name || "ece"] || THEMES.ece);
 
