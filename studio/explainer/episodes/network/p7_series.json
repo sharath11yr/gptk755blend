@@ -1,0 +1,377 @@
+{
+ "title": "Series Circuits and the Voltage Divider - Network Theory Part 7",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Series",
+ "cover": "Series Circuits",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  3,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 7 · Series circuits",
+   "narration": "Welcome back. Until now our circuits had a single resistor. Real circuits have many, and the two simplest ways to connect them are series and parallel. In this part we study series circuits: resistors connected one after another. We will watch what happens to the current and the voltage, find the total resistance, and build the voltage divider, one of the most used circuits in all of electronics.",
+   "kicker": "NETWORK THEORY · PART 7",
+   "title": "SERIES CIRCUITS",
+   "subtitle": "Same current, shared voltage, and the voltage divider"
+  },
+  {
+   "type": "dc",
+   "chapter": "7.1 · Same current everywhere",
+   "narration": "Here are three resistors connected end to end: one hundred, two hundred and three hundred ohms, across a twelve volt battery. Watch the electrons. There is only one path, so every electron that passes through the first resistor must also pass through the second and the third. Nothing can leave in between. That is why the current is the same at every point in a series circuit. The ammeter shows twenty milliamps, and it would show twenty milliamps wherever we placed it.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ],
+   "show": [
+    "current"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "7.2 · Total resistance",
+   "narration": "Because the current must push through every resistor one after another, their resistances add up. The total, or equivalent, resistance of resistors in series is R one plus R two plus R three. Here: one hundred plus two hundred plus three hundred gives six hundred ohms. Then Ohm's law gives the current: twelve volts divided by six hundred ohms is zero point zero two amperes, twenty milliamps. Notice: the total is always bigger than the biggest resistor.",
+   "formula": "R_eq = R₁ + R₂ + R₃ + …",
+   "terms": [
+    [
+     "R_eq",
+     "equivalent (total) resistance"
+    ]
+   ],
+   "example": [
+    "100 + 200 + 300 = 600 Ω",
+    "I = 12 / 600 = 20 mA"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "7.3 · The voltage is shared",
+   "narration": "Now look at the voltage across each resistor. Watch the meters. The one hundred ohm resistor has two volts. The two hundred ohm resistor has four volts. The three hundred ohm resistor has six volts. Notice two things. First, the bigger the resistor, the bigger its share of the voltage. Second, two plus four plus six equals twelve: together the drops add up exactly to the battery voltage. Nothing is lost.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ],
+   "show": [
+    "voltage"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "7.3 · The voltage is shared",
+   "narration": "Each resistor's voltage is the same current times its own resistance. Since the current is the same for all, the voltage divides in proportion to the resistances. Twenty milliamps times one hundred ohms is two volts, times two hundred is four volts, times three hundred is six volts. And the sum of the drops equals the source voltage. This idea is the heart of Kirchhoff's voltage law, which we will meet soon.",
+   "formula": "V_k = I × R_k     V = V₁ + V₂ + V₃",
+   "terms": [
+    [
+     "V_k",
+     "voltage across resistor k"
+    ],
+    [
+     "I",
+     "the same current through all"
+    ]
+   ],
+   "example": [
+    "0.02 × 100 = 2 V",
+    "0.02 × 200 = 4 V · 0.02 × 300 = 6 V",
+    "2 + 4 + 6 = 12 V"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "7.4 · The voltage divider",
+   "narration": "Now let's use this on purpose. Two resistors in series, one kilo-ohm on top and two kilo-ohms below, across twelve volts. We take our output from across the bottom resistor. Watch the meter: eight volts. We have made eight volts from a twelve volt battery, using nothing but two resistors. This is the voltage divider.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    1000,
+    2000
+   ],
+   "show": [
+    "voltage"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "7.4 · The voltage divider",
+   "narration": "Here is the voltage divider formula. The output voltage equals the input voltage times the bottom resistor, divided by the sum of both. Twelve times two thousand divided by three thousand gives eight volts. With two equal resistors, you get exactly half. One important warning: if you connect a load that draws a lot of current from the output, the output voltage drops. So a divider is used for signals and sensing, not for powering heavy loads.",
+   "formula": "V_out = V_in × R₂ / (R₁ + R₂)",
+   "terms": [
+    [
+     "V_in",
+     "voltage across the series pair"
+    ],
+    [
+     "R₂",
+     "resistor the output is taken across"
+    ]
+   ],
+   "example": [
+    "12 × 2k / 3k = 8 V",
+    "Equal resistors → V_in / 2"
+   ]
+  },
+  {
+   "type": "resistor",
+   "chapter": "7.5 · Dividers at work",
+   "narration": "A potentiometer is a voltage divider you can adjust. The wiper splits the track into two parts, the top part and the bottom part. Turn the knob, and watch the resistance between the wiper and one end change. Take the output from the wiper, and you get any voltage from zero up to the full input. This is exactly how a volume knob sets the signal level going to an amplifier.",
+   "mode": "pot",
+   "r": 10000
+  },
+  {
+   "type": "diagram",
+   "chapter": "7.5 · Dividers at work",
+   "narration": "Voltage dividers are everywhere. A light sensor circuit puts an LDR in a divider, so the output voltage changes with brightness, and a microcontroller reads it. A thermistor in a divider gives a voltage that tracks temperature. Battery monitors use a divider to bring a high battery voltage down to a level a chip can measure safely. And transistor amplifiers use a divider to set their operating voltage.",
+   "title": "Voltage dividers at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "VOLTAGE DIVIDER",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Volume knob (pot)",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Light sensor (LDR)",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Temperature sensor (thermistor)",
+     "x": 20,
+     "y": 80
+    },
+    {
+     "id": "d",
+     "label": "Battery voltage monitor",
+     "x": 80,
+     "y": 80
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "7.6 · The weakness of series",
+   "narration": "Series circuits have one big weakness. Since there is only one path, if any one element breaks and becomes an open circuit, the current stops everywhere. Old festival light strings were wired in series: when one bulb failed, the whole string went dark, and you had to test every bulb to find the bad one. Also, each element only gets part of the voltage. That is why the appliances in your home are never connected in series.",
+   "title": "One break stops everything",
+   "parts": [
+    {
+     "id": "a",
+     "label": "One path only",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "One open → current = 0 everywhere",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Old festival lights, fuses in series with a load",
+     "x": 50,
+     "y": 78
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. In a series circuit the current is the same through every element. Resistances add: R equals R one plus R two plus R three. The voltage divides in proportion to resistance, and the drops add up to the source. The voltage divider gives V out equals V in times R two over R one plus R two. And one break stops the whole circuit.",
+   "title": "Series in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Same current",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "R_eq = R₁ + R₂ + …",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Voltage shared ∝ R",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "V_out = V_in·R₂/(R₁+R₂)",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "In series, the current had only one path. Next, we give it several paths at once. In the next part, on parallel circuits, we will see how the current splits, why adding more resistors lowers the total resistance, and why every home is wired in parallel.",
+   "title": "NEXT: PARALLEL CIRCUITS & CURRENT DIVIDER",
+   "lines": [
+    "Same current",
+    "Resistances add",
+    "Voltage divider"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Series Circuits & Voltage Divider Explained from Zero | Network Theory #8",
+  "description": "Network Theory from absolute zero - Part 8: series circuits.\n- Why the current is the same everywhere in series\n- Equivalent resistance: R = R1 + R2 + R3\n- How the voltage is shared (and adds up to the source)\n- The voltage divider: Vout = Vin·R2/(R1+R2)\n- Potentiometer as an adjustable divider\n- Real uses: sensors, volume knobs, battery monitors\n- Why one break stops a series circuit\n\nPrevious: Ohm's law, power and energy. Next: Parallel circuits and the current divider.\n\n#NetworkTheory #SeriesCircuit #VoltageDivider #ECE",
+  "tags": [
+   "series circuit",
+   "voltage divider",
+   "equivalent resistance",
+   "resistors in series",
+   "voltage divider formula",
+   "network theory",
+   "circuit theory",
+   "ece",
+   "basic electronics"
+  ],
+  "playlist": "Network Theory"
+ }
+}

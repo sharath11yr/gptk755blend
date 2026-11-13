@@ -1,0 +1,358 @@
+{
+ "title": "Parallel Circuits and the Current Divider - Network Theory Part 8",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Parallel",
+ "cover": "Parallel Circuits",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  4,
+  6
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 8 · Parallel circuits",
+   "narration": "Welcome back. In the last part we connected resistors one after another, so the current had a single path. Now we connect them side by side, between the same two points, so the current has several paths at once. This is a parallel circuit. We will watch the current split, find out why the total resistance goes down, learn the current divider rule, and see why every home is wired this way.",
+   "kicker": "NETWORK THEORY · PART 8",
+   "title": "PARALLEL CIRCUITS",
+   "subtitle": "Same voltage, split current, and the current divider"
+  },
+  {
+   "type": "dc",
+   "chapter": "8.1 · Same voltage across each",
+   "narration": "Here are two resistors, one hundred ohms and two hundred ohms, both connected directly across a twelve volt battery. Both resistors are joined between the same two nodes, the top wire and the bottom wire. So each one has the full twelve volts across it. That is the defining rule of parallel: every element gets the same voltage.",
+   "mode": "parallel",
+   "v": 12,
+   "r": [
+    100,
+    200
+   ],
+   "show": [
+    "current",
+    "voltage"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "8.2 · The current splits",
+   "narration": "Now watch the electrons. Coming from the battery, the current reaches the junction and splits into two paths. Look at the meters. The one hundred ohm branch carries one hundred and twenty milliamps. The two hundred ohm branch carries sixty milliamps. The smaller resistance takes the bigger share, because it is the easier path. At the bottom, the two currents join again, and the battery delivers the total: one hundred and eighty milliamps.",
+   "mode": "parallel",
+   "v": 12,
+   "r": [
+    100,
+    200
+   ],
+   "show": [
+    "current"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "8.2 · The current splits",
+   "narration": "Each branch current follows Ohm's law with the full voltage: twelve over one hundred is one hundred and twenty milliamps, and twelve over two hundred is sixty milliamps. The total current from the source is the sum of the branch currents. No charge is created or lost at a junction: what flows in must flow out. This is the heart of Kirchhoff's current law, which is coming soon.",
+   "formula": "I = I₁ + I₂ + …     I_k = V / R_k",
+   "terms": [
+    [
+     "I",
+     "total current from the source"
+    ],
+    [
+     "I_k",
+     "current in branch k"
+    ]
+   ],
+   "example": [
+    "12/100 = 120 mA · 12/200 = 60 mA",
+    "Total = 180 mA"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "8.3 · Total resistance",
+   "narration": "So what single resistor could replace the pair? It must draw one hundred and eighty milliamps from twelve volts, so it is twelve divided by zero point one eight, which is about sixty six point seven ohms. Notice: that is less than the smallest resistor. Adding a path always makes it easier for current to flow. For parallel resistors, we add the reciprocals. For just two resistors, there is a shortcut: product over sum. One hundred times two hundred, divided by three hundred, is sixty six point seven ohms.",
+   "formula": "1/R_eq = 1/R₁ + 1/R₂ + …",
+   "terms": [
+    [
+     "Two resistors",
+     "R_eq = R₁R₂ / (R₁ + R₂)"
+    ],
+    [
+     "n equal resistors R",
+     "R_eq = R / n"
+    ]
+   ],
+   "example": [
+    "100 ∥ 200 = 20000/300 ≈ 66.7 Ω",
+    "Two 100 Ω in parallel = 50 Ω"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "8.4 · More paths, more current",
+   "narration": "Now let's add a third resistor, three hundred ohms, in parallel. Watch the source current. It goes up, because there is now another path. The first two branches still carry exactly what they did before, since each still has twelve volts. This is very important: in parallel, adding or removing one branch does not change the others. Only the total current changes.",
+   "mode": "parallel",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ],
+   "show": [
+    "current"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "8.5 · The current divider",
+   "narration": "Often we know the total current and want to know how it splits. For two resistors in parallel, the current in one branch equals the total current times the other resistor, divided by the sum. Notice it is the other resistor on top. The current prefers the smaller resistance. With a total of one hundred and eighty milliamps: through the one hundred ohm resistor, one eighty times two hundred over three hundred, which is one hundred and twenty milliamps. Exactly what the meter showed.",
+   "formula": "I₁ = I × R₂ / (R₁ + R₂)",
+   "terms": [
+    [
+     "I",
+     "total current entering the pair"
+    ],
+    [
+     "R₂",
+     "the OTHER resistor"
+    ]
+   ],
+   "example": [
+    "180 mA × 200/300 = 120 mA",
+    "180 mA × 100/300 = 60 mA"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "8.6 · Using conductance",
+   "narration": "Parallel circuits become simple with conductance, G equals one over R. In parallel, conductances just add. And the current divides in proportion to conductance: the branch with more conductance takes more current. This is the reason we learned conductance in Part 6, and it is the basis of nodal analysis later.",
+   "formula": "G_eq = G₁ + G₂ + …",
+   "terms": [
+    [
+     "G",
+     "conductance = 1/R (siemens)"
+    ],
+    [
+     "I_k = I × G_k / G_eq",
+     "current share"
+    ]
+   ],
+   "example": [
+    "0.01 S + 0.005 S = 0.015 S → 66.7 Ω"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "8.7 · Your home is parallel",
+   "narration": "Every home is wired in parallel. Each appliance is connected between the same two supply wires, the phase and the neutral. So every appliance gets the full two hundred and thirty volts. Each one can be switched on or off without affecting the others. But every appliance you switch on adds another path, so the total current from the supply increases. If too many heavy appliances run together, the current becomes too large and the MCB trips to protect the wires.",
+   "title": "Home wiring = parallel",
+   "parts": [
+    {
+     "id": "s",
+     "label": "230 V supply",
+     "x": 50,
+     "y": 15,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Fan",
+     "x": 18,
+     "y": 55
+    },
+    {
+     "id": "b",
+     "label": "Lights",
+     "x": 40,
+     "y": 55
+    },
+    {
+     "id": "c",
+     "label": "Fridge",
+     "x": 62,
+     "y": 55
+    },
+    {
+     "id": "d",
+     "label": "Geyser",
+     "x": 84,
+     "y": 55
+    },
+    {
+     "id": "m",
+     "label": "Every appliance on = more total current → MCB protects",
+     "x": 50,
+     "y": 88,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "s",
+     "a",
+     ""
+    ],
+    [
+     "s",
+     "b",
+     ""
+    ],
+    [
+     "s",
+     "c",
+     ""
+    ],
+    [
+     "s",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": "Same voltage to all"
+    },
+    {
+     "highlight": [
+      "a",
+      "b",
+      "c",
+      "d"
+     ],
+     "note": "Each works independently"
+    },
+    {
+     "highlight": [
+      "m"
+     ],
+     "note": "Total current adds up"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "8.8 · Series vs parallel",
+   "narration": "Let's compare the two side by side. In series, the current is the same and the voltage is shared. In parallel, the voltage is the same and the current is shared. In series, resistances add, so the total grows. In parallel, conductances add, so the total resistance falls below the smallest. In series, one break stops everything. In parallel, each branch works on its own.",
+   "title": "Series vs parallel",
+   "parts": [
+    {
+     "id": "s",
+     "label": "SERIES",
+     "x": 25,
+     "y": 15,
+     "shape": "pill"
+    },
+    {
+     "id": "p",
+     "label": "PARALLEL",
+     "x": 75,
+     "y": 15,
+     "shape": "pill"
+    },
+    {
+     "id": "s1",
+     "label": "Same I · V shared",
+     "x": 25,
+     "y": 40
+    },
+    {
+     "id": "p1",
+     "label": "Same V · I shared",
+     "x": 75,
+     "y": 40
+    },
+    {
+     "id": "s2",
+     "label": "R_eq = R₁ + R₂",
+     "x": 25,
+     "y": 62
+    },
+    {
+     "id": "p2",
+     "label": "1/R_eq = 1/R₁ + 1/R₂",
+     "x": 75,
+     "y": 62
+    },
+    {
+     "id": "s3",
+     "label": "One break stops all",
+     "x": 25,
+     "y": 84
+    },
+    {
+     "id": "p3",
+     "label": "Branches independent",
+     "x": 75,
+     "y": 84
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "s",
+      "p"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "s1",
+      "p1"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "s2",
+      "p2"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "s3",
+      "p3"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We have seen that current splits at junctions and that voltage drops add up around a path. These two observations are actually two of the most powerful laws in circuit theory, discovered by Gustav Kirchhoff. Next, we study the first one: Kirchhoff's current law.",
+   "title": "NEXT: KIRCHHOFF'S CURRENT LAW",
+   "lines": [
+    "Same voltage",
+    "Currents add",
+    "Current divider"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Parallel Circuits & Current Divider Explained from Zero | Network Theory #9",
+  "description": "Network Theory from absolute zero - Part 9: parallel circuits.\n- Same voltage across every branch\n- How the current splits (watched live)\n- Equivalent resistance: 1/R = 1/R1 + 1/R2, product over sum\n- Adding branches raises total current\n- Current divider rule: I1 = I·R2/(R1+R2)\n- Conductances add\n- Why your home is wired in parallel (and why MCBs trip)\n- Series vs parallel comparison\n\nPrevious: Series circuits. Next: Kirchhoff's current law.\n\n#NetworkTheory #ParallelCircuit #CurrentDivider #ECE",
+  "tags": [
+   "parallel circuit",
+   "current divider",
+   "resistors in parallel",
+   "equivalent resistance",
+   "current divider rule",
+   "network theory",
+   "circuit theory",
+   "ece",
+   "basic electronics"
+  ],
+  "playlist": "Network Theory"
+ }
+}
