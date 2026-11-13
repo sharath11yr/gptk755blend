@@ -1,0 +1,594 @@
+{
+ "title": "The Capacitor - Network Theory Part 2",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Capacitor",
+ "cover": "The Capacitor Explained",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  7,
+  12
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 2 · The capacitor",
+   "narration": "Welcome back. In the last part we met the resistor, a component that takes electrical energy and turns it into heat. Today we meet a component that does something completely different. It stores electrical energy, holds it, and gives it back later. It is the capacitor. We will look inside it, watch it charge and discharge step by step, learn the formulas behind it, and find it working inside your phone charger, your camera flash, and even your touchscreen.",
+   "kicker": "NETWORK THEORY · PART 2",
+   "title": "THE CAPACITOR",
+   "subtitle": "Storing charge: inside, charging, formulas and real uses"
+  },
+  {
+   "type": "capacitor",
+   "chapter": "2.1 · What is inside",
+   "narration": "A capacitor is surprisingly simple. Look at the screen: two metal plates, facing each other, with a small gap between them. The gap is filled with an insulator, which we call the dielectric. It can be air, paper, plastic, or ceramic. Remember from Part 0: an insulator does not let current through. So no electron can ever jump from one plate to the other. That single fact explains everything a capacitor does.",
+   "mode": "charge"
+  },
+  {
+   "type": "rc",
+   "chapter": "2.2 · Charging",
+   "narration": "Now let's connect a ten volt battery through a resistor and watch closely. The moment we connect, current rushes in. See the electrons? The battery pulls electrons off the top plate and pushes the same number onto the bottom plate. The top plate becomes positive, the bottom plate becomes negative. Now look at the two meters. The capacitor voltage starts at zero and climbs. The current starts large and falls. Why does it fall? Because the charges already on the plates push back against the battery. When the capacitor voltage reaches ten volts, it equals the battery, the push is balanced, and the current stops completely. The capacitor is now fully charged.",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001
+  },
+  {
+   "type": "capacitor",
+   "chapter": "2.2 · Charging",
+   "narration": "Notice something important. During charging, current flowed in the wires on both sides, but not one electron crossed the gap. Electrons piled up on one plate, and the same number left the other plate. Between the plates, an electric field formed, and the energy is stored in that field. Even if we now disconnect the battery, the charges stay on the plates. The capacitor holds its charge, like a tiny rechargeable tank.",
+   "mode": "cycle"
+  },
+  {
+   "type": "formula",
+   "chapter": "2.3 · Capacitance",
+   "narration": "How much charge can a capacitor store? It depends on two things: the voltage we apply, and a property of the capacitor called its capacitance. Charge Q equals capacitance C times voltage V. Capacitance is measured in farads. One farad means one coulomb of charge is stored for every volt. One farad is huge, so real capacitors use smaller units: microfarads, nanofarads and picofarads. For example, a one hundred microfarad capacitor at ten volts stores one millicoulomb of charge.",
+   "formula": "Q = C × V",
+   "terms": [
+    [
+     "Q",
+     "charge stored, in coulombs (C)"
+    ],
+    [
+     "C",
+     "capacitance, in farads (F)"
+    ],
+    [
+     "V",
+     "voltage across the plates"
+    ]
+   ],
+   "example": [
+    "1 µF = 10⁻⁶ F · 1 nF = 10⁻⁹ F · 1 pF = 10⁻¹² F",
+    "100 µF at 10 V → Q = 1 mC"
+   ]
+  },
+  {
+   "type": "capgeom",
+   "chapter": "2.4 · What decides capacitance",
+   "narration": "So what makes one capacitor bigger than another? Watch the plates. First, we make the plates bigger. There is more room for charge, and see the capacitance bar rise. Next, we bring the plates closer together. The closer the plates, the stronger the pull between the opposite charges, so even more charge can be held. Capacitance rises again. Finally, we slide a dielectric material between the plates. A good dielectric weakens the field inside, so the battery can push even more charge onto the plates. Capacitance jumps up once more."
+  },
+  {
+   "type": "formula",
+   "chapter": "2.4 · What decides capacitance",
+   "narration": "All three effects are captured in one formula. Capacitance C equals epsilon times A divided by d. A is the area of the plates, d is the distance between them, and epsilon is the permittivity of the dielectric, which tells us how good that material is at helping store charge. Epsilon equals epsilon zero, the value for empty space, times epsilon r, the relative permittivity of the material. Ceramics can have epsilon r in the thousands, which is why tiny ceramic capacitors can still have useful values.",
+   "formula": "C = ε A / d",
+   "terms": [
+    [
+     "A",
+     "plate area (m²)"
+    ],
+    [
+     "d",
+     "gap between plates (m)"
+    ],
+    [
+     "ε = ε₀ εr",
+     "permittivity of the dielectric"
+    ],
+    [
+     "ε₀",
+     "8.85 × 10⁻¹² F/m (free space)"
+    ]
+   ],
+   "example": [
+    "Bigger A → more C",
+    "Smaller d → more C",
+    "Higher εr → more C"
+   ]
+  },
+  {
+   "type": "rc",
+   "chapter": "2.5 · Time constant",
+   "narration": "Let's go back to charging and look at the shape of that graph. It is not a straight line. It rises fast at first, then slower and slower. This shape is called exponential. The speed is set by the time constant, tau, which equals R times C. Here, one kilo-ohm times one thousand microfarads gives one second. Watch the green mark: after one time constant, the capacitor reaches sixty three percent of the battery voltage. After five time constants, it is above ninety nine percent, and we call it fully charged. A bigger resistor or a bigger capacitor means slower charging.",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001
+  },
+  {
+   "type": "formula",
+   "chapter": "2.5 · Time constant",
+   "narration": "Here are the formulas behind that curve. The time constant tau equals R times C, in seconds. While charging, the capacitor voltage is V times one minus e to the power minus t over tau. Here e is a special number, about two point seven one eight. You do not need to calculate this today. Just remember the pattern: sixty three percent after one tau, about eighty six percent after two, and practically full after five.",
+   "formula": "τ = R × C",
+   "terms": [
+    [
+     "τ",
+     "time constant, in seconds"
+    ],
+    [
+     "Charging",
+     "Vc = V (1 − e^(−t/τ))"
+    ],
+    [
+     "Discharging",
+     "Vc = V e^(−t/τ)"
+    ]
+   ],
+   "example": [
+    "1 kΩ × 1000 µF = 1 s",
+    "1τ → 63% · 5τ → 99%"
+   ]
+  },
+  {
+   "type": "rc",
+   "chapter": "2.6 · Discharging",
+   "narration": "Now remove the battery and connect the charged capacitor to a small lamp. Watch the lamp: it flashes bright, then slowly fades. The capacitor is giving back the energy it stored. Notice the current now flows the other way. The voltage falls fast at first, then slower and slower, the same exponential shape upside down. After one time constant, only thirty seven percent of the voltage is left. After five, it is practically empty.",
+   "mode": "discharge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001,
+   "lamp": true
+  },
+  {
+   "type": "formula",
+   "chapter": "2.7 · Energy stored",
+   "narration": "How much energy does a capacitor hold? Energy E equals one half times C times V squared. Notice the square again: double the voltage, and the stored energy becomes four times bigger. For example, a one thousand microfarad capacitor charged to ten volts stores half times zero point zero zero one times one hundred, which is zero point zero five joules. That is small, but a capacitor can release it in a tiny fraction of a second, which makes it very powerful in short bursts.",
+   "formula": "E = ½ C V²",
+   "terms": [
+    [
+     "E",
+     "energy stored, in joules (J)"
+    ],
+    [
+     "C",
+     "capacitance, in farads"
+    ],
+    [
+     "V",
+     "voltage across it"
+    ]
+   ],
+   "example": [
+    "1000 µF at 10 V → E = 0.05 J"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "2.8 · DC and AC",
+   "narration": "We have seen that once a capacitor is charged, DC current stops. So for steady DC, a charged capacitor acts like an open circuit, a break in the wire. But with AC, the voltage keeps changing direction, so the capacitor keeps charging, discharging and charging the other way. Current keeps flowing in the wires all the time. So a capacitor blocks DC but lets AC pass. The higher the frequency, the more easily it passes. We will study this properly in the AC part of this course.",
+   "title": "Capacitor: DC vs AC",
+   "parts": [
+    {
+     "id": "d",
+     "label": "DC: charges once → current stops",
+     "x": 25,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "AC: charge, discharge, repeat → current keeps flowing",
+     "x": 75,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "r",
+     "label": "Blocks DC · passes AC",
+     "x": 50,
+     "y": 80
+    }
+   ],
+   "arrows": [
+    [
+     "d",
+     "r",
+     ""
+    ],
+    [
+     "a",
+     "r",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": "Acts like an open circuit"
+    },
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Keeps passing current"
+    },
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": "Key rule"
+    }
+   ]
+  },
+  {
+   "type": "wave",
+   "chapter": "2.9 · Capacitors at work",
+   "narration": "One of the most important jobs of a capacitor is inside every phone charger and power supply. After the AC from the wall is turned into DC, that DC is bumpy, like the humps on this screen. Now look at the output line with a capacitor connected. The capacitor charges at each peak, then supplies the current while the voltage dips. See how the output stays almost flat, with only a small ripple? This is called smoothing, or filtering, and without it your electronics would not work.",
+   "cap": true,
+   "cycles": 3,
+   "title": "SMOOTHING IN A POWER SUPPLY",
+   "ripple": true
+  },
+  {
+   "type": "diagram",
+   "chapter": "2.10 · Types of capacitors",
+   "narration": "Capacitors come in several types. Ceramic capacitors are small, cheap and non-polarized, with values from picofarads to a few microfarads, and they are used everywhere for filtering high frequency noise. Electrolytic capacitors give large values, from about one microfarad to thousands of microfarads, but they are polarized: they have a positive and a negative leg. The stripe on the body marks the negative leg. Connect one the wrong way and it can overheat and burst. Film capacitors are stable and used in audio and AC circuits. And supercapacitors store so much charge that they can act like small batteries for backup power.",
+   "title": "Main types",
+   "parts": [
+    {
+     "id": "c",
+     "label": "Ceramic: pF–µF, non-polarized",
+     "x": 25,
+     "y": 28,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Electrolytic: µF–mF, POLARIZED (stripe = −)",
+     "x": 75,
+     "y": 28,
+     "shape": "pill"
+    },
+    {
+     "id": "f",
+     "label": "Film: stable, audio & AC",
+     "x": 25,
+     "y": 72,
+     "shape": "pill"
+    },
+    {
+     "id": "s",
+     "label": "Supercapacitor: farads, backup power",
+     "x": 75,
+     "y": 72,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Noise filtering"
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": "Never connect reversed"
+    },
+    {
+     "highlight": [
+      "f"
+     ],
+     "note": "Audio, motor circuits"
+    },
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": "Memory backup, regenerative braking"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "2.11 · Symbols",
+   "narration": "In circuit diagrams, a capacitor is drawn as two short parallel lines with a gap, exactly like the two plates. For a polarized capacitor, one plate is drawn curved or marked with a plus sign, so you always know which way to connect it. A variable capacitor has an arrow through it. Old radios used a variable capacitor in the tuning knob.",
+   "title": "Capacitor symbols",
+   "parts": [
+    {
+     "id": "n",
+     "label": "Non-polarized: two straight lines",
+     "x": 20,
+     "y": 45,
+     "shape": "pill"
+    },
+    {
+     "id": "p",
+     "label": "Polarized: one curved plate / + sign",
+     "x": 50,
+     "y": 45,
+     "shape": "pill"
+    },
+    {
+     "id": "v",
+     "label": "Variable: arrow through it",
+     "x": 80,
+     "y": 45,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "n"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "p"
+     ],
+     "note": "Mind the polarity"
+    },
+    {
+     "highlight": [
+      "v"
+     ],
+     "note": "Radio tuning"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "2.12 · Series and parallel",
+   "narration": "When we connect capacitors together, they combine opposite to resistors. In parallel, the plates are effectively joined into bigger plates, so capacitances simply add. In series, the plates are effectively further apart, so the total becomes smaller than the smallest one, and we add the reciprocals. For example, two ten microfarad capacitors in parallel make twenty microfarads, but in series they make only five microfarads.",
+   "formula": "Parallel: C = C₁ + C₂     Series: 1/C = 1/C₁ + 1/C₂",
+   "terms": [
+    [
+     "Parallel",
+     "bigger plate area → capacitances add"
+    ],
+    [
+     "Series",
+     "bigger gap → total is smaller"
+    ]
+   ],
+   "example": [
+    "10 µF ∥ 10 µF = 20 µF",
+    "10 µF in series with 10 µF = 5 µF"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "2.13 · Where you meet capacitors",
+   "narration": "Capacitors are everywhere around you. In chargers and power supplies, they smooth the DC. In a camera flash, a capacitor charges slowly from the battery, then dumps its energy into the flash tube in a split second. In timers and blinking lights, the RC time constant sets the delay. In speakers and amplifiers, they block DC while letting the audio signal pass. Your phone's touchscreen senses your finger because your finger changes a tiny capacitance. And the memory in your computer, DRAM, stores every bit as charge on a microscopic capacitor.",
+   "title": "Capacitors at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "CAPACITOR",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Smoothing in chargers",
+     "x": 18,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Camera flash",
+     "x": 82,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Timers (RC delay)",
+     "x": 15,
+     "y": 55
+    },
+    {
+     "id": "d",
+     "label": "Audio coupling",
+     "x": 85,
+     "y": 55
+    },
+    {
+     "id": "e",
+     "label": "Touchscreens",
+     "x": 22,
+     "y": 88
+    },
+    {
+     "id": "f",
+     "label": "DRAM memory",
+     "x": 78,
+     "y": 88
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ],
+    [
+     "x",
+     "e",
+     ""
+    ],
+    [
+     "x",
+     "f",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "e"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "f"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A capacitor is two plates separated by an insulator, so no current crosses the gap. It stores charge, Q equals C V, and energy, one half C V squared. Its capacitance grows with plate area and dielectric, and shrinks with the gap. It charges and discharges exponentially, with time constant tau equals R C. And it blocks DC but passes AC.",
+   "title": "The capacitor in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Plates + dielectric",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Q = CV · E = ½CV²",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "C = εA/d",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "τ = RC · blocks DC, passes AC",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "The capacitor stores energy in an electric field between its plates. Our next component stores energy in a completely different way: in a magnetic field around a coil of wire. It is the inductor. We will see why it fights every change in current, and find it in chargers, motors and wireless charging pads.",
+   "title": "NEXT: THE INDUCTOR",
+   "lines": [
+    "Stores charge",
+    "Q = CV",
+    "τ = RC",
+    "Blocks DC, passes AC"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "The Capacitor Explained from Zero: Charging, Q=CV, Time Constant & Uses | Network Theory #3",
+  "description": "Network Theory from absolute zero - Part 3: the capacitor.\n- What is inside: plates and dielectric\n- Charging and discharging, watched step by step\n- Capacitance: Q = CV, units (F, µF, nF, pF)\n- What decides capacitance: C = εA/d\n- Time constant τ = RC: 63% and 5τ rule\n- Energy stored: E = ½CV²\n- DC vs AC behaviour\n- Types: ceramic, electrolytic (polarity!), film, supercapacitor\n- Series and parallel capacitors\n- Real uses: chargers, camera flash, timers, audio, touchscreens, DRAM\n\nPrevious: The resistor. Next: The inductor.\n\n#NetworkTheory #Capacitor #ECE #BasicElectronics #RCcircuit",
+  "tags": [
+   "capacitor",
+   "what is a capacitor",
+   "capacitor charging",
+   "time constant",
+   "rc circuit",
+   "capacitance formula",
+   "electrolytic capacitor",
+   "network theory",
+   "basic electronics",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

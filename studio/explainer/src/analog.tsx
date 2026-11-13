@@ -316,4 +316,68 @@ export const ResistorScene: React.FC<any> = ({ dur, mode = "bands", bands = ["br
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ RC charging / discharging, live graph
+// {"mode":"charge"|"discharge"|"both","v":10,"r":1000,"c":0.001}  (tau = R*C seconds, shown as 5 tau)
+export const RCScene: React.FC<any> = ({ dur, mode = "charge", v = 10, r = 1000, c = 0.001, lamp = false }) => {
+  const f = useCurrentFrame();
+  const tau = r * c; const T = 5 * tau;
+  const p = interpolate(f, [dur * 0.08, dur * 0.92], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const both = mode === "both"; const disch = mode === "discharge" || (both && p > 0.5);
+  const tt = (both ? (p > 0.5 ? (p - 0.5) * 2 : p * 2) : p) * T;
+  const vc = disch ? v * Math.exp(-tt / tau) : v * (1 - Math.exp(-tt / tau));
+  const i = (disch ? -1 : 1) * (v / r) * Math.exp(-tt / tau);
+  const X0 = 1000, Y0 = 820, GW = 760, GH = 520;
+  const pts = (seg: "c" | "d", upto: number) => Array.from({ length: 60 }, (_, k) => { const t = (k / 59) * upto;
+    const y = seg === "c" ? 1 - Math.exp(-t / tau) : Math.exp(-t / tau); return t; }).map((t) => {
+    const frac = both ? (seg === "c" ? t / T / 2 : 0.5 + t / T / 2) : t / T;
+    const y = seg === "c" ? 1 - Math.exp(-t / tau) : Math.exp(-t / tau);
+    return `${X0 + frac * GW},${Y0 - y * GH}`; }).join(" ");
+  const cUp = both ? (p > 0.5 ? T : tt) : (disch ? 0 : tt); const dUp = disch ? tt : 0;
+  const sp = 30 + Math.abs(i) / (v / r) * 260;
+  const loop = disch ? [[200, 300], [700, 300], [700, 760], [200, 760], [200, 300]] : [[200, 300], [700, 300], [700, 760], [200, 760], [200, 300]];
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <polyline points={loop.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />
+    <Dots pts={disch ? loop.slice().reverse() : loop} t={f / 30} speed={sp} />
+    {!disch && <Battery x={200} y={530} v={v} />}
+    {disch && <g><rect x={150} y={480} width={100} height={100} fill={L.bg0} /><text x={200} y={540} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={26}>{lamp ? "lamp" : "wire"}</text>
+      {lamp && <circle cx={200} cy={530} r={44} fill={`rgba(255,200,60,${Math.min(1, Math.abs(i) / (v / r))})`} stroke={L.dim} strokeWidth={3} />}</g>}
+    <Res x={450} y={300} ohm={r} label="R" horizontal />
+    <g><rect x={640} y={500} width={120} height={70} fill={L.bg0} /><line x1={650} y1={520} x2={750} y2={520} stroke={L.amber} strokeWidth={9} /><line x1={650} y1={550} x2={750} y2={550} stroke={L.amber} strokeWidth={9} />
+      <text x={770} y={545} fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>C</text></g>
+    <Meter x={450} y={880} kind="V" value={vc} /><text x={450} y={950} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>capacitor voltage</text>
+    <Meter x={450} y={160} kind="A" value={Math.abs(i)} />
+    <line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - GH - 30} stroke={L.dim} strokeWidth={3} />
+    <text x={X0 + GW} y={Y0 + 44} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>time →</text>
+    <text x={X0 - 14} y={Y0 - GH} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>{v} V</text>
+    <line x1={X0} y1={Y0 - GH} x2={X0 + GW} y2={Y0 - GH} stroke={L.dim} strokeDasharray="8 8" strokeWidth={2} />
+    {!(both) && <g opacity={0.9}><line x1={X0 + GW / 5} y1={Y0} x2={X0 + GW / 5} y2={Y0 - GH * (disch ? 0.37 : 0.63)} stroke={L.green} strokeDasharray="6 6" strokeWidth={3} />
+      <text x={X0 + GW / 5 + 10} y={Y0 - GH * (disch ? 0.37 : 0.63) - 12} fill={L.green} fontFamily={MONO} fontSize={26} fontWeight={700}>1τ: {disch ? "37%" : "63%"}</text></g>}
+    {cUp > 0 && <polyline points={pts("c", cUp)} fill="none" stroke={L.cyan} strokeWidth={6} />}
+    {dUp > 0 && <polyline points={pts("d", dUp)} fill="none" stroke={L.amber} strokeWidth={6} />}
+    <text x={X0 + GW / 2} y={Y0 - GH - 50} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>τ = R × C = {+tau.toFixed(3)} s</text>
+  </svg></AbsoluteFill>;
+};
+
+// ------------------------------------------------------------------ what decides capacitance: C = εA/d
+// phases: area grows, gap shrinks, dielectric slides in; C bar shows the effect
+export const CapGeom: React.FC<any> = ({ dur }) => {
+  const f = useCurrentFrame();
+  const ph = (a: number, b: number) => interpolate(f, [dur * a, dur * b], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const A = 1 + ph(0.05, 0.3); const d = 1 - 0.5 * ph(0.38, 0.62); const er = 1 + 3 * ph(0.7, 0.92);
+  const C = (er * A) / d; const w = 300 * A, gap = 260 * d;
+  const cx = 700, cy = 540;
+  const label = f < dur * 0.34 ? "Bigger plate area A → more C" : f < dur * 0.66 ? "Smaller gap d → more C" : "Dielectric (ε) between plates → more C";
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <rect x={cx - w} y={cy - gap / 2 - 24} width={2 * w} height={24} rx={6} fill={L.amber} />
+    <rect x={cx - w} y={cy + gap / 2} width={2 * w} height={24} rx={6} fill={L.amber} />
+    <rect x={cx - w + (1 - ph(0.7, 0.92)) * 2 * w * -1.2} y={cy - gap / 2 + 6} width={2 * w} height={gap - 12} fill={L.cyan} opacity={0.18 * Math.min(1, ph(0.7, 0.75) * 5)} />
+    {Array.from({ length: 8 }, (_, k) => <line key={k} x1={cx - w + (k + 0.5) * (2 * w / 8)} y1={cy - gap / 2 + 4} x2={cx - w + (k + 0.5) * (2 * w / 8)} y2={cy + gap / 2 - 4} stroke={L.red} strokeWidth={2} strokeDasharray="6 8" opacity={0.6} />)}
+    <text x={cx} y={190} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={40} fontWeight={700}>{label}</text>
+    <text x={1500} y={300} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={30}>capacitance</text>
+    <rect x={1440} y={340} width={120} height={500} rx={10} fill="none" stroke={L.dim} strokeWidth={4} />
+    <rect x={1446} y={834 - Math.min(488, C * 30)} width={108} height={Math.min(488, C * 30)} rx={8} fill={L.green} />
+    <text x={1500} y={890} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={36} fontWeight={800}>× {C.toFixed(1)}</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
