@@ -1,0 +1,546 @@
+{
+ "title": "The Language of Circuits - Network Theory Part 5",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Node",
+ "cover": "Node, Branch, Loop, Mesh",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  4,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 5 · The language of circuits",
+   "narration": "Welcome back. We now have sources and the three basic components. Before we can solve any circuit, we must learn the language every engineer uses to describe one. What is a node? What is a branch, a loop, a mesh? What exactly is an open circuit and a short circuit? These words appear in every method we will learn next, from Kirchhoff's laws to mesh and nodal analysis, so we will learn them slowly, on one example circuit.",
+   "kicker": "NETWORK THEORY · PART 5",
+   "title": "THE LANGUAGE OF CIRCUITS",
+   "subtitle": "Symbols, node, branch, loop, mesh, open and short"
+  },
+  {
+   "type": "diagram",
+   "chapter": "5.1 · Circuit symbols",
+   "narration": "Circuit diagrams use symbols instead of pictures, so any engineer in the world can read them. You already know some. A resistor is a zigzag or a rectangle. A capacitor is two parallel plates. An inductor is a row of loops. A battery is a long line and a short line, where the long line is positive. An independent source is a circle, a dependent source is a diamond. A straight line is a perfect wire with zero resistance. And when two wires cross, a dot means they are joined, while no dot means they simply pass over each other.",
+   "title": "Basic symbols",
+   "parts": [
+    {
+     "id": "r",
+     "label": "Resistor: zigzag / rectangle",
+     "x": 20,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Capacitor: two plates",
+     "x": 50,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "l",
+     "label": "Inductor: loops",
+     "x": 80,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Battery: long line = +",
+     "x": 20,
+     "y": 60,
+     "shape": "pill"
+    },
+    {
+     "id": "s",
+     "label": "Source: circle · dependent: diamond",
+     "x": 50,
+     "y": 60,
+     "shape": "pill"
+    },
+    {
+     "id": "w",
+     "label": "Wire: zero resistance",
+     "x": 80,
+     "y": 60,
+     "shape": "pill"
+    },
+    {
+     "id": "j",
+     "label": "Crossing wires: dot = joined, no dot = not joined",
+     "x": 50,
+     "y": 90,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "r",
+      "c",
+      "l"
+     ],
+     "note": "Components"
+    },
+    {
+     "highlight": [
+      "b",
+      "s"
+     ],
+     "note": "Sources"
+    },
+    {
+     "highlight": [
+      "w"
+     ],
+     "note": "Ideal wire"
+    },
+    {
+     "highlight": [
+      "j"
+     ],
+     "note": "Read junctions carefully"
+    }
+   ]
+  },
+  {
+   "type": "net",
+   "chapter": "5.2 · Node",
+   "narration": "Here is our example circuit: a twelve volt battery and four resistors. Let's find the nodes. A node is a point where two or more elements are connected. Watch the highlights. Point A joins the battery and R1. Point B joins R1, R2 and R3. Point C joins R3 and R4. Now notice the bottom: the whole bottom wire is one single node, D, because a wire has no resistance, so every point on it is at the same voltage. So this circuit has four nodes. Nodes where three or more elements meet, like B and D, are called essential nodes, or principal nodes. These are the ones that matter most in analysis.",
+   "mode": "nodes"
+  },
+  {
+   "type": "net",
+   "chapter": "5.3 · Branch",
+   "narration": "Now the branches. A branch is a single path between two nodes containing one element. Watch each branch light up. The battery is a branch from A to D. R1 is a branch from A to B. R2 runs from B down to D. R3 runs from B to C. And R4 runs from C down to D. So this circuit has five branches. Every element sits in exactly one branch.",
+   "mode": "branches"
+  },
+  {
+   "type": "net",
+   "chapter": "5.4 · Loop",
+   "narration": "A loop is any closed path in the circuit that starts at a node and comes back to the same node without passing through any node twice. Watch the orange path. The first loop goes through the battery, R1 and R2. The second goes through R2, R3 and R4. And the third is the big outer loop, through the battery, R1, R3 and R4. So this circuit has three loops.",
+   "mode": "loops"
+  },
+  {
+   "type": "net",
+   "chapter": "5.5 · Mesh",
+   "narration": "A mesh is a special kind of loop: one that has no other branch inside it. Think of the panes of a window. Watch the shaded areas. The left window, with the battery, R1 and R2, is a mesh. The right window, with R2, R3 and R4, is a mesh. But the big outer loop is not a mesh, because R2 sits inside it. So this circuit has three loops but only two meshes. Meshes only make sense for circuits that can be drawn flat on paper without crossing wires. Those are called planar circuits.",
+   "mode": "meshes"
+  },
+  {
+   "type": "formula",
+   "chapter": "5.5 · Counting meshes",
+   "narration": "There is a neat formula connecting all of these. The number of independent meshes equals the number of branches minus the number of nodes plus one. In our circuit: five branches, four nodes, so five minus four plus one equals two meshes. That matches what we saw. This number tells you how many equations you will need when we learn mesh analysis.",
+   "formula": "meshes = b − n + 1",
+   "terms": [
+    [
+     "b",
+     "number of branches"
+    ],
+    [
+     "n",
+     "number of nodes"
+    ]
+   ],
+   "example": [
+    "b = 5, n = 4",
+    "meshes = 5 − 4 + 1 = 2"
+   ]
+  },
+  {
+   "type": "net",
+   "chapter": "5.6 · Open circuit",
+   "narration": "Now two words you will hear all the time. Watch: we remove R2 and leave a gap. This is an open circuit. No current can flow through a gap, so the current there is zero. But notice: a voltage can still exist across the gap. In fact, an open circuit is like a resistor of infinite resistance. A blown fuse, a broken wire, and a switch turned off are all open circuits.",
+   "mode": "open"
+  },
+  {
+   "type": "net",
+   "chapter": "5.7 · Short circuit",
+   "narration": "Now the opposite. Watch the red wire connect straight across R2. This is a short circuit. A wire has zero resistance, so the voltage across it is zero, and current takes the easy path through the wire instead of through R2. R2 now carries no current at all. A short circuit is like a resistor of zero ohms. In real life, a short across a battery or the mains can draw a dangerous current, which is why homes have fuses and MCBs that break the circuit when the current becomes too large.",
+   "mode": "short"
+  },
+  {
+   "type": "diagram",
+   "chapter": "5.8 · Open vs short",
+   "narration": "Let's put them side by side. An open circuit has infinite resistance: current is zero, but voltage can be anything. A short circuit has zero resistance: voltage is zero, but current can be anything the rest of the circuit allows. Remember this pair. Many problems ask you to replace a capacitor with an open circuit, or an inductor with a short circuit, when the circuit has settled with DC. Now you know why: a charged capacitor blocks DC, and a settled inductor acts like a wire.",
+   "title": "Open vs short",
+   "parts": [
+    {
+     "id": "o",
+     "label": "OPEN: R = ∞ → I = 0",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "s",
+     "label": "SHORT: R = 0 → V = 0",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Capacitor in steady DC → open",
+     "x": 25,
+     "y": 75
+    },
+    {
+     "id": "l",
+     "label": "Inductor in steady DC → short",
+     "x": 75,
+     "y": 75
+    }
+   ],
+   "arrows": [
+    [
+     "o",
+     "c",
+     ""
+    ],
+    [
+     "s",
+     "l",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "o"
+     ],
+     "note": "No current"
+    },
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": "No voltage"
+    },
+    {
+     "highlight": [
+      "o",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "s",
+      "l"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "5.9 · Series and parallel",
+   "narration": "Two more words, defined exactly. Elements are in series when they are connected end to end with nothing else joining in between, so the same current must flow through them. In our circuit, R3 and R4 are in series, because node C joins only those two. Elements are in parallel when they are connected between the same two nodes, so they have the same voltage across them. In our circuit, R2 is in parallel with the series pair R3 and R4, because both sit between node B and node D.",
+   "title": "Series and parallel",
+   "parts": [
+    {
+     "id": "s",
+     "label": "SERIES: same current",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "p",
+     "label": "PARALLEL: same voltage",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "s1",
+     "label": "R3 and R4 (only node C between them)",
+     "x": 25,
+     "y": 75
+    },
+    {
+     "id": "p1",
+     "label": "R2 ∥ (R3 + R4): both between B and D",
+     "x": 75,
+     "y": 75
+    }
+   ],
+   "arrows": [
+    [
+     "s",
+     "s1",
+     ""
+    ],
+    [
+     "p",
+     "p1",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "s",
+      "s1"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "p",
+      "p1"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "5.10 · Ground",
+   "narration": "One node is usually chosen as the reference, called ground. We say its voltage is zero, and every other voltage in the circuit is measured from it. It is drawn as three short horizontal lines that get smaller, like an arrow pointing down. Usually we choose the node connected to the most elements, often the bottom wire. In devices, ground is the common return wire, and in homes, earth is a real connection to the ground for safety.",
+   "title": "Ground: the 0 V reference",
+   "parts": [
+    {
+     "id": "g",
+     "label": "Ground symbol: ⏚",
+     "x": 50,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Every voltage is measured from ground",
+     "x": 25,
+     "y": 72
+    },
+    {
+     "id": "b",
+     "label": "Pick the node with the most connections",
+     "x": 75,
+     "y": 72
+    }
+   ],
+   "arrows": [
+    [
+     "g",
+     "a",
+     ""
+    ],
+    [
+     "g",
+     "b",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "g"
+     ],
+     "note": "0 V"
+    },
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "5.11 · Kinds of elements",
+   "narration": "Finally, textbooks sort circuit elements into pairs, and you will be asked about them. Active elements deliver energy, like sources. Passive elements absorb or store it, like R, L and C. Linear elements follow a straight line between voltage and current, like a resistor. Non-linear elements do not, like a diode. Bilateral elements behave the same in both directions, like a resistor. Unilateral elements conduct mainly one way, like a diode. And lumped elements are small enough that we treat them as points, while distributed elements, like long transmission lines, spread along a distance.",
+   "title": "Classifying elements",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Active vs passive",
+     "x": 25,
+     "y": 20,
+     "shape": "pill"
+    },
+    {
+     "id": "l",
+     "label": "Linear vs non-linear",
+     "x": 75,
+     "y": 20,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Bilateral vs unilateral",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Lumped vs distributed",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Resistor: passive, linear, bilateral, lumped",
+     "x": 50,
+     "y": 88
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Source vs R, L, C"
+    },
+    {
+     "highlight": [
+      "l"
+     ],
+     "note": "Resistor vs diode"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Resistor vs diode"
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": "Component vs long cable"
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A node is where elements connect, and a whole wire is one node. A branch holds one element between two nodes. A loop is any closed path. A mesh is a loop with nothing inside, and meshes equal b minus n plus one. An open circuit has zero current, a short circuit has zero voltage. Series means same current, parallel means same voltage, and ground is our zero volt reference.",
+   "title": "The language in one picture",
+   "parts": [
+    {
+     "id": "n",
+     "label": "Node · essential node",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Branch",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "l",
+     "label": "Loop · mesh = b − n + 1",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "o",
+     "label": "Open: I = 0 · Short: V = 0",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "s",
+     "label": "Series: same I · Parallel: same V · Ground: 0 V",
+     "x": 50,
+     "y": 88,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "n"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "l"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "o"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Now we can describe any circuit. Next, we go deeper into the most used law in all of electronics, Ohm's law, together with power and energy: how much power each part uses, how energy is billed on your electricity meter, and what efficiency really means.",
+   "title": "NEXT: OHM'S LAW, POWER & ENERGY",
+   "lines": [
+    "Node, branch",
+    "Loop, mesh",
+    "Open, short",
+    "Series, parallel"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Node, Branch, Loop, Mesh, Open & Short Circuit Explained | Network Theory #6",
+  "description": "Network Theory from absolute zero - Part 6: the language of circuits.\n- Circuit symbols and junction dots\n- Node and essential node (on one example circuit)\n- Branch, loop and mesh, and the formula meshes = b − n + 1\n- Open circuit vs short circuit (and why fuses exist)\n- Series vs parallel, defined exactly\n- Ground / reference node\n- Classifying elements: active/passive, linear/non-linear, bilateral/unilateral, lumped/distributed\n\nPrevious: Sources. Next: Ohm's law, power and energy.\n\n#NetworkTheory #CircuitTheory #ECE #Mesh #Node",
+  "tags": [
+   "node branch loop mesh",
+   "what is a node",
+   "what is a mesh",
+   "open circuit",
+   "short circuit",
+   "network elements",
+   "network theory",
+   "circuit theory",
+   "ece",
+   "basic electrical engineering"
+  ],
+  "playlist": "Network Theory"
+ }
+}

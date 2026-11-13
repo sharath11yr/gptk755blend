@@ -490,4 +490,41 @@ export const SourceScene: React.FC<any> = ({ dur, mode = "practical-v", v = 12, 
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ circuit vocabulary on one example circuit
+// {"mode":"nodes"|"branches"|"loops"|"meshes"|"open"|"short"}
+export const NetScene: React.FC<any> = ({ dur, mode = "nodes" }) => {
+  const f = useCurrentFrame();
+  const A = [360, 260], B = [960, 260], C = [1560, 260], D = [960, 800];
+  const wire = (pts: number[][], hi = false, col?: string) => <polyline points={pts.map((q) => q.join(",")).join(" ")} fill="none" stroke={hi ? (col || L.cyan) : L.wire} strokeWidth={hi ? 12 : 6} strokeLinejoin="round" opacity={hi ? 0.9 : 1} />;
+  const br: Record<string, number[][]> = { V: [[360, 260], [360, 800], [960, 800]], R1: [[360, 260], [960, 260]], R2: [[960, 260], [960, 800]], R3: [[960, 260], [1560, 260]], R4: [[1560, 260], [1560, 800], [960, 800]] };
+  const keys = Object.keys(br);
+  const steps = mode === "nodes" ? 4 : mode === "branches" ? 5 : mode === "loops" ? 3 : mode === "meshes" ? 2 : 1;
+  const k = Math.min(steps - 1, Math.floor(interpolate(f, [dur * 0.08, dur * 0.9], [0, steps], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })));
+  const loops = [["V", "R1", "R2"], ["R2", "R3", "R4"], ["V", "R1", "R3", "R4"]];
+  const hiSet = mode === "branches" ? [keys[k]] : mode === "loops" || mode === "meshes" ? loops[k] : [];
+  const nodes: [number[], string, boolean][] = [[A, "A", false], [B, "B", true], [C, "C", false], [D, "D (whole bottom wire)", true]];
+  const open = mode === "open", short = mode === "short";
+  const label = mode === "nodes" ? `Node ${nodes[k][1]}${nodes[k][2] ? " · essential node (3 or more branches meet)" : ""}`
+    : mode === "branches" ? `Branch ${k + 1} of 5: ${keys[k] === "V" ? "the source" : keys[k]}`
+    : mode === "loops" ? `Loop ${k + 1} of 3${k === 2 ? " (outer loop: not a mesh, it has R2 inside)" : ""}`
+    : mode === "meshes" ? `Mesh ${k + 1} of 2: a loop with nothing inside it`
+    : open ? "OPEN circuit: a break → current = 0, full voltage across the gap" : "SHORT circuit: a plain wire across R2 → voltage = 0, current takes the wire";
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {(mode === "meshes") && <rect x={k === 0 ? 380 : 980} y={280} width={560} height={500} fill={L.cyan} opacity={0.12} />}
+    {keys.map((key) => wire(br[key]))}
+    {hiSet.map((key) => wire(br[key], true, mode === "loops" ? L.amber : L.cyan))}
+    <Battery x={360} y={530} v={12} />
+    <Res x={660} y={260} ohm={4} label="R1" horizontal /><Res x={1260} y={260} ohm={6} label="R3" horizontal />
+    {open ? <g><rect x={920} y={460} width={80} height={140} fill={L.bg0} /><circle cx={960} cy={470} r={9} fill={L.text} /><circle cx={960} cy={590} r={9} fill={L.text} />
+      <text x={1000} y={540} fill={L.red} fontFamily={MONO} fontSize={30} fontWeight={700}>gap: I = 0</text></g>
+      : <Res x={960} y={530} ohm={3} label="R2" />}
+    {short && <g><polyline points="960,400 880,400 880,660 960,660" fill="none" stroke={L.red} strokeWidth={10} /><text x={860} y={540} textAnchor="end" fill={L.red} fontFamily={MONO} fontSize={30} fontWeight={700}>short: V = 0</text></g>}
+    <Res x={1560} y={530} ohm={6} label="R4" />
+    {mode === "nodes" && nodes.map(([q, n, ess], i) => <g key={i} opacity={i <= k ? 1 : 0.25}>
+      {i === 3 ? <line x1={360} y1={800} x2={1560} y2={800} stroke={L.green} strokeWidth={i === k ? 16 : 10} opacity={0.7} /> : <circle cx={q[0]} cy={q[1]} r={i === k ? 26 : 18} fill={ess ? L.green : L.amber} />}
+      <text x={i === 3 ? 960 : q[0]} y={i === 3 ? 860 : q[1] - 40} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={34} fontWeight={800}>{n.split(" ")[0]}</text></g>)}
+    <text x={960} y={150} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={40} fontWeight={700}>{label}</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
