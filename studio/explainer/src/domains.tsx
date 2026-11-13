@@ -39,7 +39,7 @@ export const CodeLab: React.FC<any> = ({ dur, lang = "python", code = "", steps 
   const outLines = k >= 0 && f >= sStart ? steps.slice(0, k + 1).filter((s: any) => s.out !== undefined).map((s: any) => s.out) : [];
   return (
     <AbsoluteFill style={{ flexDirection: tall ? "column" : "row", padding: tall ? "16% 5% 22%" : "8% 5% 11%", gap: 28 * u }}>
-      <div style={{ flex: tall ? "0 0 55%" : "0 0 60%", background: "rgba(0,0,0,0.45)", border: `${2 * u}px solid ${L.off}`, borderRadius: 16 * u, overflow: "hidden", opacity: fade(f, 0) }}>
+      <div style={{ flex: tall ? "0 0 55%" : "0 0 60%", background: L.panel, border: `${2 * u}px solid ${L.off}`, borderRadius: 16 * u, overflow: "hidden", opacity: fade(f, 0) }}>
         <div style={{ display: "flex", gap: 10 * u, padding: `${14 * u}px ${18 * u}px`, borderBottom: `${2 * u}px solid ${L.off}`, alignItems: "center" }}>
           {[L.red, L.amber, L.green].map((c, i) => <div key={i} style={{ width: 14 * u, height: 14 * u, borderRadius: "50%", background: c, opacity: 0.8 }} />)}
           <div style={{ fontFamily: MONO, color: L.dim, fontSize: 20 * u, marginLeft: 12 * u }}>main.{lang === "python" ? "py" : lang === "java" ? "java" : lang === "c" ? "c" : "js"}</div>
@@ -47,7 +47,7 @@ export const CodeLab: React.FC<any> = ({ dur, lang = "python", code = "", steps 
         <div style={{ padding: `${18 * u}px 0`, fontFamily: MONO, fontSize: 30 * u, lineHeight: 1.55 }}>
           {lines.slice(0, typed).map((ln, i) => {
             const active = cur && cur.line === i + 1;
-            return <div key={i} style={{ display: "flex", background: active ? "rgba(255,255,255,0.08)" : "transparent", borderLeft: `${5 * u}px solid ${active ? L.amber : "transparent"}`, paddingRight: 20 * u }}>
+            return <div key={i} style={{ display: "flex", background: active ? L.hi : "transparent", borderLeft: `${5 * u}px solid ${active ? L.amber : "transparent"}`, paddingRight: 20 * u }}>
               <span style={{ color: L.dim, width: 64 * u, textAlign: "right", paddingRight: 20 * u, opacity: 0.6 }}>{i + 1}</span>
               <span style={{ whiteSpace: "pre" }}>{tokenize(ln).map((p, j) => <span key={j} style={{ color: p.c }}>{p.t}</span>)}</span>
             </div>;
@@ -56,7 +56,7 @@ export const CodeLab: React.FC<any> = ({ dur, lang = "python", code = "", steps 
         </div>
       </div>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 20 * u }}>
-        <div style={{ background: "rgba(0,0,0,0.55)", border: `${2 * u}px solid ${L.off}`, borderRadius: 16 * u, padding: 20 * u, minHeight: 200 * u, opacity: fade(f, sStart - 10) }}>
+        <div style={{ background: L.panel, border: `${2 * u}px solid ${L.off}`, borderRadius: 16 * u, padding: 20 * u, minHeight: 200 * u, opacity: fade(f, sStart - 10) }}>
           <div style={{ fontFamily: MONO, color: L.dim, fontSize: 20 * u, letterSpacing: 3 * u, marginBottom: 12 * u }}>OUTPUT</div>
           {outLines.map((o: string, i: number) => <div key={i} style={{ fontFamily: MONO, color: L.green, fontSize: 30 * u }}>{o}</div>)}
         </div>
@@ -93,7 +93,7 @@ export const ArrayLab: React.FC<any> = ({ dur, title, values = [], steps = [] })
           const done = (st.done || []).includes(idx);
           const hot = idx === st.i || idx === st.j;
           return <div key={idx} style={{ position: "absolute", left: x, top: y, width: box, height: box, borderRadius: 14 * u, display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: MONO, fontSize: 52 * u, fontWeight: 700, color: done ? L.bg0 : L.text, background: done ? L.green : hot ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.35)",
+            fontFamily: MONO, fontSize: 52 * u, fontWeight: 700, color: done ? L.bg0 : L.text, background: done ? L.green : hot ? L.hi : L.panel,
             border: `${3 * u}px solid ${hot ? L.amber : L.off}`, opacity: fade(f, idx * 3) }}>{v}</div>;
         })}
         {values.map((_: any, idx: number) => <div key={idx} style={{ position: "absolute", left: pos(idx), top: box + 10 * u, width: box, textAlign: "center", fontFamily: MONO, color: L.dim, fontSize: 22 * u }}>[{idx}]</div>)}
@@ -117,7 +117,7 @@ export const FlowLab: React.FC<any> = ({ dur, title, nodes = [], notes = [] }) =
       <div style={{ display: "flex", flexDirection: tall ? "column" : "row", alignItems: "center", gap: 0 }}>
         {nodes.map((nd: string, i: number) => <React.Fragment key={i}>
           <div style={{ minWidth: 220 * u, padding: `${28 * u}px ${24 * u}px`, borderRadius: 18 * u, textAlign: "center", fontFamily: SANS, fontWeight: 700, fontSize: 34 * u,
-            color: i <= k ? L.text : L.dim, background: i === k ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.35)", border: `${3 * u}px solid ${i === k ? L.amber : i < k ? L.cyan : L.off}`,
+            color: i <= k ? L.text : L.dim, background: i === k ? L.hi : L.panel, border: `${3 * u}px solid ${i === k ? L.amber : i < k ? L.cyan : L.off}`,
             boxShadow: i === k ? `0 0 ${40 * u}px ${L.amber}55` : "none", opacity: fade(f, i * 6), transform: `translateY(${rise(f, i * 6)}px)` }}>{nd}</div>
           {i < n - 1 && <div style={{ position: "relative", width: tall ? 6 * u : 110 * u, height: tall ? 70 * u : 6 * u, background: i < k ? L.cyan : L.off }}>
             {Math.floor(tok) === i && <div style={{ position: "absolute", width: 22 * u, height: 22 * u, borderRadius: "50%", background: L.amber,
@@ -137,7 +137,7 @@ export const TerminalLab: React.FC<any> = ({ dur, lines = [], prompt = "student@
   const per = (dur - 20) / Math.max(1, lines.length);
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: "8% 8% 12%" }}>
-      <div style={{ width: "100%", height: "100%", background: "rgba(0,0,0,0.7)", border: `${2 * u}px solid ${L.off}`, borderRadius: 16 * u, overflow: "hidden", opacity: fade(f, 0) }}>
+      <div style={{ width: "100%", height: "100%", background: L.panel, border: `${2 * u}px solid ${L.off}`, borderRadius: 16 * u, overflow: "hidden", opacity: fade(f, 0) }}>
         <div style={{ padding: `${12 * u}px ${18 * u}px`, borderBottom: `${2 * u}px solid ${L.off}`, fontFamily: MONO, color: L.dim, fontSize: 20 * u }}>● ● ●  {title}</div>
         <div style={{ padding: 26 * u, fontFamily: MONO, fontSize: 30 * u, lineHeight: 1.5 }}>
           {lines.map((ln: any, i: number) => {
@@ -173,13 +173,13 @@ export const NetworkLab: React.FC<any> = ({ dur, nodes = [], links = [], packets
           const A = by[p.from], B = by[p.to]; const stop = p.blocked ? 0.62 : 1; const tt = Math.min(stop, t);
           const x = A.x + (B.x - A.x) * tt, y = A.y + (B.y - A.y) * tt; const c = p.bad ? L.red : L.green;
           return <g key={i}>
-            <rect x={x - 70} y={y - 26} width={140} height={52} rx={10} fill="rgba(0,0,0,0.8)" stroke={c} strokeWidth={4} />
+            <rect x={x - 70} y={y - 26} width={140} height={52} rx={10} fill={L.panel} stroke={c} strokeWidth={4} />
             <text x={x} y={y + 9} textAnchor="middle" fill={c} fontFamily={MONO} fontSize={24} fontWeight={700}>{p.label}</text>
             {p.blocked && t >= stop && <text x={x} y={y - 44} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={30} fontWeight={700}>✕ BLOCKED</text>}
           </g>;
         })}
         {nodes.map((n: any, i: number) => <g key={n.id} opacity={fade(f, i * 5)}>
-          <circle cx={n.x} cy={n.y} r={70} fill="rgba(0,0,0,0.6)" stroke={n.kind === "attacker" ? L.red : L.cyan} strokeWidth={5} />
+          <circle cx={n.x} cy={n.y} r={70} fill={L.panel} stroke={n.kind === "attacker" ? L.red : L.cyan} strokeWidth={5} />
           <text x={n.x} y={n.y + 22} textAnchor="middle" fill={n.kind === "attacker" ? L.red : L.cyan} fontSize={60}>{ICON[n.kind] || "●"}</text>
           <text x={n.x} y={n.y + 116} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>{n.label}</text>
         </g>)}

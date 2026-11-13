@@ -23,6 +23,22 @@ export const THEMES: Record<string, any> = {
     cyan: "#d6aa5c", amber: "#f1d39a", green: "#9fd38a", red: "#e0533d", text: "#f3ece0", dim: "#9a8b74",
     wire: "#c9b48e", off: "#4a3d2c", electron: "#f1d39a", pattern: "grain", badge: "GETYR · ENT" },
 };
+// light versions (default): off-white paper, darker accents so everything stays readable
+const LIGHT: Record<string, any> = {
+  ece: { bg0: "#f7fafc", bg1: "#e3eef6", grid: "rgba(20,90,150,0.07)", grid2: "rgba(20,90,150,0.16)", cyan: "#0077b6", amber: "#d96c00",
+    green: "#0a9b55", red: "#d62828", text: "#0d1b2a", dim: "#5c6f80", wire: "#34495e", off: "#b9c6d2", electron: "#0096c7" },
+  cse: { bg0: "#faf8ff", bg1: "#ebe4fb", grid: "rgba(106,63,214,0.07)", grid2: "rgba(106,63,214,0.16)", cyan: "#6a3fd6", amber: "#0f9d58",
+    green: "#0f9d58", red: "#d6336c", text: "#1b1530", dim: "#6f6890", wire: "#4a4270", off: "#d2cbe8", electron: "#7b5cff" },
+  cyber: { bg0: "#f4faf6", bg1: "#dff1e6", grid: "rgba(0,120,80,0.06)", grid2: "rgba(0,120,80,0.14)", cyan: "#00875a", amber: "#d62828",
+    green: "#00875a", red: "#d62828", text: "#0b1f15", dim: "#557563", wire: "#2d4a3b", off: "#bdd4c6", electron: "#00a86b" },
+  ent: { bg0: "#fbf7ef", bg1: "#f1e4cc", grid: "rgba(150,110,40,0.05)", grid2: "rgba(150,110,40,0.11)", cyan: "#9a6a12", amber: "#c0502a",
+    green: "#4b8b3b", red: "#c0392b", text: "#2a2015", dim: "#7d6b52", wire: "#5b4a35", off: "#dccdb3", electron: "#b07d2b" },
+};
+for (const k of Object.keys(THEMES)) {
+  THEMES[k] = { ...THEMES[k], dark: true, panel: "rgba(2,10,18,0.85)", hi: "rgba(255,255,255,0.08)", shadow: "0 2px 10px rgba(0,0,0,0.95)" };
+  THEMES[k + "-dark"] = THEMES[k];
+  THEMES[k] = { ...THEMES[k], ...LIGHT[k], dark: false, panel: "rgba(255,255,255,0.92)", hi: "rgba(0,0,0,0.06)", shadow: "none" };
+}
 export const L: any = { ...THEMES.ece };
 export const setTheme = (name?: string) => Object.assign(L, THEMES[name || "ece"] || THEMES.ece);
 
@@ -66,7 +82,9 @@ export const LabFrame: React.FC<{ children: React.ReactNode; caption?: string; d
       {current && (
         <div style={{ position: "absolute", left: "7%", right: "7%", bottom: tall ? "9%" : "5%", textAlign: "center", fontFamily: SANS,
           fontSize: 30 * u * (tall ? 1.25 : 1), fontWeight: tall ? 700 : 500, lineHeight: 1.35, color: L.text,
-          textShadow: "0 2px 10px rgba(0,0,0,0.95)", opacity: out }}>{current}</div>
+          textShadow: L.shadow, opacity: out }}>
+          <span style={{ background: L.dark ? "transparent" : L.panel, padding: L.dark ? 0 : `${6 * u}px ${18 * u}px`, borderRadius: 10 * u,
+            boxShadow: L.dark ? "none" : `0 ${4 * u}px ${18 * u}px rgba(0,0,0,0.08)`, boxDecorationBreak: "clone", WebkitBoxDecorationBreak: "clone" }}>{current}</span></div>
       )}
     </AbsoluteFill>
   );
@@ -134,7 +152,7 @@ const Flow: React.FC<{ pts: number[][]; t: number; speed?: number; gap?: number;
   const n = Math.floor(len / gap); const off = (t * speed) % gap;
   return <g opacity={opacity}>{Array.from({ length: n }, (_, i) => {
     const d = len - ((i * gap + off) % len); const [x, y] = at(d);   // reversed: electrons go against conventional current
-    return <circle key={i} cx={x} cy={y} r={7} fill={L.electron} stroke="#ffffff" strokeOpacity={0.5} strokeWidth={1.5} />;
+    return <circle key={i} cx={x} cy={y} r={7} fill={L.electron} stroke={L.bg0} strokeOpacity={0.7} strokeWidth={1.5} />;
   })}</g>;
 };
 
@@ -206,7 +224,7 @@ const Scope: React.FC<{ upTo: number; cycles: number; withCap: boolean; tau: num
   let lo = 1; if (withCap) for (let i = 0; i <= 40; i++) { const tt = Math.max(0, upTo - 0.5 + (i / 40) * 0.5); lo = Math.min(lo, simulate(tt, true, tau).vc); }
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%">
-      <rect x={10} y={10} width={W - 20} height={H - 20} rx={18} fill="rgba(2,10,18,0.85)" stroke={L.cyan} strokeOpacity={0.5} strokeWidth={3} />
+      <rect x={10} y={10} width={W - 20} height={H - 20} rx={18} fill={L.panel} stroke={L.cyan} strokeOpacity={0.5} strokeWidth={3} />
       <text x={40} y={58} fill={L.dim} fontFamily={MONO} fontSize={24} letterSpacing={3}>{title}</text>
       {Array.from({ length: 11 }, (_, i) => <line key={i} x1={x0 + ((x1 - x0) * i) / 10} y1={80} x2={x0 + ((x1 - x0) * i) / 10} y2={H - 40} stroke={L.grid2} />)}
       <line x1={x0} y1={ym} x2={x1} y2={ym} stroke={L.dim} strokeWidth={2} />
@@ -220,7 +238,7 @@ const Scope: React.FC<{ upTo: number; cycles: number; withCap: boolean; tau: num
         <line x1={x0} y1={yt} x2={x1} y2={yt} stroke={L.red} strokeOpacity={0.45} strokeDasharray="6 6" strokeWidth={2} />
         <line x1={x0} y1={yb} x2={x1} y2={yb} stroke={L.red} strokeOpacity={0.45} strokeDasharray="6 6" strokeWidth={2} />
         <path d={`M${bx - 12},${yt} H${bx} V${yb} H${bx - 12}`} fill="none" stroke={L.red} strokeWidth={5} />
-        <rect x={bx - 128} y={yt - 54} width={128} height={38} rx={6} fill="rgba(2,10,18,0.9)" />
+        <rect x={bx - 128} y={yt - 54} width={128} height={38} rx={6} fill={L.panel} />
         <text x={bx - 8} y={yt - 26} fill={L.red} fontFamily={MONO} fontSize={28} fontWeight={700} textAnchor="end">ripple</text>
       </g>; })()}
       <text x={40} y={H - 10} fill={L.cyan} fontFamily={MONO} fontSize={22}>{showIn ? "- - input AC" : ""}</text>
