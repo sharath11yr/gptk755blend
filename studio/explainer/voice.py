@@ -74,7 +74,9 @@ import numpy as np
 import soundfile as sf
 SR = 48000
 theme = (ep.get("theme") or "").split("-")[0]
-def music(seconds):
+def music(seconds):  # noqa
+    if not ep.get("music"):  # no background music unless an episode asks for it (viewers found it irritating)
+        return np.zeros(int(seconds * SR), dtype=np.float32)
     """Soft background bed. Lessons: calm major pad with a gentle pulse. News (ent): low tense pulse."""
     t = np.arange(int(seconds * SR)) / SR
     if theme == "ent":
