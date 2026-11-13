@@ -2,7 +2,7 @@
  "title": "Electricity from Scratch - Part 0 (1/3)",
  "style": "lab",
  "theme": "ece",
- "badge": "GETYR · NETWORK THEORY",
+ "badge": "GETYR_IO · GET YOUR ROUTE",
  "engine": "kokoro",
  "kokoro_voice": "af_heart",
  "speed": 1.05,
@@ -526,5 +526,6 @@
    "narration": "In the next part, we open up the three most important components in every circuit: the resistor, the capacitor and the inductor. You will see what is inside each one, how it works, and where it is used in real devices."
   }
  ],
- "cover": "What Is Electricity"
+ "cover": "What Is Electricity",
+ "tag": "GETYR_IO · GET YOUR ROUTE"
 }
