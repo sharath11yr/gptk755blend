@@ -457,4 +457,37 @@ export const RLScene: React.FC<any> = ({ dur, mode = "on", v = 10, r = 10, l = 1
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ sources under a changing load
+// {"mode":"ideal-v"|"practical-v"|"ideal-i"|"practical-i","v":12,"ri":2,"i":2,"rp":50}
+// load resistance sweeps from big to small; meters + V-I graph show how the source behaves
+export const SourceScene: React.FC<any> = ({ dur, mode = "practical-v", v = 12, ri = 2, i = 2, rp = 50 }) => {
+  const f = useCurrentFrame();
+  const pp = interpolate(f, [dur * 0.08, dur * 0.88], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); const RL = 100 * Math.pow(0.02, pp);
+  const isV = mode.endsWith("-v"); const prac = mode.startsWith("practical");
+  const calc = (R: number) => { if (isV) { const r0 = prac ? ri : 0; const I = v / (R + r0); return [I * R, I]; }
+    const Rp = prac ? rp : 1e12; const Rt = (R * Rp) / (R + Rp); const V = i * Rt; return [V, V / R]; };
+  const [Vt, It] = calc(RL);
+  const X0 = 1050, Y0 = 820, GW = 720, GH = 520; const Vmax = Math.max(calc(100)[0], calc(2)[0]) * 1.15; const Imax = Math.max(calc(100)[1], calc(2)[1]) * 1.15;
+  const path = Array.from({ length: 50 }, (_, k) => { const R = 100 * Math.pow(0.02, (k / 49) * pp); const [a, b] = calc(R); return `${X0 + (b / Imax) * GW},${Y0 - Math.min(1, a / Vmax) * GH}`; }).join(" ");
+  const loop = [[220, 300], [700, 300], [700, 760], [220, 760], [220, 300]];
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <polyline points={loop.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />
+    <Dots pts={loop} t={f / 30} speed={40 + Math.min(1, It / Imax) * 300} />
+    <g><circle cx={220} cy={530} r={70} fill={L.bg0} stroke={L.text} strokeWidth={6} />
+      {isV ? <><text x={220} y={512} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={40} fontWeight={800}>+</text><text x={220} y={572} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={40} fontWeight={800}>−</text></>
+        : <><line x1={220} y1={580} x2={220} y2={482} stroke={L.text} strokeWidth={6} /><path d="M200 500 L220 470 L240 500 Z" fill={L.text} /></>}
+      <text x={110} y={540} textAnchor="end" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>{isV ? `${v} V` : `${i} A`}</text></g>
+    {prac && isV && <Res x={460} y={300} ohm={ri} label="internal r" horizontal />}
+    {prac && !isV && <g><polyline points="220,300 380,300 380,460" fill="none" stroke={L.wire} strokeWidth={6} /><polyline points="380,600 380,760" fill="none" stroke={L.wire} strokeWidth={6} /><Res x={380} y={530} ohm={rp} label="r (parallel)" /></g>}
+    <Res x={700} y={530} ohm={RL} label="LOAD" />
+    <Meter x={460} y={880} kind="V" value={Vt} /><text x={460} y={950} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>voltage at the load</text>
+    <Meter x={460} y={160} kind="A" value={It} />
+    <line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - GH - 30} stroke={L.dim} strokeWidth={3} />
+    <text x={X0 + GW} y={Y0 + 44} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>current →</text>
+    <text x={X0 - 14} y={Y0 - GH - 10} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>V ↑</text>
+    <polyline points={path} fill="none" stroke={L.cyan} strokeWidth={6} />
+    <text x={X0 + GW / 2} y={Y0 - GH - 50} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>load: {RL.toFixed(1)} Ω (getting smaller)</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

@@ -1,0 +1,432 @@
+{
+ "title": "Voltage and Current Sources - Network Theory Part 4",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Sources",
+ "cover": "Voltage & Current Sources",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  3,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 4 · Sources",
+   "narration": "Welcome back. We now know the three basic components: the resistor, the capacitor and the inductor. But none of them can do anything alone. Something has to push the charge around the circuit and supply the energy. That something is a source. In this part we learn the two kinds of sources, voltage sources and current sources, the difference between an ideal source and a real one, and the special dependent sources that make transistors and amplifiers possible.",
+   "kicker": "NETWORK THEORY · PART 4",
+   "title": "VOLTAGE & CURRENT SOURCES",
+   "subtitle": "Ideal, practical and dependent sources"
+  },
+  {
+   "type": "diagram",
+   "chapter": "4.1 · What is a source",
+   "narration": "A source is anything that gives energy to the charges in a circuit. Components like resistors, capacitors and inductors only use, store or release energy. They are called passive elements. Sources actually deliver energy, so they are called active elements. A battery turns chemical energy into electrical energy. A solar cell turns light into electrical energy. A generator in a power plant turns mechanical motion into electrical energy. Every circuit needs at least one source.",
+   "title": "Active vs passive",
+   "parts": [
+    {
+     "id": "a",
+     "label": "ACTIVE: deliver energy",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "p",
+     "label": "PASSIVE: use or store energy",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "a1",
+     "label": "Battery · solar cell · generator",
+     "x": 25,
+     "y": 70
+    },
+    {
+     "id": "p1",
+     "label": "Resistor · capacitor · inductor",
+     "x": 75,
+     "y": 70
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "a1",
+     ""
+    ],
+    [
+     "p",
+     "p1",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a",
+      "a1"
+     ],
+     "note": "Sources"
+    },
+    {
+     "highlight": [
+      "p",
+      "p1"
+     ],
+     "note": "Components"
+    }
+   ]
+  },
+  {
+   "type": "source",
+   "chapter": "4.2 · Ideal voltage source",
+   "narration": "Let's start with the ideal voltage source. It keeps the same voltage across its terminals, no matter what we connect to it. Watch this twelve volt ideal source as we make the load resistance smaller and smaller. The current meter climbs higher and higher. But look at the voltage meter: it stays fixed at twelve volts. And on the graph, the line stays perfectly flat. An ideal voltage source would deliver any current needed to hold its voltage. It is drawn as a circle with plus and minus signs.",
+   "mode": "ideal-v",
+   "v": 12
+  },
+  {
+   "type": "source",
+   "chapter": "4.3 · Practical voltage source",
+   "narration": "Now a real battery. Every real source has a small resistance inside it, called the internal resistance. Here it is two ohms. Watch again as the load gets smaller and the current rises. This time, look at the voltage meter: it starts near twelve volts but drops lower and lower. Why? The current also flows through the internal resistance, and some voltage is lost inside the battery itself. See how the line on the graph slopes downward. This is why car headlights dim for a moment when the engine is cranking: the starter draws a huge current, and the battery voltage dips.",
+   "mode": "practical-v",
+   "v": 12,
+   "ri": 2
+  },
+  {
+   "type": "formula",
+   "chapter": "4.3 · Practical voltage source",
+   "narration": "Here is the equation for a practical voltage source. The terminal voltage, the voltage you actually get, equals the source voltage minus the current times the internal resistance. When no current flows, you get the full voltage. This is called the open circuit voltage. The more current you draw, the more you lose inside. A good voltage source has a very small internal resistance. For example, twelve volts with two ohms inside, delivering two amperes, gives twelve minus four, which is only eight volts at the terminals.",
+   "formula": "V_terminal = V_s − I × r",
+   "terms": [
+    [
+     "V_s",
+     "source (open-circuit) voltage"
+    ],
+    [
+     "I",
+     "current drawn by the load"
+    ],
+    [
+     "r",
+     "internal resistance"
+    ]
+   ],
+   "example": [
+    "12 V, r = 2 Ω, I = 2 A",
+    "V_terminal = 12 − 4 = 8 V"
+   ]
+  },
+  {
+   "type": "source",
+   "chapter": "4.4 · Ideal current source",
+   "narration": "Now the second kind: the current source. An ideal current source pushes the same current no matter what load is connected. Here it is set to two amperes. Watch as we change the load. Look at the current meter: it stays at exactly two amperes the whole time. What changes now is the voltage, which adjusts itself to whatever is needed to push those two amperes through the load. A current source is drawn as a circle with an arrow inside, and the arrow shows the direction of the current.",
+   "mode": "ideal-i",
+   "i": 2
+  },
+  {
+   "type": "source",
+   "chapter": "4.5 · Practical current source",
+   "narration": "A real current source has a resistance in parallel with it. Some of its current leaks through this internal path instead of going to the load. Watch: when the load resistance is large, a big part of the current leaks through the internal resistor, so the load gets less. As the load gets smaller, almost all the current goes to the load. A good current source has a very large parallel resistance, so very little leaks. A solar cell behaves much like a current source: in steady light, it delivers nearly the same current over a wide range of loads.",
+   "mode": "practical-i",
+   "i": 2,
+   "rp": 50
+  },
+  {
+   "type": "formula",
+   "chapter": "4.5 · Practical current source",
+   "narration": "For a practical current source, the current reaching the load equals the source current minus the current leaking through the internal resistance. That leaking current is the terminal voltage divided by r. So a voltage source wants its internal resistance as small as possible, near zero. A current source wants its internal resistance as large as possible, near infinity. Remember this pair, because in a later part we will use it to convert one kind of source into the other.",
+   "formula": "I_load = I_s − V / r",
+   "terms": [
+    [
+     "I_s",
+     "source current"
+    ],
+    [
+     "V",
+     "voltage across the terminals"
+    ],
+    [
+     "r",
+     "parallel (internal) resistance"
+    ]
+   ],
+   "example": [
+    "Ideal V-source: r = 0",
+    "Ideal I-source: r = ∞"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "4.6 · Dependent sources",
+   "narration": "All the sources so far are independent: their value is fixed. But some sources are controlled by a voltage or current somewhere else in the circuit. These are dependent sources, and they are drawn as a diamond. There are four kinds. A voltage controlled voltage source, a current controlled voltage source, a voltage controlled current source, and a current controlled current source. Do not worry about the long names: the first word tells you what controls it, and the last word tells you what it produces.",
+   "title": "Four dependent sources (drawn as a diamond ◇)",
+   "parts": [
+    {
+     "id": "a",
+     "label": "VCVS: V = μ·Vx",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "CCVS: V = r·Ix",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "VCCS: I = g·Vx",
+     "x": 25,
+     "y": 72,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "CCCS: I = β·Ix",
+     "x": 75,
+     "y": 72,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Voltage controls voltage"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Current controls voltage"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Voltage controls current"
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": "Current controls current"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "4.6 · Dependent sources",
+   "narration": "Why do we need them? Because they are how we model amplifiers and transistors. A transistor is like a current controlled current source: a small current into its base controls a current about one hundred times bigger in its collector. That number is called beta. An operational amplifier is like a voltage controlled voltage source with a huge gain. So when you later study amplifiers, you will draw them using exactly these diamonds.",
+   "title": "Where dependent sources appear",
+   "parts": [
+    {
+     "id": "t",
+     "label": "Transistor (BJT) ≈ CCCS: Ic = β·Ib",
+     "x": 30,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "o",
+     "label": "Op-amp ≈ VCVS: Vout = A·Vin",
+     "x": 70,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "m",
+     "label": "Models of amplifiers",
+     "x": 50,
+     "y": 80
+    }
+   ],
+   "arrows": [
+    [
+     "t",
+     "m",
+     ""
+    ],
+    [
+     "o",
+     "m",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "t"
+     ],
+     "note": "Small current controls a big one"
+    },
+    {
+     "highlight": [
+      "o"
+     ],
+     "note": "Small voltage controls a big one"
+    },
+    {
+     "highlight": [
+      "m"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "wave",
+   "chapter": "4.7 · DC and AC sources",
+   "narration": "Sources can also be DC or AC. A DC source, like a battery, always pushes in the same direction, so its voltage is a flat line over time. An AC source, like the socket in your wall, keeps reversing direction. Watch the wave: it rises, falls through zero, goes negative, and comes back, fifty times every second in India. That is fifty hertz. An AC source is drawn as a circle with a small wave inside. We will study AC in full detail later in this course.",
+   "cap": false,
+   "cycles": 3,
+   "title": "AC SOURCE: 50 Hz IN INDIA"
+  },
+  {
+   "type": "bars",
+   "chapter": "4.8 · Real sources around you",
+   "narration": "Let's look at some real voltage sources and their typical values. A single AA cell gives one point five volts. A lithium phone battery gives about three point seven volts. A USB port gives five volts. A car battery gives twelve volts. And the socket in an Indian home gives two hundred and thirty volts AC. Each one is designed to have a small internal resistance, so its voltage stays steady when you draw current.",
+   "title": "Common voltage sources",
+   "unit": "V",
+   "items": [
+    [
+     "AA cell",
+     1.5
+    ],
+    [
+     "Phone battery",
+     3.7
+    ],
+    [
+     "USB port",
+     5
+    ],
+    [
+     "Car battery",
+     12
+    ],
+    [
+     "Home socket (AC)",
+     230
+    ]
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it all together. Sources are active elements that deliver energy. An ideal voltage source holds its voltage at any current. A practical one loses voltage across its internal resistance. An ideal current source holds its current at any voltage. A practical one leaks current through a parallel resistance. Dependent sources are controlled by another voltage or current, and they model transistors and op-amps.",
+   "title": "Sources in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Ideal V: fixed voltage",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Practical V: V − I·r",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Ideal I: fixed current",
+     "x": 25,
+     "y": 65,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Practical I: parallel r",
+     "x": 75,
+     "y": 65,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Dependent ◇: transistors, op-amps",
+     "x": 50,
+     "y": 90,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Now we have sources and components. Before we can analyse any circuit, we need to speak the language of circuits: what is a node, a branch, a loop and a mesh, what open and short circuits really mean, and what all the symbols are. That is our next part, and it is the foundation for every method we learn after it.",
+   "title": "NEXT: THE LANGUAGE OF CIRCUITS",
+   "lines": [
+    "Ideal & practical V sources",
+    "Ideal & practical I sources",
+    "Dependent sources"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Voltage & Current Sources Explained: Ideal, Practical & Dependent | Network Theory #5",
+  "description": "Network Theory from absolute zero - Part 5: sources.\n- Active vs passive elements\n- Ideal voltage source vs practical (internal resistance), watched under a changing load\n- Terminal voltage: V = Vs − I·r\n- Ideal and practical current sources\n- Dependent sources: VCVS, CCVS, VCCS, CCCS and why transistors and op-amps need them\n- DC vs AC sources\n- Real sources: AA cell, phone battery, USB, car battery, home socket\n\nPrevious: The inductor. Next: The language of circuits (node, branch, loop, mesh).\n\n#NetworkTheory #VoltageSource #CurrentSource #ECE #CircuitTheory",
+  "tags": [
+   "voltage source",
+   "current source",
+   "ideal voltage source",
+   "practical voltage source",
+   "internal resistance",
+   "dependent sources",
+   "network theory",
+   "circuit theory",
+   "ece",
+   "basic electronics"
+  ],
+  "playlist": "Network Theory"
+ }
+}
