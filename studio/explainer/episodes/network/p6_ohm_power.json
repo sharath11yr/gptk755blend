@@ -64,7 +64,7 @@
   {
    "type": "ohm",
    "chapter": "6.2 · The V-I graph",
-   "narration": "Now watch the graph of voltage against current for two resistors, one hundred ohms and two hundred ohms. Both are straight lines through the origin. That straight line is the signature of Ohm's law. Notice that the slope of each line tells us the resistance. The two hundred ohm line is flatter on this graph because, for the same voltage, it lets through only half the current.",
+   "narration": "Now watch the graph of current against voltage for two resistors, one hundred ohms and two hundred ohms. Voltage is along the bottom, current goes up the side. Both are straight lines through the origin. That straight line is the signature of Ohm's law. Notice the two hundred ohm line is flatter: for the same voltage, it lets through only half the current. On this graph the steepness of each line is one over R, so a smaller resistance gives a steeper line.",
    "r": [
     100,
     200
