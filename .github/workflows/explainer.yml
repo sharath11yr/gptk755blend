@@ -37,7 +37,8 @@ jobs:
       - name: Add the music bed under the voice
         run: |
           for v in video short; do
-            ffmpeg -y -loglevel error -i out/$v.mp4 -i public/music.wav -filter_complex "[1:a]volume=0.22[m];[0:a][m]amix=inputs=2:duration=first:normalize=0[a]" \
+            B=public/music.wav; [ $v = short ] && [ -f public/music_short.wav ] && B=public/music_short.wav
+            ffmpeg -y -loglevel error -i out/$v.mp4 -i $B -filter_complex "[1:a]volume=0.45[m];[0:a][m]amix=inputs=2:duration=first:normalize=0[a]" \
               -map 0:v -map "[a]" -c:v copy -c:a aac -b:a 192k out/${v}_final.mp4
           done
       - name: Stills for checking
