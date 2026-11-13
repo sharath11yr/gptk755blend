@@ -2,7 +2,7 @@
  "title": "Analog Electronics One Shot - Chapter 1: Basics",
  "style": "lab",
  "theme": "ece",
- "badge": "GETYR_IO · GET YOUR ROUTE",
+ "badge": "GETYR_IO · GET YOUR ROOT",
  "engine": "kokoro",
  "kokoro_voice": "af_heart",
  "speed": 1.05,
@@ -286,5 +286,5 @@
    "narration": "That completes the basics. In chapter two, we go inside silicon, the material that makes all of electronics possible, and see how adding a tiny impurity turns it into the building block of every diode and transistor."
   }
  ],
- "tag": "GETYR_IO · GET YOUR ROUTE"
+ "tag": "GETYR_IO · GET YOUR ROOT"
 }

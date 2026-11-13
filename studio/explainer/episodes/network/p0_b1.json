@@ -2,7 +2,7 @@
  "title": "Electricity from Scratch - Part 0 (1/3)",
  "style": "lab",
  "theme": "ece",
- "badge": "GETYR_IO · GET YOUR ROUTE",
+ "badge": "GETYR_IO · GET YOUR ROOT",
  "engine": "kokoro",
  "kokoro_voice": "af_heart",
  "speed": 1.05,
@@ -527,5 +527,5 @@
   }
  ],
  "cover": "What Is Electricity",
- "tag": "GETYR_IO · GET YOUR ROUTE"
+ "tag": "GETYR_IO · GET YOUR ROOT"
 }

@@ -9,6 +9,8 @@ import { STORY_SCENES } from "./story";
 import { VISUAL_SCENES } from "./visuals";
 import { ANALOG_SCENES } from "./analog";
 import { ChannelIntro, ChannelOutro } from "./brand";
+import { FlowIntro, FlowOutro } from "./flow";
+import { FlowIntro2, FlowOutro2 } from "./flow2";
 import sample from "../episodes/titanic.json";
 
 const FPS = 30;
@@ -77,6 +79,10 @@ const Thumb: React.FC<{ ep: any }> = ({ ep }) => {
 export const Root: React.FC = () => (
   <>
     <Composition id="ChannelIntro" component={ChannelIntro as any} fps={30} width={1920} height={1080} durationInFrames={150} defaultProps={{ name: "GETYR", tagline: "Learn how things really work", theme: "ece" }} />
+    <Composition id="FlowIntro2" component={FlowIntro2} fps={30} width={1920} height={1080} durationInFrames={180} />
+    <Composition id="FlowOutro2" component={FlowOutro2} fps={30} width={1920} height={1080} durationInFrames={240} />
+    <Composition id="FlowIntro" component={FlowIntro} fps={30} width={1920} height={1080} durationInFrames={180} />
+    <Composition id="FlowOutro" component={FlowOutro} fps={30} width={1920} height={1080} durationInFrames={240} />
     <Composition id="ChannelOutro" component={ChannelOutro as any} fps={30} width={1920} height={1080} durationInFrames={450} defaultProps={{ name: "GETYR", theme: "ece" }} />
     <Composition id="Thumbnail" component={Thumb as any} fps={FPS} width={1280} height={720} durationInFrames={1} defaultProps={{ ep: sample }} />
     <Composition id="Explainer" component={Film as any} fps={FPS} width={1920} height={1080} durationInFrames={total(sample)}
