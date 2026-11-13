@@ -1,0 +1,578 @@
+{
+ "title": "The Inductor - Network Theory Part 3",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Inductor",
+ "cover": "The Inductor Explained",
+ "tag": "GETYR ECE",
+ "short": [
+  3,
+  7,
+  9
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 3 · The inductor",
+   "narration": "Welcome back. So far we have met two components. The resistor turns electrical energy into heat. The capacitor stores energy in an electric field between its plates. Today we meet the third basic component, the inductor. It also stores energy, but in a magnetic field, and it has a strange personality: it hates any change in current. We will see why, step by step, and find it inside chargers, wireless charging pads and induction cooktops.",
+   "kicker": "NETWORK THEORY · PART 3",
+   "title": "THE INDUCTOR",
+   "subtitle": "Magnetic fields, Faraday, Lenz and V = L di/dt"
+  },
+  {
+   "type": "coil",
+   "chapter": "3.1 · Current makes a magnetic field",
+   "narration": "Let's start with one simple fact. Whenever current flows through a wire, it creates a magnetic field around it. Now we wind the wire into a coil, so the fields of all the turns add up. Watch as current flows: see the blue field loops appear around the coil. One end becomes a north pole, the other a south pole, just like a bar magnet. Now watch as the current rises: the field grows stronger. When the current falls, the field shrinks. This coil is an inductor, and the energy is stored in this magnetic field.",
+   "mode": "field"
+  },
+  {
+   "type": "diagram",
+   "chapter": "3.2 · What is inside",
+   "narration": "An inductor is just a coil of insulated copper wire. The wire is coated with a thin enamel layer, so the turns touch without shorting. The coil can be wound on nothing but air, or around a core. An iron or ferrite core concentrates the magnetic field and makes the inductor much stronger, without adding more turns. That is why most inductors you see on circuit boards are copper wire wound around a dark grey ferrite ring or drum.",
+   "title": "Inside an inductor",
+   "parts": [
+    {
+     "id": "w",
+     "label": "Enamelled copper wire",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "t",
+     "label": "Many turns (N)",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Core: air, iron or ferrite",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "w",
+     "c",
+     ""
+    ],
+    [
+     "t",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "w"
+     ],
+     "note": "Insulated so turns don't short"
+    },
+    {
+     "highlight": [
+      "t"
+     ],
+     "note": "More turns → stronger field"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "A core concentrates the field"
+    }
+   ]
+  },
+  {
+   "type": "coil",
+   "chapter": "3.3 · Faraday's law",
+   "narration": "Now the most important discovery behind the inductor, made by Michael Faraday. Watch: we push a magnet into a coil. See the meter needle swing? A current is flowing, even though there is no battery. Now we hold the magnet still inside the coil. Notice: the needle returns to zero. A magnet sitting still does nothing. Now we pull it out, and the needle swings the other way. So a voltage is created only while the magnetic field through the coil is changing. The faster it changes, the bigger the voltage. This is Faraday's law of induction.",
+   "mode": "magnet"
+  },
+  {
+   "type": "coil",
+   "chapter": "3.4 · Lenz's law",
+   "narration": "Watch the same experiment again and notice the direction. When the magnet's north pole moves in, the induced current makes the near end of the coil a north pole too, pushing back against the magnet. When we pull it out, the current reverses and the coil tries to pull the magnet back. The induced current always opposes the change that created it. This is Lenz's law. Nature resists change, and that is the heart of how an inductor behaves.",
+   "mode": "magnet"
+  },
+  {
+   "type": "formula",
+   "chapter": "3.5 · Self-inductance",
+   "narration": "Here is the key idea. An inductor's own current makes its own magnetic field. So if we try to change that current, the field changes, and by Faraday and Lenz, the coil produces a voltage that fights the change. This opposing voltage is called back EMF. Its size is V equals L times the rate of change of current, written di by dt. L is the inductance, measured in henries. One henry means a current changing by one ampere every second creates one volt.",
+   "formula": "V = L × di/dt",
+   "terms": [
+    [
+     "V",
+     "induced (back) voltage, in volts"
+    ],
+    [
+     "L",
+     "inductance, in henries (H)"
+    ],
+    [
+     "di/dt",
+     "how fast the current changes, A/s"
+    ]
+   ],
+   "example": [
+    "1 H with current changing 1 A/s → 1 V",
+    "Common values: µH to mH, big chokes: H"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "3.6 · What decides inductance",
+   "narration": "What makes one inductor bigger than another? Inductance L equals mu times N squared times A, divided by l. N is the number of turns, and it is squared, so doubling the turns makes four times the inductance. A is the area of the coil, l is its length, and mu is the permeability of the core, which tells how easily the core carries magnetic field. An iron or ferrite core has a permeability hundreds or thousands of times higher than air.",
+   "formula": "L = μ N² A / l",
+   "terms": [
+    [
+     "N",
+     "number of turns (squared!)"
+    ],
+    [
+     "A",
+     "cross-section area of the coil"
+    ],
+    [
+     "l",
+     "length of the coil"
+    ],
+    [
+     "μ",
+     "permeability of the core"
+    ]
+   ],
+   "example": [
+    "2× turns → 4× inductance",
+    "Ferrite core → much more L"
+   ]
+  },
+  {
+   "type": "rl",
+   "chapter": "3.7 · Switching on",
+   "narration": "Let's watch an inductor in a circuit. A ten volt battery, a ten ohm resistor, and a big inductor. We close the switch. If the inductor were just a wire, one ampere would flow at once. But watch the current meter: it starts at zero and rises slowly. The inductor is fighting the change, creating a back voltage that holds the current down. See the field loops around the coil growing as the current grows? As the current settles, the change stops, the back voltage disappears, and the full one ampere flows. Notice the curve: the same exponential shape as the capacitor, but now it is the current that rises.",
+   "mode": "on",
+   "v": 10,
+   "r": 10,
+   "l": 10
+  },
+  {
+   "type": "formula",
+   "chapter": "3.7 · Time constant",
+   "narration": "For the inductor circuit, the time constant tau equals L divided by R. Here ten henries divided by ten ohms gives one second. After one time constant the current reaches sixty three percent of its final value, and after five it is practically full. So a bigger inductance means slower current changes, while a bigger resistance makes it faster. Compare this with the capacitor, where tau was R times C.",
+   "formula": "τ = L / R",
+   "terms": [
+    [
+     "τ",
+     "time constant, in seconds"
+    ],
+    [
+     "Current rising",
+     "i = (V/R)(1 − e^(−t/τ))"
+    ]
+   ],
+   "example": [
+    "10 H / 10 Ω = 1 s",
+    "1τ → 63% · 5τ → 99%"
+   ]
+  },
+  {
+   "type": "rl",
+   "chapter": "3.8 · Switching off: the spark",
+   "narration": "Now the surprising part. The current is flowing and the field is full of energy. We open the switch. The current tries to drop to zero instantly. That is a huge rate of change, so the back voltage becomes enormous, often hundreds of volts from a ten volt battery. Watch the switch: a spark jumps across the gap. The inductor is pushing its stored energy out any way it can. This is why switches on motors spark, and why relay coils always have a protection diode placed across them.",
+   "mode": "off",
+   "v": 10,
+   "r": 10,
+   "l": 10
+  },
+  {
+   "type": "formula",
+   "chapter": "3.9 · Energy stored",
+   "narration": "The energy stored in the magnetic field is E equals one half times L times I squared. Compare it with the capacitor's one half C V squared: the same shape, with inductance in place of capacitance and current in place of voltage. For example, a one hundred millihenry inductor carrying two amperes stores half times zero point one times four, which is zero point two joules.",
+   "formula": "E = ½ L I²",
+   "terms": [
+    [
+     "E",
+     "energy in the magnetic field (J)"
+    ],
+    [
+     "L",
+     "inductance (H)"
+    ],
+    [
+     "I",
+     "current (A)"
+    ]
+   ],
+   "example": [
+    "100 mH at 2 A → E = 0.2 J"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "3.10 · DC and AC",
+   "narration": "Now compare the inductor with the capacitor. With steady DC, once the current settles, nothing changes, so the inductor has no back voltage. It acts just like a plain wire, a short circuit. With AC, the current keeps changing, so the inductor keeps fighting it. The higher the frequency, the faster the change, and the harder it opposes. So an inductor passes DC but blocks high frequency AC, exactly the opposite of a capacitor.",
+   "title": "Inductor vs capacitor",
+   "parts": [
+    {
+     "id": "l",
+     "label": "Inductor: passes DC, blocks high-freq AC",
+     "x": 25,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Capacitor: blocks DC, passes AC",
+     "x": 75,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "r",
+     "label": "Opposite behaviour → used together in filters",
+     "x": 50,
+     "y": 80
+    }
+   ],
+   "arrows": [
+    [
+     "l",
+     "r",
+     ""
+    ],
+    [
+     "c",
+     "r",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "l"
+     ],
+     "note": "Like a wire for DC"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Like a break for DC"
+    },
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "3.11 · Series and parallel",
+   "narration": "Inductors combine just like resistors, as long as their magnetic fields do not affect each other. In series, inductances add. In parallel, we add the reciprocals, and the total is smaller than the smallest one. For example, two ten millihenry inductors in series make twenty millihenries, and in parallel they make five millihenries.",
+   "formula": "Series: L = L₁ + L₂     Parallel: 1/L = 1/L₁ + 1/L₂",
+   "terms": [
+    [
+     "Rule",
+     "same as resistors (no magnetic coupling)"
+    ]
+   ],
+   "example": [
+    "10 mH + 10 mH = 20 mH",
+    "10 mH ∥ 10 mH = 5 mH"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "3.12 · Types and symbols",
+   "narration": "In circuit diagrams, an inductor is drawn as a row of loops, like the turns of the coil. Two lines next to it mean an iron core, and dashed lines mean a ferrite core. Air core inductors are used at radio frequencies. Iron core inductors handle low frequencies and large power. Ferrite core inductors are used in phone chargers and switching power supplies. And tiny chip inductors are soldered onto phone circuit boards.",
+   "title": "Types of inductors",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Air core: radio circuits",
+     "x": 25,
+     "y": 28,
+     "shape": "pill"
+    },
+    {
+     "id": "i",
+     "label": "Iron core: power, low frequency",
+     "x": 75,
+     "y": 28,
+     "shape": "pill"
+    },
+    {
+     "id": "f",
+     "label": "Ferrite core: chargers, SMPS",
+     "x": 25,
+     "y": 72,
+     "shape": "pill"
+    },
+    {
+     "id": "s",
+     "label": "Chip (SMD): phones",
+     "x": 75,
+     "y": 72,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Symbol: loops only"
+    },
+    {
+     "highlight": [
+      "i"
+     ],
+     "note": "Symbol: loops + solid lines"
+    },
+    {
+     "highlight": [
+      "f"
+     ],
+     "note": "Symbol: loops + dashed lines"
+    },
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "3.13 · Where you meet inductors",
+   "narration": "Inductors are all around you. Your phone charger uses a ferrite inductor to store and release energy thousands of times a second. Filters use inductors, called chokes, to block electrical noise. Wireless charging pads use one coil to create a changing magnetic field and a second coil in the phone to pick it up, which is Faraday's law at work. Induction cooktops use a coil to induce currents directly in the metal pan. Metal detectors sense how metal changes a coil's field. And relays and solenoids use coils as electromagnets to move switches and locks.",
+   "title": "Inductors at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "INDUCTOR",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Phone chargers (SMPS)",
+     "x": 18,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Noise chokes",
+     "x": 82,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Wireless charging",
+     "x": 15,
+     "y": 55
+    },
+    {
+     "id": "d",
+     "label": "Induction cooktops",
+     "x": 85,
+     "y": 55
+    },
+    {
+     "id": "e",
+     "label": "Metal detectors",
+     "x": 22,
+     "y": 88
+    },
+    {
+     "id": "f",
+     "label": "Relays & solenoids",
+     "x": 78,
+     "y": 88
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ],
+    [
+     "x",
+     "e",
+     ""
+    ],
+    [
+     "x",
+     "f",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "e"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "f"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it all together. An inductor is a coil that stores energy in a magnetic field. By Faraday and Lenz, it creates a back voltage that opposes any change in current: V equals L di by dt. Its inductance grows with the square of the turns and with a magnetic core. Current through it rises with time constant L over R, and opening the circuit suddenly makes a big spike. It passes DC and blocks high frequency AC.",
+   "title": "The inductor in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Coil → magnetic field",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "V = L di/dt · opposes change",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "L = μN²A/l · E = ½LI²",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "τ = L/R · passes DC",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We now know the three basic components: the resistor, the capacitor and the inductor. But none of them does anything without something to push the current. In the next part we meet the sources that power every circuit: voltage sources and current sources, ideal and practical, and the special dependent sources used inside transistors.",
+   "title": "NEXT: VOLTAGE & CURRENT SOURCES",
+   "lines": [
+    "Magnetic field",
+    "V = L di/dt",
+    "τ = L/R",
+    "Passes DC"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "The Inductor Explained from Zero: Faraday, Lenz, V = L di/dt & Uses | Network Theory #4",
+  "description": "Network Theory from absolute zero - Part 4: the inductor.\n- Current makes a magnetic field\n- What is inside an inductor (coil, core)\n- Faraday's law and Lenz's law, shown with a magnet and coil\n- Self-inductance and back EMF: V = L di/dt, the henry\n- What decides inductance: L = μN²A/l\n- Switching on: τ = L/R\n- Switching off: why switches spark\n- Energy stored: E = ½LI²\n- DC vs AC, series and parallel inductors\n- Types, symbols and real uses: chargers, chokes, wireless charging, induction cooktops, metal detectors, relays\n\nPrevious: The capacitor. Next: Voltage and current sources.\n\n#NetworkTheory #Inductor #ECE #FaradaysLaw #BasicElectronics",
+  "tags": [
+   "inductor",
+   "what is an inductor",
+   "faraday law",
+   "lenz law",
+   "back emf",
+   "inductance formula",
+   "rl circuit",
+   "network theory",
+   "basic electronics",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

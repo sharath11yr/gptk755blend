@@ -380,4 +380,81 @@ export const CapGeom: React.FC<any> = ({ dur }) => {
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ coil + moving magnet (Faraday & Lenz)
+// {"mode":"magnet"}: magnet pushed in, held, pulled out; galvanometer swings one way, zero, other way
+// {"mode":"field","i":1}: current through a coil, field loops grow with current
+export const CoilScene: React.FC<any> = ({ dur, mode = "magnet" }) => {
+  const f = useCurrentFrame();
+  const cx = 860, cy = 470;
+  const turns = Array.from({ length: 9 }, (_, k) => <ellipse key={k} cx={cx - 240 + k * 60} cy={cy} rx={26} ry={130} fill="none" stroke={L.amber} strokeWidth={9} />);
+  if (mode === "field") {
+    const I = interpolate(f, [dur * 0.1, dur * 0.5, dur * 0.75, dur * 0.95], [0, 1, 1, 0.2], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      {[1, 2, 3, 4].map((k) => <ellipse key={k} cx={cx} cy={cy} rx={330 + k * 70} ry={150 + k * 70} fill="none" stroke={L.cyan} strokeWidth={4} strokeDasharray="14 12" strokeDashoffset={-f * 2} opacity={Math.max(0, I * 1.2 - k * 0.2)} />)}
+      <line x1={cx - 300} y1={cy} x2={cx + 300} y2={cy} stroke={L.cyan} strokeWidth={6} opacity={I} markerEnd="" />
+      {turns}
+      <text x={cx + 340} y={cy - 6} fill={L.cyan} fontFamily={MONO} fontSize={30} fontWeight={700} opacity={I}>N</text>
+      <text x={cx - 370} y={cy - 6} fill={L.red} fontFamily={MONO} fontSize={30} fontWeight={700} opacity={I}>S</text>
+      <rect x={1500} y={380} width={300} height={100} rx={14} fill={L.panel} stroke={L.amber} strokeWidth={4} />
+      <text x={1650} y={445} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={40} fontWeight={800}>I = {(I * 2).toFixed(1)} A</text>
+      <text x={cx} y={900} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={32}>more current → stronger magnetic field (stored energy)</text>
+    </svg></AbsoluteFill>;
+  }
+  const pos = interpolate(f, [dur * 0.05, dur * 0.3, dur * 0.55, dur * 0.8], [-1, 0, 0, -1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const vel = interpolate(f, [dur * 0.05, dur * 0.3, dur * 0.31, dur * 0.55, dur * 0.56, dur * 0.8, dur * 0.81], [1, 1, 0, 0, -1, -1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const mx = cx - 900 + (pos + 1) * 760;
+  const ang = vel * 45;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {turns}
+    <g><rect x={mx - 170} y={cy - 50} width={170} height={100} fill={L.red} rx={8} /><rect x={mx} y={cy - 50} width={170} height={100} fill={L.cyan} rx={8} />
+      <text x={mx - 85} y={cy + 14} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={44} fontWeight={800}>S</text>
+      <text x={mx + 85} y={cy + 14} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={44} fontWeight={800}>N</text></g>
+    <polyline points={`${cx - 240},${cy + 130} ${cx - 240},${cy + 280} ${1500},${cy + 280} ${1500},${cy + 200}`} fill="none" stroke={L.wire} strokeWidth={5} />
+    <polyline points={`${cx + 240},${cy - 130} ${cx + 240},${cy - 220} ${1640},${cy - 220} ${1640},${cy + 60}`} fill="none" stroke={L.wire} strokeWidth={5} />
+    <circle cx={1570} cy={cy + 120} r={130} fill={L.panel} stroke={L.dim} strokeWidth={4} />
+    <line x1={1570} y1={cy + 190} x2={1570 + 120 * Math.sin(ang * Math.PI / 180)} y2={cy + 190 - 120 * Math.cos(ang * Math.PI / 180)} stroke={L.red} strokeWidth={8} strokeLinecap="round" />
+    <text x={1570} y={cy + 300} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>meter</text>
+    <text x={cx} y={150} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={40} fontWeight={700}>{vel > 0 ? "Magnet moving IN → current flows" : vel < 0 ? "Magnet moving OUT → current flows the other way" : "Magnet not moving → no current"}</text>
+  </svg></AbsoluteFill>;
+};
+
+// ------------------------------------------------------------------ RL circuit: current builds slowly; opening the switch makes a spark
+// {"mode":"on"|"off","v":10,"r":10,"l":10}  tau = L/R
+export const RLScene: React.FC<any> = ({ dur, mode = "on", v = 10, r = 10, l = 10 }) => {
+  const f = useCurrentFrame();
+  const tau = l / r; const T = 5 * tau; const Imax = v / r;
+  const p = interpolate(f, [dur * 0.1, dur * 0.9], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const t = p * T; const on = mode === "on";
+  const I = on ? Imax * (1 - Math.exp(-t / tau)) : Imax * Math.exp(-t * 6 / tau);
+  const spark = !on && f > dur * 0.1 && f < dur * 0.22;
+  const loop = [[200, 300], [700, 300], [700, 760], [200, 760], [200, 300]];
+  const X0 = 1000, Y0 = 820, GW = 760, GH = 520;
+  const curve = Array.from({ length: 60 }, (_, k) => { const tt = (k / 59) * t; const y = on ? 1 - Math.exp(-tt / tau) : Math.exp(-tt * 6 / tau);
+    return `${X0 + (tt / T) * GW},${Y0 - y * GH}`; }).join(" ");
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <polyline points={loop.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />
+    {I > 0.02 && <Dots pts={loop} t={f / 30} speed={40 + (I / Imax) * 260} />}
+    <Battery x={200} y={530} v={v} />
+    <Res x={450} y={300} ohm={r} label="R" horizontal />
+    <g><rect x={650} y={430} width={100} height={200} fill={L.bg0} />
+      {Array.from({ length: 5 }, (_, k) => <path key={k} d={`M700 ${445 + k * 36} a22 18 0 1 1 0 36`} fill="none" stroke={L.amber} strokeWidth={7} />)}
+      <text x={770} y={540} fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>L</text>
+      {[1, 2].map((k) => <ellipse key={k} cx={700} cy={530} rx={60 + k * 30} ry={120 + k * 30} fill="none" stroke={L.cyan} strokeWidth={3} strokeDasharray="10 10" opacity={(I / Imax) * (1 - k * 0.3)} />)}</g>
+    <g><rect x={420} y={730} width={120} height={60} fill={L.bg0} /><circle cx={430} cy={760} r={8} fill={L.text} /><circle cx={530} cy={760} r={8} fill={L.text} />
+      <line x1={430} y1={760} x2={on || f < dur * 0.1 ? 530 : 515} y2={on || f < dur * 0.1 ? 760 : 700} stroke={L.text} strokeWidth={7} />
+      {spark && <g>{[0, 1, 2, 3, 4].map((k) => <line key={k} x1={520} y1={735} x2={520 + 40 * Math.cos(k * 1.3 + f)} y2={735 + 40 * Math.sin(k * 1.3 + f)} stroke="#ffd23f" strokeWidth={5} />)}
+        <circle cx={520} cy={735} r={22} fill="#fff6c2" opacity={0.9} /></g>}
+      <text x={480} y={840} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>switch</text></g>
+    <Meter x={450} y={160} kind="A" value={I} />
+    <line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - GH - 30} stroke={L.dim} strokeWidth={3} />
+    <text x={X0 + GW} y={Y0 + 44} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>time →</text>
+    <text x={X0 - 14} y={Y0 - GH} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>{+Imax.toFixed(2)} A</text>
+    <line x1={X0} y1={Y0 - GH} x2={X0 + GW} y2={Y0 - GH} stroke={L.dim} strokeDasharray="8 8" strokeWidth={2} />
+    {on && <g><line x1={X0 + GW / 5} y1={Y0} x2={X0 + GW / 5} y2={Y0 - GH * 0.63} stroke={L.green} strokeDasharray="6 6" strokeWidth={3} />
+      <text x={X0 + GW / 5 + 10} y={Y0 - GH * 0.63 - 12} fill={L.green} fontFamily={MONO} fontSize={26} fontWeight={700}>1τ: 63%</text></g>}
+    {t > 0 && <polyline points={curve} fill="none" stroke={on ? L.cyan : L.red} strokeWidth={6} />}
+    <text x={X0 + GW / 2} y={Y0 - GH - 50} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>{on ? `current  ·  τ = L / R = ${+tau.toFixed(2)} s` : "switch opened → current collapses → spark"}</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
