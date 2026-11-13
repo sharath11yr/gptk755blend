@@ -1,70 +1,530 @@
-{"title": "Electricity from Scratch - Part 0 (1/3)", "style": "lab", "theme": "ece", "badge": "GETYR · NETWORK THEORY",
- "engine": "kokoro", "kokoro_voice": "af_heart", "speed": 1.05, "cover": "What Is Electricity", "cover_highlight": "Electricity",
- "short": [2, 6, 11],
+{
+ "title": "Electricity from Scratch - Part 0 (1/3)",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR · NETWORK THEORY",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Electricity",
+ "short": [
+  2,
+  6,
+  11
+ ],
  "scenes": [
-  {"type": "lab-title", "chapter": "Part 0 · Electricity from scratch", "kicker": "NETWORK THEORY · COMPLETE COURSE", "title": "ELECTRICITY FROM SCRATCH", "subtitle": "Charge, current, voltage and resistance",
-   "narration": "Welcome to the complete Network Theory course. You don't need to know anything before starting. In this first part, we answer the most basic question of all: what actually is electricity? By the end, you will see current, voltage and resistance with your own eyes, and understand where you meet them every single day."},
-  {"type": "image", "chapter": "0.1 · What is electricity?", "query": "lightning strike night sky", "label": "Lightning: electricity in nature",
-   "narration": "Look at this lightning bolt. It is one of the most powerful things in nature, and it is electricity. The same thing that lights your room, charges your phone and runs your laptop. So what is it made of? To find out, we have to zoom in, far smaller than anything you can see, into a single atom."},
-  {"type": "atom", "chapter": "0.1 · What is electricity?", "element": "hydrogen",
-   "narration": "Here is the simplest atom, hydrogen. In the centre is the nucleus, shown in red. It carries a positive charge, called a proton. Around it, one tiny electron moves, shown in blue. The electron carries a negative charge. Positive and negative attract each other, and that attraction is what holds the electron close to the nucleus."},
-  {"type": "atom", "chapter": "0.1 · What is electricity?", "element": "copper", "free": false,
-   "narration": "Now look at a copper atom, the metal inside every electrical wire. It has twenty nine protons in the nucleus and twenty nine electrons, arranged in layers called shells. Count the outermost shell. There is just one electron there, far away from the nucleus. Because it is so far away, the nucleus holds it very weakly."},
-  {"type": "atom", "chapter": "0.1 · What is electricity?", "element": "copper", "free": true,
-   "narration": "Watch what happens to that outermost electron. It is held so weakly that it easily breaks free and wanders away from its atom. This orange one is a free electron. In a copper wire, almost every atom gives away one free electron, so a tiny wire contains billions upon billions of them. These free electrons are what carry electricity."},
-  {"type": "formula", "chapter": "0.1 · What is electricity?", "formula": "Q = n × e", "terms": [["Q", "charge (coulombs, C)"], ["n", "number of electrons"], ["e", "1.6 × 10⁻¹⁹ C (charge of one electron)"]],
-   "example": ["1 coulomb ≈ 6.25 × 10¹⁸ electrons"],
-   "narration": "The amount of electric charge is measured in coulombs. One electron carries a tiny charge of one point six times ten to the power minus nineteen coulombs. So the total charge Q equals the number of electrons times the charge of one electron. To make just one coulomb, you need about six point two five quintillion electrons."},
-  {"type": "inside", "chapter": "0.2 · What is current?", "mode": "no-voltage",
-   "narration": "Now let's zoom inside a copper wire. The grey circles are the copper atoms, fixed in their places. The blue dots are the free electrons. Watch them carefully. They move very fast, but in completely random directions, like people in a crowded hall. As many move left as right, so overall, nothing flows. A wire lying on your table is exactly like this. No current."},
-  {"type": "inside", "chapter": "0.2 · What is current?", "mode": "wire",
-   "narration": "Now we connect a battery to the ends of this wire. Look at the electrons now. They still jiggle, but the whole crowd starts drifting slowly in one direction, towards the positive end of the battery. This steady drift of charge is electric current. It is like a crowd that slowly moves towards an exit, even though each person is moving around."},
-  {"type": "formula", "chapter": "0.2 · What is current?", "formula": "I = Q ÷ t", "terms": [["I", "current (amperes, A)"], ["Q", "charge passing a point (C)"], ["t", "time (seconds)"]],
-   "example": ["1 ampere = 1 coulomb per second"],
-   "narration": "Current tells us how much charge passes a point every second. So current I equals charge Q divided by time t. It is measured in amperes, or amps. One ampere means one coulomb of charge passing a point every second. That is about six quintillion electrons passing every single second."},
-  {"type": "dc", "chapter": "0.2 · What is current?", "mode": "series", "v": 12, "r": [100], "show": ["current"],
-   "narration": "Here is a complete circuit: a twelve volt battery, a resistor, and an ammeter at the bottom, which measures current. Follow the blue electrons. They leave the negative terminal, travel through the wire and the resistor, and come back to the positive terminal. The ammeter reads one hundred and twenty milliamps, which is zero point one two amperes."},
-  {"type": "diagram", "chapter": "0.2 · What is current?", "title": "Two directions of current",
-   "parts": [{"id": "e", "label": "Electron flow: − to +", "x": 22, "y": 40, "shape": "pill"}, {"id": "c", "label": "Conventional current: + to −", "x": 78, "y": 40, "shape": "pill"}, {"id": "d", "label": "All circuit diagrams use conventional current", "x": 50, "y": 82}],
-   "arrows": [["e", "d", ""], ["c", "d", ""]],
-   "steps": [{"highlight": ["e"], "note": "What electrons really do"}, {"highlight": ["c"], "note": "The direction we draw"}, {"highlight": ["c", "d"], "note": "Same current, opposite arrow"}],
-   "narration": "Here is something that confuses many students. Electrons really move from negative to positive. But long before electrons were discovered, scientists had already decided that current flows from positive to negative. That older direction is called conventional current, and every circuit diagram still uses it. Both describe the same current, just with opposite arrows."},
-  {"type": "image", "chapter": "0.2 · What is current?", "query": "smartphone charging cable plugged", "label": "Charging current: about 1 to 3 A",
-   "narration": "Where do you meet current in real life? When your phone charges, roughly one to three amps flow into the battery. An LED bulb draws only a fraction of an amp. An electric kettle draws around eight to ten amps, and that is why it needs thick wires and a strong socket. More current always needs thicker wires."},
-  {"type": "water", "chapter": "0.3 · What is voltage?", "high": 0.8, "low": 0.2,
-   "narration": "So what makes the electrons move? Voltage. Picture two water tanks joined by a pipe. The left tank is full and high, the right one is low. Watch the water flow from the high tank to the low one. The water flows because of the difference in height. Voltage works the same way. It is the difference in electrical pressure between two points, and it pushes charge from one point to the other."},
-  {"type": "water", "chapter": "0.3 · What is voltage?", "high": 0.5, "low": 0.5,
-   "narration": "Now see what happens when both tanks are at the same level. The water stops flowing. There is no height difference, so there is no push. In the same way, if two points in a circuit have the same voltage, no current flows between them. Remember this. Voltage is always measured between two points, never at one point alone."},
-  {"type": "dc", "chapter": "0.3 · What is voltage?", "mode": "series", "v": 3, "v_to": 15, "r": [100], "show": ["current"],
-   "narration": "Now watch our circuit as the battery voltage slowly rises from three volts to fifteen volts. See how the electrons move faster and faster, and the ammeter reading climbs with them. A bigger voltage is a stronger push, and a stronger push drives more current through the same resistor. Voltage is measured in volts."},
-  {"type": "formula", "chapter": "0.3 · What is voltage?", "formula": "V = W ÷ Q", "terms": [["V", "voltage (volts, V)"], ["W", "energy given (joules, J)"], ["Q", "charge (coulombs, C)"]],
-   "example": ["1 volt = 1 joule of energy per coulomb"],
-   "narration": "Here is the exact meaning of a volt. Voltage is the energy given to each coulomb of charge. V equals W divided by Q. One volt means every coulomb of charge gets one joule of energy. So a twelve volt battery gives twelve joules of energy to every coulomb that passes through it."},
-  {"type": "image", "chapter": "0.3 · What is voltage?", "query": "AA batteries", "label": "1.5 V cells",
-   "narration": "Voltages around you: a single AA cell gives one point five volts. A phone battery is about three point seven volts. A USB port gives five volts. The socket in your wall in India gives two hundred and thirty volts AC, which is dangerous to touch. And the high voltage lines on tall towers carry hundreds of thousands of volts."},
-  {"type": "image", "chapter": "0.3 · What is voltage?", "query": "high voltage transmission tower power lines", "label": "Power lines: up to 765,000 V",
-   "narration": "Why do power lines use such huge voltages? Because for the same power, a higher voltage needs a much smaller current. A smaller current wastes less energy as heat in the long wires. That is why electricity travels across the country at very high voltage, and is reduced to two hundred and thirty volts near your home."},
-  {"type": "inside", "chapter": "0.4 · What is resistance?", "mode": "resistor",
-   "narration": "Now, resistance. Let's zoom inside a material where the atoms are packed more tightly and vibrate strongly. Watch the electrons: they keep crashing into the atoms, and their drift becomes much slower. This opposition to the flow of current is called resistance. Every crash also hands energy to the atoms, which makes them vibrate harder. That is why current flowing through resistance produces heat."},
-  {"type": "inside", "chapter": "0.4 · What is resistance?", "mode": "insulator",
-   "narration": "Now look at an insulator, like rubber or plastic. Here, every electron is held tightly by its own atom. Watch them: they only circle around their atoms and never break free. With no free electrons, there is nothing to carry the current. So almost no current flows, no matter how hard we push. Insulators have an extremely high resistance."},
-  {"type": "diagram", "chapter": "0.4 · What is resistance?", "title": "Conductors · Semiconductors · Insulators",
-   "parts": [{"id": "c", "label": "Conductors: copper, silver", "x": 12, "y": 50, "shape": "pill"}, {"id": "s", "label": "Semiconductors: silicon", "x": 50, "y": 50}, {"id": "i", "label": "Insulators: rubber, glass", "x": 88, "y": 50, "shape": "pill"}],
-   "arrows": [["c", "s", "more resistance"], ["s", "i", "more resistance"]],
-   "steps": [{"highlight": ["c"], "note": "Many free electrons, very low resistance"}, {"highlight": ["s"], "note": "In between: the heart of all electronics"}, {"highlight": ["i"], "note": "Almost no free electrons, huge resistance"}],
-   "narration": "So materials fall into three groups. Conductors, like copper and silver, have plenty of free electrons and very low resistance. Insulators, like rubber and glass, have almost none, and a huge resistance. And in between are semiconductors, like silicon. Their resistance can be controlled, and that is why every chip and transistor is made from them."},
-  {"type": "image", "chapter": "0.4 · What is resistance?", "query": "electrical cable cross section copper insulation", "label": "Copper inside, plastic outside",
-   "narration": "Look at the inside of a normal electrical cable. You can see both ideas working together. The copper core is a conductor, so current flows easily through it. The plastic around it is an insulator, so the current cannot escape and cannot shock you. Every wire in your home is built exactly like this."},
-  {"type": "formula", "chapter": "0.4 · What is resistance?", "formula": "R = ρ × L ÷ A", "terms": [["R", "resistance (ohms, Ω)"], ["ρ", "resistivity of the material"], ["L", "length"], ["A", "cross-section area"]],
-   "example": ["longer wire → more resistance", "thicker wire → less resistance"],
-   "narration": "The resistance of a wire depends on three things. R equals rho times L divided by A. Rho is the resistivity, which depends on the material. A longer wire has more resistance, because electrons must crash through more atoms. A thicker wire has less resistance, because there are more paths side by side. Resistance is measured in ohms."},
-  {"type": "image", "chapter": "0.4 · What is resistance?", "query": "electric heater glowing heating element", "label": "Heating element: resistance makes heat",
-   "narration": "Resistance is not always bad. We use it on purpose. The glowing coil in an electric heater, an iron or a toaster is a wire with high resistance. Current crashing through it produces lots of heat. The same idea is used in old filament bulbs, which glow because their thin wire gets white hot. Resistance turns electrical energy into heat."},
-  {"type": "diagram", "chapter": "Recap", "title": "Part 0 · so far",
-   "parts": [{"id": "q", "label": "Charge: electrons", "x": 8, "y": 30, "shape": "pill"}, {"id": "i", "label": "Current: charge flowing", "x": 36, "y": 70}, {"id": "v", "label": "Voltage: the push", "x": 64, "y": 30}, {"id": "r", "label": "Resistance: opposition", "x": 92, "y": 70, "shape": "pill"}],
-   "arrows": [["q", "i", "flows as"], ["v", "i", "drives"], ["r", "i", "limits"]],
-   "steps": [{"highlight": ["q"], "note": "Free electrons carry the charge"}, {"highlight": ["q", "i"], "note": "Their drift is the current"}, {"highlight": ["v", "i"], "note": "Voltage pushes them"}, {"highlight": ["r", "i"], "note": "Resistance slows them and makes heat"}],
-   "narration": "Let's bring it all together. Charge is carried by free electrons. When they drift together, that flow is current, measured in amps. Voltage is the push that drives them, measured in volts. And resistance opposes their flow and turns energy into heat, measured in ohms. These four ideas are the foundation of everything that follows."},
-  {"type": "lab-outro", "chapter": "Next", "title": "NEXT: RESISTOR, CAPACITOR, INDUCTOR", "lines": ["Charge and current", "Voltage", "Resistance"], "cta": "Next part coming up",
-   "narration": "In the next part, we open up the three most important components in every circuit: the resistor, the capacitor and the inductor. You will see what is inside each one, how it works, and where it is used in real devices."}
- ]}
+  {
+   "type": "lab-title",
+   "chapter": "Part 0 · Electricity from scratch",
+   "kicker": "NETWORK THEORY · COMPLETE COURSE",
+   "title": "ELECTRICITY FROM SCRATCH",
+   "subtitle": "Charge, current, voltage and resistance",
+   "narration": "Welcome to the complete Network Theory course. You don't need to know anything before starting. In this first part, we answer the most basic question of all: what actually is electricity? By the end, you will see current, voltage and resistance with your own eyes, and understand where you meet them every single day."
+  },
+  {
+   "type": "dc",
+   "element": "hydrogen",
+   "chapter": "0.1 · What is electricity?",
+   "narration": "Think of a lightning bolt in a storm. It is one of the most powerful things in nature, and it is electricity. The same thing that lights your room, charges your phone and runs your laptop. So what is it made of? To find out, we have to zoom in, far smaller than anything you can see, into a single atom.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    24
+   ],
+   "show": [
+    "current",
+    "heat"
+   ]
+  },
+  {
+   "type": "atom",
+   "chapter": "0.1 · What is electricity?",
+   "element": "hydrogen",
+   "narration": "Here is the simplest atom, hydrogen. In the centre is the nucleus, shown in red. It carries a positive charge, called a proton. Around it, one tiny electron moves, shown in blue. The electron carries a negative charge. Positive and negative attract each other, and that attraction is what holds the electron close to the nucleus."
+  },
+  {
+   "type": "atom",
+   "chapter": "0.1 · What is electricity?",
+   "element": "copper",
+   "free": false,
+   "narration": "Now look at a copper atom, the metal inside every electrical wire. It has twenty nine protons in the nucleus and twenty nine electrons, arranged in layers called shells. Count the outermost shell. There is just one electron there, far away from the nucleus. Because it is so far away, the nucleus holds it very weakly."
+  },
+  {
+   "type": "atom",
+   "chapter": "0.1 · What is electricity?",
+   "element": "copper",
+   "free": true,
+   "narration": "Watch what happens to that outermost electron. It is held so weakly that it easily breaks free and wanders away from its atom. This orange one is a free electron. In a copper wire, almost every atom gives away one free electron, so a tiny wire contains billions upon billions of them. These free electrons are what carry electricity."
+  },
+  {
+   "type": "formula",
+   "chapter": "0.1 · What is electricity?",
+   "formula": "Q = n × e",
+   "terms": [
+    [
+     "Q",
+     "charge (coulombs, C)"
+    ],
+    [
+     "n",
+     "number of electrons"
+    ],
+    [
+     "e",
+     "1.6 × 10⁻¹⁹ C (charge of one electron)"
+    ]
+   ],
+   "example": [
+    "1 coulomb ≈ 6.25 × 10¹⁸ electrons"
+   ],
+   "narration": "The amount of electric charge is measured in coulombs. One electron carries a tiny charge of one point six times ten to the power minus nineteen coulombs. So the total charge Q equals the number of electrons times the charge of one electron. To make just one coulomb, you need about six point two five quintillion electrons."
+  },
+  {
+   "type": "inside",
+   "chapter": "0.2 · What is current?",
+   "mode": "no-voltage",
+   "narration": "Now let's zoom inside a copper wire. The grey circles are the copper atoms, fixed in their places. The blue dots are the free electrons. Watch them carefully. They move very fast, but in completely random directions, like people in a crowded hall. As many move left as right, so overall, nothing flows. A wire lying on your table is exactly like this. No current."
+  },
+  {
+   "type": "inside",
+   "chapter": "0.2 · What is current?",
+   "mode": "wire",
+   "narration": "Now we connect a battery to the ends of this wire. Look at the electrons now. They still jiggle, but the whole crowd starts drifting slowly in one direction, towards the positive end of the battery. This steady drift of charge is electric current. It is like a crowd that slowly moves towards an exit, even though each person is moving around."
+  },
+  {
+   "type": "formula",
+   "chapter": "0.2 · What is current?",
+   "formula": "I = Q ÷ t",
+   "terms": [
+    [
+     "I",
+     "current (amperes, A)"
+    ],
+    [
+     "Q",
+     "charge passing a point (C)"
+    ],
+    [
+     "t",
+     "time (seconds)"
+    ]
+   ],
+   "example": [
+    "1 ampere = 1 coulomb per second"
+   ],
+   "narration": "Current tells us how much charge passes a point every second. So current I equals charge Q divided by time t. It is measured in amperes, or amps. One ampere means one coulomb of charge passing a point every second. That is about six quintillion electrons passing every single second."
+  },
+  {
+   "type": "dc",
+   "chapter": "0.2 · What is current?",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    100
+   ],
+   "show": [
+    "current"
+   ],
+   "narration": "Here is a complete circuit: a twelve volt battery, a resistor, and an ammeter at the bottom, which measures current. Follow the blue electrons. They leave the negative terminal, travel through the wire and the resistor, and come back to the positive terminal. The ammeter reads one hundred and twenty milliamps, which is zero point one two amperes."
+  },
+  {
+   "type": "diagram",
+   "chapter": "0.2 · What is current?",
+   "title": "Two directions of current",
+   "parts": [
+    {
+     "id": "e",
+     "label": "Electron flow: − to +",
+     "x": 22,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Conventional current: + to −",
+     "x": 78,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "All circuit diagrams use conventional current",
+     "x": 50,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "e",
+     "d",
+     ""
+    ],
+    [
+     "c",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": "What electrons really do"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "The direction we draw"
+    },
+    {
+     "highlight": [
+      "c",
+      "d"
+     ],
+     "note": "Same current, opposite arrow"
+    }
+   ],
+   "narration": "Here is something that confuses many students. Electrons really move from negative to positive. But long before electrons were discovered, scientists had already decided that current flows from positive to negative. That older direction is called conventional current, and every circuit diagram still uses it. Both describe the same current, just with opposite arrows."
+  },
+  {
+   "type": "bars",
+   "title": "Current in everyday devices",
+   "unit": "A",
+   "items": [
+    [
+     "LED bulb",
+     0.05
+    ],
+    [
+     "Phone charging",
+     2
+    ],
+    [
+     "Laptop",
+     3.5
+    ],
+    [
+     "Electric kettle",
+     9
+    ]
+   ],
+   "chapter": "0.2 · What is current?",
+   "narration": "Where do you meet current in real life? When your phone charges, roughly one to three amps flow into the battery. An LED bulb draws only a fraction of an amp. An electric kettle draws around eight to ten amps, and that is why it needs thick wires and a strong socket. More current always needs thicker wires."
+  },
+  {
+   "type": "water",
+   "chapter": "0.3 · What is voltage?",
+   "high": 0.8,
+   "low": 0.2,
+   "narration": "So what makes the electrons move? Voltage. Picture two water tanks joined by a pipe. The left tank is full and high, the right one is low. Watch the water flow from the high tank to the low one. The water flows because of the difference in height. Voltage works the same way. It is the difference in electrical pressure between two points, and it pushes charge from one point to the other."
+  },
+  {
+   "type": "water",
+   "chapter": "0.3 · What is voltage?",
+   "high": 0.5,
+   "low": 0.5,
+   "narration": "Now see what happens when both tanks are at the same level. The water stops flowing. There is no height difference, so there is no push. In the same way, if two points in a circuit have the same voltage, no current flows between them. Remember this. Voltage is always measured between two points, never at one point alone."
+  },
+  {
+   "type": "dc",
+   "chapter": "0.3 · What is voltage?",
+   "mode": "series",
+   "v": 3,
+   "v_to": 15,
+   "r": [
+    100
+   ],
+   "show": [
+    "current"
+   ],
+   "narration": "Now watch our circuit as the battery voltage slowly rises from three volts to fifteen volts. See how the electrons move faster and faster, and the ammeter reading climbs with them. A bigger voltage is a stronger push, and a stronger push drives more current through the same resistor. Voltage is measured in volts."
+  },
+  {
+   "type": "formula",
+   "chapter": "0.3 · What is voltage?",
+   "formula": "V = W ÷ Q",
+   "terms": [
+    [
+     "V",
+     "voltage (volts, V)"
+    ],
+    [
+     "W",
+     "energy given (joules, J)"
+    ],
+    [
+     "Q",
+     "charge (coulombs, C)"
+    ]
+   ],
+   "example": [
+    "1 volt = 1 joule of energy per coulomb"
+   ],
+   "narration": "Here is the exact meaning of a volt. Voltage is the energy given to each coulomb of charge. V equals W divided by Q. One volt means every coulomb of charge gets one joule of energy. So a twelve volt battery gives twelve joules of energy to every coulomb that passes through it."
+  },
+  {
+   "type": "bars",
+   "title": "Voltages around you",
+   "unit": "V",
+   "items": [
+    [
+     "AA cell",
+     1.5
+    ],
+    [
+     "Phone battery",
+     3.7
+    ],
+    [
+     "USB port",
+     5
+    ],
+    [
+     "Car battery",
+     12
+    ],
+    [
+     "Wall socket (India)",
+     230
+    ],
+    [
+     "Power lines",
+     765000
+    ]
+   ],
+   "chapter": "0.3 · What is voltage?",
+   "narration": "Voltages around you: a single AA cell gives one point five volts. A phone battery is about three point seven volts. A USB port gives five volts. The socket in your wall in India gives two hundred and thirty volts AC, which is dangerous to touch. And the high voltage lines on tall towers carry hundreds of thousands of volts."
+  },
+  {
+   "type": "dc",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    2,
+    2
+   ],
+   "show": [
+    "current",
+    "voltage",
+    "heat"
+   ],
+   "chapter": "0.3 · What is voltage?",
+   "narration": "Why do power lines use such huge voltages? Because for the same power, a higher voltage needs a much smaller current. A smaller current wastes less energy as heat in the long wires. That is why electricity travels across the country at very high voltage, and is reduced to two hundred and thirty volts near your home."
+  },
+  {
+   "type": "inside",
+   "chapter": "0.4 · What is resistance?",
+   "mode": "resistor",
+   "narration": "Now, resistance. Let's zoom inside a material where the atoms are packed more tightly and vibrate strongly. Watch the electrons: they keep crashing into the atoms, and their drift becomes much slower. This opposition to the flow of current is called resistance. Every crash also hands energy to the atoms, which makes them vibrate harder. That is why current flowing through resistance produces heat."
+  },
+  {
+   "type": "inside",
+   "chapter": "0.4 · What is resistance?",
+   "mode": "insulator",
+   "narration": "Now look at an insulator, like rubber or plastic. Here, every electron is held tightly by its own atom. Watch them: they only circle around their atoms and never break free. With no free electrons, there is nothing to carry the current. So almost no current flows, no matter how hard we push. Insulators have an extremely high resistance."
+  },
+  {
+   "type": "diagram",
+   "chapter": "0.4 · What is resistance?",
+   "title": "Conductors · Semiconductors · Insulators",
+   "parts": [
+    {
+     "id": "c",
+     "label": "Conductors: copper, silver",
+     "x": 12,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "s",
+     "label": "Semiconductors: silicon",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "id": "i",
+     "label": "Insulators: rubber, glass",
+     "x": 88,
+     "y": 50,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "c",
+     "s",
+     "more resistance"
+    ],
+    [
+     "s",
+     "i",
+     "more resistance"
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Many free electrons, very low resistance"
+    },
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": "In between: the heart of all electronics"
+    },
+    {
+     "highlight": [
+      "i"
+     ],
+     "note": "Almost no free electrons, huge resistance"
+    }
+   ],
+   "narration": "So materials fall into three groups. Conductors, like copper and silver, have plenty of free electrons and very low resistance. Insulators, like rubber and glass, have almost none, and a huge resistance. And in between are semiconductors, like silicon. Their resistance can be controlled, and that is why every chip and transistor is made from them."
+  },
+  {
+   "type": "inside",
+   "mode": "insulator",
+   "chapter": "0.4 · What is resistance?",
+   "narration": "Think of a normal electrical cable in your home. It uses both ideas together. The copper core is a conductor, so current flows easily through it. The plastic around it is an insulator, so the current cannot escape and cannot shock you. Every wire in your home is built exactly like this."
+  },
+  {
+   "type": "formula",
+   "chapter": "0.4 · What is resistance?",
+   "formula": "R = ρ × L ÷ A",
+   "terms": [
+    [
+     "R",
+     "resistance (ohms, Ω)"
+    ],
+    [
+     "ρ",
+     "resistivity of the material"
+    ],
+    [
+     "L",
+     "length"
+    ],
+    [
+     "A",
+     "cross-section area"
+    ]
+   ],
+   "example": [
+    "longer wire → more resistance",
+    "thicker wire → less resistance"
+   ],
+   "narration": "The resistance of a wire depends on three things. R equals rho times L divided by A. Rho is the resistivity, which depends on the material. A longer wire has more resistance, because electrons must crash through more atoms. A thicker wire has less resistance, because there are more paths side by side. Resistance is measured in ohms."
+  },
+  {
+   "type": "dc",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    6
+   ],
+   "show": [
+    "current",
+    "heat"
+   ],
+   "chapter": "0.4 · What is resistance?",
+   "narration": "Resistance is not always bad. We use it on purpose. The glowing coil in an electric heater, an iron or a toaster is a wire with high resistance. Current crashing through it produces lots of heat. The same idea is used in old filament bulbs, which glow because their thin wire gets white hot. Resistance turns electrical energy into heat."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "title": "Part 0 · so far",
+   "parts": [
+    {
+     "id": "q",
+     "label": "Charge: electrons",
+     "x": 8,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "i",
+     "label": "Current: charge flowing",
+     "x": 36,
+     "y": 70
+    },
+    {
+     "id": "v",
+     "label": "Voltage: the push",
+     "x": 64,
+     "y": 30
+    },
+    {
+     "id": "r",
+     "label": "Resistance: opposition",
+     "x": 92,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "q",
+     "i",
+     "flows as"
+    ],
+    [
+     "v",
+     "i",
+     "drives"
+    ],
+    [
+     "r",
+     "i",
+     "limits"
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "q"
+     ],
+     "note": "Free electrons carry the charge"
+    },
+    {
+     "highlight": [
+      "q",
+      "i"
+     ],
+     "note": "Their drift is the current"
+    },
+    {
+     "highlight": [
+      "v",
+      "i"
+     ],
+     "note": "Voltage pushes them"
+    },
+    {
+     "highlight": [
+      "r",
+      "i"
+     ],
+     "note": "Resistance slows them and makes heat"
+    }
+   ],
+   "narration": "Let's bring it all together. Charge is carried by free electrons. When they drift together, that flow is current, measured in amps. Voltage is the push that drives them, measured in volts. And resistance opposes their flow and turns energy into heat, measured in ohms. These four ideas are the foundation of everything that follows."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: RESISTOR, CAPACITOR, INDUCTOR",
+   "lines": [
+    "Charge and current",
+    "Voltage",
+    "Resistance"
+   ],
+   "cta": "Next part coming up",
+   "narration": "In the next part, we open up the three most important components in every circuit: the resistor, the capacitor and the inductor. You will see what is inside each one, how it works, and where it is used in real devices."
+  }
+ ],
+ "cover": "What Is Electricity"
+}

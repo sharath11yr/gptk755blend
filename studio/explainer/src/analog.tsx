@@ -223,4 +223,29 @@ export const WaterTank: React.FC<any> = ({ dur, high = 0.8, low = 0.2, narrow = 
   );
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+/** Real-world example values as bars that grow one by one (log scale, so 1.5 V and 765,000 V both fit).
+ *  {"title": "Voltages around you", "unit": "V", "items": [["AA cell", 1.5], ["Phone battery", 3.7], ...]} */
+export const ValueBars: React.FC<any> = ({ dur, title = "", unit = "", items = [] }) => {
+  const f = useCurrentFrame(); const { u } = useU();
+  const vals = items.map((it: any[]) => +it[1]); const lo = Math.min(...vals), hi = Math.max(...vals);
+  const span = Math.log10(hi) - Math.log10(lo) || 1; const per = (dur * 0.7) / Math.max(1, items.length);
+  const W = (v: number) => 0.1 + 0.62 * (span > 0.01 ? (Math.log10(v) - Math.log10(lo)) / span : 1);
+  const cols = [L.cyan, L.green, L.amber, L.red, "#7b5cff", "#d6336c"];
+  const show = (v: number) => (v >= 1000 ? v.toLocaleString("en-US") : String(v));
+  return (
+    <AbsoluteFill style={{ padding: "11% 8% 8%", opacity: fade(f, 0) }}>
+      {title && <div style={{ fontFamily: MONO, color: L.cyan, fontSize: 32 * u, letterSpacing: 4 * u, fontWeight: 700, marginBottom: 30 * u }}>{title.toUpperCase()}</div>}
+      {items.map(([name, v]: any[], i: number) => { const p = prog(f, 8 + i * per, 8 + i * per + 18);
+        return <div key={i} style={{ display: "flex", alignItems: "center", gap: 24 * u, marginTop: 20 * u, opacity: fade(f, 8 + i * per, 6) }}>
+          <div style={{ width: 340 * u, fontFamily: SANS, fontWeight: 700, fontSize: 34 * u, color: L.text, textAlign: "right" }}>{name}</div>
+          <div style={{ flex: 1, height: 52 * u, position: "relative" }}>
+            <div style={{ width: `${W(+v) * p * 100}%`, height: "100%", borderRadius: 10 * u, background: cols[i % cols.length] }} />
+            <div style={{ position: "absolute", left: `calc(${W(+v) * p * 100}% + ${14 * u}px)`, top: 6 * u, whiteSpace: "nowrap", fontFamily: MONO, fontWeight: 700, fontSize: 32 * u, color: L.text }}>
+              {show(+v)} {unit}</div>
+          </div>
+        </div>; })}
+    </AbsoluteFill>
+  );
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
