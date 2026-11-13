@@ -1,0 +1,425 @@
+{
+ "title": "Ohm's Law, Power and Energy - Network Theory Part 6",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Ohm's Law",
+ "cover": "Ohm's Law & Power",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  7,
+  9
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 6 · Ohm's law, power & energy",
+   "narration": "Welcome back. We now speak the language of circuits. In this part we go deep into the single most used law in electronics, Ohm's law, and into power and energy: how fast a component uses energy, how your electricity bill is calculated, and what efficiency means. Every circuit method that follows is built on these ideas, so we will take them one step at a time.",
+   "kicker": "NETWORK THEORY · PART 6",
+   "title": "OHM'S LAW, POWER & ENERGY",
+   "subtitle": "V = IR, P = VI, energy in kWh, efficiency"
+  },
+  {
+   "type": "dc",
+   "chapter": "6.1 · Ohm's law",
+   "narration": "In Part 0 we saw voltage push current through a resistor. Now let's measure it carefully. Watch this circuit as the battery voltage rises from three volts to fifteen volts across a one hundred ohm resistor. Look at the ammeter: at three volts it reads thirty milliamps. At six volts, sixty milliamps. At twelve volts, one hundred and twenty milliamps. Every time the voltage doubles, the current doubles. The current is directly proportional to the voltage.",
+   "mode": "series",
+   "v": 3,
+   "v_to": 15,
+   "r": [
+    100
+   ],
+   "show": [
+    "current"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "6.1 · Ohm's law",
+   "narration": "This is Ohm's law, discovered by Georg Ohm in 1827. Voltage V equals current I times resistance R. It can be rearranged in three ways. To find current, divide voltage by resistance. To find resistance, divide voltage by current. A simple way to remember: cover the quantity you want in the triangle V over I times R, and what remains tells you the formula.",
+   "formula": "V = I × R",
+   "terms": [
+    [
+     "I = V / R",
+     "find current"
+    ],
+    [
+     "R = V / I",
+     "find resistance"
+    ],
+    [
+     "V = I × R",
+     "find voltage"
+    ]
+   ],
+   "example": [
+    "12 V across 100 Ω → I = 0.12 A",
+    "0.5 A through 20 Ω → V = 10 V"
+   ]
+  },
+  {
+   "type": "ohm",
+   "chapter": "6.2 · The V-I graph",
+   "narration": "Now watch the graph of voltage against current for two resistors, one hundred ohms and two hundred ohms. Both are straight lines through the origin. That straight line is the signature of Ohm's law. Notice that the slope of each line tells us the resistance. The two hundred ohm line is flatter on this graph because, for the same voltage, it lets through only half the current.",
+   "r": [
+    100,
+    200
+   ],
+   "vmax": 12
+  },
+  {
+   "type": "diagram",
+   "chapter": "6.3 · Where Ohm's law works",
+   "narration": "Ohm's law is not a law of nature like gravity. It is a property that some materials follow. It holds for metals and resistors, as long as the temperature stays constant. It does not hold for a diode, whose current shoots up suddenly after a small voltage, or for a filament lamp, whose resistance rises as it heats up. Elements that follow Ohm's law are called ohmic, or linear. Those that do not are called non-ohmic, or non-linear.",
+   "title": "Ohmic vs non-ohmic",
+   "parts": [
+    {
+     "id": "o",
+     "label": "OHMIC: straight V-I line",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "n",
+     "label": "NON-OHMIC: curved V-I line",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "o1",
+     "label": "Resistors, metal wires (constant temperature)",
+     "x": 25,
+     "y": 75
+    },
+    {
+     "id": "n1",
+     "label": "Diodes, lamps, transistors",
+     "x": 75,
+     "y": 75
+    }
+   ],
+   "arrows": [
+    [
+     "o",
+     "o1",
+     ""
+    ],
+    [
+     "n",
+     "n1",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "o",
+      "o1"
+     ],
+     "note": "Linear"
+    },
+    {
+     "highlight": [
+      "n",
+      "n1"
+     ],
+     "note": "Non-linear"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "6.4 · Conductance",
+   "narration": "Sometimes it is easier to talk about how well something conducts, instead of how much it resists. This is called conductance, written G, and it is simply one over R. Its unit is the siemens. A one hundred ohm resistor has a conductance of zero point zero one siemens. Conductance will be very useful later in nodal analysis, where currents add up.",
+   "formula": "G = 1 / R",
+   "terms": [
+    [
+     "G",
+     "conductance, in siemens (S)"
+    ],
+    [
+     "R",
+     "resistance, in ohms"
+    ]
+   ],
+   "example": [
+    "R = 100 Ω → G = 0.01 S",
+    "Ohm's law: I = G × V"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "6.5 · Power",
+   "narration": "Now power. Power is how fast energy is used, measured in watts. One watt means one joule of energy every second. Watch the resistor in this circuit as the voltage rises. The current rises and so does the heat. A larger voltage pushes more charge every second, and gives each charge more energy. Both effects multiply, which is why the power grows so quickly.",
+   "mode": "series",
+   "v": 3,
+   "v_to": 15,
+   "r": [
+    100
+   ],
+   "show": [
+    "current",
+    "heat"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "6.5 · Power",
+   "narration": "Power P equals voltage times current. And by putting Ohm's law into it, we get two more forms: I squared R and V squared over R. Use whichever matches what you know. For our one hundred ohm resistor at twelve volts: twelve times zero point one two is one point four four watts. Or twelve squared, one hundred and forty four, divided by one hundred, gives the same one point four four watts.",
+   "formula": "P = V × I = I²R = V²/R",
+   "terms": [
+    [
+     "P",
+     "power, in watts (W)"
+    ],
+    [
+     "1 W",
+     "1 joule per second"
+    ]
+   ],
+   "example": [
+    "12 V, 0.12 A → P = 1.44 W",
+    "12² / 100 = 1.44 W"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "6.6 · Absorbed or delivered",
+   "narration": "In circuit analysis we must say whether an element absorbs power or delivers it. Here is the rule, called the passive sign convention. If current enters an element at its positive terminal, the element absorbs power, like a resistor or a charging battery. If current leaves from the positive terminal, the element delivers power, like a battery running a circuit. In any circuit, the total power delivered always equals the total power absorbed. Energy is never lost, only moved.",
+   "title": "Passive sign convention",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Current enters + terminal → ABSORBS",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Current leaves + terminal → DELIVERS",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Total delivered = total absorbed",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "d",
+     "b",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Resistor, charging battery"
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": "Source powering a load"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Conservation of energy"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "6.7 · Energy",
+   "narration": "Power tells us how fast energy is used. Energy is power multiplied by time. In physics we measure it in joules, which are watts times seconds. But for electricity bills, a joule is far too small, so we use the kilowatt hour, which is one thousand watts used for one hour. One kilowatt hour is called one unit on your electricity bill. For example, a two thousand watt geyser running for half an hour uses one kilowatt hour, one unit.",
+   "formula": "E = P × t",
+   "terms": [
+    [
+     "E",
+     "energy (J, or kWh)"
+    ],
+    [
+     "P",
+     "power"
+    ],
+    [
+     "t",
+     "time"
+    ],
+    [
+     "1 kWh",
+     "1 unit = 3.6 million joules"
+    ]
+   ],
+   "example": [
+    "2000 W geyser × 0.5 h = 1 kWh = 1 unit"
+   ]
+  },
+  {
+   "type": "bars",
+   "chapter": "6.7 · Energy",
+   "narration": "Here is the power of some common appliances. An LED bulb uses about nine watts. A ceiling fan, about seventy five watts. A laptop, about sixty. A refrigerator, around two hundred while its motor runs. And an air conditioner, around fifteen hundred watts. Now you can calculate your own bill: power in kilowatts, times hours of use, gives units. A nine watt LED running ten hours a day uses only zero point zero nine units a day.",
+   "title": "Typical appliance power",
+   "unit": "W",
+   "items": [
+    [
+     "LED bulb",
+     9
+    ],
+    [
+     "Laptop",
+     60
+    ],
+    [
+     "Ceiling fan",
+     75
+    ],
+    [
+     "Refrigerator",
+     200
+    ],
+    [
+     "Air conditioner",
+     1500
+    ]
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "6.8 · Efficiency",
+   "narration": "No machine turns all of its input energy into useful output. Some is always lost, mostly as heat. Efficiency tells us what fraction is useful: output power divided by input power, written as a percentage. A good phone charger is about eighty five to ninety percent efficient, so it gets warm because of the lost ten to fifteen percent. An old filament bulb turned only about five percent of its power into light. That is why LED bulbs, which are far more efficient, save so much electricity.",
+   "formula": "η = P_out / P_in × 100%",
+   "terms": [
+    [
+     "η",
+     "efficiency (eta)"
+    ],
+    [
+     "P_out",
+     "useful output power"
+    ],
+    [
+     "P_in",
+     "input power"
+    ]
+   ],
+   "example": [
+    "Charger: 18 W out, 20 W in → η = 90%"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Ohm's law: V equals I R, a straight V-I line for ohmic elements at constant temperature. Conductance is one over R. Power is V times I, also I squared R and V squared over R. Energy is power times time, and one kilowatt hour is one unit on your bill. And efficiency is useful output divided by input.",
+   "title": "Part 6 in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "V = IR · G = 1/R",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "P = VI = I²R = V²/R",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "E = P × t · 1 kWh = 1 unit",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "η = P_out / P_in",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "So far our circuits had one resistor. Next we connect resistors one after another, in series. We will see what happens to the current, how the voltage is shared, and build one of the most useful circuits in electronics: the voltage divider.",
+   "title": "NEXT: SERIES CIRCUITS & VOLTAGE DIVIDER",
+   "lines": [
+    "V = IR",
+    "P = VI",
+    "kWh",
+    "Efficiency"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Ohm's Law, Power & Energy Explained from Zero (V=IR, P=VI, kWh) | Network Theory #7",
+  "description": "Network Theory from absolute zero - Part 7.\n- Ohm's law shown live on a circuit\n- The V-I graph and where Ohm's law fails (diodes, lamps)\n- Conductance G = 1/R\n- Power: P = VI = I²R = V²/R\n- Passive sign convention: absorbed vs delivered power\n- Energy, kWh and your electricity bill\n- Efficiency\n\nPrevious: Node, branch, loop, mesh. Next: Series circuits and the voltage divider.\n\n#NetworkTheory #OhmsLaw #ElectricPower #ECE #BasicElectronics",
+  "tags": [
+   "ohm's law",
+   "electric power",
+   "p=vi",
+   "kwh",
+   "efficiency",
+   "passive sign convention",
+   "conductance",
+   "network theory",
+   "ece",
+   "basic electronics"
+  ],
+  "playlist": "Network Theory"
+ }
+}
