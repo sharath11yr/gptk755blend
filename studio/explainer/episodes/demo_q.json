@@ -1,0 +1,3 @@
+{"title":"Q","style":"lab","theme":"ece","short":[0],"short_hook":"x","scenes":[
+{"type":"question","q":"In the positive half-cycle, which two diodes switch on?","options":["D1 and D2","D3 and D4","All four"],"narration":"Which two diodes switch on? Pause and think. Three, two, one."},
+{"type":"question","reveal":true,"q":"In the positive half-cycle, which two diodes switch on?","options":["D1 and D2","D3 and D4","All four"],"answer":"D1 and D2","narration":"The answer is D1 and D2. The left side is positive, so current flows up through D1, through the load, and back through D2."}]}
