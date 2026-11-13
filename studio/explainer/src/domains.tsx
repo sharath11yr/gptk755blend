@@ -32,8 +32,8 @@ void KW;
 export const CodeLab: React.FC<any> = ({ dur, lang = "python", code = "", steps = [] }) => {
   const f = useCurrentFrame(); const { u, tall } = useU();
   const lines: string[] = code.split("\n");
-  const typed = Math.floor(interpolate(f, [4, Math.min(dur * 0.35, 4 + lines.length * 10)], [0, lines.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
-  const sStart = Math.min(dur * 0.35, 4 + lines.length * 10) + 6;
+  const typed = Math.floor(interpolate(f, [4, Math.min(dur * 0.3, 4 + lines.length * 7)], [0, lines.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
+  const sStart = Math.min(dur * 0.3, 4 + lines.length * 7) + 6;
   const k = steps.length ? Math.min(steps.length - 1, Math.floor(interpolate(f, [sStart, dur - 10], [0, steps.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }))) : -1;
   const cur = k >= 0 && f >= sStart ? steps[k] : null;
   const outLines = k >= 0 && f >= sStart ? steps.slice(0, k + 1).filter((s: any) => s.out !== undefined).map((s: any) => s.out) : [];
@@ -143,7 +143,7 @@ export const TerminalLab: React.FC<any> = ({ dur, lines = [], prompt = "student@
           {lines.map((ln: any, i: number) => {
             const start = 10 + i * per; if (f < start) return null;
             if (ln.cmd !== undefined) {
-              const shown = ln.cmd.slice(0, Math.floor((f - start) / 1.6));
+              const shown = ln.cmd.slice(0, Math.floor((f - start) / 1.1));
               return <div key={i}><span style={{ color: L.cyan }}>{prompt} </span><span style={{ color: L.text }}>{shown}</span>
                 {shown.length < ln.cmd.length && <span style={{ color: L.cyan }}>▋</span>}</div>;
             }

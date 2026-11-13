@@ -20,11 +20,12 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - uses: actions/setup-python@v5
-        with: {python-version: "3.12"}
+        with: {python-version: "3.11"}
       - name: Install
         run: |
           npm ci || npm install
-          pip install edge-tts
+          sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng
+          pip install edge-tts "kokoro>=0.9.4" soundfile
           command -v ffmpeg || (pip install imageio-ffmpeg && sudo ln -sf "$(python -c 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())')" /usr/local/bin/ffmpeg)
           command -v ffprobe || sudo apt-get install -y ffmpeg
       - name: Voice, timing and music

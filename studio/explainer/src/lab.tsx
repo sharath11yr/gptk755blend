@@ -344,12 +344,12 @@ export const FormulaLab: React.FC<any> = ({ formula, terms = [], example = [] })
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: "0 8%" }}>
       <div style={{ fontFamily: MONO, color: L.amber, fontSize: 92 * u, fontWeight: 700, opacity: fade(f, 4), transform: `scale(${interpolate(f, [0, 30], [1.12, 1], { extrapolateRight: "clamp" })})` }}>{formula}</div>
       <div style={{ display: "flex", gap: 40 * u, marginTop: 40 * u, flexWrap: "wrap", justifyContent: "center" }}>
-        {terms.map(([k, v]: string[], i: number) => <div key={i} style={{ fontFamily: MONO, fontSize: 28 * u, color: L.text, opacity: fade(f, 25 + i * 14) }}>
+        {terms.map(([k, v]: string[], i: number) => <div key={i} style={{ fontFamily: MONO, fontSize: 28 * u, color: L.text, opacity: fade(f, 16 + i * 9) }}>
           <span style={{ color: L.cyan, fontWeight: 700 }}>{k}</span> = {v}</div>)}
       </div>
       {example.length > 0 && <div style={{ marginTop: 60 * u, borderTop: `${2 * u}px solid ${L.grid2}`, paddingTop: 30 * u, textAlign: "center" }}>
         {example.map((line: string, i: number) => <div key={i} style={{ fontFamily: MONO, fontSize: 36 * u, color: i === example.length - 1 ? L.green : L.text,
-          fontWeight: i === example.length - 1 ? 700 : 400, marginTop: 10 * u, opacity: fade(f, 70 + i * 30) }}>{line}</div>)}
+          fontWeight: i === example.length - 1 ? 700 : 400, marginTop: 10 * u, opacity: fade(f, 45 + i * 22) }}>{line}</div>)}
       </div>}
     </AbsoluteFill>
   );
@@ -371,7 +371,7 @@ export const TitleLab: React.FC<any> = ({ kicker, title, subtitle }) => {
 /** Numbered steps / key points that appear one by one. */
 export const StepsLab: React.FC<any> = ({ title, items = [], dur }) => {
   const f = useCurrentFrame(); const { u } = useU();
-  const gap = Math.max(18, (dur * 0.75) / Math.max(1, items.length));
+  const gap = Math.max(12, (dur * 0.55) / Math.max(1, items.length));
   return (
     <AbsoluteFill style={{ justifyContent: "center", padding: "0 12%" }}>
       {title && <div style={{ fontFamily: MONO, color: L.cyan, fontSize: 32 * u, letterSpacing: 4 * u, fontWeight: 700, marginBottom: 30 * u, opacity: fade(f, 0) }}>{title.toUpperCase()}</div>}

@@ -9,10 +9,27 @@ def dur(f):
     return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(f)],
                                 capture_output=True, text=True, check=True).stdout)
 jobs = [(f"s{i}", s) for i, s in enumerate(ep["scenes"])] + [(f"sh{i}", s) for i, s in enumerate(ep.get("short_scenes", []))]
+KOKORO = None
+def kokoro_say(text, voice, speed, wav):
+    """Kokoro: free, open-source voice that runs on this machine (default: af_heart)."""
+    global KOKORO
+    from kokoro import KPipeline
+    import soundfile as sf, numpy as np
+    if KOKORO is None:
+        KOKORO = KPipeline(lang_code=voice[0])
+    audio = np.concatenate([a for _, _, a in KOKORO(text, voice=voice, speed=speed)])
+    sf.write(str(wav), audio, 24000)
+
+engine = ep.get("engine", "kokoro")
 for key, s in jobs:
     i = key
     f = pub / "audio" / f"{key}.mp3"
-    for attempt in range(8):
+    if engine == "kokoro":
+        wav = f.with_suffix(".wav")
+        kokoro_say(s["narration"], ep.get("kokoro_voice", "af_heart"), float(ep.get("speed", 1.05)), wav)
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav), "-b:a", "160k", str(f)], check=True); wav.unlink()
+    else:
+      for attempt in range(8):
         v = ep.get("voice", "en-US-AndrewMultilingualNeural") if attempt < 5 else "en-US-GuyNeural"
         r = subprocess.run(["edge-tts", "--voice", v, f"--rate={ep.get('rate', '+4%')}", "--text", s["narration"], "--write-media", str(f)], capture_output=True, text=True)
         if r.returncode == 0 and f.exists() and f.stat().st_size > 2000:
