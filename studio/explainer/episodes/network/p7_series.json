@@ -93,7 +93,7 @@
   {
    "type": "dc",
    "chapter": "7.4 · The voltage divider",
-   "narration": "Now let's use this on purpose. Two resistors in series, one kilo-ohm on top and two kilo-ohms below, across twelve volts. We take our output from across the bottom resistor. Watch the meter: eight volts. We have made eight volts from a twelve volt battery, using nothing but two resistors. This is the voltage divider.",
+   "narration": "Now let's use this on purpose. Two resistors in series across twelve volts: R1 is one kilo-ohm and R2 is two kilo-ohms. The current is four milliamps. We take our output from across R2. Watch its meter: eight volts. And R1 takes the remaining four volts. We have made eight volts from a twelve volt battery, using nothing but two resistors. This is the voltage divider.",
    "mode": "series",
    "v": 12,
    "r": [
@@ -107,7 +107,7 @@
   {
    "type": "formula",
    "chapter": "7.4 · The voltage divider",
-   "narration": "Here is the voltage divider formula. The output voltage equals the input voltage times the bottom resistor, divided by the sum of both. Twelve times two thousand divided by three thousand gives eight volts. With two equal resistors, you get exactly half. One important warning: if you connect a load that draws a lot of current from the output, the output voltage drops. So a divider is used for signals and sensing, not for powering heavy loads.",
+   "narration": "Here is the voltage divider formula. The output voltage equals the input voltage times R2, the resistor we take the output across, divided by the sum of both. Twelve times two thousand divided by three thousand gives eight volts. With two equal resistors, you get exactly half. One important warning: if you connect a load that draws a lot of current from the output, the output voltage drops. So a divider is used for signals and sensing, not for powering heavy loads.",
    "formula": "V_out = V_in × R₂ / (R₁ + R₂)",
    "terms": [
     [
