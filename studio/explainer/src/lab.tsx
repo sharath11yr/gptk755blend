@@ -39,8 +39,10 @@ for (const k of Object.keys(THEMES)) {
   THEMES[k + "-dark"] = THEMES[k];
   THEMES[k] = { ...THEMES[k], ...LIGHT[k], dark: false, panel: "rgba(255,255,255,0.92)", hi: "rgba(0,0,0,0.06)", shadow: "none" };
 }
-// CYBERSEC stays dark: pure black terminal look
-THEMES.cyber = { ...THEMES["cyber-dark"], bg0: "#000000", bg1: "#07110b" };
+// CYBERSEC: light sky blue (easy on the eyes for long videos); navy for defence, red for attacks, green for safe
+THEMES.cyber = { ...THEMES.cyber, bg0: "#eef7ff", bg1: "#d4eafb", grid: "rgba(10,92,168,0.05)", grid2: "rgba(10,92,168,0.11)",
+  cyan: "#0a5ca8", amber: "#d62839", green: "#138a50", red: "#d62839", text: "#0b2540", dim: "#4f6b85", wire: "#2c4a66",
+  off: "#b7cde0", electron: "#1f8fe0", pattern: "grid" };
 export const L: any = { ...THEMES.ece };
 export const setTheme = (name?: string) => Object.assign(L, THEMES[name || "ece"] || THEMES.ece);
 
