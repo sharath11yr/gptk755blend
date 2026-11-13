@@ -102,7 +102,8 @@ export const DCCircuit: React.FC<any> = ({ dur, mode = "series", v = 12, v_to, r
 export const InsideWire: React.FC<any> = ({ dur, mode = "wire" }) => {
   const f = useCurrentFrame(); const { u } = useU();
   const atoms = Array.from({ length: 5 * 11 }, (_, i) => [180 + (i % 11) * 125, 240 + Math.floor(i / 11) * 85]);
-  const dense = mode === "resistor"; const drift = mode === "no-voltage" ? 0 : dense ? 1.2 : 4.2;
+  const dense = mode === "resistor"; const ins = mode === "insulator";
+  const drift = mode === "no-voltage" || ins ? 0 : dense ? 1.2 : 4.2;
   const rnd = (i: number, k: number) => Math.sin(i * 12.9898 + k * 78.233) * 43758.5453 % 1;
   return (
     <AbsoluteFill style={{ opacity: fade(f, 0) }}>
@@ -110,14 +111,16 @@ export const InsideWire: React.FC<any> = ({ dur, mode = "wire" }) => {
         <rect x={100} y={190} width={1400} height={420} rx={40} fill={dense ? `${L.amber}18` : `${L.cyan}10`} stroke={dense ? L.amber : L.wire} strokeWidth={5} />
         {atoms.map(([x, y], i) => <g key={i}><circle cx={x + (dense ? Math.sin(f * 0.6 + i) * 4 : Math.sin(f * 0.2 + i) * 1.5)} cy={y} r={dense ? 26 : 20} fill={L.off} />
           <text x={x} y={y + 8} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>+</text></g>)}
-        {Array.from({ length: 70 }, (_, i) => {
+        {!ins && Array.from({ length: 70 }, (_, i) => {
           const baseX = 120 + Math.abs(rnd(i, 1)) * 1360, baseY = 210 + Math.abs(rnd(i, 2)) * 380;
           const jitX = Math.sin(f * 0.35 + i * 1.7) * (dense ? 26 : 14), jitY = Math.cos(f * 0.31 + i * 2.3) * (dense ? 26 : 14);
           const x = 120 + ((baseX - 120 + f * drift) % 1360);
           return <circle key={i} cx={x + jitX} cy={baseY + jitY} r={8} fill={L.electron} />;
         })}
-        {mode !== "no-voltage" && <g><text x={800} y={690} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>
+        {mode !== "no-voltage" && !ins && <g><text x={800} y={690} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>
           {dense ? "more collisions → slower drift → heat" : "electrons drift →  (current flows ←)"}</text></g>}
+        {ins && atoms.map(([x, y], i) => <circle key={"b" + i} cx={x + Math.cos(f * 0.25 + i) * 30} cy={y + Math.sin(f * 0.25 + i) * 30} r={7} fill={L.electron} />)}
+        {ins && <text x={800} y={690} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>insulator: every electron is held by its atom → no current</text>}
         {mode === "no-voltage" && <text x={800} y={690} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>no voltage → random motion, no net flow</text>}
       </svg>
     </AbsoluteFill>
@@ -168,4 +171,56 @@ export const Numerical: React.FC<any> = ({ dur, title = "SOLVED EXAMPLE", given 
   );
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+/** An atom: nucleus + electrons in shells; "free": the outer electron leaves (copper's free electron).
+ *  {"element": "copper"|"hydrogen"|"silicon", "free": true} */
+export const AtomScene: React.FC<any> = ({ dur, element = "copper", free = false }) => {
+  const f = useCurrentFrame(); const { u } = useU();
+  const shells: number[] = element === "hydrogen" ? [1] : element === "silicon" ? [2, 8, 4] : [2, 8, 18, 1];
+  const Z = shells.reduce((a, b) => a + b, 0); const cx = 800, cy = 400;
+  return (
+    <AbsoluteFill style={{ opacity: fade(f, 0) }}>
+      <svg viewBox="0 0 1600 800" width="100%" height="100%">
+        <circle cx={cx} cy={cy} r={58} fill={L.red} opacity={0.85} />
+        <text x={cx} y={cy + 10} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={30} fontWeight={700}>+{Z}</text>
+        {shells.map((n, k) => { const R = 110 + k * 70; const last = k === shells.length - 1;
+          return <g key={k}><circle cx={cx} cy={cy} r={R} fill="none" stroke={L.off} strokeWidth={3} strokeDasharray="8 8" />
+            {Array.from({ length: n }, (_, j) => {
+              const a = (j / n) * Math.PI * 2 + f * (0.05 - k * 0.008);
+              let x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R;
+              if (free && last) { const p = prog(f, dur * 0.35, dur * 0.75); x += p * 520; y -= p * 120; }
+              return <circle key={j} cx={x} cy={y} r={11} fill={free && last ? L.amber : L.electron} stroke={L.bg0} strokeWidth={2} />;
+            })}</g>; })}
+        <text x={cx} y={760} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>
+          {element.toUpperCase()} ATOM · {Z} proton{Z > 1 ? "s" : ""} (+) · {Z} electron{Z > 1 ? "s" : ""} (−)</text>
+        {free && <text x={1330} y={230} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={28} fontWeight={700} opacity={fade(f, dur * 0.6)}>free electron</text>}
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+/** Water analogy: two tanks at different heights joined by a pipe (height = voltage, flow = current,
+ *  narrow pipe = resistance). {"high": 0.8, "low": 0.2, "narrow": false} */
+export const WaterTank: React.FC<any> = ({ dur, high = 0.8, low = 0.2, narrow = false }) => {
+  const f = useCurrentFrame(); const { u } = useU();
+  const diff = Math.max(0, high - low); const speed = diff * (narrow ? 1.2 : 4);
+  const pw = narrow ? 14 : 44;
+  return (
+    <AbsoluteFill style={{ opacity: fade(f, 0) }}>
+      <svg viewBox="0 0 1600 800" width="100%" height="100%">
+        <rect x={180} y={120} width={300} height={520} fill="none" stroke={L.wire} strokeWidth={6} />
+        <rect x={183} y={120 + 520 * (1 - high)} width={294} height={520 * high} fill={L.cyan} opacity={0.35} />
+        <rect x={1120} y={120} width={300} height={520} fill="none" stroke={L.wire} strokeWidth={6} />
+        <rect x={1123} y={120 + 520 * (1 - low)} width={294} height={520 * low} fill={L.cyan} opacity={0.35} />
+        <rect x={480} y={620 - pw} width={640} height={pw} fill={L.cyan} opacity={0.25} stroke={L.wire} strokeWidth={4} />
+        {Array.from({ length: 14 }, (_, i) => <circle key={i} cx={480 + ((i * 46 + f * speed * 3) % 640)} cy={620 - pw / 2} r={Math.min(9, pw / 3)} fill={L.electron} />)}
+        {diff > 0.02 ? <><line x1={540} y1={120 + 520 * (1 - high)} x2={540} y2={120 + 520 * (1 - low)} stroke={L.amber} strokeWidth={5} />
+          <text x={560} y={(240 + 520 * (2 - high - low)) / 2} fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={700}>height difference = VOLTAGE</text></>
+          : <text x={800} y={300} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={700}>same level → no difference → NO FLOW</text>}
+        <text x={800} y={700} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>
+          {diff > 0.02 ? "water flow = CURRENT" : "no current"}{narrow ? "   ·   narrow pipe = RESISTANCE" : ""}</text>
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

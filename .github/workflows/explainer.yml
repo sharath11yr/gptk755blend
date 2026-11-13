@@ -28,6 +28,8 @@ jobs:
           pip install edge-tts "kokoro>=0.9.4" soundfile
           command -v ffmpeg || (pip install imageio-ffmpeg && sudo ln -sf "$(python -c 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())')" /usr/local/bin/ffmpeg)
           command -v ffprobe || sudo apt-get install -y ffmpeg
+      - name: Real photos (Wikimedia Commons, licensed)
+        run: pip install -q httpx && python fetch_images.py "episodes/${{ inputs.episode }}"
       - name: Voice, timing and music
         run: python voice.py "episodes/${{ inputs.episode }}" public props.json
       - name: Render the explainer (1920x1080) and the Short (1080x1920)
@@ -53,3 +55,4 @@ jobs:
           path: |
             studio/explainer/out/*_final.mp4
             studio/explainer/out/stills/*
+            studio/explainer/out/credits.txt
