@@ -8,11 +8,23 @@ import "@fontsource/jetbrains-mono/700.css";
 import { SANS, fade, rise, prog, ease } from "./theme";
 
 export const MONO = `"JetBrains Mono", Menlo, monospace`;
-export const L = {
-  bg0: "#04101c", bg1: "#0a2236", grid: "rgba(80,160,220,0.10)", grid2: "rgba(80,160,220,0.22)",
-  cyan: "#38d6ff", amber: "#ffb547", green: "#46f29a", red: "#ff6464", text: "#e8f1f8", dim: "#6f88a0",
-  wire: "#9fb6c9", off: "#3b5266", electron: "#7fe7ff",
+// One look per channel (colours + background pattern). cyan = primary accent, amber = secondary.
+export const THEMES: Record<string, any> = {
+  ece: { bg0: "#04101c", bg1: "#0a2236", grid: "rgba(80,160,220,0.10)", grid2: "rgba(80,160,220,0.22)",
+    cyan: "#38d6ff", amber: "#ffb547", green: "#46f29a", red: "#ff6464", text: "#e8f1f8", dim: "#6f88a0",
+    wire: "#9fb6c9", off: "#3b5266", electron: "#7fe7ff", pattern: "grid", badge: "GETYR · ECE LAB" },
+  cse: { bg0: "#0d0b16", bg1: "#1b1530", grid: "rgba(160,120,255,0.07)", grid2: "rgba(160,120,255,0.16)",
+    cyan: "#a98bff", amber: "#4ee39b", green: "#4ee39b", red: "#ff6b8b", text: "#f1edff", dim: "#8a82a8",
+    wire: "#b9b0d8", off: "#3d3757", electron: "#c7b5ff", pattern: "dots", badge: "GETYR · CSE" },
+  cyber: { bg0: "#030605", bg1: "#07140e", grid: "rgba(0,255,140,0.06)", grid2: "rgba(0,255,140,0.13)",
+    cyan: "#19ff8c", amber: "#ff4d4d", green: "#19ff8c", red: "#ff4d4d", text: "#dfffee", dim: "#5f8a74",
+    wire: "#8fbfa6", off: "#2b4236", electron: "#7dffc0", pattern: "scan", badge: "GETYR · CYBERSEC" },
+  ent: { bg0: "#0c0906", bg1: "#21170d", grid: "rgba(214,170,92,0.05)", grid2: "rgba(214,170,92,0.10)",
+    cyan: "#d6aa5c", amber: "#f1d39a", green: "#9fd38a", red: "#e0533d", text: "#f3ece0", dim: "#9a8b74",
+    wire: "#c9b48e", off: "#4a3d2c", electron: "#f1d39a", pattern: "grain", badge: "GETYR · ENT" },
 };
+export const L: any = { ...THEMES.ece };
+export const setTheme = (name?: string) => Object.assign(L, THEMES[name || "ece"] || THEMES.ece);
 
 const useU = () => {
   const { width, height } = useVideoConfig(); const tall = height > width;
@@ -35,14 +47,18 @@ export const LabFrame: React.FC<{ children: React.ReactNode; caption?: string; d
   const g = 54 * u;
   return (
     <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 35%, ${L.bg1} 0%, ${L.bg0} 75%)`, overflow: "hidden" }}>
-      <AbsoluteFill style={{ backgroundImage: `linear-gradient(${L.grid} 1px, transparent 1px), linear-gradient(90deg, ${L.grid} 1px, transparent 1px),
+      {L.pattern === "grid" && <AbsoluteFill style={{ backgroundImage: `linear-gradient(${L.grid} 1px, transparent 1px), linear-gradient(90deg, ${L.grid} 1px, transparent 1px),
         linear-gradient(${L.grid2} 1px, transparent 1px), linear-gradient(90deg, ${L.grid2} 1px, transparent 1px)`,
-        backgroundSize: `${g}px ${g}px, ${g}px ${g}px, ${g * 5}px ${g * 5}px, ${g * 5}px ${g * 5}px`, backgroundPosition: `${-f * 0.15}px 0` }} />
+        backgroundSize: `${g}px ${g}px, ${g}px ${g}px, ${g * 5}px ${g * 5}px, ${g * 5}px ${g * 5}px`, backgroundPosition: `${-f * 0.15}px 0` }} />}
+      {L.pattern === "dots" && <AbsoluteFill style={{ backgroundImage: `radial-gradient(${L.grid2} ${1.6 * u}px, transparent ${1.8 * u}px)`, backgroundSize: `${g * 0.7}px ${g * 0.7}px`, backgroundPosition: `0 ${-f * 0.2}px` }} />}
+      {L.pattern === "scan" && <AbsoluteFill style={{ backgroundImage: `repeating-linear-gradient(0deg, ${L.grid} 0px, ${L.grid} 1px, transparent 2px, transparent ${4 * u}px)` }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: `${(f * 0.6) % 120 - 10}%`, height: "8%", background: `linear-gradient(transparent, ${L.grid2}, transparent)` }} /></AbsoluteFill>}
+      {L.pattern === "grain" && <AbsoluteFill style={{ opacity: 0.08, mixBlendMode: "screen" }}><svg width="100%" height="100%"><filter id="lg"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={f % 50} /></filter><rect width="100%" height="100%" filter="url(#lg)" /></svg></AbsoluteFill>}
       <AbsoluteFill style={{ opacity: Math.min(fade(f, 0, 8), out) }}>{children}</AbsoluteFill>
       {/* channel badge + chapter */}
       <div style={{ position: "absolute", left: 40 * u, top: 34 * u, display: "flex", alignItems: "center", gap: 14 * u, fontFamily: MONO }}>
         <div style={{ border: `${2 * u}px solid ${L.cyan}`, color: L.cyan, fontSize: 18 * u, fontWeight: 700, padding: `${4 * u}px ${10 * u}px`, letterSpacing: 2 * u }}>
-          {ep?.badge || "GETYR · LAB"}</div>
+          {ep?.badge || L.badge}</div>
         {scene?.chapter && <div style={{ color: L.dim, fontSize: 18 * u, letterSpacing: 3 * u }}>{scene.chapter.toUpperCase()}</div>}
       </div>
       {/* lesson progress */}

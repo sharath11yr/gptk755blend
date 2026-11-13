@@ -3,7 +3,8 @@ import { AbsoluteFill, Audio, Composition, Sequence, staticFile, useCurrentFrame
 import { Frame } from "./Frame";
 import { Title, Ship, MapScene, Counter, Bars, Facts, Clock, Timeline, Quote, Outro, Depth, Valve, Silicon, Mosfet, Circuit, Binary } from "./scenes";
 import { C, SERIF, SANS, fade } from "./theme";
-import { LabFrame, LAB_SCENES } from "./lab";
+import { LabFrame, LAB_SCENES, setTheme } from "./lab";
+import { DOMAIN_SCENES } from "./domains";
 import sample from "../episodes/titanic.json";
 
 const FPS = 30;
@@ -17,13 +18,13 @@ const Film: React.FC<{ ep: any; pick?: number[]; hook?: string; short?: boolean 
     : (pick ? pick.map((i) => ({ ...ep.scenes[i], idx: i })) : ep.scenes.map((s: any, i: number) => ({ ...s, idx: i })));
   if (short && ep.short_scenes) hook = undefined;  // a written Short opens on its own hook scene
   let at = hook ? 75 : 0;
-  const lab = ep.style === "lab";
+  const lab = ep.style === "lab"; if (lab) setTheme(ep.theme);
   const all = scenes.reduce((a: number, s: any) => a + framesOf(s), 0) || 1;
   return (
     <AbsoluteFill style={{ background: C.bg0 }}>
       {hook && <Sequence durationInFrames={75}><Hook text={hook} tag={ep.tag} /></Sequence>}
       {scenes.map((s: any) => {
-        const d = framesOf(s); const from = at; at += d; const Comp = LAB_SCENES[s.type] || SCENES[s.type];
+        const d = framesOf(s); const from = at; at += d; const Comp = LAB_SCENES[s.type] || DOMAIN_SCENES[s.type] || SCENES[s.type];
         return (
           <Sequence key={s.idx} from={from} durationInFrames={d}>
             {lab ? <LabFrame caption={s.narration} dur={d} scene={s} ep={ep} progress={(from + d) / all}><Comp {...s} dur={d} /></LabFrame>
