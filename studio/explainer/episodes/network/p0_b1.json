@@ -2,7 +2,7 @@
  "title": "Electricity from Scratch - Part 0 (1/3)",
  "style": "lab",
  "theme": "ece",
- "badge": "GETYR_IO · GET YOUR ROOT",
+ "badge": "GETYR ECE",
  "engine": "kokoro",
  "kokoro_voice": "af_heart",
  "speed": 1.05,
@@ -83,7 +83,7 @@
    "type": "inside",
    "chapter": "0.2 · What is current?",
    "mode": "no-voltage",
-   "narration": "Now let's zoom inside a copper wire. The grey circles are the copper atoms, fixed in their places. The blue dots are the free electrons. Watch them carefully. They move very fast, but in completely random directions, like people in a crowded hall. As many move left as right, so overall, nothing flows. A wire lying on your table is exactly like this. No current."
+   "narration": "We now know that electrons are the tiny carriers of charge. But electricity only happens when they move. So let's see how they move. Let's zoom inside a copper wire. The grey circles are the copper atoms, fixed in their places. The blue dots are the free electrons. Watch them carefully. They move very fast, but in completely random directions, like people in a crowded hall. As many move left as right, so overall, nothing flows. A wire lying on your table is exactly like this. No current."
   },
   {
    "type": "inside",
@@ -218,7 +218,7 @@
    "chapter": "0.3 · What is voltage?",
    "high": 0.8,
    "low": 0.2,
-   "narration": "So what makes the electrons move? Voltage. Picture two water tanks joined by a pipe. The left tank is full and high, the right one is low. Watch the water flow from the high tank to the low one. The water flows because of the difference in height. Voltage works the same way. It is the difference in electrical pressure between two points, and it pushes charge from one point to the other."
+   "narration": "We have seen what current is: charge flowing every second. But electrons don't move on their own. So what makes the electrons move? Voltage. Picture two water tanks joined by a pipe. The left tank is full and high, the right one is low. Watch the water flow from the high tank to the low one. The water flows because of the difference in height. Voltage works the same way. It is the difference in electrical pressure between two points, and it pushes charge from one point to the other."
   },
   {
    "type": "water",
@@ -317,7 +317,7 @@
    "type": "inside",
    "chapter": "0.4 · What is resistance?",
    "mode": "resistor",
-   "narration": "Now, resistance. Let's zoom inside a material where the atoms are packed more tightly and vibrate strongly. Watch the electrons: they keep crashing into the atoms, and their drift becomes much slower. This opposition to the flow of current is called resistance. Every crash also hands energy to the atoms, which makes them vibrate harder. That is why current flowing through resistance produces heat."
+   "narration": "So voltage pushes, and current flows. But every material pushes back against that flow a little. This opposition is called resistance. Let's zoom inside a material where the atoms are packed more tightly and vibrate strongly. Watch the electrons: they keep crashing into the atoms, and their drift becomes much slower. This opposition to the flow of current is called resistance. Every crash also hands energy to the atoms, which makes them vibrate harder. That is why current flowing through resistance produces heat."
   },
   {
    "type": "inside",
@@ -417,7 +417,7 @@
     "longer wire → more resistance",
     "thicker wire → less resistance"
    ],
-   "narration": "The resistance of a wire depends on three things. R equals rho times L divided by A. Rho is the resistivity, which depends on the material. A longer wire has more resistance, because electrons must crash through more atoms. A thicker wire has less resistance, because there are more paths side by side. Resistance is measured in ohms."
+   "narration": "We have seen why materials resist. Now let's see how much a wire resists. The resistance of a wire depends on three things. R equals rho times L divided by A. Rho is the resistivity, which depends on the material. A longer wire has more resistance, because electrons must crash through more atoms. A thicker wire has less resistance, because there are more paths side by side. Resistance is measured in ohms."
   },
   {
    "type": "dc",
@@ -527,5 +527,22 @@
   }
  ],
  "cover": "What Is Electricity",
- "tag": "GETYR_IO · GET YOUR ROOT"
+ "tag": "GETYR ECE",
+ "yt": {
+  "title": "What is Electricity? Charge, Current, Voltage & Resistance from Zero | Network Theory #1",
+  "description": "Network Theory from absolute zero - Part 1.\nStart here even if you know nothing about electricity. Watch what really happens inside a wire:\n- What electric charge is (atoms, free electrons, coulombs)\n- Current: electrons drifting through a wire, I = Q/t, electron flow vs conventional current\n- Voltage: the push, explained with water tanks, V = W/Q\n- Resistance: conductors, insulators, semiconductors, R = rho L / A\n- Real-world examples: phone charging, power lines, house wiring, heaters\n\nNext: Resistor, Capacitor and Inductor - how they work inside.\n\n#NetworkTheory #ECE #Electricity #BasicElectronics #Engineering",
+  "tags": [
+   "network theory",
+   "electricity basics",
+   "what is current",
+   "what is voltage",
+   "what is resistance",
+   "basic electrical engineering",
+   "ece",
+   "circuit theory",
+   "electric charge",
+   "ohms law basics"
+  ],
+  "playlist": "Network Theory"
+ }
 }

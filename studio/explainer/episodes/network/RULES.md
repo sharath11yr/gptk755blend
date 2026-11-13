@@ -7,4 +7,6 @@
 - NO background music (small scene-change sounds only). NO captions.
 - The narration explains through the animation ("watch", "see", "notice").
 - Released as a playlist: one video per part/topic, in order.
-- Branding: corner badge "GETYR_IO · GET YOUR ROOT"; the channel's own intro (brand/intro.mp4) and outro (brand/outro.mp4) on every course video.
+- Branding: corner badge "GETYR ECE"; the channel's own intro (brand/intro.mp4) and outro (brand/outro.mp4) on every course video.
+- Flow: every new topic opens with a bridge from the previous one ("We have seen X. But ... That is Y.").
+- Publishing: ECE channel, playlist "Network Theory", one chapter a day (course.yml in aptk752zx renders the next file in order.json).
