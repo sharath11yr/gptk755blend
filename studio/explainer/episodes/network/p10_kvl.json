@@ -1,0 +1,364 @@
+{
+ "title": "Kirchhoff's Voltage Law (KVL) - Network Theory Part 10",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "KVL",
+ "cover": "Kirchhoff's Voltage Law",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  4,
+  7
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 10 · Kirchhoff's voltage law",
+   "narration": "Welcome back. In the last part, Kirchhoff's current law told us what happens to current at a node. Now we learn his second law, about voltage around a closed path: Kirchhoff's voltage law, or KVL. In series circuits we saw the voltage drops add up to the battery voltage. Today we see why that is always true, around any loop, in any circuit. KVL is the foundation of mesh analysis.",
+   "kicker": "NETWORK THEORY · PART 10",
+   "title": "KIRCHHOFF'S VOLTAGE LAW",
+   "subtitle": "Around any closed loop, the voltages add to zero"
+  },
+  {
+   "type": "kvl",
+   "chapter": "10.1 · Walking around a loop",
+   "narration": "Here is our series circuit: twelve volts and three resistors of one hundred, two hundred and three hundred ohms. The drops are two, four and six volts. Now watch the green marker. It starts at the bottom and walks around the loop. Going up through the battery, from minus to plus, the voltage rises by twelve volts: plus twelve. Now through R1, the voltage drops by two: minus two. Through R2, minus four. Through R3, minus six. And we are back where we started. Look at the sum: twelve minus two minus four minus six equals zero.",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "10.2 · Why it must be true",
+   "narration": "Why is the sum always zero? Think of voltage like height on a hill. If you walk any path and come back to exactly where you started, you are at the same height again. Your total climb up equals your total climb down. Voltage is energy per charge at each point, so a charge carried around a closed loop comes back to the same energy. KVL is conservation of energy, applied to a loop.",
+   "title": "KVL = conservation of energy",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Voltage is like height",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Back at the start = same height",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Total rises = total drops",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "c",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Sum around a loop = 0"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "10.3 · Writing KVL",
+   "narration": "KVL says: around any closed loop, the algebraic sum of all voltages is zero. Or equivalently, the sum of voltage rises equals the sum of voltage drops. For our loop: plus twelve, minus two, minus four, minus six, equals zero. To get the signs right, we need one simple rule, which we see next.",
+   "formula": "Σ V = 0 around any closed loop",
+   "terms": [
+    [
+     "Σ rises",
+     "= Σ drops"
+    ]
+   ],
+   "example": [
+    "+12 − 2 − 4 − 6 = 0"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "10.4 · The sign rule",
+   "narration": "Pick a direction to walk around the loop, clockwise or anticlockwise, and keep it. Through a source, if you go from its minus terminal to its plus terminal, write plus V, a rise. From plus to minus, write minus V. Through a resistor, if you walk in the same direction as the current, the voltage drops, so write minus I R. If you walk against the current, write plus I R. Follow this rule and KVL never goes wrong.",
+   "title": "Sign rule for KVL",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Source: − to + → +V (rise)",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Source: + to − → −V",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Resistor, with current → −IR (drop)",
+     "x": 25,
+     "y": 72,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Resistor, against current → +IR",
+     "x": 75,
+     "y": 72,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "10.5 · Finding an unknown voltage",
+   "narration": "Let's use KVL to find something unknown. A twelve volt battery feeds three resistors in series. We measure three volts across the first and five volts across the second. What is the voltage across the third? Walk around the loop: plus twelve, minus three, minus five, minus V three equals zero. So V three is twelve minus three minus five, which is four volts. No meter needed.",
+   "formula": "12 − 3 − 5 − V₃ = 0",
+   "terms": [
+    [
+     "V₃",
+     "unknown drop"
+    ]
+   ],
+   "example": [
+    "V₃ = 12 − 3 − 5 = 4 V"
+   ]
+  },
+  {
+   "type": "net",
+   "chapter": "10.6 · Every loop obeys KVL",
+   "narration": "KVL holds for every closed loop, not just simple ones. Here is our example circuit with two meshes. Watch the orange loops light up one at a time: the left loop, the right loop, and the big outer loop. For each one, the rises and drops must add to zero. In a later part, we will write KVL around each mesh and get exactly enough equations to find every current. That is mesh analysis.",
+   "mode": "loops"
+  },
+  {
+   "type": "formula",
+   "chapter": "10.7 · Voltage across an open gap",
+   "narration": "Here is a clever use of KVL. What is the voltage across an open switch? No current flows, so the resistors in the loop have no drop: I R is zero. Walk around the loop: plus twelve from the battery, zero from each resistor, minus V across the gap. So the gap has the full twelve volts across it. That is why an open switch in a live circuit can still give you a shock, and why electricians always check before touching.",
+   "formula": "12 − 0 − 0 − V_gap = 0",
+   "terms": [
+    [
+     "I = 0",
+     "no drop across resistors"
+    ]
+   ],
+   "example": [
+    "V_gap = 12 V (full supply!)"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "10.8 · KCL and KVL together",
+   "narration": "Now we hold the two most powerful tools in circuit theory. KCL works at nodes and comes from conservation of charge. KVL works around loops and comes from conservation of energy. Together with Ohm's law, they can solve any linear circuit. Every method coming next, source transformation, mesh analysis, nodal analysis and all the theorems, is just a smart, organised way of applying these two laws.",
+   "title": "The two laws",
+   "parts": [
+    {
+     "id": "k",
+     "label": "KCL: at nodes · Σ I = 0 · charge",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "v",
+     "label": "KVL: around loops · Σ V = 0 · energy",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "o",
+     "label": "+ Ohm's law → solve any linear circuit",
+     "x": 50,
+     "y": 80,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "k",
+     "o",
+     ""
+    ],
+    [
+     "v",
+     "o",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "k"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "v"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "o"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Kirchhoff's voltage law: around any closed loop, the algebraic sum of voltages is zero, or rises equal drops. It comes from conservation of energy. Use the sign rule: minus to plus through a source is a rise, and walking with the current through a resistor is a drop. KVL finds unknown voltages, and works for every loop in a circuit.",
+   "title": "KVL in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Σ V = 0 around a loop",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Rises = drops",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Conservation of energy",
+     "x": 25,
+     "y": 72,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Sign rule: −→+ rise, with I → −IR",
+     "x": 75,
+     "y": 72,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "With KCL, KVL and Ohm's law, we can now solve circuits. But some circuits become much simpler if we first change their shape. Next, we learn source transformation: how to swap a voltage source for an equivalent current source, and back, to simplify a circuit before solving it.",
+   "title": "NEXT: SOURCE TRANSFORMATION",
+   "lines": [
+    "Σ V = 0",
+    "Rises = drops",
+    "Conservation of energy"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Kirchhoff's Voltage Law (KVL) Explained from Zero | Network Theory #11",
+  "description": "Network Theory from absolute zero - Part 11: Kirchhoff's voltage law.\n- Walk around a loop: rises and drops add to zero (animated)\n- Why: conservation of energy\n- Writing KVL and the sign rule\n- Finding an unknown voltage\n- KVL in multi-loop circuits\n- Voltage across an open switch\n- KCL + KVL + Ohm's law = solve any linear circuit\n\nPrevious: Kirchhoff's current law. Next: Source transformation.\n\n#NetworkTheory #KVL #KirchhoffsLaw #ECE",
+  "tags": [
+   "kvl",
+   "kirchhoff's voltage law",
+   "kirchhoff law",
+   "loop voltage",
+   "network theory",
+   "circuit analysis",
+   "ece",
+   "basic electrical engineering"
+  ],
+  "playlist": "Network Theory"
+ }
+}

@@ -527,4 +527,58 @@ export const NetScene: React.FC<any> = ({ dur, mode = "nodes" }) => {
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ KCL at a node: {"currents":[5,3,-2,-6]} (+ = into the node)
+export const KclScene: React.FC<any> = ({ dur, currents = [5, 3, -2, -6], unknown = -1 }) => {
+  const f = useCurrentFrame();
+  const cx = 760, cy = 520, R = 380;
+  const angs = currents.map((_: number, k: number) => (k / currents.length) * Math.PI * 2 - Math.PI / 2 + 0.4);
+  const ins = currents.filter((c: number) => c > 0), outs = currents.filter((c: number) => c < 0).map((c: number) => -c);
+  const rev = (k: number) => fade(f, dur * 0.12 + k * dur * 0.1, 10);
+  const sumIn = ins.reduce((a: number, b: number) => a + b, 0), sumOut = outs.reduce((a: number, b: number) => a + b, 0);
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {currents.map((c: number, k: number) => { const x = cx + R * Math.cos(angs[k]), y = cy + R * Math.sin(angs[k]);
+      const pts = c > 0 ? [[x, y], [cx, cy]] : [[cx, cy], [x, y]];
+      const mx = (x + cx) / 2, my = (y + cy) / 2; const isU = k === unknown;
+      return <g key={k} opacity={0.25 + 0.75 * rev(k)}>
+        <line x1={x} y1={y} x2={cx} y2={cy} stroke={L.wire} strokeWidth={8} />
+        <Dots pts={pts} t={f / 30} speed={30 + Math.abs(c) * 40} color={c > 0 ? L.cyan : L.amber} gap={34} />
+        <rect x={mx - 110 + 70 * Math.sin(angs[k])} y={my - 34 - 50 * Math.cos(angs[k])} width={220} height={68} rx={12} fill={L.panel} stroke={c > 0 ? L.cyan : L.amber} strokeWidth={4} />
+        <text x={mx + 70 * Math.sin(angs[k])} y={my + 12 - 50 * Math.cos(angs[k])} textAnchor="middle" fill={c > 0 ? L.cyan : L.amber} fontFamily={MONO} fontSize={32} fontWeight={800}>{isU && f < dur * 0.8 ? "I = ?" : `${Math.abs(c)} A ${c > 0 ? "in" : "out"}`}</text></g>; })}
+    <circle cx={cx} cy={cy} r={30} fill={L.green} />
+    <text x={cx} y={cy + 80} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>node</text>
+    <g opacity={fade(f, dur * (unknown >= 0 ? 0.82 : 0.6), 12)}>
+      <rect x={1300} y={340} width={520} height={330} rx={18} fill={L.panel} stroke={L.green} strokeWidth={4} />
+      <text x={1560} y={420} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={36} fontWeight={700}>In:  {ins.join(" + ")} = {sumIn} A</text>
+      <text x={1560} y={500} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={36} fontWeight={700}>Out: {outs.join(" + ")} = {sumOut} A</text>
+      <text x={1560} y={600} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={40} fontWeight={800}>In = Out</text></g>
+  </svg></AbsoluteFill>;
+};
+
+// ------------------------------------------------------------------ KVL walk around a loop: {"v":12,"r":[100,200,300]}
+export const KvlScene: React.FC<any> = ({ dur, v = 12, r = [100, 200, 300] }) => {
+  const f = useCurrentFrame();
+  const I = v / r.reduce((a: number, b: number) => a + b, 0);
+  const drops = r.map((x: number) => +(I * x).toFixed(2));
+  const loop = [[300, 820], [300, 260], [1400, 260], [1400, 820], [300, 820]];
+  const seg = loop.slice(1).map((q, i) => Math.hypot(q[0] - loop[i][0], q[1] - loop[i][1])); const len = seg.reduce((a, b) => a + b, 0);
+  const p = interpolate(f, [dur * 0.06, dur * 0.82], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  let d = p * len, k = 0; while (k < seg.length - 1 && d > seg[k]) { d -= seg[k]; k++; }
+  const q = Math.min(1, d / seg[k]); const mx = loop[k][0] + (loop[k + 1][0] - loop[k][0]) * q, my = loop[k][1] + (loop[k + 1][1] - loop[k][1]) * q;
+  const rx = r.map((_: number, i: number) => 300 + (1100 * (i + 1)) / (r.length + 1));
+  const passed = (x: number) => (k >= 1 && mx >= x) || k >= 2;
+  const items: [string, number, boolean][] = [[`battery  +${v} V`, v, k >= 1 || my < 530], ...r.map((_: number, i: number) => [`R${i + 1}  −${drops[i]} V`, -drops[i], passed(rx[i])] as [string, number, boolean])];
+  const total = items.filter((it) => it[2]).reduce((a, it) => a + it[1], 0);
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <polyline points={loop.map((z) => z.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />
+    <Battery x={300} y={540} v={v} />
+    {r.map((x: number, i: number) => <g key={i}><Res x={rx[i]} y={260} ohm={x} label={`R${i + 1}`} horizontal />
+      <text x={rx[i]} y={360} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={28} fontWeight={700}>{drops[i]} V</text></g>)}
+    <circle cx={mx} cy={my} r={22} fill={L.green} stroke="#fff" strokeWidth={4} />
+    <rect x={1500} y={240} width={360} height={110 + items.length * 60} rx={18} fill={L.panel} stroke={L.green} strokeWidth={4} />
+    {items.map((it, i) => <text key={i} x={1530} y={300 + i * 60} fill={it[2] ? (it[1] > 0 ? L.cyan : L.amber) : L.dim} opacity={it[2] ? 1 : 0.35} fontFamily={MONO} fontSize={30} fontWeight={700}>{it[0]}</text>)}
+    <text x={1530} y={320 + items.length * 60} fill={L.green} fontFamily={MONO} fontSize={34} fontWeight={800}>sum = {+total.toFixed(2)} V</text>
+    <text x={850} y={960} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={30}>walk around the loop: rises (+) and drops (−) add up to zero</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

@@ -1,0 +1,369 @@
+{
+ "title": "Kirchhoff's Current Law (KCL) - Network Theory Part 9",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "KCL",
+ "cover": "Kirchhoff's Current Law",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  4,
+  6
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 9 · Kirchhoff's current law",
+   "narration": "Welcome back. In the parallel circuits part, we watched current split at a junction and join again, and the total always matched. That was not a coincidence. It is one of the two great laws of circuit theory, given by Gustav Kirchhoff in 1845. Today we learn the first: Kirchhoff's current law, usually called KCL. It works for every circuit ever built, however complicated, and it is the foundation of nodal analysis.",
+   "kicker": "NETWORK THEORY · PART 9",
+   "title": "KIRCHHOFF'S CURRENT LAW",
+   "subtitle": "What flows into a node must flow out"
+  },
+  {
+   "type": "kcl",
+   "chapter": "9.1 · The law",
+   "narration": "Look at this node, where four wires meet. Watch the blue currents flowing in, and the orange currents flowing out. Five amperes and three amperes flow in. Two amperes and six amperes flow out. Now look at the total. In: five plus three is eight amperes. Out: two plus six is also eight amperes. The current flowing into a node always equals the current flowing out. That is Kirchhoff's current law.",
+   "currents": [
+    5,
+    3,
+    -2,
+    -6
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "9.2 · Why it must be true",
+   "narration": "Why must this always hold? Because charge cannot be created or destroyed, and a node is just a point of wire. It has no room to store charge. So every coulomb that arrives each second must leave in that same second. If more flowed in than out, charge would pile up at a single point, which never happens in a wire. KCL is simply conservation of charge, applied to a node. Think of water pipes joining: whatever water flows into the joint must flow out of it.",
+   "title": "KCL = conservation of charge",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Charge can't be created or destroyed",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "A node can't store charge",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "So: total in = total out",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "c",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Like water at a pipe joint"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "9.3 · Writing KCL",
+   "narration": "There are two ways to write KCL, and both mean the same thing. The first: the sum of currents entering equals the sum of currents leaving. The second: give currents entering a plus sign and currents leaving a minus sign, and then the algebraic sum of all currents at a node is zero. For our node: plus five, plus three, minus two, minus six, which is zero. Choose one sign rule and use it consistently for the whole problem.",
+   "formula": "Σ I_in = Σ I_out     or     Σ I = 0",
+   "terms": [
+    [
+     "Entering",
+     "+"
+    ],
+    [
+     "Leaving",
+     "−"
+    ]
+   ],
+   "example": [
+    "(+5) + (+3) + (−2) + (−6) = 0"
+   ]
+  },
+  {
+   "type": "kcl",
+   "chapter": "9.4 · Finding an unknown",
+   "narration": "Now let's use KCL to find a current we don't know. Four amperes and seven amperes flow into this node. Five amperes flows out through one wire. What flows out through the last wire? Think before the answer appears. In: four plus seven is eleven. Out so far: five. So the last wire must carry eleven minus five, which is six amperes, flowing out. Watch the label: six amperes out. KCL gave us the answer without measuring anything.",
+   "currents": [
+    4,
+    7,
+    -5,
+    -6
+   ],
+   "unknown": 3
+  },
+  {
+   "type": "formula",
+   "chapter": "9.5 · Direction you don't know",
+   "narration": "What if you don't know which way a current flows? Just guess. Draw an arrow in any direction, name it, and write KCL. If your answer comes out positive, the guess was right. If it comes out negative, the current simply flows the other way, with the same size. So a negative answer is not a mistake, it is information. This trick is used in every circuit analysis method.",
+   "formula": "Assume a direction → solve → sign tells the truth",
+   "terms": [
+    [
+     "Positive answer",
+     "flows as assumed"
+    ],
+    [
+     "Negative answer",
+     "flows opposite, same size"
+    ]
+   ],
+   "example": [
+    "I = −2 A → 2 A in the opposite direction"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "9.6 · KCL in a parallel circuit",
+   "narration": "Let's check KCL in a real circuit. Here three resistors are in parallel across twelve volts. Watch the top junction. The source current, two hundred and twenty milliamps, flows into it. Out of it flow one hundred and twenty, sixty and forty milliamps. Add them: one hundred and twenty plus sixty plus forty is two hundred and twenty. Exactly what came in. At the bottom junction, the three currents join and return to the battery. KCL holds at every node.",
+   "mode": "parallel",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ],
+   "show": [
+    "current"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "9.7 · KCL for a closed boundary",
+   "narration": "KCL is even more powerful. It works not only for a single node, but for any closed boundary drawn around part of a circuit. Draw a circle around a group of components: the total current entering the circle equals the total current leaving it, because no charge can pile up inside. This idea is used later for the supernode, and it is also why the current entering a chip through all its pins must equal the current leaving it.",
+   "title": "KCL for any closed boundary",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Draw a boundary around any region",
+     "x": 50,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Total current in = total current out",
+     "x": 50,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Used for the supernode later",
+     "x": 50,
+     "y": 85
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "9.8 · Where KCL is used",
+   "narration": "Engineers use KCL every day. Nodal analysis, which we will learn soon, is nothing but KCL written at every node. When an electrician checks a house, the current in the phase wire should equal the current returning in the neutral. If it does not, some current is leaking, maybe through a person, and the RCCB in your home uses exactly this KCL check to cut the power in a fraction of a second.",
+   "title": "KCL in practice",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Nodal analysis = KCL at each node",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "RCCB: phase current = neutral current?",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "If not equal → leakage → trip!",
+     "x": 75,
+     "y": 78
+    }
+   ],
+   "arrows": [
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Coming up in this course"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Saves lives"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Kirchhoff's current law: the total current entering a node equals the total current leaving it. Equivalently, the algebraic sum of currents at a node is zero. It comes from conservation of charge. If a current's direction is unknown, assume one, and a negative answer just means the opposite direction. And KCL also holds for any closed boundary.",
+   "title": "KCL in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Σ I_in = Σ I_out",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Σ I = 0 (in +, out −)",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Conservation of charge",
+     "x": 25,
+     "y": 72,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Works for any closed boundary",
+     "x": 75,
+     "y": 72,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "KCL is about current at a point. Kirchhoff's second law is about voltage around a path. In the next part we walk around closed loops, adding every rise and every drop, and discover why the total is always zero. That is Kirchhoff's voltage law.",
+   "title": "NEXT: KIRCHHOFF'S VOLTAGE LAW",
+   "lines": [
+    "In = out",
+    "Σ I = 0",
+    "Conservation of charge"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Kirchhoff's Current Law (KCL) Explained from Zero | Network Theory #10",
+  "description": "Network Theory from absolute zero - Part 10: Kirchhoff's current law.\n- KCL shown live at a node: current in = current out\n- Why: conservation of charge\n- Two ways to write KCL and the sign rule\n- Finding an unknown current\n- What a negative answer means\n- KCL checked in a parallel circuit\n- KCL for a closed boundary (supernode idea)\n- Real use: how an RCCB detects leakage\n\nPrevious: Parallel circuits. Next: Kirchhoff's voltage law.\n\n#NetworkTheory #KCL #KirchhoffsLaw #ECE",
+  "tags": [
+   "kcl",
+   "kirchhoff's current law",
+   "kirchhoff law",
+   "node current",
+   "network theory",
+   "circuit analysis",
+   "ece",
+   "basic electrical engineering"
+  ],
+  "playlist": "Network Theory"
+ }
+}
