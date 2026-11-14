@@ -1,0 +1,1399 @@
+{
+ "title": "Network Theory Numericals 6: Mesh Analysis and Supermesh",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Mesh Analysis and Supermesh Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 6",
+   "narration": "Welcome back. Today we solve circuits with mesh analysis. First a two mesh circuit with two voltage sources. Then a circuit with a current source on the outside branch, which makes one mesh current known immediately. And finally, a supermesh, where a current source sits in the shared branch. Every time: draw clockwise mesh currents, write KVL, solve, and check.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "MESH & SUPERMESH",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Two meshes, two sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ],
+     "label": "R3",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "3 V",
+     "value": null,
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "10 V source (left), 3 V source (right, + on top)",
+    "R1 = 2 Ω, R3 = 6 Ω on top",
+    "R2 = 4 Ω shared (middle)"
+   ],
+   "ask": "mesh currents I1, I2\nand the current in R2",
+   "narration": "Problem one. A ten volt source on the left, a three volt source on the right with its positive terminal at the top, two ohms and six ohms on top, and a four ohm resistor in the shared middle branch. Find the mesh currents and the current in the middle resistor. Draw I1 and I2 clockwise."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Two meshes, two sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ],
+     "label": "R3",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "3 V",
+     "value": null,
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: KVL mesh 1 (clockwise)",
+    "10 − 2·I1 − 4(I1 − I2) = 0",
+    "→ 6·I1 − 4·I2 = 10",
+    "Step 2: KVL mesh 2 (clockwise)",
+    "−6·I2 − 3 − 4(I2 − I1) = 0",
+    "→ 4·I1 − 10·I2 = 3"
+   ],
+   "answer": "",
+   "narration": "Step one, mesh one, walking clockwise. Up through the ten volt source: plus ten. Across R1: minus two I1. Down through the shared R2, which carries I1 minus I2: minus four times I1 minus I2. The sum is zero, giving six I1 minus four I2 equals ten. Step two, mesh two, clockwise. Across R3: minus six I2. Down through the three volt source, from plus to minus: minus three. Up through R2, where the current in our direction is I2 minus I1: minus four times I2 minus I1. This gives four I1 minus ten I2 equals three."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Two meshes, two sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ],
+     "label": "R3",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "3 V",
+     "value": null,
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: solve",
+    "from eq 1: I1 = (10 + 4·I2)/6",
+    "4(10 + 4I2)/6 − 10·I2 = 3",
+    "→ I2 = 0.5 A, I1 = 2 A",
+    "Step 4: middle branch",
+    "I(R2) = I1 − I2 = 1.5 A (down)",
+    "Check: 10 = 2·2 + 4·1.5 = 4 + 6 ✓"
+   ],
+   "answer": "I1 = 2 A · I2 = 0.5 A · I(R2) = 1.5 A ↓",
+   "narration": "Step three: solve. From the first equation, I1 equals ten plus four I2, all over six. Substitute into the second and solve: I2 equals half an ampere, and I1 equals two amperes. Step four: the middle resistor carries I1 minus I2, one point five amperes downward. Check KVL around mesh one: ten volts equals two times two, four, plus four times one point five, six. Four plus six is ten. Correct."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Current source on the outside",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R2",
+     "value": "6 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "1 A",
+     "value": null,
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "12 V source, R1 = 3 Ω, R2 = 6 Ω shared",
+    "1 A current source on the right branch",
+    "source arrow points down (clockwise)"
+   ],
+   "ask": "I1, I2 and the\ncurrent in R2",
+   "narration": "Problem two. Here the right hand branch is a one ampere current source, pointing down, which is the clockwise direction of mesh two. It belongs to mesh two only. Find both mesh currents and the current in the six ohm resistor."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Current source on the outside",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R2",
+     "value": "6 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "1 A",
+     "value": null,
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: outside current source",
+    "only mesh 2 passes through it",
+    "→ I2 = +1 A (same direction)",
+    "Step 2: KVL mesh 1",
+    "12 − 3·I1 − 6(I1 − I2) = 0",
+    "→ 9·I1 − 6·I2 = 12"
+   ],
+   "answer": "",
+   "narration": "Step one: the current source is on an outside branch, used only by mesh two, and it points in mesh two's clockwise direction. So I2 simply equals one ampere. No equation needed. Step two: KVL around mesh one: plus twelve, minus three I1, minus six times I1 minus I2, equals zero. That gives nine I1 minus six I2 equals twelve."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Current source on the outside",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R2",
+     "value": "6 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "1 A",
+     "value": null,
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: substitute I2 = 1",
+    "9·I1 − 6 = 12  →  I1 = 2 A",
+    "Step 4: shared branch",
+    "I(R2) = I1 − I2 = 2 − 1 = 1 A (down)",
+    "Check: 12 = 3·2 + 6·1 ✓",
+    "! no KVL for mesh 2 (source voltage unknown)"
+   ],
+   "answer": "I1 = 2 A · I2 = 1 A · I(R2) = 1 A ↓",
+   "narration": "Step three: put I2 equals one: nine I1 minus six equals twelve, so I1 equals two amperes. Step four: the shared resistor carries I1 minus I2, one ampere downward. Check: twelve volts equals three times two plus six times one. Correct. Notice we never wrote KVL for mesh two, because the voltage across a current source is unknown."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Supermesh",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "30 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ],
+     "label": "R2",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "I",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "2 A"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R3",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      3,
+      5
+     ],
+     "label": "R4",
+     "value": "1 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "30 V source; R1 = 2 Ω, R2 = 2 Ω on top",
+    "R3 = 3 Ω on the right, R4 = 1 Ω bottom-left",
+    "2 A source in the SHARED branch, pointing down"
+   ],
+   "ask": "mesh currents I1 and I2",
+   "narration": "Problem three, a supermesh. A thirty volt source, R1 and R2 of two ohms on top, R3 of three ohms on the right, R4 of one ohm on the bottom left, and a two ampere current source in the shared middle branch, pointing down. Find the mesh currents."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Supermesh",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "30 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ],
+     "label": "R2",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "I",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "2 A"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R3",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      3,
+      5
+     ],
+     "label": "R4",
+     "value": "1 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: constraint from the source",
+    "shared branch current (down) = I1 − I2",
+    "I1 − I2 = 2",
+    "Step 2: KVL around the supermesh",
+    "(outer loop, skip the source)",
+    "30 − 2·I1 − 2·I2 − 3·I2 − 1·I1 = 0",
+    "→ 3·I1 + 5·I2 = 30"
+   ],
+   "answer": "",
+   "narration": "Step one: the current source sits in the shared branch, so we cannot write KVL for either mesh on its own. Instead, it gives a constraint. In the middle branch, I1 flows down and I2 flows up, so the downward current is I1 minus I2, and the source forces it to be two amperes. Step two: KVL around the supermesh, the outer loop, skipping the source. Plus thirty, minus two I1 across R1, minus two I2 across R2, minus three I2 across R3, minus one I1 across R4. This gives three I1 plus five I2 equals thirty."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Supermesh",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "30 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.8,
+      1
+     ],
+     "b": [
+      8.2,
+      1
+     ],
+     "label": "R2",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "I",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "2 A"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R3",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      3,
+      5
+     ],
+     "label": "R4",
+     "value": "1 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: solve",
+    "I1 = I2 + 2",
+    "3(I2 + 2) + 5·I2 = 30  →  8·I2 = 24",
+    "I2 = 3 A, I1 = 5 A",
+    "Check: I1 − I2 = 2 A ✓",
+    "Check KVL: 30 = 2·5 + 2·3 + 3·3 + 1·5 = 30 ✓"
+   ],
+   "answer": "I1 = 5 A · I2 = 3 A",
+   "narration": "Step three: from the constraint, I1 equals I2 plus two. Substitute: three times I2 plus two, plus five I2, equals thirty. That is eight I2 plus six equals thirty, so I2 equals three amperes, and I1 equals five amperes. Check the constraint: five minus three is two. And KVL around the outside: ten plus six plus nine plus five equals thirty. Correct."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Draw every mesh current clockwise. In a shared branch, use your own mesh current minus the other. A current source on an outside branch gives that mesh current directly. A current source in a shared branch needs a supermesh: one constraint equation plus KVL around the combined loop. And check your answer with KVL around the outer loop.",
+   "title": "Exam tips: mesh & supermesh",
+   "parts": [
+    {
+     "id": "a",
+     "label": "All mesh currents clockwise",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Shared branch: (own − other)",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Outside I-source → mesh current known",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Shared I-source → supermesh + constraint",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Check KVL around the outer loop",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, the partner method: nodal analysis and the supernode, solved step by step.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Mesh Analysis & Supermesh Numericals Solved Step by Step | Network Theory Numericals #6",
+  "description": "Network Theory numericals - Part 6.\nProblem 1: two meshes with two voltage sources\nProblem 2: current source on an outside branch\nProblem 3: supermesh with a shared current source\nEvery answer checked with KVL.\n\n#NetworkTheory #MeshAnalysis #Supermesh #ECE",
+  "tags": [
+   "mesh analysis problems",
+   "supermesh numericals",
+   "mesh current method examples",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

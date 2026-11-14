@@ -1,0 +1,1018 @@
+{
+ "title": "Network Theory Numericals 7: Nodal Analysis and Supernode",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Nodal Analysis and Supernode Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 7",
+   "narration": "Welcome back. Today we solve circuits with nodal analysis. First a circuit with two unknown node voltages, a voltage source and a current source. Then a supernode, where a voltage source floats between two nodes. Remember the steps: choose ground, label node voltages, write KCL at each unknown node with every current as voltage difference over resistance, solve and check.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "NODAL & SUPERNODE",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Two-node circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "20 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      3.6,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      4,
+      5
+     ],
+     "label": "R2",
+     "value": "8 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6.6,
+      1
+     ],
+     "label": "R3",
+     "value": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      6.6,
+      5
+     ],
+     "label": "R4",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      8.6,
+      1
+     ]
+    },
+    {
+     "t": "I",
+     "a": [
+      8.6,
+      5
+     ],
+     "b": [
+      8.6,
+      1
+     ],
+     "label": "0.75 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.6,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      4,
+      1
+     ],
+     "label": "V1"
+    },
+    {
+     "at": [
+      6.6,
+      1
+     ],
+     "label": "V2"
+    },
+    {
+     "at": [
+      4,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "given": [
+    "20 V source with R1 = 4 Ω into node V1",
+    "R2 = 8 Ω (V1 to ground), R3 = 4 Ω (V1 to V2)",
+    "R4 = 8 Ω (V2 to ground)",
+    "0.75 A source pushing into V2"
+   ],
+   "ask": "node voltages V1, V2",
+   "narration": "Problem one. A twenty volt source feeds node V1 through four ohms. From V1, eight ohms goes to ground and four ohms goes to node V2. From V2, eight ohms goes to ground, and a zero point seven five ampere current source pushes current into V2. Find V1 and V2."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Two-node circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "20 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      3.6,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      4,
+      5
+     ],
+     "label": "R2",
+     "value": "8 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6.6,
+      1
+     ],
+     "label": "R3",
+     "value": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      6.6,
+      5
+     ],
+     "label": "R4",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      8.6,
+      1
+     ]
+    },
+    {
+     "t": "I",
+     "a": [
+      8.6,
+      5
+     ],
+     "b": [
+      8.6,
+      1
+     ],
+     "label": "0.75 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.6,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      4,
+      1
+     ],
+     "label": "V1"
+    },
+    {
+     "at": [
+      6.6,
+      1
+     ],
+     "label": "V2"
+    },
+    {
+     "at": [
+      4,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 1: KCL at V1 (currents leaving = 0)",
+    "(V1 − 20)/4 + V1/8 + (V1 − V2)/4 = 0",
+    "× 8:  2V1 − 40 + V1 + 2V1 − 2V2 = 0",
+    "→ 5·V1 − 2·V2 = 40",
+    "Step 2: KCL at V2",
+    "(V2 − V1)/4 + V2/8 − 0.75 = 0",
+    "× 8:  −2·V1 + 3·V2 = 6"
+   ],
+   "answer": "",
+   "narration": "Step one: KCL at V1, adding all currents leaving. Through R1 back to the twenty volt node: V1 minus twenty, over four. Through R2 to ground: V1 over eight. Through R3 to V2: V1 minus V2, over four. Multiply everything by eight to clear the fractions: five V1 minus two V2 equals forty. Step two: KCL at V2. Leaving through R3: V2 minus V1 over four. Leaving through R4: V2 over eight. The current source brings zero point seven five amperes in, so it counts as minus zero point seven five leaving. Times eight: minus two V1 plus three V2 equals six."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Two-node circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "20 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      3.6,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      4,
+      5
+     ],
+     "label": "R2",
+     "value": "8 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6.6,
+      1
+     ],
+     "label": "R3",
+     "value": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      6.6,
+      5
+     ],
+     "label": "R4",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      8.6,
+      1
+     ]
+    },
+    {
+     "t": "I",
+     "a": [
+      8.6,
+      5
+     ],
+     "b": [
+      8.6,
+      1
+     ],
+     "label": "0.75 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.6,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      4,
+      1
+     ],
+     "label": "V1"
+    },
+    {
+     "at": [
+      6.6,
+      1
+     ],
+     "label": "V2"
+    },
+    {
+     "at": [
+      4,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 3: solve",
+    "from eq 1: V2 = (5·V1 − 40)/2",
+    "−2·V1 + 3(5·V1 − 40)/2 = 6",
+    "→ 11·V1 = 132  →  V1 = 12 V",
+    "V2 = (60 − 40)/2 = 10 V",
+    "Check KCL at V2: in 0.75 + (12−10)/4 = 1.25",
+    "out 10/8 = 1.25 A ✓"
+   ],
+   "answer": "V1 = 12 V · V2 = 10 V",
+   "narration": "Step three: solve. From the first equation, V2 equals five V1 minus forty, all over two. Substituting into the second gives eleven V1 equals one hundred and thirty two, so V1 is twelve volts, and V2 is ten volts. Check KCL at V2: coming in, zero point seven five from the source plus twelve minus ten over four, half an ampere, total one point two five. Going out through R4: ten over eight, one point two five. Correct."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Supernode",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "4 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "Vb"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "given": [
+    "12 V source with R1 = 2 Ω into Va",
+    "R2 = 4 Ω (Va to ground), R3 = 2 Ω (Vb to ground)",
+    "4 V source between Va (+) and Vb (−)"
+   ],
+   "ask": "Va, Vb and the current\nthrough the 4 V source",
+   "narration": "Problem two, a supernode. A twelve volt source feeds node V a through two ohms. Four ohms goes from V a to ground, and two ohms from V b to ground. A four volt source connects V a and V b, with plus at V a. Neither end of it is ground, so it is a floating source. Find V a, V b and the current through the four volt source."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Supernode",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "4 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "Vb"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 1: constraint from the source",
+    "Va − Vb = 4",
+    "Step 2: KCL around the supernode",
+    "(Va − 12)/2 + Va/4 + Vb/2 = 0",
+    "× 4:  3·Va + 2·Vb = 24"
+   ],
+   "answer": "",
+   "narration": "Step one: the floating source gives a constraint: V a minus V b equals four. Step two: draw a boundary around both nodes and the source, the supernode, and add all currents leaving it. Through R1: V a minus twelve over two. Through R2: V a over four. Through R3: V b over two. The source current stays inside, so it does not appear. Multiplying by four gives three V a plus two V b equals twenty four."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Supernode",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "4 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "Vb"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 3: solve with Va = Vb + 4",
+    "3(Vb + 4) + 2·Vb = 24  →  5·Vb = 12",
+    "Vb = 2.4 V, Va = 6.4 V",
+    "Step 4: source current (KCL at Vb)",
+    "I = Vb / 2 = 1.2 A (from Va to Vb)",
+    "Check: (12 − 6.4)/2 = 2.8 = 6.4/4 + 1.2 ✓"
+   ],
+   "answer": "Va = 6.4 V · Vb = 2.4 V · I = 1.2 A",
+   "narration": "Step three: substitute V a equals V b plus four. Three V b plus twelve plus two V b equals twenty four, so five V b equals twelve, and V b is two point four volts. Then V a is six point four volts. Step four: the source current, from KCL at V b: all of it flows down through R3, two point four over two, one point two amperes. Check at V a: two point eight amperes arrive through R1, and one point six leave through R2 plus one point two through the source. Correct."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Choose the node with the most connections as ground. Write every current as leaving the node, so the signs are automatic. Multiply each equation by the least common multiple to clear fractions before solving. For a floating voltage source, use a supernode with a constraint equation. And always check KCL at one node with your final values.",
+   "title": "Exam tips: nodal & supernode",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Ground the node with most connections",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Write all currents as LEAVING",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Multiply by the LCM to clear fractions",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Floating V-source → supernode + constraint",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Check KCL at one node",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, we solve problems using the superposition theorem, one source at a time.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Nodal Analysis & Supernode Numericals Solved Step by Step | Network Theory Numericals #7",
+  "description": "Network Theory numericals - Part 7.\nProblem 1: two unknown node voltages with a voltage and a current source\nProblem 2: supernode with a floating 4 V source, and the source current\nEvery answer checked with KCL.\n\n#NetworkTheory #NodalAnalysis #Supernode #ECE",
+  "tags": [
+   "nodal analysis problems",
+   "supernode numericals",
+   "node voltage method examples",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

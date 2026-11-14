@@ -1,0 +1,1024 @@
+{
+ "title": "Network Theory Numericals 5: Source Transformation and Star-Delta",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Source Transformation and Star-Delta Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 5",
+   "narration": "Welcome back. Today we practise two simplifying tools. First, source transformation to combine two batteries connected in parallel. Then a direct delta to star conversion. And finally, a bridge network that cannot be solved with series and parallel rules, until we use star-delta. Every answer will be checked another way.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "SOURCE TRANSFORMATION & STAR-DELTA",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Combining sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "V",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      3.2
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      3.2
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R_L",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Source 1: 24 V with 6 Ω in series",
+    "Source 2: 12 V with 3 Ω in series",
+    "Both in parallel with R_L = 4 Ω"
+   ],
+   "ask": "load current I_L",
+   "narration": "Problem one. Two practical batteries are connected in parallel to a four ohm load. The first is twenty four volts with six ohms of internal resistance. The second is twelve volts with three ohms. Find the load current using source transformation."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Combining sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "V",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      3.2
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      3.2
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R_L",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: convert each to a current source",
+    "24 V, 6 Ω → 24/6 = 4 A ∥ 6 Ω",
+    "12 V, 3 Ω → 12/3 = 4 A ∥ 3 Ω",
+    "Step 2: add parallel current sources",
+    "4 + 4 = 8 A",
+    "Step 3: combine resistors: 6 ∥ 3 = 2 Ω"
+   ],
+   "answer": "",
+   "narration": "Step one: convert each practical voltage source into a current source with the same resistor in parallel. Twenty four over six gives four amperes with six ohms. Twelve over three gives four amperes with three ohms. Step two: the two current sources are now in parallel, so they add: eight amperes. Step three: the resistors are in parallel too: six in parallel with three is two ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Combining sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "V",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      3.2
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      3.2
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R_L",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 4: convert back",
+    "8 A × 2 Ω = 16 V, with 2 Ω in series",
+    "Step 5: load current",
+    "I_L = 16 / (2 + 4) = 2.67 A",
+    "Check (nodal): V = 8/(1/6+1/3+1/4) = 10.67 V",
+    "I_L = 10.67 / 4 = 2.67 A ✓"
+   ],
+   "answer": "I_L ≈ 2.67 A",
+   "narration": "Step four: convert back. Eight amperes times two ohms gives a single sixteen volt source with two ohms in series. Step five: the load current is sixteen divided by two plus four, about two point six seven amperes. Let's check with nodal analysis: the top node voltage is ten point six seven volts, and ten point six seven over four is two point six seven amperes. Both methods agree."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Delta to star",
+   "circuit": [
+    {
+     "t": "R",
+     "a": [
+      5,
+      0.8
+     ],
+     "b": [
+      2,
+      5
+     ],
+     "label": "R_AB",
+     "value": "10 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_BC",
+     "value": "20 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      5,
+      0.8
+     ],
+     "label": "R_CA",
+     "value": "30 Ω"
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      0.8
+     ],
+     "label": "A"
+    },
+    {
+     "at": [
+      2,
+      5
+     ],
+     "label": "B",
+     "dy": 50
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "C",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "Delta: R_AB = 10 Ω",
+    "R_BC = 20 Ω, R_CA = 30 Ω"
+   ],
+   "ask": "the equivalent star\nresistors R_A, R_B, R_C",
+   "narration": "Problem two. A delta network has R A B equal to ten ohms, R B C twenty ohms and R C A thirty ohms. Find the equivalent star."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Delta to star",
+   "circuit": [
+    {
+     "t": "R",
+     "a": [
+      5,
+      0.8
+     ],
+     "b": [
+      2,
+      5
+     ],
+     "label": "R_AB",
+     "value": "10 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_BC",
+     "value": "20 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      5,
+      0.8
+     ],
+     "label": "R_CA",
+     "value": "30 Ω"
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      0.8
+     ],
+     "label": "A"
+    },
+    {
+     "at": [
+      2,
+      5
+     ],
+     "label": "B",
+     "dy": 50
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "C",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: sum of all three",
+    "10 + 20 + 30 = 60 Ω",
+    "Step 2: product of the two touching / sum",
+    "R_A = R_AB·R_CA / 60 = 10×30/60 = 5 Ω",
+    "R_B = R_AB·R_BC / 60 = 10×20/60 = 3.33 Ω",
+    "R_C = R_BC·R_CA / 60 = 20×30/60 = 10 Ω"
+   ],
+   "answer": "",
+   "narration": "Step one: add all three delta resistors: sixty ohms. Step two: each star resistor is the product of the two delta resistors touching that terminal, divided by sixty. At A, the touching ones are R A B and R C A: ten times thirty over sixty, five ohms. At B: ten times twenty over sixty, three point three three ohms. At C: twenty times thirty over sixty, ten ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Delta to star",
+   "circuit": [
+    {
+     "t": "R",
+     "a": [
+      5,
+      0.8
+     ],
+     "b": [
+      2,
+      5
+     ],
+     "label": "R_AB",
+     "value": "10 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_BC",
+     "value": "20 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      5,
+      0.8
+     ],
+     "label": "R_CA",
+     "value": "30 Ω"
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      0.8
+     ],
+     "label": "A"
+    },
+    {
+     "at": [
+      2,
+      5
+     ],
+     "label": "B",
+     "dy": 50
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "C",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Check: resistance between A and B",
+    "Delta: 10 ∥ (20 + 30) = 10×50/60 = 8.33 Ω",
+    "Star: R_A + R_B = 5 + 3.33 = 8.33 Ω ✓"
+   ],
+   "answer": "R_A = 5 Ω · R_B = 3.33 Ω · R_C = 10 Ω",
+   "narration": "Let's check between terminals A and B. In the delta, ten ohms is in parallel with the path through C, twenty plus thirty, fifty ohms: ten in parallel with fifty is eight point three three ohms. In the star, it is R A plus R B, five plus three point three three, also eight point three three ohms. They match."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Bridge network",
+   "circuit": [
+    {
+     "t": "R",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "2 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "6 Ω"
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      3
+     ],
+     "label": "A",
+     "dx": -30,
+     "dy": 10
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "C"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "D",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      3
+     ],
+     "label": "B",
+     "dx": 30,
+     "dy": 10
+    }
+   ],
+   "given": [
+    "A–C = 6 Ω, A–D = 3 Ω, C–D = 2 Ω",
+    "C–B = 4 Ω, D–B = 6 Ω"
+   ],
+   "ask": "equivalent resistance\nbetween A and B",
+   "narration": "Problem three, the classic bridge. From A, six ohms goes to C and three ohms goes to D. Two ohms connects C and D. Then four ohms goes from C to B, and six ohms from D to B. Find the resistance between A and B. No two resistors are in series or parallel, so we use star-delta."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Bridge network",
+   "circuit": [
+    {
+     "t": "R",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "2 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "6 Ω"
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      3
+     ],
+     "label": "A",
+     "dx": -30,
+     "dy": 10
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "C"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "D",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      3
+     ],
+     "label": "B",
+     "dx": 30,
+     "dy": 10
+    }
+   ],
+   "steps": [
+    "Step 1: delta A-C-D → star",
+    "sum = 6 + 3 + 2 = 11 Ω",
+    "R_A = 6×3/11 = 1.636 Ω",
+    "R_C = 6×2/11 = 1.091 Ω",
+    "R_D = 3×2/11 = 0.545 Ω"
+   ],
+   "answer": "",
+   "narration": "Step one: the triangle A, C, D is a delta: six, three and two ohms. Their sum is eleven. Convert to a star. R A is six times three over eleven, one point six three six ohms. R C is six times two over eleven, one point zero nine one. R D is three times two over eleven, zero point five four five."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Bridge network",
+   "circuit": [
+    {
+     "t": "R",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "2 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "6 Ω"
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      3
+     ],
+     "label": "A",
+     "dx": -30,
+     "dy": 10
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "C"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "D",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      3
+     ],
+     "label": "B",
+     "dx": 30,
+     "dy": 10
+    }
+   ],
+   "steps": [
+    "Step 2: now series and parallel",
+    "path via C: 1.091 + 4 = 5.091 Ω",
+    "path via D: 0.545 + 6 = 6.545 Ω",
+    "5.091 ∥ 6.545 = 2.864 Ω",
+    "Step 3: add R_A: 1.636 + 2.864 = 4.5 Ω",
+    "Check (nodal, 1 A in at A): V_A = 4.5 V ✓"
+   ],
+   "answer": "R_AB = 4.5 Ω",
+   "narration": "Step two: now the network is simple. From the star centre, one path goes through R C and the four ohm resistor: five point zero nine one ohms. The other goes through R D and the six ohm resistor: six point five four five ohms. These two paths are in parallel: two point eight six four ohms. Step three: add R A in series: one point six three six plus two point eight six four is exactly four point five ohms. A nodal check, pushing one ampere into A, gives four point five volts at A, confirming four point five ohms."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. In source transformation, the resistor value never changes, it only moves between series and parallel, and the current arrow points to the old positive terminal. For delta to star, use the product of the two touching resistors over the sum. For star to delta, use P over the opposite resistor. And always check by comparing the resistance between two terminals in both forms.",
+   "title": "Exam tips: transformations",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Source transformation: R stays, moves series ↔ parallel",
+     "x": 50,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Δ→Y: product of 2 touching / sum",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Y→Δ: P / opposite",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Check: resistance between two terminals",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, we solve circuits with mesh analysis and the supermesh, writing and solving the equations step by step.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Source Transformation & Star-Delta Numericals (Bridge Network Solved) | Network Theory Numericals #5",
+  "description": "Network Theory numericals - Part 5.\nProblem 1: two batteries in parallel combined by source transformation, checked by nodal\nProblem 2: delta to star conversion with a terminal check\nProblem 3: bridge network solved with star-delta (R = 4.5 Ω)\nPlus exam tips.\n\n#NetworkTheory #StarDelta #SourceTransformation #ECE",
+  "tags": [
+   "source transformation problems",
+   "star delta numericals",
+   "bridge network problem",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
