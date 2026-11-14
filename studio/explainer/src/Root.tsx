@@ -10,7 +10,8 @@ import { VISUAL_SCENES } from "./visuals";
 import { ANALOG_SCENES } from "./analog";
 import { SolveScene } from "./solve";
 import { StickScene } from "./stick";
-const SOLVE_SCENES: Record<string, any> = { solve: SolveScene, stick: StickScene };
+import { SagaScene } from "./saga";
+const SOLVE_SCENES: Record<string, any> = { solve: SolveScene, stick: StickScene, saga: SagaScene };
 import { ChannelIntro, ChannelOutro } from "./brand";
 import { FlowIntro, FlowOutro } from "./flow";
 import { FlowIntro2, FlowOutro2 } from "./flow2";
@@ -41,7 +42,7 @@ const Film: React.FC<{ ep: any; pick?: number[]; hook?: string; short?: boolean 
         const Bg = bgScene ? (LAB_SCENES[bgScene.type] || DOMAIN_SCENES[bgScene.type] || STORY_SCENES[bgScene.type] || VISUAL_SCENES[bgScene.type]) : undefined;
         return (
           <Sequence key={s.idx} from={from} durationInFrames={d}>
-            {lab ? <LabFrame caption={s.narration} dur={d} scene={s} ep={ep} progress={(from + d) / all}>{Bg && <AbsoluteFill style={{ opacity: 0.75 }}><Bg {...bgScene} dur={d} /></AbsoluteFill>}{ep.story && short && s.type !== "stick" && s.type !== "cover" ? <><AbsoluteFill style={{ transform: "translateY(-20%)" }}><Comp {...s} dur={d} Visual={vis} /></AbsoluteFill><StickScene pose="point" say={s.volt_say || "Watch closely!"} name="Volt" dur={d} bubbleY={1060} /></> : <Comp {...s} dur={d} Visual={vis} />}</LabFrame>
+            {lab ? <LabFrame caption={s.narration} dur={d} scene={s} ep={ep} progress={(from + d) / all}>{Bg && <AbsoluteFill style={{ opacity: 0.75 }}><Bg {...bgScene} dur={d} /></AbsoluteFill>}{ep.story && short && s.type !== "stick" && s.type !== "saga" && s.type !== "cover" ? <><AbsoluteFill style={{ transform: "translateY(-20%)" }}><Comp {...s} dur={d} Visual={vis} /></AbsoluteFill><StickScene pose="point" say={s.volt_say || "Watch closely!"} name="Volt" dur={d} bubbleY={1060} /></> : <Comp {...s} dur={d} Visual={vis} />}</LabFrame>
                  : <Frame caption={s.narration} dur={d}><Comp {...s} dur={d} /></Frame>}
             {s.audio && <Audio src={staticFile(`audio/${s.audio_key || "s" + s.idx}.mp3`)} />}
           </Sequence>
