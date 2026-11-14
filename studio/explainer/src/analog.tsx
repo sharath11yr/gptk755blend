@@ -615,4 +615,34 @@ export const SrcTxScene: React.FC<any> = ({ dur, vs = 12, r = 4, rl = [8, 2, 20]
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ star-delta: {"mode":"d2y"|"y2d","r":[6,12,18]}
+// delta: R_AB, R_BC, R_CA. star: R_A, R_B, R_C (each joined to the centre N)
+const ZZ: React.FC<{ a: number[]; b: number[]; color: string; label: string; o?: number }> = ({ a, b, color, label, o = 1 }) => {
+  const dx = b[0] - a[0], dy = b[1] - a[1], L2 = Math.hypot(dx, dy), ux = dx / L2, uy = dy / L2, nx = -uy, ny = ux;
+  const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; const h = 70;
+  const sgn = ((m[0] - 960) * nx + (m[1] - 593) * ny) >= 0 ? 1 : -1;
+  const pts = [a, [m[0] - ux * h, m[1] - uy * h], ...Array.from({ length: 6 }, (_, i) => { const t = -h + ((i + 0.5) * 2 * h) / 6; const s = i % 2 ? -18 : 18; return [m[0] + ux * t + nx * s, m[1] + uy * t + ny * s]; }), [m[0] + ux * h, m[1] + uy * h], b];
+  return <g opacity={o}><polyline points={pts.map((q) => q.join(",")).join(" ")} fill="none" stroke={color} strokeWidth={6} strokeLinejoin="round" />
+    <text x={m[0] + sgn * nx * 40} y={m[1] + sgn * ny * (Math.abs(ny) > 0.7 ? 62 : 40) + 10} textAnchor={sgn * nx > 0.3 ? "start" : sgn * nx < -0.3 ? "end" : "middle"} fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>{label}</text></g>;
+};
+export const StarDelta: React.FC<any> = ({ dur, mode = "d2y", r = [6, 12, 18] }) => {
+  const f = useCurrentFrame();
+  const A = [960, 200], B = [620, 790], C = [1300, 790], N = [960, 593];
+  let Rab: number, Rbc: number, Rca: number, Ra: number, Rb: number, Rc: number;
+  if (mode === "d2y") { [Rab, Rbc, Rca] = r; const S = Rab + Rbc + Rca; Ra = (Rab * Rca) / S; Rb = (Rab * Rbc) / S; Rc = (Rbc * Rca) / S; }
+  else { [Ra, Rb, Rc] = r; const P = Ra * Rb + Rb * Rc + Rc * Ra; Rab = P / Rc; Rbc = P / Ra; Rca = P / Rb; }
+  const t = interpolate(f, [dur * 0.35, dur * 0.6], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const dO = mode === "d2y" ? 1 - t * 0.75 : t, yO = mode === "d2y" ? t : 1 - t * 0.75;
+  const fm = (v: number) => `${+v.toFixed(2)} Ω`;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <ZZ a={A} b={B} color={L.amber} label={`R_AB = ${fm(Rab)}`} o={dO} /><ZZ a={B} b={C} color={L.amber} label={`R_BC = ${fm(Rbc)}`} o={dO} /><ZZ a={C} b={A} color={L.amber} label={`R_CA = ${fm(Rca)}`} o={dO} />
+    <ZZ a={A} b={N} color={L.cyan} label={`R_A = ${fm(Ra)}`} o={yO} /><ZZ a={B} b={N} color={L.cyan} label={`R_B = ${fm(Rb)}`} o={yO} /><ZZ a={C} b={N} color={L.cyan} label={`R_C = ${fm(Rc)}`} o={yO} />
+    {[[A, "A"], [B, "B"], [C, "C"]].map(([q, n]: any, i) => <g key={i}><circle cx={q[0]} cy={q[1]} r={18} fill={L.green} /><text x={q[0] + (i === 0 ? 0 : i === 1 ? -50 : 50)} y={q[1] + (i === 0 ? -34 : 50)} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={40} fontWeight={800}>{n}</text></g>)}
+    <circle cx={N[0]} cy={N[1]} r={12} fill={L.cyan} opacity={yO} />
+    <text x={300} y={150} fill={L.amber} fontFamily={SANS} fontSize={36} fontWeight={700} opacity={0.4 + 0.6 * dO}>DELTA (Δ)</text>
+    <text x={1620} y={150} textAnchor="end" fill={L.cyan} fontFamily={SANS} fontSize={36} fontWeight={700} opacity={0.4 + 0.6 * yO}>STAR (Y)</text>
+    <text x={960} y={960} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={30}>{mode === "d2y" ? "same three terminals A, B, C → same behaviour from outside" : "star → delta: same terminals, same behaviour"}</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

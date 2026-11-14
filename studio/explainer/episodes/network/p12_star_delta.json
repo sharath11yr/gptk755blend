@@ -1,0 +1,398 @@
+{
+ "title": "Star-Delta Transformation - Network Theory Part 12",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Star-Delta",
+ "cover": "Star-Delta Transformation",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  3,
+  4
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 12 · Star-delta transformation",
+   "narration": "Welcome back. In the last part, source transformation let us reshape sources. But sometimes the problem is the resistors themselves. Some networks have three resistors joined in a triangle, or in a Y shape, and they are neither in series nor in parallel. Our usual rules cannot combine them. Today we learn the star-delta transformation, which converts one shape into the other, so the network suddenly becomes easy to simplify.",
+   "kicker": "NETWORK THEORY · PART 12",
+   "title": "STAR-DELTA TRANSFORMATION",
+   "subtitle": "Turning triangles into Ys, and back"
+  },
+  {
+   "type": "diagram",
+   "chapter": "12.1 · The problem",
+   "narration": "Look at this kind of network, called a bridge. Five resistors connect four points. Pick any two resistors: none of them are in series, because three branches meet at every junction, and none are in parallel, because no two share the same pair of nodes. So we cannot just add or combine them. We need a new trick that changes the shape of part of the network without changing how it behaves from the outside.",
+   "title": "Neither series nor parallel",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Bridge network: 5 resistors, 4 nodes",
+     "x": 50,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "No two resistors in series",
+     "x": 25,
+     "y": 65
+    },
+    {
+     "id": "c",
+     "label": "No two resistors in parallel",
+     "x": 75,
+     "y": 65
+    },
+    {
+     "id": "d",
+     "label": "→ change the shape",
+     "x": 50,
+     "y": 90,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "a",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b",
+      "c"
+     ],
+     "note": "Normal rules fail"
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "stardelta",
+   "chapter": "12.2 · Delta and star",
+   "narration": "Here are the two shapes. In amber, three resistors form a triangle between points A, B and C. Because the triangle looks like the Greek letter delta, it is called a delta connection. Now watch: the triangle fades and a new shape appears in blue, three resistors joined at a centre point, reaching out to A, B and C. It looks like the letter Y, or a star, so it is called a star, or Y, connection. Both shapes connect the same three terminals. If we choose the right values, they behave exactly the same from outside.",
+   "mode": "d2y",
+   "r": [
+    6,
+    12,
+    18
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "12.3 · Delta to star",
+   "narration": "Here is how to convert a delta into a star. Each star resistor equals the product of the two delta resistors touching that same terminal, divided by the sum of all three delta resistors. For terminal A, the delta resistors touching A are R A B and R C A. So R A equals R A B times R C A, over the sum. With six, twelve and eighteen ohms, the sum is thirty six. R A is six times eighteen over thirty six, three ohms. R B is six times twelve over thirty six, two ohms. R C is twelve times eighteen over thirty six, six ohms.",
+   "formula": "R_A = R_AB·R_CA / (R_AB + R_BC + R_CA)",
+   "terms": [
+    [
+     "R_B",
+     "R_AB·R_BC / sum"
+    ],
+    [
+     "R_C",
+     "R_BC·R_CA / sum"
+    ],
+    [
+     "Rule",
+     "product of the two touching / sum of all three"
+    ]
+   ],
+   "example": [
+    "R_AB = 6, R_BC = 12, R_CA = 18 → sum = 36",
+    "R_A = 3 Ω · R_B = 2 Ω · R_C = 6 Ω"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "12.4 · Check: same from outside",
+   "narration": "Let's check that the two shapes really behave the same. Measure the resistance between A and B, with C left open. In the delta, R A B, six ohms, is in parallel with the path through C: twelve plus eighteen, thirty ohms. Six in parallel with thirty is five ohms. In the star, the path from A to B goes through R A and R B: three plus two, also five ohms. The same answer. You can check B to C and C to A the same way, and they match too.",
+   "formula": "Δ: 6 ∥ (12 + 18) = 5 Ω     Y: 3 + 2 = 5 Ω",
+   "terms": [
+    [
+     "Between A and B",
+     "C left open"
+    ]
+   ],
+   "example": [
+    "Same resistance seen from the terminals → equivalent"
+   ]
+  },
+  {
+   "type": "stardelta",
+   "chapter": "12.5 · Star to delta",
+   "narration": "Now the opposite direction. We start with a star, of three, two and six ohms, and watch it turn back into a triangle. The values that appear are six, twelve and eighteen ohms, exactly where we began. So the two conversions undo each other.",
+   "mode": "y2d",
+   "r": [
+    3,
+    2,
+    6
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "12.5 · Star to delta",
+   "narration": "The rule for star to delta: first find P, the sum of the products of the star resistors taken two at a time. R A times R B, plus R B times R C, plus R C times R A. With three, two and six: six plus twelve plus eighteen, P equals thirty six. Then each delta resistor equals P divided by the star resistor on the opposite side. R A B is opposite to R C, so it is thirty six over six, six ohms. R B C is thirty six over three, twelve ohms. R C A is thirty six over two, eighteen ohms.",
+   "formula": "R_AB = P / R_C     P = R_A·R_B + R_B·R_C + R_C·R_A",
+   "terms": [
+    [
+     "R_BC",
+     "P / R_A"
+    ],
+    [
+     "R_CA",
+     "P / R_B"
+    ],
+    [
+     "Rule",
+     "P divided by the opposite star resistor"
+    ]
+   ],
+   "example": [
+    "P = 6 + 12 + 18 = 36",
+    "R_AB = 6 · R_BC = 12 · R_CA = 18"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "12.6 · Equal resistors",
+   "narration": "When all three resistors are equal, the formulas become very simple. A delta of three equal resistors R becomes a star of three resistors, each R over three. And a star of equal resistors R becomes a delta of three R. For example, a delta of three thirty ohm resistors becomes a star of ten ohm resistors. This special case appears often, especially in three phase power systems.",
+   "formula": "R_Y = R_Δ / 3          R_Δ = 3 R_Y",
+   "terms": [
+    [
+     "Balanced",
+     "all three resistors equal"
+    ]
+   ],
+   "example": [
+    "Δ of 30 Ω → Y of 10 Ω"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "12.7 · Solving the bridge",
+   "narration": "Now let's solve the bridge we could not solve before. From terminal A: ten ohms to C, ten ohms to D, and five ohms between C and D, forming a delta A, C, D. Then ten ohms from C to B, and ten ohms from D to B. Convert the delta. The sum is twenty five. R A is ten times ten over twenty five, four ohms. R C and R D are each ten times five over twenty five, two ohms. Now the network is simple: four ohms in series with two parallel paths, two plus ten and two plus ten, that is twelve in parallel with twelve, six ohms. Total: four plus six, ten ohms.",
+   "formula": "R_AB = 4 + (12 ∥ 12) = 10 Ω",
+   "terms": [
+    [
+     "Delta A-C-D",
+     "10, 5, 10 Ω → sum 25"
+    ],
+    [
+     "Star",
+     "R_A = 4 Ω, R_C = 2 Ω, R_D = 2 Ω"
+    ],
+    [
+     "Paths",
+     "2 + 10 = 12 Ω each"
+    ]
+   ],
+   "example": [
+    "Total = 4 + 6 = 10 Ω"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "12.8 · Where it is used",
+   "narration": "Star-delta conversion is used far beyond textbook bridges. Three phase power systems connect generators, transformers and motors in either star or delta, and engineers convert between them all the time. Large induction motors are often started in star to reduce the starting current, then switched to delta to run at full power. And measuring bridges and some filter circuits are analysed with exactly this trick.",
+   "title": "Star-delta in practice",
+   "parts": [
+    {
+     "id": "x",
+     "label": "STAR ⇄ DELTA",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Three-phase power systems",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Star-delta motor starters",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Bridge circuits",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Filter & network analysis",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": "Lower starting current"
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A delta is three resistors in a triangle, a star is three resistors joined at a centre. Delta to star: product of the two touching resistors divided by the sum of all three. Star to delta: P, the sum of products taken two at a time, divided by the opposite resistor. For equal resistors: star is delta over three. And these conversions unlock networks like the bridge that series and parallel rules cannot solve.",
+   "title": "Star-delta in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Δ → Y: product of 2 touching / sum",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Y → Δ: P / opposite",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Equal: R_Y = R_Δ / 3",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Solves bridge networks",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We can now reshape sources and resistors. Next comes the first complete, systematic method for solving any planar circuit: mesh analysis. We will write KVL around each mesh and find every current, step by step.",
+   "title": "NEXT: MESH ANALYSIS",
+   "lines": [
+    "Δ → Y",
+    "Y → Δ",
+    "R_Y = R_Δ / 3"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Star-Delta (Y-Δ) Transformation Explained from Zero | Network Theory #13",
+  "description": "Network Theory from absolute zero - Part 13: star-delta transformation.\n- Why bridge networks can't be solved with series/parallel\n- Delta and star connections (animated)\n- Delta to star formula, with an example\n- Proof: same resistance between the terminals\n- Star to delta formula\n- Equal resistors: R_Y = R_Δ / 3\n- Solving a bridge network step by step\n- Real uses: three-phase systems, star-delta motor starters\n\nPrevious: Source transformation. Next: Mesh analysis.\n\n#NetworkTheory #StarDelta #ECE #CircuitAnalysis",
+  "tags": [
+   "star delta transformation",
+   "delta to star",
+   "star to delta",
+   "y delta",
+   "bridge network",
+   "network theory",
+   "circuit analysis",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
