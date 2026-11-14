@@ -931,4 +931,32 @@ export const CoupledScene: React.FC<any> = ({ dur, mode = "mutual", k = 0.5 }) =
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { coupled: CoupledScene, resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ network graph of the NetScene circuit: {"mode":"graph"|"tree"|"tieset"|"cutset"}
+export const GraphScene: React.FC<any> = ({ dur, mode = "graph" }) => {
+  const f = useCurrentFrame();
+  const N: Record<string, number[]> = { A: [460, 300], B: [960, 300], C: [1460, 300], D: [960, 800] };
+  const E: [string, string, string, string][] = [["1", "A", "D", "V"], ["2", "A", "B", "R1"], ["3", "B", "D", "R2"], ["4", "B", "C", "R3"], ["5", "C", "D", "R4"]];
+  const twigs = ["1", "3", "5"];
+  const ties: [string[], string][] = [[["2", "3", "1"], "tie-set of link R1: {R1, R2, V}"], [["4", "5", "3"], "tie-set of link R3: {R3, R4, R2}"]];
+  const cuts: [string[], string, string][] = [[["1", "2"], "A", "cut-set of twig V: {V, R1}"], [["3", "2", "4"], "B", "cut-set of twig R2: {R2, R1, R3}"], [["5", "4"], "C", "cut-set of twig R4: {R4, R3}"]];
+  const nk = mode === "tieset" ? ties.length : mode === "cutset" ? cuts.length : 1;
+  const k = Math.min(nk - 1, Math.floor(interpolate(f, [dur * 0.1, dur * 0.92], [0, nk], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })));
+  const hot = mode === "tieset" ? ties[k][0] : mode === "cutset" ? cuts[k][0] : [];
+  const label = mode === "graph" ? "Graph: 4 nodes, 5 branches (elements become lines)" : mode === "tree" ? "Tree: twigs (green) connect all nodes, no loop · links dashed"
+    : mode === "tieset" ? ties[k][1] : cuts[k][2];
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {E.map(([id, a, b, nm]) => { const [x1, y1] = N[a], [x2, y2] = N[b]; const tw = twigs.includes(id); const on = hot.includes(id);
+      const showTree = mode !== "graph"; const col = on ? L.amber : showTree ? (tw ? L.green : L.dim) : L.cyan;
+      const path = id === "1" ? `M${x1} ${y1} L${x1} ${y2} L${x2} ${y2}` : id === "5" ? `M${x1} ${y1} L${x1} ${y2} L${x2} ${y2}` : `M${x1} ${y1} L${x2} ${y2}`;
+      const mid = id === "1" ? [x1, (y1 + y2) / 2] : id === "5" ? [x1, (y1 + y2) / 2] : [(x1 + x2) / 2, (y1 + y2) / 2];
+      return <g key={id}><path d={path} fill="none" stroke={col} strokeWidth={on ? 12 : showTree && !tw ? 5 : 8} strokeDasharray={showTree && !tw && !on ? "16 12" : undefined} />
+        <rect x={mid[0] - 62} y={mid[1] - 26} width={124} height={44} rx={10} fill={L.bg0} /><text x={mid[0]} y={mid[1] + 8} textAnchor="middle" fill={col} fontFamily={MONO} fontSize={28} fontWeight={800}>{id}: {nm}</text></g>; })}
+    {Object.entries(N).map(([n, [x, y]]) => <g key={n}><circle cx={x} cy={y} r={22} fill={mode === "cutset" && cuts[k][1] === n ? L.amber : L.text} />
+      <text x={x} y={n === "D" ? y + 64 : y - 38} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={36} fontWeight={800}>{n}</text></g>)}
+    {mode === "cutset" && <circle cx={N[cuts[k][1]][0]} cy={N[cuts[k][1]][1]} r={150} fill="none" stroke={L.amber} strokeWidth={4} strokeDasharray="12 10" />}
+    <text x={960} y={150} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={38} fontWeight={700}>{label}</text>
+    {mode !== "graph" && <text x={960} y={960} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={30}>twigs = n − 1 = 3 · links = b − n + 1 = 2</text>}
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { graph: GraphScene, coupled: CoupledScene, resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
