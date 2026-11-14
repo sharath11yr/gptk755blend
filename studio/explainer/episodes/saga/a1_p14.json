@@ -103,8 +103,26 @@
     }
    ],
    "caption": "Then the cold came.",
-   "narration": "But far in the north, the sky was turning white. The great cold was coming.",
-   "partcard": "PART 15 → NEXT"
+   "narration": "But far in the north, the sky was turning white. The great cold was coming."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "ice",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 420,
+     "expr": "fear"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "What is coming from the north? Guess below!",
+   "partcard": "PART 15 → NEXT",
+   "narration": "What is coming from the north? Guess below! Follow so you don't miss the next part."
   }
  ],
  "yt": {

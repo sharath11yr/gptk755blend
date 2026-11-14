@@ -82,8 +82,27 @@
    ],
    "caption": "Then they heard howling.",
    "narration": "Then, through the storm, they heard it. Howling. Getting closer.",
+   "animal": "wolf"
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
    "animal": "wolf",
-   "partcard": "PART 7 → NEXT"
+   "fire": false,
+   "firex": null,
+   "caption": "Will the fire survive the wolves? What do you think?",
+   "partcard": "PART 7 → NEXT",
+   "narration": "Will the fire survive the wolves? What do you think? Follow so you don't miss the next part."
   }
  ],
  "yt": {

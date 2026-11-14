@@ -88,8 +88,26 @@
     }
    ],
    "caption": "But the fire could be seen…",
-   "narration": "But fire can be seen from very far away. And on the hill, someone was watching.",
-   "partcard": "PART 6 → NEXT"
+   "narration": "But fire can be seen from very far away. And on the hill, someone was watching."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "expr": "angry"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "Who was watching them? Comment your guess!",
+   "partcard": "PART 6 → NEXT",
+   "narration": "Who was watching them? Comment your guess below. Follow so you don't miss the next part."
   }
  ],
  "yt": {

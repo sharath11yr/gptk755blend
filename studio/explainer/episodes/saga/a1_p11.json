@@ -82,8 +82,26 @@
    "caption": "A small voice: \"Papa…\"",
    "narration": "Then, from a clearing ahead, a small voice. Papa…",
    "fire": true,
+   "firex": 820
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 540,
+     "expr": "fear"
+    }
+   ],
+   "animal": "none",
+   "fire": true,
    "firex": 820,
-   "partcard": "PART 12 → NEXT"
+   "caption": "Is Leo safe? What do you think?",
+   "partcard": "PART 12 → NEXT",
+   "narration": "Is Leo safe? What do you think? Follow so you don't miss the next part."
   }
  ],
  "yt": {

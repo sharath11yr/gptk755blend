@@ -94,8 +94,26 @@
     }
    ],
    "caption": "Footsteps outside.",
-   "narration": "Then, outside the cave, heavy footsteps. Someone had followed her.",
-   "partcard": "PART 4 → NEXT"
+   "narration": "Then, outside the cave, heavy footsteps. Someone had followed her."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "cave",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "expr": "curious"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "Who followed Mia? Comment below!",
+   "partcard": "PART 4 → NEXT",
+   "narration": "Who followed Mia? Comment below! Follow so you don't miss the next part."
   }
  ],
  "yt": {

@@ -77,8 +77,27 @@
     }
    ],
    "caption": "\"Then you'll both burn.\"",
-   "narration": "She stayed. Zor's face went dark. Then you will both pay, he said, and vanished into the night.",
-   "partcard": "PART 5 → NEXT"
+   "narration": "She stayed. Zor's face went dark. Then you will both pay, he said, and vanished into the night."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "What will Zor do next? Guess in the comments!",
+   "partcard": "PART 5 → NEXT",
+   "narration": "What will Zor do next? Guess in the comments! Follow so you don't miss the next part."
   }
  ],
  "yt": {

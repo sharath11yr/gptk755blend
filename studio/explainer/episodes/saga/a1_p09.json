@@ -89,8 +89,26 @@
     }
    ],
    "caption": "Leo went too far.",
-   "narration": "One evening, Leo chased a rabbit into the forest. Too far. And he wasn't alone.",
-   "partcard": "PART 10 → NEXT"
+   "narration": "One evening, Leo chased a rabbit into the forest. Too far. And he wasn't alone."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 420,
+     "expr": "fear"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "Who is waiting in the forest? Guess below!",
+   "partcard": "PART 10 → NEXT",
+   "narration": "Who is waiting in the forest? Guess below! Follow so you don't miss the next part."
   }
  ],
  "yt": {

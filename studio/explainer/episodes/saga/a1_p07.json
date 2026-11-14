@@ -83,8 +83,27 @@
     }
    ],
    "caption": "\"John… I have to tell you something.\"",
-   "narration": "Breathless, Mia held his arm. John, she whispered. I have to tell you something.",
-   "partcard": "PART 8 → NEXT"
+   "narration": "Breathless, Mia held his arm. John, she whispered. I have to tell you something."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "expr": "fear"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "What is Mia's secret? Guess below!",
+   "partcard": "PART 8 → NEXT",
+   "narration": "What is Mia's secret? Guess below! Follow so you don't miss the next part."
   }
  ],
  "yt": {

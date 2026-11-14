@@ -94,8 +94,27 @@
     }
    ],
    "caption": "The ground began to shake.",
-   "narration": "Then, on the fifth day, the ground began to shake. Something enormous was coming.",
-   "partcard": "ARC 2 COMING"
+   "narration": "Then, on the fifth day, the ground began to shake. Something enormous was coming."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "ice",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 420,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "What is shaking the ground? Comment your guess!",
+   "partcard": "ARC 2 COMING",
+   "narration": "What is shaking the ground? Comment your guess below. Follow so you don't miss the next part."
   }
  ],
  "yt": {

@@ -75,8 +75,28 @@
     }
    ],
    "caption": "Then… silence.",
-   "narration": "Then silence. Mia ran to the grass. And saw blood. A lot of blood.",
-   "partcard": "PART 3 → NEXT"
+   "narration": "Then silence. Mia ran to the grass. And saw blood. A lot of blood."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 600,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "Did John survive? What do you think?",
+   "partcard": "PART 3 → NEXT",
+   "narration": "Did John survive? What do you think? Follow so you don't miss the next part."
   }
  ],
  "yt": {

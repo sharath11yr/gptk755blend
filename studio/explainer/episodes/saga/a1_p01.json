@@ -83,8 +83,27 @@
    ],
    "caption": "The grass moved…",
    "narration": "But behind him, the tall grass moved. Slowly. Silently.",
+   "animal": "lion"
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
    "animal": "lion",
-   "partcard": "PART 2 → NEXT"
+   "fire": false,
+   "firex": null,
+   "caption": "Who is in the grass? Comment your guess!",
+   "partcard": "PART 2 → NEXT",
+   "narration": "Who is in the grass? Comment your guess below. Follow so you don't miss the next part."
   }
  ],
  "yt": {

@@ -83,8 +83,27 @@
     }
    ],
    "caption": "Into the Dark Forest.",
-   "narration": "The tracks led into the Dark Forest, where no one had ever come back.",
-   "partcard": "PART 11 → NEXT"
+   "narration": "The tracks led into the Dark Forest, where no one had ever come back."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "walk",
+     "expr": "angry"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "Will John find Leo in time? Comment!",
+   "partcard": "PART 11 → NEXT",
+   "narration": "Will John find Leo in time? Comment! Follow so you don't miss the next part."
   }
  ],
  "yt": {

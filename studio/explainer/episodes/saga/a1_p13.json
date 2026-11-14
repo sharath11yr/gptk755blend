@@ -78,8 +78,26 @@
     }
    ],
    "caption": "\"Why?\"",
-   "narration": "Why? Zor asked. Because my son is watching, John said.",
-   "partcard": "PART 14 → NEXT"
+   "narration": "Why? Zor asked. Because my son is watching, John said."
+  },
+  {
+   "type": "saga",
+   "chapter": "Your guess",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "expr": "curious"
+    }
+   ],
+   "animal": "none",
+   "fire": false,
+   "firex": null,
+   "caption": "Will Zor change? What do you think?",
+   "partcard": "PART 14 → NEXT",
+   "narration": "Will Zor change? What do you think? Follow so you don't miss the next part."
   }
  ],
  "yt": {
