@@ -1,0 +1,560 @@
+{
+ "title": "Laplace Transform in Circuits - Network Theory Part 32",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Laplace",
+ "cover": "Laplace Transform",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  5,
+  6
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 32 · Laplace transform",
+   "narration": "Welcome to the final theory part of this course. In the transients parts, every inductor and capacitor brought a derivative or an integral into the equations, and RLC circuits gave second order differential equations. Solving those directly is hard. The Laplace transform is a mathematical tool that turns differential equations into simple algebra. With it, any linear circuit, with any switching, can be solved step by step, using the same methods we already know.",
+   "kicker": "NETWORK THEORY · PART 32",
+   "title": "LAPLACE TRANSFORM",
+   "subtitle": "Turning differential equations into algebra"
+  },
+  {
+   "type": "diagram",
+   "chapter": "32.1 · The big idea",
+   "narration": "Here is the plan. We move the problem from the time domain, where things change with t, into a new domain called the s domain, using the Laplace transform. In the s domain, derivatives become multiplication by s, and integrals become division by s. So the circuit equations become ordinary algebra. We solve the algebra, then use the inverse Laplace transform to come back to the time domain with the answer.",
+   "title": "Laplace in three steps",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Time domain: differential equation",
+     "x": 20,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "s-domain: plain algebra",
+     "x": 50,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Back to time: the answer",
+     "x": 80,
+     "y": 40,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "d/dt → × s · ∫ dt → ÷ s",
+     "x": 50,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     "Laplace"
+    ],
+    [
+     "b",
+     "c",
+     "inverse"
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Hard"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Easy"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "32.2 · The definition",
+   "narration": "The Laplace transform of a function f of t is the integral, from zero to infinity, of f of t times e to the minus s t, d t. The result is a function of s, written capital F of s. The variable s is a complex frequency. You do not have to evaluate this integral every time: engineers use a short table of standard pairs, which we see next.",
+   "formula": "F(s) = ∫₀^∞ f(t) e^(−st) dt",
+   "terms": [
+    [
+     "s",
+     "complex frequency, σ + jω"
+    ],
+    [
+     "F(s)",
+     "the transform of f(t)"
+    ]
+   ],
+   "example": [
+    "We mostly use a table of pairs"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "32.3 · The pairs you need",
+   "narration": "Here are the pairs used in almost every circuit problem. A unit impulse transforms to one. A unit step, a switch turning on a constant, transforms to one over s. An exponential e to the minus a t transforms to one over s plus a. A sine wave, sine omega t, transforms to omega over s squared plus omega squared, and cosine omega t to s over s squared plus omega squared. Learn these few, and you can handle most problems.",
+   "formula": "u(t) → 1/s     e^(−at) → 1/(s + a)",
+   "terms": [
+    [
+     "δ(t)",
+     "→ 1"
+    ],
+    [
+     "sin ωt",
+     "→ ω/(s² + ω²)"
+    ],
+    [
+     "cos ωt",
+     "→ s/(s² + ω²)"
+    ],
+    [
+     "t",
+     "→ 1/s²"
+    ]
+   ],
+   "example": [
+    "A constant 10 V switched on → 10/s"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "32.4 · Circuit elements in the s-domain",
+   "narration": "Now the best part: we can transform the circuit itself, not just the equations. A resistor stays R. An inductor becomes an impedance s L. A capacitor becomes an impedance one over s C. If an inductor already carries current at t equals zero, add a small voltage source L times i zero in series. If a capacitor is already charged, add a source v zero over s in series. Then use Ohm's law, KCL, KVL, mesh, nodal or any theorem, exactly as before.",
+   "title": "Elements in the s-domain",
+   "parts": [
+    {
+     "id": "r",
+     "label": "R → R",
+     "x": 20,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "l",
+     "label": "L → sL (+ source L·i(0))",
+     "x": 50,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "C → 1/(sC) (+ source v(0)/s)",
+     "x": 80,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "m",
+     "label": "Then: Ohm, KCL, KVL, mesh, nodal, theorems",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "r",
+     "m",
+     ""
+    ],
+    [
+     "l",
+     "m",
+     ""
+    ],
+    [
+     "c",
+     "m",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "l"
+     ],
+     "note": "Like jωL with s in place of jω"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "m"
+     ],
+     "note": "Nothing new to learn"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "32.5 · Example: RC charging",
+   "narration": "Let's solve the RC circuit from the transients part with Laplace. Ten volts switched on through one kilo-ohm into an uncharged one thousand microfarad capacitor. The source becomes ten over s. The capacitor becomes one over s C. By Ohm's law, I of s equals ten over s, divided by R plus one over s C. Multiply top and bottom by s, and simplify: I of s equals ten over R, times one over s plus one over R C. With R C equal to one second, I of s equals zero point zero one over s plus one.",
+   "formula": "I(s) = (10/s) / (R + 1/(sC)) = (10/R) / (s + 1/RC)",
+   "terms": [
+    [
+     "R",
+     "1000 Ω"
+    ],
+    [
+     "RC",
+     "1 s"
+    ]
+   ],
+   "example": [
+    "I(s) = 0.01 / (s + 1)"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "32.6 · Back to time",
+   "narration": "Now look up the table: one over s plus a comes from e to the minus a t. So zero point zero one over s plus one comes from zero point zero one times e to the minus t. The current is ten milliamps times e to the minus t over one second. That is exactly the answer we found in the transients part with the time constant method, but this time with no differential equation at all.",
+   "formula": "i(t) = 0.01 e^(−t) A = 10 e^(−t/τ) mA",
+   "terms": [
+    [
+     "Inverse pair",
+     "1/(s + a) → e^(−at)"
+    ]
+   ],
+   "example": [
+    "Same as Part 26 ✓"
+   ]
+  },
+  {
+   "type": "rc",
+   "chapter": "32.7 · The same curve",
+   "narration": "Here is that result on the circuit. Watch the current start at ten milliamps and decay exponentially, while the capacitor voltage rises towards ten volts. Laplace predicted every point of this curve with simple algebra and one table lookup.",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001
+  },
+  {
+   "type": "formula",
+   "chapter": "32.8 · Transfer function, poles and zeros",
+   "narration": "Laplace also gives the transfer function, H of s, the ratio of output to input in the s domain. For the RC circuit with the output across the capacitor, H of s equals one over one plus s R C. The values of s that make the denominator zero are called poles. Here there is one pole, at s equals minus one over R C, minus one. A pole at minus a always produces a term e to the minus a t in the response. Poles on the left side mean the response dies out: the circuit is stable.",
+   "formula": "H(s) = V_out / V_in = 1 / (1 + sRC)",
+   "terms": [
+    [
+     "Pole",
+     "s = −1/RC = −1"
+    ],
+    [
+     "Left-half-plane poles",
+     "stable, response decays"
+    ]
+   ],
+   "example": [
+    "Pole at −a ↔ e^(−at) in the answer"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "32.9 · Initial and final value theorems",
+   "narration": "Two shortcuts let you check answers without going back to time. The initial value theorem: f at zero plus equals the limit of s F of s as s goes to infinity. The final value theorem: f at infinity equals the limit of s F of s as s goes to zero, valid when the system is stable. For our current, s times zero point zero one over s plus one tends to zero point zero one as s goes to infinity: ten milliamps at the start. And it tends to zero as s goes to zero: no current at the end. Both correct.",
+   "formula": "f(0⁺) = lim s→∞ sF(s)     f(∞) = lim s→0 sF(s)",
+   "terms": [
+    [
+     "Check",
+     "i(0⁺) = 10 mA, i(∞) = 0"
+    ]
+   ],
+   "example": [
+    "Final value theorem: stable systems only"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "32.10 · Common mistakes",
+   "narration": "Common mistakes with Laplace. One: forgetting the initial condition sources for a charged capacitor or an inductor already carrying current. Two: writing the capacitor as s C instead of one over s C. Three: transforming a step of ten volts as ten instead of ten over s. Four: using the final value theorem on an unstable or oscillating system. Five: messy partial fractions: always check the result at t equals zero and at infinity.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Include initial-condition sources",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "C → 1/(sC), L → sL",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Step of 10 V → 10/s",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Final value theorem: stable only",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Check t = 0⁺ and t → ∞",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "32.11 · Where Laplace is used",
+   "narration": "Laplace transforms are the working language of control systems, where engineers design cruise control, robot arms and drones using transfer functions and poles. Filter designers use them to shape frequency responses. Power engineers use them to study faults and switching surges. And every circuit simulator uses the same ideas under the hood.",
+   "title": "Laplace at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "LAPLACE",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Control systems",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Filter design",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Switching & fault studies",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Signals & systems",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. The Laplace transform moves a circuit into the s domain, where derivatives become multiplication by s. Resistors stay R, inductors become s L and capacitors one over s C, with sources for initial conditions. Solve with the usual methods, then return with the table of pairs. Transfer functions and their poles tell us the shape and stability of the response. And this completes the theory of our Network Theory course.",
+   "title": "Laplace in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "d/dt → s · step → 1/s",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "R, sL, 1/(sC)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Solve → inverse with the table",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "H(s), poles → stability",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Congratulations! You have completed the full theory of Network Theory, from what electricity is, all the way to Laplace transforms. Next, the numericals series begins in this same playlist: solved problems for every topic, step by step, exactly the way they appear in exams.",
+   "title": "NEXT: NUMERICALS SERIES",
+   "lines": [
+    "Theory complete",
+    "33 parts",
+    "Numericals next"
+   ],
+   "cta": "Numericals start next"
+  }
+ ],
+ "yt": {
+  "title": "Laplace Transform for Circuit Analysis Explained from Zero | Network Theory #33",
+  "description": "Network Theory from absolute zero - Part 33: the Laplace transform.\n- Why Laplace: differential equations become algebra\n- Definition and the table of pairs you need\n- R, sL and 1/(sC), with initial-condition sources\n- Worked example: RC charging solved in the s-domain, matching the transient result\n- Transfer function, poles and stability\n- Initial and final value theorems\n- Common mistakes\n\nThis completes the Network Theory theory series. Next: numericals for every topic.\n\n#NetworkTheory #LaplaceTransform #ECE #CircuitAnalysis",
+  "tags": [
+   "laplace transform",
+   "laplace transform circuit analysis",
+   "s domain",
+   "transfer function",
+   "poles and zeros",
+   "initial value theorem",
+   "final value theorem",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
