@@ -789,6 +789,12 @@ export const PhasorScene: React.FC<any> = ({ dur, mode = "gen", vm = 325, phi = 
       <text x={cx} y={cy + R + 80} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={30} fontWeight={800}>{phi === 0 ? `φ = 0° (in phase)` : phi > 0 ? `φ = ${phi}° (${label2} lags)` : `φ = ${-phi}° (${label2} leads)`}</text></g>}
     <polyline points={wave(0)} fill="none" stroke={L.cyan} strokeWidth={6} />
     {two && <polyline points={wave(-ph, 0.7)} fill="none" stroke={L.amber} strokeWidth={6} />}
+    {mode === "power" && (() => { const pw = Array.from({ length: 240 }, (_, i) => { const a = (i / 239) * th; const v = Math.sin(a) * Math.sin(a - ph);
+        return `${X0 + (a / (2 * Math.PI * cycles)) * GW},${cy - v * A}`; }).join(" "); const avg = 0.5 * Math.cos(ph);
+      return <g><polyline points={wave(-ph, 0.7)} fill="none" stroke={L.amber} strokeWidth={5} opacity={0.8} /><polyline points={pw} fill="none" stroke={L.green} strokeWidth={7} />
+        <line x1={X0} y1={cy - avg * A} x2={X0 + GW} y2={cy - avg * A} stroke={L.red} strokeWidth={3} strokeDasharray="10 8" />
+        <rect x={X0 + GW - 360} y={cy - avg * A - 52} width={360} height={40} rx={8} fill={L.bg0} opacity={0.9} />
+        <text x={X0 + GW - 10} y={cy - avg * A - 22} textAnchor="end" fill={L.red} fontFamily={MONO} fontSize={26} fontWeight={800}>average = real power P</text></g>; })()}
     {mode === "rms" && <g><polyline points={wave(0, 1, true)} fill="none" stroke={L.amber} strokeWidth={5} opacity={0.9} />
       <line x1={X0} y1={cy - 0.5 * A} x2={X0 + GW} y2={cy - 0.5 * A} stroke={L.green} strokeWidth={4} strokeDasharray="12 8" />
       <text x={X0 + GW - 10} y={cy - 0.5 * A + 36} textAnchor="end" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>average of v² = Vm²/2</text>
@@ -798,7 +804,7 @@ export const PhasorScene: React.FC<any> = ({ dur, mode = "gen", vm = 325, phi = 
     <text x={X0 + GW} y={cy + 44} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>time →</text>
     <text x={X0 - 14} y={cy - A + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>+{vm} V</text>
     <text x={X0 - 14} y={cy + A + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>−{vm} V</text>
-    <text x={X0 + GW / 2} y={170} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={32} fontWeight={700}>{mode === "gen" ? `angle = ${Math.round((th * 180) / Math.PI) % 360}°   ·   v = Vm sin(θ)` : two ? `${label1} (blue) and ${label2} (amber)` : "squaring the wave, then averaging"}</text>
+    <text x={X0 + GW / 2} y={170} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={32} fontWeight={700}>{mode === "gen" ? `angle = ${Math.round((th * 180) / Math.PI) % 360}°   ·   v = Vm sin(θ)` : two ? `${label1} (blue) and ${label2} (amber)` : mode === "power" ? "v (blue) × i (amber) = p (green)" : "squaring the wave, then averaging"}</text>
   </svg></AbsoluteFill>;
 };
 
@@ -813,8 +819,8 @@ export const ComplexScene: React.FC<any> = ({ dur, mode = "plane", re = 3, im = 
     <line x1={P(-6.5, 0)[0]} y1={O[1]} x2={P(6.5, 0)[0]} y2={O[1]} stroke={L.text} strokeWidth={3} /><line x1={O[0]} y1={P(0, 6.5)[1]} x2={O[0]} y2={P(0, -6.5)[1]} stroke={L.text} strokeWidth={3} />
     <text x={P(6.5, 0)[0] + 10} y={O[1] + 10} fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>real</text>
     <text x={O[0] + 14} y={P(0, 6.5)[1] - 8} fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>imaginary (j)</text></g>;
-  const panel = (lines: string[]) => <g><rect x={1300} y={300} width={560} height={70 + lines.length * 62} rx={18} fill={L.panel} stroke={L.green} strokeWidth={3} />
-    {lines.map((t, i) => <text key={i} x={1580} y={360 + i * 62} textAnchor="middle" fill={i === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={34} fontWeight={800} opacity={fade(f, dur * 0.15 + i * dur * 0.15, 10)}>{t}</text>)}</g>;
+  const panel = (lines: string[]) => { const fs = Math.min(34, Math.floor(520 / (Math.max(...lines.map((x) => x.length)) * 0.6))); return <g><rect x={1300} y={300} width={580} height={70 + lines.length * 62} rx={18} fill={L.panel} stroke={L.green} strokeWidth={3} />
+    {lines.map((t, i) => <text key={i} x={1590} y={360 + i * 62} textAnchor="middle" fill={i === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={fs} fontWeight={800} opacity={fade(f, dur * 0.15 + i * dur * 0.15, 10)}>{t}</text>)}</g>; };
   if (mode === "j") {
     const k = Math.min(3, Math.floor(interpolate(f, [dur * 0.12, dur * 0.85], [0, 4], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })));
     const pts = [[4, 0], [0, 4], [-4, 0], [0, -4]]; const names = ["1 × 4 = 4", "j × 4 = j4", "j² × 4 = −4", "j³ × 4 = −j4"];

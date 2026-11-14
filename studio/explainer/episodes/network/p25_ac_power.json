@@ -1,0 +1,395 @@
+{
+ "title": "AC Power - Network Theory Part 25",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Power",
+ "cover": "AC Power",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  5,
+  7
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 25 · AC power",
+   "narration": "Welcome back. In DC, power was simple: P equals V times I. In AC, voltage and current keep changing, and with inductors or capacitors they are not even in step. So how much power does an AC circuit really use? Today we answer that. We will meet three kinds of power, real, reactive and apparent, see the power triangle, and learn why industries add capacitors to fix a poor power factor.",
+   "kicker": "NETWORK THEORY · PART 25",
+   "title": "AC POWER",
+   "subtitle": "Real, reactive, apparent power and power factor"
+  },
+  {
+   "type": "phasor",
+   "chapter": "25.1 · Instantaneous power",
+   "narration": "At every instant, the power is the voltage times the current at that instant: p equals v times i. Watch the waves. Blue is the voltage, amber is the current, lagging by fifty three degrees, and green is their product, the power. Notice something surprising: for short moments, the green power curve goes below zero. During those moments, energy flows back from the circuit to the source. That happens because the inductor stores energy and then returns it. The dashed red line is the average power, the energy actually used.",
+   "mode": "power",
+   "vm": 325,
+   "phi": 53
+  },
+  {
+   "type": "formula",
+   "chapter": "25.2 · Real power",
+   "narration": "The average power, the energy actually converted into heat, light or motion every second, is called real power, or active power, P. It equals V times I times the cosine of the phase angle, using RMS values. Only the resistor uses real power. For our circuit from the last part, two hundred and thirty volts and four point six amperes with an angle of fifty three point one three degrees: two thirty times four point six times zero point six, which is six hundred and thirty four point eight watts. Check with the resistor: four point six squared times thirty gives the same.",
+   "formula": "P = V I cos φ = I²R",
+   "terms": [
+    [
+     "Unit",
+     "watt (W)"
+    ],
+    [
+     "V, I",
+     "RMS values"
+    ],
+    [
+     "Used by",
+     "resistance only"
+    ]
+   ],
+   "example": [
+    "230 × 4.6 × 0.6 = 634.8 W",
+    "4.6² × 30 = 634.8 W ✓"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "25.3 · Reactive power",
+   "narration": "The energy that sloshes back and forth between the source and the inductor or capacitor is described by reactive power, Q. It does no useful work, but it still makes current flow through the wires. Q equals V times I times the sine of the phase angle, measured in volt ampere reactive, VAR. For our circuit: two thirty times four point six times zero point eight, which is eight hundred and forty six point four VAR. Check with the inductor: four point six squared times forty gives the same. Inductors absorb reactive power, capacitors supply it.",
+   "formula": "Q = V I sin φ = I²X",
+   "terms": [
+    [
+     "Unit",
+     "volt-ampere reactive (VAR)"
+    ],
+    [
+     "Inductor",
+     "absorbs Q (+)"
+    ],
+    [
+     "Capacitor",
+     "supplies Q (−)"
+    ]
+   ],
+   "example": [
+    "230 × 4.6 × 0.8 = 846.4 VAR",
+    "4.6² × 40 = 846.4 VAR ✓"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "25.4 · Apparent power",
+   "narration": "Finally, the plain product of RMS voltage and RMS current, ignoring the angle, is called apparent power, S, measured in volt amperes, VA. It tells how much current the wires, transformers and generators must carry. For our circuit: two thirty times four point six, one thousand and fifty eight VA. Transformers and UPS units are rated in kVA, not kilowatts, because their heating depends on the current, whatever the power factor.",
+   "formula": "S = V I",
+   "terms": [
+    [
+     "Unit",
+     "volt-ampere (VA), kVA"
+    ],
+    [
+     "Rating",
+     "transformers, UPS, generators"
+    ]
+   ],
+   "example": [
+    "230 × 4.6 = 1058 VA"
+   ]
+  },
+  {
+   "type": "complex",
+   "chapter": "25.5 · The power triangle",
+   "narration": "The three powers form a right angled triangle, exactly like the impedance triangle. Real power P along the horizontal, six hundred and thirty four point eight watts. Reactive power Q going up, eight hundred and forty six point four VAR. And the long side is the apparent power S, one thousand and fifty eight VA, at the same angle, fifty three point one three degrees. In complex form, S equals P plus j Q. So S squared equals P squared plus Q squared.",
+   "mode": "plane",
+   "re": 3,
+   "im": 4,
+   "k": 211.6
+  },
+  {
+   "type": "formula",
+   "chapter": "25.6 · Power factor",
+   "narration": "Power factor is the ratio of real power to apparent power: P over S, which equals cos phi. For our circuit: six thirty four point eight over one thousand fifty eight, zero point six lagging. It means only sixty percent of the current flowing does useful work. Factories with many motors often have power factors around zero point seven. Electricity boards charge penalties for low power factor, because the extra current heats their cables and transformers.",
+   "formula": "pf = P / S = cos φ",
+   "terms": [
+    [
+     "Lagging",
+     "inductive loads (motors, fans)"
+    ],
+    [
+     "Leading",
+     "capacitive loads"
+    ],
+    [
+     "Ideal",
+     "pf = 1"
+    ]
+   ],
+   "example": [
+    "634.8 / 1058 = 0.6 lagging"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "25.7 · Power factor correction",
+   "narration": "How do we fix it? Add a capacitor in parallel with the load. The capacitor supplies reactive power locally, so it no longer has to flow from the supply. To cancel all eight hundred and forty six point four VAR at two hundred and thirty volts, fifty hertz, the capacitor needs Q equals V squared omega C, so C equals eight forty six point four divided by two thirty squared times three fourteen point one six, about fifty one microfarads. Now the power factor is one, and the supply current falls from four point six to just two point seven six amperes, for the same useful power.",
+   "formula": "C = Q / (V² ω)",
+   "terms": [
+    [
+     "Q to cancel",
+     "846.4 VAR"
+    ],
+    [
+     "V², ω",
+     "230², 314.16"
+    ]
+   ],
+   "example": [
+    "C ≈ 50.9 µF",
+    "Supply current: 4.6 A → 634.8/230 = 2.76 A"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "25.8 · Why correction helps",
+   "narration": "Look at what changed. The load still gets exactly the same six hundred and thirty four point eight watts. But the current from the supply dropped by forty percent. Less current means less heating in cables, smaller losses in transformers, and more spare capacity in the same wires. That is why every large building and factory has banks of power factor correction capacitors, often switched automatically.",
+   "title": "Power factor correction",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Same real power: 634.8 W",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Supply current: 4.6 A → 2.76 A",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Less heating, lower bills, more capacity",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "c",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "25.9 · Common mistakes",
+   "narration": "Common mistakes with AC power. One: using peak values instead of RMS in P equals V I cos phi. Two: adding P and Q directly: S is the square root of P squared plus Q squared, not P plus Q. Three: calculating real power with the impedance instead of the resistance: P equals I squared R, not I squared Z. Four: forgetting whether the power factor is leading or lagging. Five: putting the correction capacitor in series instead of in parallel.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Use RMS values",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "S = √(P² + Q²), not P + Q",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "P = I²R (not I²Z)",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "State leading / lagging",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Correction capacitor in PARALLEL",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Real power P equals V I cos phi, in watts, the useful power. Reactive power Q equals V I sine phi, in VAR, energy sloshing back and forth. Apparent power S equals V I, in VA, what the wires carry. They form the power triangle, S equals P plus j Q. Power factor is cos phi, and a parallel capacitor corrects a lagging power factor.",
+   "title": "AC power in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "P = VI cos φ (W)",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Q = VI sin φ (VAR)",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "S = VI (VA) · S = P + jQ",
+     "x": 25,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "pf = P/S = cos φ",
+     "x": 75,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Fix low pf: parallel capacitor",
+     "x": 50,
+     "y": 88,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "So far our AC circuits were in steady state, running for a long time. But what happens in the first moments after a switch is closed, before things settle? That is the world of transients. Next, we study how RC and RL circuits respond to sudden changes, and the time constant that controls them.",
+   "title": "NEXT: TRANSIENTS (RC & RL)",
+   "lines": [
+    "P = VI cos φ",
+    "Q = VI sin φ",
+    "S = VI",
+    "pf correction"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "AC Power Explained: Real, Reactive, Apparent Power & Power Factor | Network Theory #26",
+  "description": "Network Theory from absolute zero - Part 26: AC power.\n- Instantaneous power p = v·i, and why it goes negative (animated)\n- Real power P = VI cos φ (W)\n- Reactive power Q = VI sin φ (VAR)\n- Apparent power S = VI (VA, kVA ratings)\n- The power triangle, S = P + jQ\n- Power factor and its penalties\n- Power factor correction with a capacitor (worked example: 4.6 A → 2.76 A)\n- Common mistakes\n\nPrevious: R, L, C in AC. Next: Transients.\n\n#NetworkTheory #PowerFactor #ACPower #ECE",
+  "tags": [
+   "ac power",
+   "real power",
+   "reactive power",
+   "apparent power",
+   "power triangle",
+   "power factor correction",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
