@@ -1,0 +1,525 @@
+{
+ "title": "Transients in RC and RL Circuits - Network Theory Part 26",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Transients",
+ "cover": "Transients",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  5,
+  6
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 26 · Transients in RC and RL circuits",
+   "narration": "Welcome back. Everything in the AC parts assumed a circuit that has been running for a long time, in steady state. But the moment you flip a switch, the circuit does not jump instantly to its new state. For a short time, voltages and currents change smoothly from their old values to their new ones. This short period is called the transient. Today we learn to predict it exactly, for circuits with a resistor and a capacitor, or a resistor and an inductor.",
+   "kicker": "NETWORK THEORY · PART 26",
+   "title": "TRANSIENTS: RC & RL",
+   "subtitle": "What happens right after a switch moves"
+  },
+  {
+   "type": "diagram",
+   "chapter": "26.1 · Why transients happen",
+   "narration": "Why can't a circuit change instantly? Because capacitors and inductors store energy, and energy cannot change in zero time. That needs infinite power. A capacitor stores energy in its voltage, so a capacitor's voltage cannot jump. An inductor stores energy in its current, so an inductor's current cannot jump. These two rules are the key to every transient problem.",
+   "title": "Two rules that never break",
+   "parts": [
+    {
+     "id": "c",
+     "label": "Capacitor VOLTAGE can't jump",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "l",
+     "label": "Inductor CURRENT can't jump",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Stored energy can't change instantly",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "e",
+     "c",
+     ""
+    ],
+    [
+     "e",
+     "l",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "½CV²"
+    },
+    {
+     "highlight": [
+      "l"
+     ],
+     "note": "½LI²"
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "rc",
+   "chapter": "26.2 · RC charging",
+   "narration": "Here is an RC circuit: ten volts, one kilo-ohm, and a one thousand microfarad capacitor, starting empty. We close the switch at time zero. Watch the meters. At the very first instant, the capacitor voltage is still zero, because it cannot jump. So all ten volts appear across the resistor, and the current jumps to ten milliamps. Then, as the capacitor charges, its voltage rises along the curve, and the current falls. The curve is exponential, controlled by the time constant tau equals R C, here one second.",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001
+  },
+  {
+   "type": "formula",
+   "chapter": "26.3 · The charging equations",
+   "narration": "Here are the exact equations. The capacitor voltage is V times one minus e to the minus t over tau. The current is V over R times e to the minus t over tau. The number e is about two point seven one eight, and e to the minus t over tau is simply a number that starts at one and shrinks towards zero as time passes. At t equals tau, it is zero point three six eight. That is why the voltage reaches sixty three point two percent after one time constant.",
+   "formula": "v_C(t) = V (1 − e^(−t/τ))     i(t) = (V/R) e^(−t/τ)",
+   "terms": [
+    [
+     "τ = RC",
+     "time constant (s)"
+    ],
+    [
+     "e^(−1)",
+     "≈ 0.368"
+    ]
+   ],
+   "example": [
+    "τ = 1 kΩ × 1000 µF = 1 s",
+    "At t = 1 s: v_C = 6.32 V, i = 3.68 mA"
+   ]
+  },
+  {
+   "type": "bars",
+   "chapter": "26.4 · How fast it settles",
+   "narration": "This table is worth remembering. After one time constant, the capacitor reaches sixty three point two percent of its final value. After two, eighty six point five percent. After three, ninety five percent. After four, ninety eight point two percent. And after five time constants, ninety nine point three percent. Engineers say a transient is over after five time constants.",
+   "title": "Percent of final value",
+   "unit": "%",
+   "items": [
+    [
+     "1 τ",
+     63.2
+    ],
+    [
+     "2 τ",
+     86.5
+    ],
+    [
+     "3 τ",
+     95.0
+    ],
+    [
+     "4 τ",
+     98.2
+    ],
+    [
+     "5 τ",
+     99.3
+    ]
+   ]
+  },
+  {
+   "type": "rc",
+   "chapter": "26.5 · RC discharging",
+   "narration": "Now the capacitor is charged to ten volts, and we switch it to discharge through the resistor and a small lamp. Watch: the capacitor voltage starts at ten volts, because it cannot jump, and falls exponentially. The current now flows the other way. After one time constant, thirty six point eight percent is left. After five, it is practically empty.",
+   "mode": "discharge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001,
+   "lamp": true
+  },
+  {
+   "type": "rl",
+   "chapter": "26.6 · RL circuit",
+   "narration": "Now an RL circuit: ten volts, ten ohms and a ten henry inductor. We close the switch. The inductor current cannot jump, so it starts at zero and rises along the same exponential curve. The time constant is tau equals L over R, ten over ten, one second. The current reaches sixty three point two percent of its final value, one ampere, after one second, and practically all of it after five seconds.",
+   "mode": "on",
+   "v": 10,
+   "r": 10,
+   "l": 10
+  },
+  {
+   "type": "formula",
+   "chapter": "26.7 · The general formula",
+   "narration": "Here is one formula that solves almost every first order transient. Any voltage or current x of t equals its final value, plus the difference between its initial value and final value, times e to the minus t over tau. So you only need three things: the initial value at t equals zero plus, the final value at t equals infinity, and the time constant. For example, a capacitor already at two volts, charging towards ten volts with tau equals one second: v equals ten minus eight e to the minus t. At one second: ten minus eight times zero point three six eight, about seven point zero six volts.",
+   "formula": "x(t) = x(∞) + [x(0⁺) − x(∞)] e^(−t/τ)",
+   "terms": [
+    [
+     "x(0⁺)",
+     "initial value"
+    ],
+    [
+     "x(∞)",
+     "final value"
+    ],
+    [
+     "τ",
+     "RC or L/R"
+    ]
+   ],
+   "example": [
+    "v(t) = 10 + (2 − 10)e^(−t) = 10 − 8e^(−t)",
+    "v(1 s) ≈ 7.06 V"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "26.8 · Finding initial and final values",
+   "narration": "How do we find those values quickly? At t equals zero plus, just after switching: a capacitor keeps its old voltage, so an uncharged capacitor acts like a short circuit. An inductor keeps its old current, so an inductor with no current acts like an open circuit. At t equals infinity, with DC, everything has settled: a capacitor acts like an open circuit, and an inductor acts like a short circuit. Draw these simple circuits, and the values come from Ohm's law.",
+   "title": "Initial and final circuits",
+   "parts": [
+    {
+     "id": "a",
+     "label": "t = 0⁺: uncharged C → short",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "t = 0⁺: L with no current → open",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "t = ∞ (DC): C → open",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "t = ∞ (DC): L → short",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "keeps its voltage"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "keeps its current"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "26.9 · Which R in the time constant?",
+   "narration": "In bigger circuits, which resistance goes into tau? Use the Thevenin resistance seen by the capacitor or inductor. Remove the capacitor or inductor, switch off the independent sources, and find the resistance between its terminals. Then tau equals that resistance times C, or L divided by that resistance. This connects transients with Thevenin's theorem from Part 18.",
+   "formula": "τ = R_th × C     τ = L / R_th",
+   "terms": [
+    [
+     "R_th",
+     "resistance seen by C or L, sources off"
+    ]
+   ],
+   "example": [
+    "Thevenin's theorem again"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "26.10 · Common mistakes",
+   "narration": "Common mistakes in transients. One: letting a capacitor voltage or inductor current jump at t equals zero. Two: using tau equals R C for an inductor, it is L over R. Three: using the wrong resistance in tau instead of the Thevenin resistance. Four: treating the capacitor as a short at t equals zero when it was already charged: it keeps its old voltage, not zero. Five: mixing up milliseconds and seconds, or microfarads and farads.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "v_C and i_L never jump",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "RC: τ = RC · RL: τ = L/R",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Use R_th seen by C or L",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Charged C keeps its voltage at 0⁺",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Units: µF, mH, ms",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "26.11 · Where transients matter",
+   "narration": "Transients are everywhere. Camera flash chargers and defibrillators rely on RC charging. Timers and blinking LEDs set their delay with an RC time constant. Switching off a relay coil or motor produces an RL transient spike, which is why protection diodes are used. Touch screens measure tiny RC time constants. And digital circuits are limited in speed by the RC transients of their wires.",
+   "title": "Transients at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "TRANSIENTS",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Timers, blinking LEDs (RC)",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Flash, defibrillators",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Relay & motor spikes (RL)",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Speed of digital circuits",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Capacitor voltage and inductor current cannot jump. RC and RL circuits change exponentially with time constant R C or L over R. After five time constants the transient is over. Every first order transient follows x of t equals final plus initial minus final, times e to the minus t over tau. And use the Thevenin resistance seen by the capacitor or inductor.",
+   "title": "Transients in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "v_C, i_L can't jump",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "τ = RC · τ = L/R",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "x(t) = x∞ + (x0 − x∞)e^(−t/τ)",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "5τ → settled",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "An RC or RL circuit has one energy store, so it simply rises or falls. But when a circuit has both an inductor and a capacitor, energy can swing back and forth between them, and the response can oscillate. Next, we study RLC transients: overdamped, critically damped and underdamped.",
+   "title": "NEXT: RLC TRANSIENTS",
+   "lines": [
+    "v_C, i_L can't jump",
+    "τ = RC, L/R",
+    "General formula",
+    "5τ rule"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "RC & RL Transients Explained from Zero: Time Constant, Charging, Discharging | Network Theory #27",
+  "description": "Network Theory from absolute zero - Part 27: first-order transients.\n- Why transients happen (energy can't change instantly)\n- RC charging and discharging, animated with live graphs\n- v_C = V(1 − e^(−t/τ)), τ = RC\n- 63.2%, 86.5%, 95%, 98.2%, 99.3% table\n- RL circuit, τ = L/R\n- The general formula x(t) = x(∞) + [x(0) − x(∞)]e^(−t/τ)\n- Initial and final circuits (C short/open, L open/short)\n- Thevenin resistance in τ\n- Common mistakes\n\nPrevious: AC power. Next: RLC transients.\n\n#NetworkTheory #Transients #RCcircuit #ECE",
+  "tags": [
+   "transient analysis",
+   "rc circuit",
+   "rl circuit",
+   "time constant",
+   "capacitor charging",
+   "first order circuits",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
