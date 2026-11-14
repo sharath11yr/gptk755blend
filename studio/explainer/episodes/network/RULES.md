@@ -14,3 +14,12 @@
   arrow labels never sit on a line, every box and label fully on screen, formulas never wrap mid-formula,
   narration names/values match exactly what the animation shows, answers never appear before they are said.
 - Reviewer AI fixes its own findings; if it cannot, the chapter is paused and the owner gets an email (GitHub issue).
+- Complex topics (theorems, AC, phasors, transients, resonance, two-port, Laplace) - every part must have:
+  1. WHY first: the problem the method solves, in plain words, before any formula.
+  2. One idea per scene; every new word/symbol explained the moment it appears (j, phasor, s, e^-t/τ ...).
+  3. A worked example shown step by step on the animation, every step with its number, no skipped algebra.
+  4. "Common mistakes" scene: the silly errors students make (signs, deactivating sources wrongly,
+     degrees vs radians, peak vs RMS, forgetting units) and how to avoid them.
+  5. When to use it / when it does NOT work (limits, linear only, dependent sources stay ...).
+  6. A check: verify the answer another way (another method, KCL/KVL, units).
+  7. Real-world uses, then recap. Every number re-calculated before queuing.
