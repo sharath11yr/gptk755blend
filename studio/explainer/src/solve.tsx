@@ -39,7 +39,7 @@ const Elem: React.FC<{ p: Part; W: number }> = ({ p, W }) => {
   if (p.t === "dv" || p.t === "di") body = <g><polygon points={`${P(-40)} ${P(0, 40)} ${P(40)} ${P(0, -40)}`} fill={L.bg0} stroke={col} strokeWidth={5} />
     {p.t === "dv" ? <text x={mx} y={my + 10} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={26} fontWeight={800}>±</text>
       : <><line x1={mx - ux * 20} y1={my - uy * 20} x2={mx + ux * 14} y2={my + uy * 14} stroke={col} strokeWidth={4} /><polygon points={`${mx + ux * 22},${my + uy * 22} ${mx + ux * 8 + nx * 9},${my + uy * 8 + ny * 9} ${mx + ux * 8 - nx * 9},${my + uy * 8 - ny * 9}`} fill={col} /></>}</g>;
-  return <g>{p.t !== "C" && lead}{body}{txt}</g>;
+  return <g>{lead}{body}{txt}</g>;
 };
 
 export const SolveScene: React.FC<any> = ({ dur, title = "", circuit = [], nodes = [], given = [], steps = [], answer = "", ask = "", stage = "solve" }) => {

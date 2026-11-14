@@ -1,0 +1,905 @@
+{
+ "title": "Network Theory Numericals 11: AC Basics and Phasors",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "AC Basics and Phasors Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 11",
+   "narration": "Welcome back. Today our numericals move into AC. We read all the information from a sine wave equation, add two sine waves using phasors, and practise converting and multiplying complex numbers. Keep your calculator in degree mode, and watch the quadrant of every angle.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "AC BASICS & PHASORS",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Reading a sine wave",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "v(t)"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "load",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "v(t) = 100 sin(314t + 30°) V"
+   ],
+   "ask": "peak, RMS, frequency, period,\nand v at t = 5 ms",
+   "narration": "Problem one. A voltage is given as v equals one hundred sine of three hundred and fourteen t plus thirty degrees, volts. Find the peak value, the RMS value, the frequency, the period, and the instantaneous voltage at t equals five milliseconds."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Reading a sine wave",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "v(t)"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "load",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: compare with Vm sin(ωt + φ)",
+    "Vm = 100 V",
+    "V_rms = 100 / √2 = 70.71 V",
+    "Step 2: ω = 314 rad/s = 2πf",
+    "f = 314 / (2π) ≈ 50 Hz",
+    "T = 1 / f = 20 ms"
+   ],
+   "answer": "",
+   "narration": "Step one: compare with the standard form, V m sine of omega t plus phi. The number in front, one hundred volts, is the peak value. The RMS value is one hundred over root two, seventy point seven one volts. Step two: omega, three hundred and fourteen radians per second, equals two pi f, so f is three fourteen over two pi, about fifty hertz, and the period is one over fifty, twenty milliseconds."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Reading a sine wave",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "v(t)"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "load",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: v at t = 5 ms",
+    "ωt = 314 × 0.005 = 1.57 rad ≈ 90°",
+    "angle = 90° + 30° = 120°",
+    "v = 100 sin 120° = 100 × 0.866",
+    "v ≈ 86.6 V",
+    "! ωt is in radians: convert to degrees"
+   ],
+   "answer": "Vm = 100 V · Vrms = 70.7 V · 50 Hz · 20 ms · 86.6 V",
+   "narration": "Step three: at five milliseconds, omega t equals three fourteen times zero point zero zero five, one point five seven radians, which is about ninety degrees. Here is the trap: omega t is in radians, while the phase is in degrees. Convert first, then add: ninety plus thirty is one hundred and twenty degrees. One hundred times sine one twenty, zero point eight six six, gives about eighty six point six volts."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Adding two sine waves",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "v1 + v2"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "v1 = 10 sin(ωt) V",
+    "v2 = 10 sin(ωt + 60°) V"
+   ],
+   "ask": "v = v1 + v2 as a single\nsine wave",
+   "narration": "Problem two. Two voltages of the same frequency are added: ten sine omega t, and ten sine of omega t plus sixty degrees. Find the total as a single sine wave."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Adding two sine waves",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "v1 + v2"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: write as phasors (peak)",
+    "V1 = 10 ∠ 0° = 10 + j0",
+    "V2 = 10 ∠ 60° = 10cos60 + j10sin60",
+    "V2 = 5 + j8.66",
+    "Step 2: add in rectangular form",
+    "V = 15 + j8.66"
+   ],
+   "answer": "",
+   "narration": "Step one: write each wave as a phasor, using peak values. V1 is ten angle zero, which is ten plus j zero. V2 is ten angle sixty: ten cos sixty plus j ten sine sixty, which is five plus j eight point six six. Step two: add in rectangular form: real parts ten plus five, fifteen, and imaginary parts eight point six six. So V is fifteen plus j eight point six six."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Adding two sine waves",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "v1 + v2"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: back to polar",
+    "|V| = √(15² + 8.66²) = 17.32",
+    "θ = tan⁻¹(8.66 / 15) = 30°",
+    "v = 17.32 sin(ωt + 30°) V",
+    "! not 20 V: phasors add as arrows"
+   ],
+   "answer": "v = 17.32 sin(ωt + 30°) V",
+   "narration": "Step three: convert back to polar. The magnitude is the square root of fifteen squared plus eight point six six squared, seventeen point three two. The angle is the inverse tangent of eight point six six over fifteen, thirty degrees. So v equals seventeen point three two sine of omega t plus thirty degrees. Notice it is not twenty volts: the two waves do not peak at the same time, so their arrows add at an angle."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Complex number practice",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "Z"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Z1 = 4 − j3",
+    "Z2 = 2 ∠ 90°"
+   ],
+   "ask": "Z1 in polar form,\nZ1 × Z2 and (Z1 × Z2) ÷ Z1",
+   "narration": "Problem three. Convert four minus j three into polar form. Then multiply it by two angle ninety degrees, and divide the result by the original number."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Complex number practice",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "Z"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: rectangular → polar",
+    "r = √(4² + 3²) = 5",
+    "θ = tan⁻¹(−3 / 4) = −36.87°",
+    "(4th quadrant: right and down ✓)",
+    "Z1 = 5 ∠ −36.87°"
+   ],
+   "answer": "",
+   "narration": "Step one: the magnitude is the square root of sixteen plus nine, five. The angle is the inverse tangent of minus three over four, minus thirty six point eight seven degrees. Always sketch it: the real part is positive and the imaginary part negative, so the arrow points right and down, in the fourth quadrant, which agrees with a negative angle. So Z1 is five angle minus thirty six point eight seven."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Complex number practice",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "Z"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 2: multiply (polar)",
+    "5∠−36.87° × 2∠90° = 10 ∠ 53.13°",
+    "Step 3: divide (polar)",
+    "10∠53.13° ÷ 5∠−36.87° = 2 ∠ 90°",
+    "= j2 (multiplying by j2 = turn 90°, ×2)"
+   ],
+   "answer": "5∠−36.87° · 10∠53.13° · 2∠90°",
+   "narration": "Step two: to multiply in polar form, multiply magnitudes and add angles: five times two is ten, and minus thirty six point eight seven plus ninety is fifty three point one three degrees. Step three: to divide, divide magnitudes and subtract angles: ten over five is two, and fifty three point one three minus minus thirty six point eight seven is ninety degrees. So we get back two angle ninety, which is j two, exactly the number we multiplied by."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. The number in front of the sine is the peak value, and RMS is peak over root two. Omega t is in radians, so convert before adding a phase in degrees. Add and subtract phasors in rectangular form, and multiply and divide in polar form. And always sketch the arrow to check the quadrant of the angle.",
+   "title": "Exam tips: AC & phasors",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Vm is peak · RMS = Vm/√2",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "ωt in radians → convert",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Add: rectangular form",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Multiply/divide: polar form",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Sketch to check the quadrant",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, we solve series AC circuits with resistors, inductors and capacitors using impedance.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "AC Fundamentals & Phasors Numericals Solved | Network Theory Numericals #11",
+  "description": "Network Theory numericals - Part 11.\nProblem 1: reading v = 100 sin(314t + 30°): peak, RMS, f, T and v at 5 ms\nProblem 2: adding two sine waves with phasors\nProblem 3: polar/rectangular conversion, multiplication and division\nPlus exam tips.\n\n#NetworkTheory #ACCircuits #Phasors #ECE",
+  "tags": [
+   "ac circuit problems",
+   "phasor numericals",
+   "rms value problems",
+   "complex numbers ac",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

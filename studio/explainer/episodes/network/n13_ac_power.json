@@ -1,0 +1,621 @@
+{
+ "title": "Network Theory Numericals 13: AC Power and Power Factor",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "AC Power and Power Factor Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 13",
+   "narration": "Welcome back. Today we calculate AC power. First the three powers and the power triangle for a load. Then a real industrial problem: correcting a motor's power factor with a capacitor, and seeing how much the supply current drops.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "AC POWER & POWER FACTOR",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · The three powers",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "load",
+     "value": "10 A, pf 0.8 lag"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "V = 230 V, I = 10 A (RMS)",
+    "Power factor = 0.8 lagging"
+   ],
+   "ask": "P, Q, S",
+   "narration": "Problem one. A load draws ten amperes from two hundred and thirty volts at a power factor of zero point eight lagging. Find the real, reactive and apparent power."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · The three powers",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "load",
+     "value": "10 A, pf 0.8 lag"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: apparent power",
+    "S = V I = 230 × 10 = 2300 VA",
+    "Step 2: real power",
+    "P = V I cos φ = 2300 × 0.8 = 1840 W",
+    "Step 3: reactive power",
+    "sin φ = √(1 − 0.8²) = 0.6"
+   ],
+   "answer": "",
+   "narration": "Step one: apparent power is simply V times I, two thousand three hundred volt amperes. Step two: real power is V I cos phi, two thousand three hundred times zero point eight, one thousand eight hundred and forty watts. Step three: for reactive power we need sine phi. Since cos phi is zero point eight, sine phi is the square root of one minus zero point six four, zero point six."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · The three powers",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "load",
+     "value": "10 A, pf 0.8 lag"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Q = V I sin φ = 2300 × 0.6 = 1380 VAR",
+    "Check: √(1840² + 1380²) = 2300 VA ✓",
+    "lagging → Q absorbed (inductive)"
+   ],
+   "answer": "P = 1840 W · Q = 1380 VAR · S = 2300 VA",
+   "narration": "So Q is two thousand three hundred times zero point six, one thousand three hundred and eighty VAR. Check the power triangle: the square root of eighteen forty squared plus thirteen eighty squared is exactly two thousand three hundred. A lagging power factor means the load is inductive, so it absorbs reactive power."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Power factor correction",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      7.6,
+      5
+     ],
+     "label": "motor",
+     "value": "5 kW, pf 0.7"
+    },
+    {
+     "t": "C",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "C = ?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Motor: 5 kW at pf 0.7 lagging",
+    "Supply 230 V, 50 Hz",
+    "Target pf = 0.95 lagging"
+   ],
+   "ask": "capacitor kVAR, C,\nsupply current before/after",
+   "narration": "Problem two. A five kilowatt motor runs at a power factor of zero point seven lagging from two hundred and thirty volts, fifty hertz. Find the capacitor needed in parallel to raise the power factor to zero point nine five, and compare the supply current before and after."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Power factor correction",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      7.6,
+      5
+     ],
+     "label": "motor",
+     "value": "5 kW, pf 0.7"
+    },
+    {
+     "t": "C",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "C = ?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: reactive power now",
+    "φ1 = cos⁻¹ 0.7 = 45.57°, tan φ1 = 1.020",
+    "Q1 = P tan φ1 = 5000 × 1.020 = 5101 VAR",
+    "Step 2: reactive power wanted",
+    "φ2 = cos⁻¹ 0.95 = 18.19°, tan φ2 = 0.329",
+    "Q2 = 5000 × 0.329 = 1643 VAR",
+    "Step 3: capacitor supplies Q_C = 3458 VAR"
+   ],
+   "answer": "",
+   "narration": "Step one: the reactive power now. The angle is the inverse cos of zero point seven, forty five point five seven degrees, and its tangent is one point zero two. Q1 equals P tan phi, five thousand times one point zero two, about five thousand one hundred and one VAR. Step two: the reactive power we want at zero point nine five: the angle is eighteen point one nine degrees, tangent zero point three two nine, so Q2 is about one thousand six hundred and forty three VAR. Step three: the capacitor must supply the difference, about three thousand four hundred and fifty eight VAR."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Power factor correction",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      7.6,
+      5
+     ],
+     "label": "motor",
+     "value": "5 kW, pf 0.7"
+    },
+    {
+     "t": "C",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "C = ?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 4: capacitance",
+    "C = Q_C / (V² ω) = 3458 / (230² × 314.16)",
+    "C ≈ 208 µF",
+    "Step 5: supply current",
+    "before: 5000 / (230 × 0.7) = 31.1 A",
+    "after: 5000 / (230 × 0.95) = 22.9 A",
+    "same 5 kW, 26% less current ✓"
+   ],
+   "answer": "C ≈ 208 µF · current 31.1 A → 22.9 A",
+   "narration": "Step four: the capacitance is Q C over V squared omega: three thousand four hundred and fifty eight divided by two hundred and thirty squared times three fourteen point one six, about two hundred and eight microfarads. Step five: the supply current. Before, five thousand over two thirty times zero point seven, thirty one point one amperes. After, five thousand over two thirty times zero point nine five, twenty two point nine amperes. The motor gets the same five kilowatts, but the cables carry about twenty six percent less current."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Remember S equals V I, P equals V I cos phi, and Q equals V I sine phi. Find sine phi from cos phi with the square root. For power factor correction, use Q equals P tan phi before and after, the capacitor supplies the difference, and C equals Q C over V squared omega. And the capacitor always goes in parallel.",
+   "title": "Exam tips: AC power",
+   "parts": [
+    {
+     "id": "a",
+     "label": "S = VI · P = VI cos φ · Q = VI sin φ",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "sin φ = √(1 − cos² φ)",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Q = P tan φ",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Q_C = Q1 − Q2 · C = Q_C/(V²ω)",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Correction capacitor in PARALLEL",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, transient numericals: RC and RL circuits after switching.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "AC Power & Power Factor Correction Numericals Solved | Network Theory Numericals #13",
+  "description": "Network Theory numericals - Part 13.\nProblem 1: P, Q and S for a 230 V, 10 A, pf 0.8 load\nProblem 2: correcting a 5 kW motor from pf 0.7 to 0.95 - capacitor size and current saving\nPlus exam tips.\n\n#NetworkTheory #PowerFactor #ACPower #ECE",
+  "tags": [
+   "power factor correction problems",
+   "ac power numericals",
+   "real reactive apparent power problems",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

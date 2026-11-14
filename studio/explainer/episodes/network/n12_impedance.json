@@ -1,0 +1,1062 @@
+{
+ "title": "Network Theory Numericals 12: Impedance and AC Circuits",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Impedance and AC Circuits Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 12",
+   "narration": "Welcome back. Today we solve series AC circuits using impedance. An RL circuit, an RC circuit, and a full RLC circuit. In each one: find the reactances, add the impedances, use Ohm's law with phasors, and state whether the current leads or lags.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "IMPEDANCE & AC CIRCUITS",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Series RL circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "100 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5.0,
+      1
+     ],
+     "label": "R",
+     "value": "6 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      5.0,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "L",
+     "value": "25.46 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "V = 100 V (RMS), f = 50 Hz",
+    "R = 6 Ω, L = 25.46 mH"
+   ],
+   "ask": "X_L, Z, current, phase,\nV_R and V_L",
+   "narration": "Problem one. A series circuit has six ohms of resistance and twenty five point four six millihenries of inductance, on one hundred volts, fifty hertz. Find the reactance, impedance, current, phase angle, and the voltage across each element."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Series RL circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "100 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5.0,
+      1
+     ],
+     "label": "R",
+     "value": "6 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      5.0,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "L",
+     "value": "25.46 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: reactance",
+    "X_L = 2πfL = 2π × 50 × 0.02546",
+    "X_L ≈ 8 Ω",
+    "Step 2: impedance",
+    "Z = 6 + j8 = 10 ∠ 53.13° Ω",
+    "Step 3: current",
+    "I = V / Z = 100∠0° / 10∠53.13° = 10 ∠ −53.13° A"
+   ],
+   "answer": "",
+   "narration": "Step one: the inductive reactance is two pi f L: two pi times fifty times zero point zero two five four six, about eight ohms. Step two: in series, impedances add: six plus j eight, which is ten ohms at fifty three point one three degrees. Step three: Ohm's law with phasors. One hundred angle zero divided by ten angle fifty three point one three gives ten amperes at minus fifty three point one three degrees."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Series RL circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "100 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5.0,
+      1
+     ],
+     "label": "R",
+     "value": "6 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      5.0,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "L",
+     "value": "25.46 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 4: element voltages",
+    "V_R = I R = 10 × 6 = 60 V",
+    "V_L = I X_L = 10 × 8 = 80 V",
+    "Check: √(60² + 80²) = 100 V ✓",
+    "! 60 + 80 = 140 V is WRONG (phasors)",
+    "current LAGS by 53.13° (inductive)"
+   ],
+   "answer": "I = 10 A lagging 53.13° · V_R = 60 V · V_L = 80 V",
+   "narration": "Step four: the resistor drops ten times six, sixty volts, and the inductor drops ten times eight, eighty volts. They add as phasors, at right angles: the square root of sixty squared plus eighty squared is one hundred volts, the supply. Adding them as plain numbers would give one hundred and forty, which is wrong. The current lags the voltage, because the circuit is inductive."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Series RC circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5.0,
+      1
+     ],
+     "label": "R",
+     "value": "40 Ω"
+    },
+    {
+     "t": "C",
+     "a": [
+      5.0,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "C",
+     "value": "79.58 µF"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "V = 230 V, f = 50 Hz",
+    "R = 40 Ω, C = 79.58 µF"
+   ],
+   "ask": "X_C, Z, current and phase",
+   "narration": "Problem two. A forty ohm resistor in series with a seventy nine point five eight microfarad capacitor, on two hundred and thirty volts, fifty hertz. Find the reactance, impedance, current and phase."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Series RC circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5.0,
+      1
+     ],
+     "label": "R",
+     "value": "40 Ω"
+    },
+    {
+     "t": "C",
+     "a": [
+      5.0,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "C",
+     "value": "79.58 µF"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: reactance",
+    "X_C = 1 / (2πfC)",
+    "= 1 / (2π × 50 × 79.58×10⁻⁶) ≈ 40 Ω",
+    "Step 2: impedance",
+    "Z = 40 − j40 = 56.57 ∠ −45° Ω"
+   ],
+   "answer": "",
+   "narration": "Step one: the capacitive reactance is one over two pi f C. Remember to convert microfarads to farads. The result is about forty ohms. Step two: the capacitor's impedance is minus j forty, so the total is forty minus j forty, which is fifty six point five seven ohms at minus forty five degrees."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Series RC circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "230 V, 50 Hz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5.0,
+      1
+     ],
+     "label": "R",
+     "value": "40 Ω"
+    },
+    {
+     "t": "C",
+     "a": [
+      5.0,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "C",
+     "value": "79.58 µF"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: current",
+    "I = 230∠0° / 56.57∠−45°",
+    "I = 4.07 ∠ +45° A",
+    "current LEADS by 45° (capacitive)",
+    "! capacitor: −jX_C (minus sign)"
+   ],
+   "answer": "I = 4.07 A leading 45°",
+   "narration": "Step three: two hundred and thirty angle zero divided by fifty six point five seven angle minus forty five gives four point zero seven amperes at plus forty five degrees. The current leads the voltage by forty five degrees, because the circuit is capacitive. Remember: capacitor reactance always carries a minus j."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Series RLC circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "100 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      3.8666666666666667,
+      1
+     ],
+     "label": "R",
+     "value": "10 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      3.8666666666666667,
+      1
+     ],
+     "b": [
+      6.133333333333333,
+      1
+     ],
+     "label": "X_L",
+     "value": "20 Ω"
+    },
+    {
+     "t": "C",
+     "a": [
+      6.133333333333333,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "X_C",
+     "value": "10 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "V = 100 V (RMS)",
+    "R = 10 Ω, X_L = 20 Ω, X_C = 10 Ω"
+   ],
+   "ask": "Z, current, power factor,\nlead or lag",
+   "narration": "Problem three. A series RLC circuit with ten ohms of resistance, twenty ohms of inductive reactance and ten ohms of capacitive reactance, on one hundred volts. Find the impedance, current, power factor, and whether the current leads or lags."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Series RLC circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "100 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      3.8666666666666667,
+      1
+     ],
+     "label": "R",
+     "value": "10 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      3.8666666666666667,
+      1
+     ],
+     "b": [
+      6.133333333333333,
+      1
+     ],
+     "label": "X_L",
+     "value": "20 Ω"
+    },
+    {
+     "t": "C",
+     "a": [
+      6.133333333333333,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "X_C",
+     "value": "10 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: total impedance",
+    "Z = R + j(X_L − X_C) = 10 + j(20 − 10)",
+    "Z = 10 + j10 = 14.14 ∠ 45° Ω",
+    "Step 2: current",
+    "I = 100 / 14.14 = 7.07 A, at −45°"
+   ],
+   "answer": "",
+   "narration": "Step one: in series RLC, the reactances partly cancel: X L minus X C, twenty minus ten, ten ohms. So Z is ten plus j ten, fourteen point one four ohms at forty five degrees. Step two: the current is one hundred over fourteen point one four, seven point zero seven amperes, at minus forty five degrees."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Series RLC circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "100 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      3.8666666666666667,
+      1
+     ],
+     "label": "R",
+     "value": "10 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      3.8666666666666667,
+      1
+     ],
+     "b": [
+      6.133333333333333,
+      1
+     ],
+     "label": "X_L",
+     "value": "20 Ω"
+    },
+    {
+     "t": "C",
+     "a": [
+      6.133333333333333,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "X_C",
+     "value": "10 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: power factor",
+    "pf = cos 45° = R / |Z| = 0.707",
+    "X_L > X_C → inductive → LAGGING",
+    "Check: V_R = 70.7, V_L = 141.4, V_C = 70.7",
+    "√(70.7² + (141.4 − 70.7)²) = 100 V ✓"
+   ],
+   "answer": "Z = 14.14∠45° Ω · I = 7.07 A · pf = 0.707 lag",
+   "narration": "Step three: the power factor is cos forty five, or R over Z, zero point seven zero seven. Since X L is bigger than X C, the circuit is inductive, so the power factor is lagging. Check: the resistor has seventy point seven volts, the inductor one hundred and forty one point four, and the capacitor seventy point seven. The inductor and capacitor voltages subtract, leaving seventy point seven, and combined with the resistor's seventy point seven at right angles, that gives exactly one hundred volts."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Calculate both reactances with two pi f, converting milli and micro units. Inductors are plus j, capacitors minus j. In series, Z equals R plus j times X L minus X C. Element voltages add as phasors, never as plain numbers. And always state whether the current leads or lags.",
+   "title": "Exam tips: impedance",
+   "parts": [
+    {
+     "id": "a",
+     "label": "X_L = 2πfL · X_C = 1/(2πfC)",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "L: +jX_L · C: −jX_C",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Series: Z = R + j(X_L − X_C)",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Voltages add as phasors",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "State lead / lag with the answer",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, AC power: real, reactive and apparent power, and power factor correction.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Impedance Numericals: Series RL, RC & RLC Circuits Solved | Network Theory Numericals #12",
+  "description": "Network Theory numericals - Part 12.\nProblem 1: series RL - X_L, Z, current, V_R and V_L (why 60 + 80 ≠ 100)\nProblem 2: series RC - leading current\nProblem 3: series RLC - impedance, power factor, phasor check\nPlus exam tips.\n\n#NetworkTheory #Impedance #RLC #ECE",
+  "tags": [
+   "impedance problems",
+   "series rl circuit numericals",
+   "series rc circuit problems",
+   "rlc circuit problems",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
