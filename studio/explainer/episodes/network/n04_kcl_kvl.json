@@ -1,0 +1,1045 @@
+{
+ "title": "Network Theory Numericals 4: KCL and KVL",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "KCL and KVL Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 4",
+   "narration": "Welcome back. Today we practise Kirchhoff's laws. First, a simple KCL problem to find an unknown current at a node. Second, a loop with two batteries facing each other, where the signs in KVL really matter. And third, a problem that needs both laws together. Remember the sign rules: currents in and out for KCL, rises and drops for KVL.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "KCL & KVL",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · KCL at a node",
+   "circuit": [
+    {
+     "t": "arr",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "5 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      0.6
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "2 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "3 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      5,
+      5.4
+     ],
+     "label": "I = ?",
+     "hi": true
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      3
+     ],
+     "label": "node",
+     "dx": 60,
+     "dy": -20,
+     "c": "g"
+    }
+   ],
+   "given": [
+    "Into the node: 5 A and 2 A",
+    "Out of the node: 3 A",
+    "Fourth wire: current I"
+   ],
+   "ask": "I and its direction",
+   "narration": "Problem one. Four wires meet at a node. Five amperes and two amperes flow in. Three amperes flows out. Find the current in the fourth wire and its direction."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · KCL at a node",
+   "circuit": [
+    {
+     "t": "arr",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "5 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      0.6
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "2 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "3 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      5,
+      5.4
+     ],
+     "label": "I = ?",
+     "hi": true
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      3
+     ],
+     "label": "node",
+     "dx": 60,
+     "dy": -20,
+     "c": "g"
+    }
+   ],
+   "steps": [
+    "Step 1: KCL, Σ in = Σ out",
+    "Assume I flows OUT",
+    "5 + 2 = 3 + I",
+    "I = 7 − 3 = 4 A"
+   ],
+   "answer": "",
+   "narration": "Step one, KCL: total in equals total out. We do not know the direction of I, so we assume it flows out. Then five plus two equals three plus I, so I equals seven minus three, four amperes."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · KCL at a node",
+   "circuit": [
+    {
+     "t": "arr",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "5 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      0.6
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "2 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "label": "3 A"
+    },
+    {
+     "t": "arr",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      5,
+      5.4
+     ],
+     "label": "I = ?",
+     "hi": true
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      3
+     ],
+     "label": "node",
+     "dx": 60,
+     "dy": -20,
+     "c": "g"
+    }
+   ],
+   "steps": [
+    "Step 2: interpret the sign",
+    "I is positive → it really flows OUT",
+    "Check: in 7 A = out 3 + 4 = 7 A ✓",
+    "! if you assumed IN, you get −4 A:",
+    "same answer, opposite direction"
+   ],
+   "answer": "I = 4 A, flowing out",
+   "narration": "Step two: the answer is positive, so our guess was right: four amperes flows out. Check: seven amperes in, three plus four, seven amperes out. If you had assumed I flows in, you would get minus four amperes, which means exactly the same thing. A negative answer is never wrong, it just reverses your arrow."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · KVL with two sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "20 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "8 V",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      6,
+      5
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      6,
+      5
+     ],
+     "b": [
+      3,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "20 V source (left), 8 V source (right)",
+    "+ terminals both at the top",
+    "R1 = 2 Ω, R2 = 4 Ω"
+   ],
+   "ask": "loop current I,\nvoltage across R2",
+   "narration": "Problem two. A single loop has a twenty volt source on the left and an eight volt source on the right, both with their positive terminals at the top, so they push against each other. The resistors are two ohms and four ohms. Find the current and the voltage across the four ohm resistor."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · KVL with two sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "20 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "8 V",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      6,
+      5
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      6,
+      5
+     ],
+     "b": [
+      3,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: assume I clockwise",
+    "Step 2: KVL, walk clockwise",
+    "Up 20 V source (− to +): +20",
+    "R1 with I: −2I",
+    "Down 8 V source (+ to −): −8",
+    "R2 with I: −4I"
+   ],
+   "answer": "",
+   "narration": "Step one: assume the current flows clockwise. Step two: walk clockwise around the loop. Up through the twenty volt source, from minus to plus: plus twenty. Across R1 with the current: minus two I. Down through the eight volt source, from plus to minus: minus eight. Across R2 with the current: minus four I."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · KVL with two sources",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "20 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "8 V",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      6,
+      5
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      6,
+      5
+     ],
+     "b": [
+      3,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      3,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: solve",
+    "20 − 2I − 8 − 4I = 0",
+    "12 = 6I  →  I = 2 A",
+    "Step 4: V across R2",
+    "V = 2 × 4 = 8 V",
+    "Check: 20 = 2×2 + 8 + 2×4 = 20 ✓"
+   ],
+   "answer": "I = 2 A (clockwise) · V_R2 = 8 V",
+   "narration": "Step three: set the sum to zero. Twenty minus eight is twelve, and minus two I minus four I is minus six I. So twelve equals six I, and I equals two amperes, clockwise, as assumed. Step four: the voltage across R2 is two times four, eight volts. Check: the rises, twenty volts, equal the drops, four plus eight plus eight, twenty volts."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · KCL and KVL together",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      9,
+      1
+     ],
+     "label": "1 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "given": [
+    "10 V source with R1 = 2 Ω into node Va",
+    "R2 = 4 Ω from Va to ground",
+    "1 A current source pushing into Va"
+   ],
+   "ask": "Va and the current\nin R1 and R2",
+   "narration": "Problem three. A ten volt source feeds node V a through a two ohm resistor. A four ohm resistor goes from V a to ground, and a one ampere current source pushes current into V a. Find V a and the currents in both resistors."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · KCL and KVL together",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      9,
+      1
+     ],
+     "label": "1 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 1: currents by Ohm's law",
+    "I1 (into Va via R1) = (10 − Va) / 2",
+    "I2 (out via R2) = Va / 4",
+    "Step 2: KCL at Va",
+    "in = out:  (10 − Va)/2 + 1 = Va/4"
+   ],
+   "answer": "",
+   "narration": "Step one: write each current using Ohm's law. The current coming into V a through R1 is the voltage across R1, ten minus V a, divided by two. The current leaving through R2 is V a divided by four. Step two: KCL at V a. Currents in: the R1 current plus the one ampere source. Current out: the R2 current."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · KCL and KVL together",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      9,
+      1
+     ],
+     "label": "1 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 3: solve",
+    "5 − 0.5 Va + 1 = 0.25 Va",
+    "6 = 0.75 Va  →  Va = 8 V",
+    "I1 = (10 − 8)/2 = 1 A · I2 = 8/4 = 2 A",
+    "Check KCL: 1 + 1 = 2 A ✓"
+   ],
+   "answer": "Va = 8 V · I(R1) = 1 A · I(R2) = 2 A",
+   "narration": "Step three: solve. Ten minus V a over two is five minus half V a. So five minus half V a plus one equals a quarter V a. Collect: six equals three quarters V a, so V a is eight volts. Then R1 carries ten minus eight over two, one ampere, and R2 carries eight over four, two amperes. Check KCL: one plus one equals two. Correct. This was a preview of nodal analysis."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Always mark an assumed direction, and trust the sign of the answer. In KVL, going from minus to plus through a source is a rise, and walking with the current through a resistor is a drop. When a node voltage is unknown, write each current with Ohm's law, then apply KCL. And finish with a check: rises equal drops, and in equals out.",
+   "title": "Exam tips: KCL & KVL",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Assume directions, trust the sign",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "KVL: − to + is a rise (+)",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "With the current through R: −IR",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Write currents with Ohm's law, then KCL",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Check: rises = drops, in = out",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, we practise source transformation and star-delta conversion, two tools that simplify circuits before solving them.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "KCL & KVL Numericals Solved Step by Step | Network Theory Numericals #4",
+  "description": "Network Theory numericals - Part 4.\nProblem 1: unknown current at a node (KCL)\nProblem 2: loop with two opposing sources (KVL sign rules)\nProblem 3: KCL and KVL together - find a node voltage\nPlus exam tips.\n\n#NetworkTheory #KCL #KVL #Numericals #ECE",
+  "tags": [
+   "kcl numericals",
+   "kvl numericals",
+   "kirchhoff law problems",
+   "network theory numericals",
+   "solved problems",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

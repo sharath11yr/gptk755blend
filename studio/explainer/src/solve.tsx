@@ -18,6 +18,9 @@ const Elem: React.FC<{ p: Part; W: number }> = ({ p, W }) => {
     {p.value && <text x={lx} y={ly + 30} textAnchor={vert ? "start" : "middle"} fill={L.dim} fontFamily={MONO} fontSize={24} fontWeight={700}>{p.value}</text>}</g>;
   const P = (t: number, s = 0) => `${mx + ux * t + nx * s},${my + uy * t + ny * s}`;
   if (p.t === "w") return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={wc} strokeWidth={5} />;
+  if (p.t === "arr") { const ax = x1 + dx * 0.62, ay = y1 + dy * 0.62; return <g><line x1={x1} y1={y1} x2={x2} y2={y2} stroke={wc} strokeWidth={5} />
+    <polygon points={`${ax + ux * 22},${ay + uy * 22} ${ax - ux * 10 + nx * 14},${ay - uy * 10 + ny * 14} ${ax - ux * 10 - nx * 14},${ay - uy * 10 - ny * 14}`} fill={p.hi ? L.amber : L.cyan} />
+    <text x={ax + nx * (Math.abs(uy) > 0.7 ? 80 : 44)} y={ay + ny * 44 + 10} textAnchor="middle" fill={p.hi ? L.amber : L.cyan} fontFamily={MONO} fontSize={28} fontWeight={800}>{p.label}</text></g>; }
   if (p.t === "open") return <g><line x1={x1} y1={y1} x2={mx - ux * 30} y2={my - uy * 30} stroke={wc} strokeWidth={5} /><line x1={mx + ux * 30} y1={my + uy * 30} x2={x2} y2={y2} stroke={wc} strokeWidth={5} />
     <circle cx={mx - ux * 30} cy={my - uy * 30} r={7} fill={L.text} /><circle cx={mx + ux * 30} cy={my + uy * 30} r={7} fill={L.text} />{txt}</g>;
   if (p.t === "sw") return <g><line x1={x1} y1={y1} x2={mx - ux * 30} y2={my - uy * 30} stroke={wc} strokeWidth={5} /><line x1={mx + ux * 30} y1={my + uy * 30} x2={x2} y2={y2} stroke={wc} strokeWidth={5} />
