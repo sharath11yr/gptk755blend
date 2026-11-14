@@ -959,4 +959,32 @@ export const GraphScene: React.FC<any> = ({ dur, mode = "graph" }) => {
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { graph: GraphScene, coupled: CoupledScene, resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ two-port: T network Za=2, Zb=4, Zc=6. {"mode":"box"|"tnet"|"open2"|"open1"}
+export const TwoPortScene: React.FC<any> = ({ dur, mode = "box" }) => {
+  const f = useCurrentFrame(); const inside = mode !== "box";
+  const port = (x: number, side: string, V: string, I: string, col: string) => <g>
+    <circle cx={x} cy={330} r={14} fill={L.text} /><circle cx={x} cy={730} r={14} fill={L.text} />
+    <text x={x + (side === "l" ? -40 : 40)} y={540} textAnchor="middle" fill={col} fontFamily={MONO} fontSize={40} fontWeight={800}>{V}</text>
+    <text x={x + (side === "l" ? -40 : 40)} y={490} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={34} fontWeight={800}>+</text><text x={x + (side === "l" ? -40 : 40)} y={600} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={34} fontWeight={800}>−</text>
+    <line x1={side === "l" ? x - 110 : x + 110} y1={300} x2={side === "l" ? x - 30 : x + 30} y2={300} stroke={L.amber} strokeWidth={5} />
+    <path d={side === "l" ? `M${x - 30} 300 l-18 -10 l0 20 z` : `M${x + 30} 300 l18 -10 l0 20 z`} fill={L.amber} />
+    <text x={side === "l" ? x - 70 : x + 70} y={280} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={32} fontWeight={800}>{I}</text></g>;
+  const open2 = mode === "open2", open1 = mode === "open1";
+  const I1 = open2 ? 1 : 0, I2 = open1 ? 1 : 0; const V1 = 8 * I1 + 6 * I2, V2 = 6 * I1 + 10 * I2;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <rect x={560} y={260} width={800} height={540} rx={24} fill={inside ? "none" : L.panel} stroke={L.text} strokeWidth={5} strokeDasharray={inside ? "16 12" : undefined} />
+    {!inside && <text x={960} y={545} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={48} fontWeight={800}>TWO-PORT NETWORK</text>}
+    {[[480, 330, 560, 330], [480, 730, 560, 730], [1360, 330, 1440, 330], [1360, 730, 1440, 730]].map((q, i) => <line key={i} x1={q[0]} y1={q[1]} x2={q[2]} y2={q[3]} stroke={L.wire} strokeWidth={6} />)}
+    {inside && <g><polyline points="560,330 960,330 1360,330" fill="none" stroke={L.wire} strokeWidth={6} /><polyline points="560,730 1360,730" fill="none" stroke={L.wire} strokeWidth={6} />
+      <polyline points="960,330 960,730" fill="none" stroke={L.wire} strokeWidth={6} />
+      <Res x={760} y={330} ohm={2} label="Za" horizontal /><Res x={1160} y={330} ohm={4} label="Zb" horizontal /><Res x={960} y={530} ohm={6} label="Zc" /></g>}
+    {port(480, "l", "V₁", "I₁", L.text)}{port(1440, "r", "V₂", "I₂", L.text)}
+    <text x={450} y={790} textAnchor="end" fill={L.dim} fontFamily={SANS} fontSize={28}>input port 1</text><text x={1470} y={790} textAnchor="start" fill={L.dim} fontFamily={SANS} fontSize={28}>output port 2</text>
+    {(open2 || open1) && <g><rect x={360} y={860} width={1200} height={150} rx={18} fill={L.panel} stroke={L.green} strokeWidth={3} />
+      <text x={960} y={910} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>{open2 ? "port 2 open (I₂ = 0), I₁ = 1 A" : "port 1 open (I₁ = 0), I₂ = 1 A"}</text>
+      <text x={960} y={965} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={32} fontWeight={800} opacity={fade(f, dur * 0.4, 10)}>{open2 ? `V₁ = ${V1} V → z₁₁ = 8 Ω · V₂ = ${V2} V → z₂₁ = 6 Ω` : `V₂ = ${V2} V → z₂₂ = 10 Ω · V₁ = ${V1} V → z₁₂ = 6 Ω`}</text></g>}
+    <text x={960} y={170} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={36} fontWeight={700}>{mode === "box" ? "only the four terminal quantities V₁, I₁, V₂, I₂ matter" : mode === "tnet" ? "inside: a T network (Za = 2 Ω, Zb = 4 Ω, Zc = 6 Ω)" : "measuring the Z parameters"}</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { twoport: TwoPortScene, graph: GraphScene, coupled: CoupledScene, resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

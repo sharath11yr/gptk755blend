@@ -1,0 +1,357 @@
+{
+ "title": "Two-Port Networks - Network Theory Part 31",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Two-Port",
+ "cover": "Two-Port Networks",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  4,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 31 · Two-port networks",
+   "narration": "Welcome back. Many electronic blocks have an input and an output: an amplifier, a filter, a transformer, a transmission line. Often we do not care what is inside. We only want to know how the output responds to the input. A network seen from an input pair of terminals and an output pair of terminals is called a two port network. Today we learn to describe any such box with just four numbers, called parameters.",
+   "kicker": "NETWORK THEORY · PART 31",
+   "title": "TWO-PORT NETWORKS",
+   "subtitle": "Z, Y, h and ABCD parameters"
+  },
+  {
+   "type": "twoport",
+   "chapter": "31.1 · The box",
+   "narration": "Here is the box. Port one on the left is the input, with voltage V one and current I one. Port two on the right is the output, with voltage V two and current I two. By convention, both currents are drawn flowing into the box, at the top terminal of each port, and both voltages are positive at the top. Keep this convention in mind, because every sign in the parameters depends on it. There are four quantities, and the parameters connect two of them to the other two.",
+   "mode": "box"
+  },
+  {
+   "type": "twoport",
+   "chapter": "31.2 · Our example",
+   "narration": "To make it real, let's put a simple T network inside: a two ohm resistor Z a on the input side, a four ohm resistor Z b on the output side, and a six ohm resistor Z c going down the middle. We will describe this same network with every kind of parameter, so you can compare them.",
+   "mode": "tnet"
+  },
+  {
+   "type": "formula",
+   "chapter": "31.3 · Z parameters",
+   "narration": "The Z parameters, or impedance parameters, express the voltages in terms of the currents. V one equals z eleven I one plus z twelve I two. V two equals z twenty one I one plus z twenty two I two. Each z is measured with one port open circuited, so they are also called open circuit impedance parameters.",
+   "formula": "V₁ = z₁₁I₁ + z₁₂I₂\nV₂ = z₂₁I₁ + z₂₂I₂",
+   "terms": [
+    [
+     "z₁₁ = V₁/I₁",
+     "with I₂ = 0 (port 2 open)"
+    ],
+    [
+     "z₂₁ = V₂/I₁",
+     "with I₂ = 0"
+    ]
+   ],
+   "example": [
+    "Unit: ohms"
+   ]
+  },
+  {
+   "type": "twoport",
+   "chapter": "31.4 · Measuring z11 and z21",
+   "narration": "Watch how we measure them. Leave port two open, so I two is zero, and push one ampere into port one. The current flows through Z a and Z c only, because the open port two carries nothing. V one is one ampere times two plus six ohms, eight volts. So z eleven is eight ohms. And V two is the voltage across Z c, six volts, because no current flows in Z b. So z twenty one is six ohms.",
+   "mode": "open2"
+  },
+  {
+   "type": "twoport",
+   "chapter": "31.5 · Measuring z22 and z12",
+   "narration": "Now the other side. Leave port one open and push one ampere into port two. It flows through Z b and Z c. V two is four plus six, ten volts, so z twenty two is ten ohms. And V one is the voltage across Z c, six volts, so z twelve is six ohms. Notice z twelve equals z twenty one. That always happens for networks made of resistors, inductors and capacitors, called reciprocal networks, exactly the reciprocity theorem from Part 21.",
+   "mode": "open1"
+  },
+  {
+   "type": "formula",
+   "chapter": "31.6 · Y parameters",
+   "narration": "The Y parameters, or admittance parameters, do the opposite: they express the currents in terms of the voltages. Each is measured with one port short circuited, so they are called short circuit admittance parameters. The Y matrix is simply the inverse of the Z matrix. For our network, the determinant of Z is eight times ten minus six times six, forty four. So y eleven is ten over forty four, y twelve and y twenty one are minus six over forty four, and y twenty two is eight over forty four, all in siemens.",
+   "formula": "I₁ = y₁₁V₁ + y₁₂V₂\nI₂ = y₂₁V₁ + y₂₂V₂",
+   "terms": [
+    [
+     "[Y] = [Z]⁻¹",
+     "Δz = 8·10 − 6·6 = 44"
+    ]
+   ],
+   "example": [
+    "y₁₁ = 10/44 ≈ 0.227 S · y₂₂ = 8/44 ≈ 0.182 S",
+    "y₁₂ = y₂₁ = −6/44 ≈ −0.136 S"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "31.7 · h parameters",
+   "narration": "The hybrid, or h, parameters mix the two: V one and I two in terms of I one and V two. They are the standard way to describe transistors, because they are easy to measure there. h eleven is an input impedance, h twelve a reverse voltage ratio, h twenty one a forward current gain, and h twenty two an output admittance. For our network: h eleven equals Delta z over z twenty two, four point four ohms. h twelve equals z twelve over z twenty two, zero point six. h twenty one equals minus z twenty one over z twenty two, minus zero point six. And h twenty two equals one over z twenty two, zero point one siemens.",
+   "formula": "V₁ = h₁₁I₁ + h₁₂V₂\nI₂ = h₂₁I₁ + h₂₂V₂",
+   "terms": [
+    [
+     "h₁₁",
+     "input impedance (Ω)"
+    ],
+    [
+     "h₂₁",
+     "forward current gain (β in transistors)"
+    ]
+   ],
+   "example": [
+    "h₁₁ = 4.4 Ω · h₁₂ = 0.6",
+    "h₂₁ = −0.6 · h₂₂ = 0.1 S"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "31.8 · ABCD parameters",
+   "narration": "The ABCD, or transmission, parameters express the input, V one and I one, in terms of the output, V two and minus I two. They are used for transmission lines, because when two networks are connected one after another, called cascade, their ABCD matrices simply multiply. For our network: A is z eleven over z twenty one, one point three three three. B is Delta z over z twenty one, seven point three three three ohms. C is one over z twenty one, zero point one six seven siemens. And D is z twenty two over z twenty one, one point six six seven.",
+   "formula": "V₁ = A·V₂ − B·I₂\nI₁ = C·V₂ − D·I₂",
+   "terms": [
+    [
+     "Cascade",
+     "[ABCD]total = [ABCD]₁ × [ABCD]₂"
+    ],
+    [
+     "Reciprocal",
+     "AD − BC = 1"
+    ]
+   ],
+   "example": [
+    "A = 1.333 · B = 7.333 Ω",
+    "C = 0.167 S · D = 1.667",
+    "AD − BC = 2.222 − 1.222 = 1 ✓"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "31.9 · Which parameters when?",
+   "narration": "Each set has its favourite use. Z parameters suit networks connected in series. Y parameters suit networks connected in parallel, and high frequency circuits. h parameters describe transistors. ABCD parameters handle cascaded stages and transmission lines. And for reciprocal networks: z twelve equals z twenty one, y twelve equals y twenty one, h twelve equals minus h twenty one, and A D minus B C equals one. For symmetrical networks, z eleven also equals z twenty two.",
+   "title": "Choosing parameters",
+   "parts": [
+    {
+     "id": "z",
+     "label": "Z: series connections",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "y",
+     "label": "Y: parallel connections",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "h",
+     "label": "h: transistors",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "ABCD: cascades, lines",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "r",
+     "label": "Reciprocal: z₁₂ = z₂₁ · AD − BC = 1",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "z"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "y"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "h"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "31.10 · Common mistakes",
+   "narration": "Common mistakes with two ports. One: drawing I two flowing out of the box: by convention it flows in, which is why ABCD uses minus I two. Two: opening a port when it should be shorted: Z and h twenty two need open circuits, Y and h eleven need short circuits. Three: forgetting that Y is the matrix inverse of Z, not one over each element. Four: forgetting units: Z in ohms, Y in siemens, and some h and ABCD values have no unit.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "I₂ flows INTO the box",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Z: open · Y: short",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "[Y] = [Z]⁻¹ (not 1/z each)",
+     "x": 25,
+     "y": 68,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Check units of each parameter",
+     "x": 75,
+     "y": 68,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A two port network is a box seen from an input port and an output port, with currents flowing in. Z parameters give voltages from currents, measured with ports open. Y parameters give currents from voltages, with ports shorted. h parameters describe transistors, and ABCD parameters multiply for cascaded networks. Reciprocal networks have z twelve equals z twenty one and A D minus B C equals one.",
+   "title": "Two-ports in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Z: V from I (open circuit)",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Y: I from V (short circuit)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "h: transistors",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "ABCD: cascades · AD − BC = 1",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Our last theory part brings in the most powerful tool of all: the Laplace transform. It turns the differential equations of transients into simple algebra, so even complex RLC circuits can be solved step by step. It completes the theory of this course.",
+   "title": "NEXT: LAPLACE TRANSFORM",
+   "lines": [
+    "Z parameters",
+    "Y parameters",
+    "h parameters",
+    "ABCD"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Two-Port Networks Explained: Z, Y, h & ABCD Parameters | Network Theory #32",
+  "description": "Network Theory from absolute zero - Part 32: two-port networks.\n- The two-port box and current conventions\n- Z parameters measured live on a T network (z11 = 8, z12 = z21 = 6, z22 = 10 Ω)\n- Y parameters as the inverse of Z\n- h parameters (transistors)\n- ABCD parameters and cascading, AD − BC = 1\n- Reciprocity and symmetry conditions\n- Common mistakes\n\nPrevious: Network topology. Next: Laplace transform.\n\n#NetworkTheory #TwoPort #ZParameters #ECE",
+  "tags": [
+   "two port network",
+   "z parameters",
+   "y parameters",
+   "h parameters",
+   "abcd parameters",
+   "transmission parameters",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
