@@ -59,7 +59,47 @@ const Circuit: React.FC<{ c: any; f: number; dur: number }> = ({ c, f, dur }) =>
   </g>;
 };
 
-export const StickScene: React.FC<any> = ({ dur, pose = "worry", say = "", name, prop = "none", circuit = {}, card }) => {
+
+// Original mascot "Volt": bean body, lightning-bolt tuft, wire limbs with terminal ends, plug tail.
+const Volt: React.FC<{ x: number; y: number; pose: string; f: number; name?: string }> = ({ x, y, pose, f, name }) => {
+  const bob = Math.sin(f / 6) * 8; const ink = "#1b2a3a"; const body = "#2f8fe0", body2 = "#1d6fbf", bolt = "#ffc93c";
+  const arm: Record<string, number[][]> = { // [shoulder->hand] for left, right (relative)
+    worry: [[-120, 40], [120, 40]], shock: [[-150, -90], [150, -90]], happy: [[-140, -110], [140, -110]],
+    point: [[-120, 40], [210, -40]], think: [[-120, 40], [40, -10]], wave: [[-120, 40], [150 + Math.sin(f / 4) * 25, -150]],
+  };
+  const [la, ra] = arm[pose] || arm.worry;
+  const eyeR = pose === "shock" ? 30 : 26; const blink = f % 90 > 84 ? 0.15 : 1;
+  const mouth = pose === "happy" || pose === "wave" ? <path d="M-45 40 Q0 90 45 40 Z" fill={ink} />
+    : pose === "shock" ? <ellipse cx={0} cy={58} rx={22} ry={28} fill={ink} />
+    : pose === "worry" ? <path d="M-38 70 Q0 40 38 70" fill="none" stroke={ink} strokeWidth={9} strokeLinecap="round" />
+    : pose === "think" ? <path d="M-20 60 L30 52" fill="none" stroke={ink} strokeWidth={9} strokeLinecap="round" />
+    : <path d="M-35 52 Q0 74 35 52" fill="none" stroke={ink} strokeWidth={9} strokeLinecap="round" />;
+  const limb = (x1: number, y1: number, x2: number, y2: number) => <g><path d={`M${x1} ${y1} Q${(x1 + x2) / 2 + (x2 > x1 ? 10 : -10)} ${(y1 + y2) / 2 + 25} ${x2} ${y2}`} fill="none" stroke={ink} strokeWidth={12} strokeLinecap="round" />
+    <circle cx={x2} cy={y2} r={16} fill="#c8ccd2" stroke={ink} strokeWidth={6} /></g>;
+  return <g transform={`translate(${x} ${y + bob})`}>
+    <ellipse cx={0} cy={300} rx={150} ry={22} fill="#000" opacity={0.08} />
+    {limb(-60, 160, -80, 285)}{limb(60, 160, 80, 285)}
+    <path d="M110 120 Q190 140 200 210" fill="none" stroke={ink} strokeWidth={10} /><rect x={182} y={205} width={36} height={40} rx={6} fill="#c8ccd2" stroke={ink} strokeWidth={6} />
+    <line x1={192} y1={245} x2={192} y2={268} stroke={ink} strokeWidth={6} /><line x1={208} y1={245} x2={208} y2={268} stroke={ink} strokeWidth={6} />
+    <path d="M0 -190 C120 -190 160 -80 150 20 C140 140 80 190 0 190 C-80 190 -140 140 -150 20 C-160 -80 -120 -190 0 -190 Z" fill={body} stroke={ink} strokeWidth={9} />
+    <path d="M-110 60 C-90 150 -30 170 40 170" fill="none" stroke={body2} strokeWidth={14} strokeLinecap="round" opacity={0.6} />
+    <path d="M-20 -185 L-55 -260 L-5 -250 L-30 -320 L45 -230 L0 -240 L20 -185 Z" fill={bolt} stroke={ink} strokeWidth={7} strokeLinejoin="round" />
+    <g transform="translate(0 -40)">
+      <ellipse cx={-52} cy={0} rx={42} ry={50 * blink} fill="#fff" stroke={ink} strokeWidth={6} /><ellipse cx={52} cy={0} rx={42} ry={50 * blink} fill="#fff" stroke={ink} strokeWidth={6} />
+      {blink > 0.5 && <><circle cx={-46 + (pose === "think" ? 14 : 0)} cy={pose === "think" ? -14 : 6} r={eyeR * 0.75} fill={ink} /><circle cx={58 + (pose === "think" ? 14 : 0)} cy={pose === "think" ? -14 : 6} r={eyeR * 0.75} fill={ink} />
+        <circle cx={-38} cy={-6} r={7} fill="#fff" /><circle cx={66} cy={-6} r={7} fill="#fff" /></>}
+      {pose === "worry" && <><line x1={-90} y1={-62} x2={-30} y2={-48} stroke={ink} strokeWidth={8} strokeLinecap="round" /><line x1={90} y1={-62} x2={30} y2={-48} stroke={ink} strokeWidth={8} strokeLinecap="round" /></>}
+      {mouth}
+      {(pose === "happy" || pose === "wave") && <><ellipse cx={-95} cy={50} rx={18} ry={11} fill="#ff8fa3" opacity={0.7} /><ellipse cx={95} cy={50} rx={18} ry={11} fill="#ff8fa3" opacity={0.7} /></>}
+    </g>
+    {limb(-140, 30, la[0] - 30, la[1] + 20)}{limb(140, 30, ra[0] + 30, ra[1] + 20)}
+    {pose === "shock" && [0, 1, 2].map((k) => <line key={k} x1={-190 + k * 190} y1={-250} x2={-210 + k * 210} y2={-300} stroke={bolt} strokeWidth={9} strokeLinecap="round" />)}
+    {pose === "think" && <g opacity={0.7}><circle cx={180} cy={-200} r={12} fill={ink} /><circle cx={215} cy={-245} r={18} fill={ink} /></g>}
+    {name && <text x={0} y={350} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={42} fontWeight={800}>{name}</text>}
+  </g>;
+};
+
+export const StickScene: React.FC<any> = ({ dur, pose = "worry", say = "", name, prop = "none", circuit = {}, card, char }) => {
   const f = useCurrentFrame();
   const words = String(say).split(" "); const lines: string[] = []; let cur = "";
   for (const w of words) { if ((cur + " " + w).trim().length > 22) { lines.push(cur.trim()); cur = w; } else cur += " " + w; } if (cur.trim()) lines.push(cur.trim());
@@ -71,6 +111,6 @@ export const StickScene: React.FC<any> = ({ dur, pose = "worry", say = "", name,
     {say && <g opacity={fade(f, 2, 8)}><rect x={300} y={by + (card ? 200 : 0)} width={720} height={70 + lines.length * 62} rx={36} fill="#fff" stroke={L.text} strokeWidth={6} />
       <path d={`M380 ${by + (card ? 200 : 0) + 70 + lines.length * 62} l-60 70 l120 -70 z`} fill="#fff" stroke={L.text} strokeWidth={6} />
       {lines.map((l, i) => <text key={i} x={660} y={by + (card ? 200 : 0) + 80 + i * 62} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={50} fontWeight={800}>{l}</text>)}</g>}
-    <Stick x={250} y={1560} pose={pose} f={f} name={name} />
+    {(char || "volt") === "volt" ? <Volt x={250} y={1500} pose={pose} f={f} name={name} /> : <Stick x={250} y={1560} pose={pose} f={f} name={name} />}
   </svg></AbsoluteFill>;
 };
