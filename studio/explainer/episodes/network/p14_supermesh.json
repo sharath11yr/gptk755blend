@@ -1,0 +1,303 @@
+{
+ "title": "Supermesh - Network Theory Part 14",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Supermesh",
+ "cover": "Supermesh",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  3,
+  4
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 14 · Supermesh",
+   "narration": "Welcome back. In the last part, mesh analysis solved circuits by writing KVL around each mesh. That worked because every element had a voltage we could write, like I times R or a source voltage. But a current source is different: we know its current, but its voltage depends on the rest of the circuit. So what do we do when a current source sits in a branch shared by two meshes? We create a supermesh.",
+   "kicker": "NETWORK THEORY · PART 14",
+   "title": "SUPERMESH",
+   "subtitle": "Mesh analysis with a shared current source"
+  },
+  {
+   "type": "diagram",
+   "chapter": "14.1 · Two kinds of current source",
+   "narration": "There are two situations. If a current source sits on the outside edge of the circuit, in a branch that belongs to only one mesh, life is easy: that mesh current simply equals the source current. One unknown is gone. But if the current source sits in a branch shared by two meshes, its voltage is unknown, so we cannot write KVL around either mesh on its own. That second case needs a supermesh.",
+   "title": "Where is the current source?",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Outer branch (one mesh) → I_mesh = I_source",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Shared branch (two meshes) → SUPERMESH",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Its voltage is unknown → can't write KVL across it",
+     "x": 75,
+     "y": 78
+    }
+   ],
+   "arrows": [
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Easy case"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "mesh",
+   "chapter": "14.2 · The supermesh",
+   "narration": "Here is our circuit from the last part, but the middle resistor is replaced by a two ampere current source pointing up. It sits in the branch shared by mesh one and mesh two. Watch the green dashed outline: we imagine removing the current source branch and joining the two meshes into one big loop. This combined loop is the supermesh. We will walk around it, skipping the current source completely.",
+   "mode": "supermesh"
+  },
+  {
+   "type": "formula",
+   "chapter": "14.3 · Equation from the source",
+   "narration": "First, the current source itself gives us an equation. In the shared branch, mesh current I1 flows down and I2 flows up, so the upward current in that branch is I2 minus I1. The source forces exactly two amperes upward. So I2 minus I1 equals two. This is called the constraint equation. It replaces the KVL equation we could not write.",
+   "formula": "I2 − I1 = 2",
+   "terms": [
+    [
+     "Source branch",
+     "carries I2 − I1 upward"
+    ],
+    [
+     "Source value",
+     "2 A upward"
+    ]
+   ],
+   "example": [
+    "Constraint equation"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "14.4 · KVL around the supermesh",
+   "narration": "Now walk clockwise around the supermesh, the big outer loop, skipping the source branch. Up through the battery: plus twelve. Across R1 with I1: minus two I1. Across R2 with I2: minus two I2. Down R4 with I2: minus two I2. Back along the bottom wire. The sum is zero. So twelve minus two I1 minus four I2 equals zero, or two I1 plus four I2 equals twelve.",
+   "formula": "12 − 2·I1 − 2·I2 − 2·I2 = 0",
+   "terms": [
+    [
+     "Simplified",
+     "2·I1 + 4·I2 = 12"
+    ]
+   ],
+   "example": [
+    "The current source is skipped"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "14.5 · Solve",
+   "narration": "Now solve. From the constraint, I2 equals I1 plus two. Put it into the supermesh equation: two I1 plus four times I1 plus two equals twelve. That gives six I1 plus eight equals twelve, so six I1 equals four, and I1 equals two thirds of an ampere, about zero point six seven amperes. Then I2 equals zero point six seven plus two, about two point six seven amperes. Check: I2 minus I1 equals two. Correct.",
+   "formula": "2·I1 + 4·(I1 + 2) = 12",
+   "terms": [
+    [
+     "6·I1 = 4",
+     "I1 = 2/3 A ≈ 0.67 A"
+    ],
+    [
+     "I2 = I1 + 2",
+     "≈ 2.67 A"
+    ]
+   ],
+   "example": [
+    "Check: 2.67 − 0.67 = 2 A ✓"
+   ]
+  },
+  {
+   "type": "steps",
+   "chapter": "14.6 · The method",
+   "narration": "Here is the supermesh recipe. One: assign mesh currents as usual. Two: find any current source shared by two meshes, and remove it in your mind to form a supermesh. Three: write the constraint equation: the difference of the two mesh currents equals the source current. Four: write KVL around the supermesh, skipping the source. Five: write KVL for any other ordinary meshes, and solve all the equations together.",
+   "title": "Supermesh step by step",
+   "items": [
+    "Assign mesh currents",
+    "Shared current source → join the two meshes",
+    "Constraint: I_a − I_b = I_source",
+    "KVL around the supermesh (skip the source)",
+    "KVL for other meshes → solve"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "14.7 · Counting equations",
+   "narration": "Notice that we still got exactly as many equations as unknowns. Two mesh currents, two equations: one from the current source, one from KVL around the supermesh. That is always true. Each shared current source removes one KVL equation, but gives back one constraint equation. So the total number of equations always equals the number of meshes.",
+   "title": "Equations always match unknowns",
+   "parts": [
+    {
+     "id": "a",
+     "label": "2 mesh currents",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "1 constraint + 1 supermesh KVL",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "2 equations ✓",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "c",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A current source on an outer branch fixes that mesh current directly. A current source shared by two meshes creates a supermesh. Write the constraint equation from the source, then KVL around the supermesh, skipping the source. Solve them together, and the number of equations still equals the number of meshes.",
+   "title": "Supermesh in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Outer source → I_mesh = I_s",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Shared source → supermesh",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Constraint: I2 − I1 = I_s",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "KVL around supermesh, skip source",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Mesh analysis used KVL around loops. Its partner method uses KCL at nodes instead, and is often even faster: nodal analysis. In the next part we find node voltages, and from them, every current in the circuit.",
+   "title": "NEXT: NODAL ANALYSIS",
+   "lines": [
+    "Shared current source",
+    "Constraint equation",
+    "KVL around supermesh"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Supermesh Explained Step by Step from Zero | Network Theory #15",
+  "description": "Network Theory from absolute zero - Part 15: supermesh.\n- Why current sources are a problem in mesh analysis\n- Outer current source vs shared current source\n- Forming the supermesh (animated)\n- Constraint equation from the current source\n- KVL around the supermesh, skipping the source\n- Solved example and the 5-step method\n\nPrevious: Mesh analysis. Next: Nodal analysis.\n\n#NetworkTheory #Supermesh #MeshAnalysis #ECE",
+  "tags": [
+   "supermesh",
+   "supermesh analysis",
+   "mesh analysis current source",
+   "network theory",
+   "circuit analysis",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

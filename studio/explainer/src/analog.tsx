@@ -645,4 +645,39 @@ export const StarDelta: React.FC<any> = ({ dur, mode = "d2y", r = [6, 12, 18] })
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ mesh analysis on a 2-mesh circuit
+// V=12, R1=2 (top-left), R3=4 (shared, middle), R2=2 (top-right), R4=2 (right). I1=3 A, I2=1.5 A.
+// {"mode":"label"|"kvl1"|"kvl2"|"solve"|"supermesh"}
+export const MeshScene: React.FC<any> = ({ dur, mode = "label" }) => {
+  const f = useCurrentFrame();
+  const sm = mode === "supermesh";
+  const wires = [[[360, 260], [1560, 260]], [[360, 260], [360, 800]], [[360, 800], [1560, 800]], [[960, 260], [960, 800]], [[1560, 260], [1560, 800]]];
+  const arc = (cx: number, col: string, lab: string, o: number, spin: number) => <g opacity={o}>
+    <path d={`M${cx - 120} ${530} A120 120 0 1 1 ${cx - 85} ${615}`} fill="none" stroke={col} strokeWidth={6} strokeDasharray="16 10" strokeDashoffset={-spin} />
+    <path d={`M${cx - 85 - 18} ${615 - 18} L${cx - 85 + 10} ${615 - 10} L${cx - 85 - 10} ${615 + 10} Z`} fill={col} />
+    <text x={cx} y={545} textAnchor="middle" fill={col} fontFamily={MONO} fontSize={44} fontWeight={800}>{lab}</text></g>;
+  const hi1 = mode === "kvl1", hi2 = mode === "kvl2";
+  const eq = mode === "kvl1" ? ["Mesh 1 (clockwise):", "12 − 2·I1 − 4·(I1 − I2) = 0", "→ 6·I1 − 4·I2 = 12"]
+    : mode === "kvl2" ? ["Mesh 2 (clockwise):", "− 2·I2 − 2·I2 − 4·(I2 − I1) = 0", "→ −4·I1 + 8·I2 = 0"]
+    : mode === "solve" ? ["Solve:", "I1 = 3 A,  I2 = 1.5 A", "R3 carries I1 − I2 = 1.5 A ↓"]
+    : sm ? ["Current source in the shared branch:", "I2 − I1 = 2 A  (source equation)", "KVL around the SUPERMESH (skip the source)"]
+    : ["Step 1: one current per mesh,", "all clockwise", "shared branch carries I1 − I2"];
+  const eo = fade(f, dur * 0.2, 12);
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {hi1 && <rect x={370} y={270} width={580} height={520} fill={L.cyan} opacity={0.1} />}
+    {hi2 && <rect x={970} y={270} width={580} height={520} fill={L.amber} opacity={0.1} />}
+    {sm && <rect x={370} y={270} width={1180} height={520} fill={L.green} opacity={0.08} stroke={L.green} strokeDasharray="14 10" strokeWidth={4} />}
+    {wires.map((w, i) => <polyline key={i} points={w.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />)}
+    <Battery x={360} y={530} v={12} />
+    <Res x={660} y={260} ohm={2} label="R1" horizontal /><Res x={1260} y={260} ohm={2} label="R2" horizontal />
+    {sm ? <g><circle cx={960} cy={530} r={54} fill={L.bg0} stroke={L.text} strokeWidth={6} /><line x1={960} y1={570} x2={960} y2={494} stroke={L.text} strokeWidth={6} /><path d="M944 512 L960 484 L976 512 Z" fill={L.text} />
+      <text x={1030} y={540} fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>2 A</text></g> : <Res x={960} y={530} ohm={4} label="R3" />}
+    <Res x={1560} y={530} ohm={2} label="R4" />
+    {arc(660, L.cyan, "I1", hi2 ? 0.3 : 1, f * 1.5)}{arc(1260, L.amber, "I2", hi1 ? 0.3 : 1, f * 1.5)}
+    {mode === "solve" && <g><rect x={990} y={700} width={200} height={56} rx={10} fill={L.panel} stroke={L.green} strokeWidth={3} /><text x={1090} y={738} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>1.5 A ↓</text></g>}
+    <g opacity={eo}><rect x={360} y={850} width={1200} height={180} rx={18} fill={L.panel} stroke={L.green} strokeWidth={3} />
+      {eq.map((t, i) => <text key={i} x={960} y={900 + i * 52} textAnchor="middle" fill={i === 2 ? L.green : L.text} fontFamily={MONO} fontSize={i === 0 ? 28 : 36} fontWeight={i ? 800 : 600} opacity={fade(f, dur * 0.2 + i * dur * 0.15, 10)}>{t}</text>)}</g>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

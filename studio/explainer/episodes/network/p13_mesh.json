@@ -1,0 +1,272 @@
+{
+ "title": "Mesh Analysis - Network Theory Part 13",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Mesh",
+ "cover": "Mesh Analysis",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  3,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 13 · Mesh analysis",
+   "narration": "Welcome back. We have KVL, we know what a mesh is, and we can count meshes with b minus n plus one. Now we put them together into our first complete, step by step method for solving circuits: mesh analysis. Instead of guessing currents in every branch, we give each mesh one current of its own, write KVL around each mesh, and solve. It works for every planar circuit, and it is one of the most asked topics in exams.",
+   "kicker": "NETWORK THEORY · PART 13",
+   "title": "MESH ANALYSIS",
+   "subtitle": "KVL around each mesh, one current per mesh"
+  },
+  {
+   "type": "mesh",
+   "chapter": "13.1 · Mesh currents",
+   "narration": "Here is a circuit with two meshes: a twelve volt battery, R1 and R2 of two ohms each on top, R3 of four ohms in the middle, and R4 of two ohms on the right. Watch the circling arrows. We imagine a current flowing around each mesh, like a little loop of water: I1 around the left mesh and I2 around the right mesh. We draw both clockwise. That is just a choice that keeps the signs simple. These are called mesh currents.",
+   "mode": "label"
+  },
+  {
+   "type": "diagram",
+   "chapter": "13.2 · The shared branch",
+   "narration": "Here is the key idea. A branch that belongs to only one mesh carries only that mesh current. So R1 carries I1, and R2 and R4 carry I2. But R3 sits between both meshes. Both mesh currents flow through it, in opposite directions: I1 goes down through R3, while I2 goes up. So the real current in R3 is the difference, I1 minus I2, downward. Once we know the mesh currents, every branch current follows.",
+   "title": "Branch currents from mesh currents",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Branch in one mesh → that mesh current",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Shared branch → difference: I1 − I2",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "R1: I1 · R2, R4: I2 · R3: I1 − I2",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "c",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Opposite directions subtract"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "mesh",
+   "chapter": "13.3 · KVL around mesh 1",
+   "narration": "Now write KVL around mesh one, walking clockwise, the same way as I1. Up through the battery from minus to plus: a rise of twelve volts. Across R1, walking with I1: a drop of two times I1. Down through R3: the current there is I1 minus I2, so the drop is four times I1 minus I2. The sum must be zero. Collect the terms and we get: six I1 minus four I2 equals twelve. That is our first equation.",
+   "mode": "kvl1"
+  },
+  {
+   "type": "mesh",
+   "chapter": "13.4 · KVL around mesh 2",
+   "narration": "Now mesh two, again walking clockwise, the same way as I2. Across R2: a drop of two times I2. Down through R4: a drop of two times I2. Then up through R3. Going up, the current in our walking direction is I2 minus I1, so the drop is four times I2 minus I1. There is no source in this mesh, so the sum is zero. Collect the terms: minus four I1 plus eight I2 equals zero. Our second equation.",
+   "mode": "kvl2"
+  },
+  {
+   "type": "formula",
+   "chapter": "13.5 · Solve the equations",
+   "narration": "Now we have two equations in two unknowns. From the second: eight I2 equals four I1, so I1 equals two I2. Put this into the first: six times two I2, minus four I2, equals twelve. That is twelve I2 minus four I2, eight I2, equals twelve. So I2 equals one point five amperes, and I1 equals two times one point five, three amperes. You can also solve such equations with matrices or Cramer's rule, which helps when there are three or more meshes.",
+   "formula": "6·I1 − 4·I2 = 12     −4·I1 + 8·I2 = 0",
+   "terms": [
+    [
+     "From eq. 2",
+     "I1 = 2·I2"
+    ],
+    [
+     "Into eq. 1",
+     "12·I2 − 4·I2 = 12 → I2 = 1.5 A"
+    ]
+   ],
+   "example": [
+    "I1 = 3 A",
+    "I2 = 1.5 A"
+   ]
+  },
+  {
+   "type": "mesh",
+   "chapter": "13.6 · Branch currents",
+   "narration": "Now we can read every branch current. R1 carries I1, three amperes. R2 and R4 carry I2, one point five amperes. And R3 carries I1 minus I2, which is one point five amperes downward, as you see marked. Let's check with KCL at the top middle node: three amperes come in from R1, and one point five goes down through R3 plus one point five continues through R2. Three in, three out. Correct.",
+   "mode": "solve"
+  },
+  {
+   "type": "formula",
+   "chapter": "13.7 · Check another way",
+   "narration": "Let's verify with series and parallel. R2 and R4 in series make four ohms. That is in parallel with R3, also four ohms, giving two ohms. Add R1: two plus two, four ohms total. Twelve volts divided by four ohms is three amperes, exactly I1. Mesh analysis gave the right answer. For this simple circuit, series parallel was enough, but mesh analysis works even when series parallel fails, such as circuits with several sources.",
+   "formula": "R_total = 2 + (4 ∥ (2 + 2)) = 4 Ω",
+   "terms": [
+    [
+     "Current",
+     "12 / 4 = 3 A = I1"
+    ]
+   ],
+   "example": [
+    "Mesh analysis ✓"
+   ]
+  },
+  {
+   "type": "steps",
+   "chapter": "13.8 · The method",
+   "narration": "Here is mesh analysis as a recipe you can apply to any planar circuit. One: count the meshes and draw one clockwise current in each. Two: write KVL around each mesh, using the difference of mesh currents in shared branches. Three: arrange the equations neatly, with the unknowns on the left and the sources on the right. Four: solve them, by substitution, matrices or Cramer's rule. Five: find each branch current from the mesh currents, and check with KCL.",
+   "title": "Mesh analysis step by step",
+   "items": [
+    "Draw one clockwise current per mesh",
+    "KVL around each mesh (shared branch: difference)",
+    "Arrange: unknowns left, sources right",
+    "Solve: substitution / matrix / Cramer",
+    "Find branch currents, check with KCL"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "13.9 · The shortcut by inspection",
+   "narration": "When a circuit has only voltage sources and all mesh currents are clockwise, the equations follow a pattern you can write by just looking. The coefficient of a mesh's own current is the sum of all resistances in that mesh: R11 equals six, R22 equals eight. The coefficient of the other current is minus the shared resistance: minus four. And the right side is the sum of source voltages pushing in that mesh's direction. This gives the resistance matrix directly.",
+   "formula": "[6 −4] [I1] = [12]\n[−4 8] [I2] = [0]",
+   "terms": [
+    [
+     "Diagonal",
+     "sum of resistances in the mesh"
+    ],
+    [
+     "Off-diagonal",
+     "− shared resistance"
+    ],
+    [
+     "Right side",
+     "sum of source voltages in the mesh"
+    ]
+   ],
+   "example": [
+    "Works for voltage sources only (current sources → next part)"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Mesh analysis gives each mesh its own clockwise current. Shared branches carry the difference of mesh currents. Write KVL around each mesh, solve the equations, then find every branch current. The number of equations equals the number of meshes, b minus n plus one. And for circuits with only voltage sources, the equations can be written by inspection.",
+   "title": "Mesh analysis in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "One clockwise current per mesh",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Shared branch: I1 − I2",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "KVL each mesh → solve",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Equations = meshes = b − n + 1",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Mesh analysis works beautifully with voltage sources. But what happens when a current source sits in a branch shared by two meshes? We cannot write its voltage directly. The answer is a clever idea called the supermesh, our next part.",
+   "title": "NEXT: SUPERMESH",
+   "lines": [
+    "Mesh currents",
+    "KVL per mesh",
+    "Solve"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Mesh Analysis Explained Step by Step from Zero | Network Theory #14",
+  "description": "Network Theory from absolute zero - Part 14: mesh analysis.\n- Mesh currents (animated)\n- Shared branches carry the difference of mesh currents\n- KVL around each mesh, written step by step\n- Solving the equations\n- Finding branch currents and checking with KCL\n- The 5-step method\n- Writing mesh equations by inspection (resistance matrix)\n\nPrevious: Star-delta transformation. Next: Supermesh.\n\n#NetworkTheory #MeshAnalysis #ECE #CircuitAnalysis",
+  "tags": [
+   "mesh analysis",
+   "mesh current method",
+   "kvl",
+   "network theory",
+   "circuit analysis",
+   "ece",
+   "basic electrical engineering"
+  ],
+  "playlist": "Network Theory"
+ }
+}
