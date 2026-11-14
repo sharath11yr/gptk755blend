@@ -1,0 +1,1342 @@
+{
+ "title": "Network Theory Numericals 9: Thevenin and Norton",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Thevenin and Norton Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 9",
+   "narration": "Welcome back. Today we practise the two most important theorems. First, a Thevenin equivalent for a circuit with a load that keeps changing. Then the Norton equivalent of the same circuit, found directly with a short circuit. And finally, a circuit with a dependent source, where we must not switch the dependent source off, and instead find R th with V open circuit over I short circuit.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "THEVENIN & NORTON",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Thevenin equivalent",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "36 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "36 V, R1 = 6 Ω, R2 = 3 Ω (shunt)",
+    "R3 = 2 Ω to terminal a",
+    "Loads: R_L = 4 Ω, then 8 Ω"
+   ],
+   "ask": "V_th, R_th and the load\ncurrent for each load",
+   "narration": "Problem one. Thirty six volts feeds R1, six ohms, then R2, three ohms, goes to ground, and R3, two ohms, leads to terminals a and b. Find the Thevenin equivalent at a b, then the current for a four ohm load and an eight ohm load."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Thevenin equivalent",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "36 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: V_th (open circuit at a-b)",
+    "no current in R3 → V_th = V across R2",
+    "V_th = 36 × 3 / (6 + 3) = 12 V",
+    "Step 2: R_th (36 V → short)",
+    "6 ∥ 3 = 2 Ω, then + R3 = 2 + 2 = 4 Ω",
+    "R_th = 4 Ω"
+   ],
+   "answer": "",
+   "narration": "Step one: V Thevenin is the open circuit voltage at a b. With nothing connected, no current flows in R3, so there is no voltage across it, and V a b equals the voltage across R2. By the voltage divider, thirty six times three over nine, twelve volts. Step two: R Thevenin. Short the voltage source and look back from a b. R1 and R2 are now in parallel, six in parallel with three, two ohms, and R3 is in series with that: two plus two, four ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Thevenin equivalent",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "36 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 3: loads",
+    "R_L = 4 Ω: I = 12 / (4 + 4) = 1.5 A",
+    "R_L = 8 Ω: I = 12 / (4 + 8) = 1 A",
+    "Each new load: one line!",
+    "! remove the load before finding V_th"
+   ],
+   "answer": "V_th = 12 V · R_th = 4 Ω · 1.5 A, 1 A",
+   "narration": "Step three: now any load is easy. With four ohms: twelve over four plus four, one point five amperes. With eight ohms: twelve over four plus eight, one ampere. Without Thevenin, we would solve the whole circuit again for every load."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Norton equivalent",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "36 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "Same circuit as Problem 1"
+   ],
+   "ask": "I_N by shorting a-b,\nR_N, and check V_th = I_N R_N",
+   "narration": "Problem two. Find the Norton equivalent of the same circuit, by actually shorting terminals a and b, and check that it matches the Thevenin result."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Norton equivalent",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "36 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: short a-b, find I_sc",
+    "R3 now goes from node X to ground",
+    "KCL at X: (X − 36)/6 + X/3 + X/2 = 0",
+    "X(1/6 + 1/3 + 1/2) = 6  →  X = 6 V",
+    "I_N = I(R3) = 6 / 2 = 3 A"
+   ],
+   "answer": "",
+   "narration": "Step one: short terminals a and b with a wire. Now R3 connects the middle node, call it X, to ground. KCL at X: X minus thirty six over six, plus X over three, plus X over two equals zero. The coefficients add to one, and the constant is six, so X equals six volts. The short circuit current is the current in R3: six over two, three amperes. That is I Norton."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Norton equivalent",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "36 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      7.6,
+      1
+     ],
+     "label": "R3",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7.6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 2: R_N = R_th = 4 Ω",
+    "Check: V_th = I_N × R_N = 3 × 4 = 12 V ✓",
+    "Load 4 Ω (current divider):",
+    "I = 3 × 4 / (4 + 4) = 1.5 A ✓"
+   ],
+   "answer": "I_N = 3 A ∥ R_N = 4 Ω",
+   "narration": "Step two: R Norton is the same as R Thevenin, four ohms. Check: I N times R N is three times four, twelve volts, exactly V Thevenin. And with a four ohm load, the current divider gives three times four over eight, one point five amperes, the same as before."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · With a dependent source",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "di",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "0.25·Va",
+     "value": "(A)"
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "12 V with R1 = 4 Ω into node a",
+    "Dependent current source 0.25·Va (A)",
+    "from a down to b (ground)"
+   ],
+   "ask": "V_th, I_N and R_th",
+   "narration": "Problem three, with a dependent source. Twelve volts feeds node a through four ohms. A dependent current source, equal to zero point two five times V a amperes, flows from a down to ground. Find the Thevenin equivalent at a b. Remember: we must never switch off the dependent source."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · With a dependent source",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "di",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "0.25·Va",
+     "value": "(A)"
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: V_th (a-b open)",
+    "KCL at a: (Va − 12)/4 + 0.25·Va = 0",
+    "0.25·Va + 0.25·Va = 3  →  Va = 6 V",
+    "V_th = 6 V",
+    "Step 2: I_N (a-b shorted)",
+    "Va = 0 → dependent source = 0.25 × 0 = 0",
+    "I_N = 12 / 4 = 3 A"
+   ],
+   "answer": "",
+   "narration": "Step one: V Thevenin with a b open. KCL at a: the current leaving through R1 is V a minus twelve over four, and the dependent source takes zero point two five V a. Their sum is zero, so half V a equals three, and V a is six volts. So V th is six volts. Step two: short a b. Now V a is zero, so the dependent source carries zero current. All the current from the twelve volt source flows through the short: twelve over four, three amperes. That is I N."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · With a dependent source",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "di",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "0.25·Va",
+     "value": "(A)"
+    },
+    {
+     "t": "open",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "a-b"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "Va"
+    },
+    {
+     "at": [
+      8,
+      1
+     ],
+     "label": "a"
+    },
+    {
+     "at": [
+      8,
+      5
+     ],
+     "label": "b",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 3: R_th = V_th / I_N",
+    "R_th = 6 / 3 = 2 Ω",
+    "Check (test source, 12 V shorted):",
+    "I_test = Va/4 + 0.25·Va = 0.5·Va",
+    "R_th = Va / I_test = 2 Ω ✓",
+    "! never switch off dependent sources"
+   ],
+   "answer": "V_th = 6 V · I_N = 3 A · R_th = 2 Ω",
+   "narration": "Step three: R th equals V th over I N, six over three, two ohms. Let's check with a test source: short the twelve volt source, apply a test current at a b. It splits into V a over four through R1 and zero point two five V a through the dependent source, a total of half V a, so R th is V a over half V a, two ohms. Both methods agree. If we had wrongly switched off the dependent source, we would have got four ohms."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Remove the load before anything else. V th is the open circuit voltage and I N is the short circuit current. For R th, switch off only the independent sources. With a dependent source, use V th over I N, or a test source. And always check that V th equals I N times R th.",
+   "title": "Exam tips: Thevenin & Norton",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Remove the load first",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "V_th: open circuit · I_N: short circuit",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "R_th: sources off (independent only)",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Dependent source: R_th = V_th / I_N",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Check: V_th = I_N × R_th",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, maximum power transfer, Millman's theorem and reciprocity, with solved examples.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Thevenin & Norton Numericals (with Dependent Source) Solved | Network Theory Numericals #9",
+  "description": "Network Theory numericals - Part 9.\nProblem 1: Thevenin equivalent and two different loads\nProblem 2: Norton equivalent by shorting the terminals, checked\nProblem 3: dependent source - R_th = V_th / I_N, checked with a test source\nPlus exam tips.\n\n#NetworkTheory #TheveninTheorem #NortonTheorem #ECE",
+  "tags": [
+   "thevenin theorem problems",
+   "norton theorem problems",
+   "thevenin dependent source",
+   "network theorems numericals",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

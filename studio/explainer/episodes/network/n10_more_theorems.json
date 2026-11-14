@@ -1,0 +1,1022 @@
+{
+ "title": "Network Theory Numericals 10: Max Power, Millman and Reciprocity",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Max Power, Millman and Reciprocity Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 10",
+   "narration": "Welcome back. Today we finish the network theorems with three problems: choosing a load for maximum power, using Millman's theorem for parallel sources, and verifying the reciprocity theorem with numbers.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "MAX POWER, MILLMAN & RECIPROCITY",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Maximum power transfer",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_L",
+     "value": "?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "24 V, R1 = 4 Ω, R2 = 4 Ω",
+    "Load R_L across R2"
+   ],
+   "ask": "R_L for maximum power,\nand P_max",
+   "narration": "Problem one. Twenty four volts feeds R1, four ohms, with R2, four ohms, across the output, and a load R L connected across R2. What value of R L takes the maximum power, and what is that power?"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Maximum power transfer",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_L",
+     "value": "?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: Thevenin at the load",
+    "V_th = 24 × 4 / (4 + 4) = 12 V",
+    "R_th = 4 ∥ 4 = 2 Ω",
+    "Step 2: maximum power condition",
+    "R_L = R_th = 2 Ω"
+   ],
+   "answer": "",
+   "narration": "Step one: find the Thevenin equivalent seen by the load. V th is the voltage across R2 with the load removed: twenty four times four over eight, twelve volts. R th is R1 in parallel with R2 with the source shorted: two ohms. Step two: maximum power needs R L equal to R th, so R L equals two ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Maximum power transfer",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_L",
+     "value": "?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: maximum power",
+    "P_max = V_th² / (4 R_th) = 144 / 8 = 18 W",
+    "Check R_L = 4 Ω: I = 2 A, P = 16 W < 18 ✓",
+    "Check R_L = 1 Ω: I = 4 A, P = 16 W < 18 ✓"
+   ],
+   "answer": "R_L = 2 Ω · P_max = 18 W",
+   "narration": "Step three: P max equals V th squared over four R th: one hundred and forty four over eight, eighteen watts. Let's check two other loads. With four ohms, the current is twelve over six, two amperes, and the power is two squared times four, sixteen watts. With one ohm, the current is four amperes, and the power is four squared times one, sixteen watts. Both are less than eighteen. Correct."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Millman's theorem",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      3
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      3
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "6 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      8,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Branch 1: 12 V with 3 Ω",
+    "Branch 2: 6 V with 6 Ω",
+    "Branch 3: 2 Ω only",
+    "all in parallel"
+   ],
+   "ask": "common voltage V\nand branch currents",
+   "narration": "Problem two. Three branches are connected in parallel between the same two wires: twelve volts with three ohms, six volts with six ohms, and a plain two ohm resistor. Find the common voltage using Millman's theorem."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Millman's theorem",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      3
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      3
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "6 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      8,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: Millman's formula",
+    "V = (Σ V_k / R_k) / (Σ 1 / R_k)",
+    "top: 12/3 + 6/6 + 0/2 = 4 + 1 + 0 = 5",
+    "bottom: 1/3 + 1/6 + 1/2 = 1",
+    "V = 5 / 1 = 5 V"
+   ],
+   "answer": "",
+   "narration": "Step one: Millman's formula. The top is the sum of each source voltage over its resistance: twelve over three is four, six over six is one, and the plain resistor branch adds zero, total five. The bottom is the sum of conductances: a third plus a sixth plus a half, exactly one. So the common voltage is five volts."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Millman's theorem",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      3
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      3
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "3 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      5,
+      3
+     ],
+     "label": "6 V"
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      8,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 2: branch currents (up)",
+    "I1 = (12 − 5)/3 = 2.333 A",
+    "I2 = (6 − 5)/6 = 0.167 A",
+    "I3 (down) = 5 / 2 = 2.5 A",
+    "Check KCL: 2.333 + 0.167 = 2.5 ✓"
+   ],
+   "answer": "V = 5 V",
+   "narration": "Step two: the branch currents. The first branch pushes twelve minus five over three, two point three three three amperes up. The second pushes six minus five over six, zero point one six seven amperes up. The two ohm branch carries five over two, two point five amperes down. Check KCL: two point three three three plus zero point one six seven is two point five. Correct."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Verify reciprocity",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R3",
+     "value": "6 Ω (ammeter)"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "10 V source in series with R1 = 2 Ω",
+    "R2 = 3 Ω (middle), R3 = 6 Ω with an ammeter"
+   ],
+   "ask": "ammeter reading, then swap\nsource and ammeter",
+   "narration": "Problem three. A ten volt source in series with two ohms feeds a three ohm resistor and a six ohm resistor in parallel, with an ammeter in the six ohm branch. Find the ammeter reading. Then swap the source and the ammeter and check that the reading stays the same."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Verify reciprocity",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R3",
+     "value": "6 Ω (ammeter)"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: original",
+    "R2 ∥ R3 = 3 × 6 / 9 = 2 Ω",
+    "I_total = 10 / (2 + 2) = 2.5 A",
+    "I(R3) = 2.5 × 3 / 9 = 0.833 A",
+    "Step 2: swap (10 V in R3 branch)",
+    "R1 ∥ R2 = 2 × 3 / 5 = 1.2 Ω"
+   ],
+   "answer": "",
+   "narration": "Step one, the original circuit. R2 and R3 in parallel make two ohms, so the total resistance is four ohms and the source gives two point five amperes. The current divider sends two point five times three over nine, zero point eight three three amperes, through R3. Step two: swap. Now the ten volt source sits in the six ohm branch, and the ammeter replaces the source in the first branch, which is now just the two ohm resistor. Looking from the source, R1 and R2 are in parallel: one point two ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Verify reciprocity",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "3 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R3",
+     "value": "6 Ω (ammeter)"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "I_total = 10 / (6 + 1.2) = 1.389 A",
+    "I(R1) = 1.389 × 3 / 5 = 0.833 A",
+    "Same reading: 0.833 A ✓",
+    "Reciprocity holds (linear, one source)"
+   ],
+   "answer": "0.833 A both ways",
+   "narration": "The source sees six plus one point two, seven point two ohms, and gives one point three eight nine amperes. The current divider sends one point three eight nine times three over five, zero point eight three three amperes, through R1. Exactly the same reading. Reciprocity holds, because the circuit is linear and has a single source."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. For maximum power, find R th as seen from the load terminals, then use V th squared over four R th, and do not forget the four. In Millman's theorem, include branches without sources: they add zero on top but their conductance at the bottom. And reciprocity works only with a single independent source in a linear circuit.",
+   "title": "Exam tips: more theorems",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Max power: R_L = R_th from the load",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "P_max = V_th² / (4 R_th)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Millman: include source-free branches",
+     "x": 25,
+     "y": 68,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Reciprocity: single source only",
+     "x": 75,
+     "y": 68,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, we move to AC: problems on sine waves, RMS values and phasors.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Maximum Power Transfer, Millman & Reciprocity Numericals | Network Theory Numericals #10",
+  "description": "Network Theory numericals - Part 10.\nProblem 1: load for maximum power and P_max, checked with other loads\nProblem 2: Millman's theorem with three parallel branches\nProblem 3: reciprocity theorem verified by swapping source and ammeter\nPlus exam tips.\n\n#NetworkTheory #MaximumPowerTransfer #MillmansTheorem #ECE",
+  "tags": [
+   "maximum power transfer problems",
+   "millman theorem problems",
+   "reciprocity theorem problems",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

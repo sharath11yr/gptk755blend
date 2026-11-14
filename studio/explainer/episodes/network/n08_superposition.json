@@ -1,0 +1,886 @@
+{
+ "title": "Network Theory Numericals 8: Superposition Theorem",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Superposition Theorem Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 8",
+   "narration": "Welcome back. Today we practise the superposition theorem. In each problem we switch on one source at a time, remembering that a voltage source becomes a short and a current source becomes an open, then add the results with their directions. In the second problem we will also prove, with numbers, why superposition must never be used for power.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "SUPERPOSITION THEOREM",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Voltage source and current source",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      9,
+      1
+     ],
+     "label": "2 A",
+     "value": "",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "X"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "given": [
+    "12 V source with R1 = 4 Ω into node X",
+    "R2 = 4 Ω from X to ground",
+    "2 A current source pushing into X"
+   ],
+   "ask": "current in R2 using\nsuperposition",
+   "narration": "Problem one. A twelve volt source feeds node X through a four ohm resistor. Another four ohm resistor, R2, goes from X to ground, and a two ampere current source pushes current into X. Find the current in R2 using superposition."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Voltage source and current source",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      9,
+      1
+     ],
+     "label": "2 A",
+     "value": "",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "X"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 1: 12 V alone (2 A source → OPEN)",
+    "R1 and R2 in series: 12 / (4 + 4) = 1.5 A",
+    "I'(R2) = 1.5 A ↓",
+    "Step 2: 2 A alone (12 V source → SHORT)",
+    "R1 ∥ R2 = 2 Ω, V_X = 2 × 2 = 4 V",
+    "I''(R2) = 4 / 4 = 1 A ↓"
+   ],
+   "answer": "",
+   "narration": "Step one: keep only the twelve volt source. The current source is switched off, which means it becomes an open circuit. Now R1 and R2 are simply in series: twelve over eight, one point five amperes down through R2. Step two: keep only the two ampere source. The voltage source becomes a short circuit, so R1 now connects X to ground, in parallel with R2: four in parallel with four, two ohms. The node voltage is two amperes times two ohms, four volts, so R2 carries four over four, one ampere down."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Voltage source and current source",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "4 Ω"
+    },
+    {
+     "t": "I",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      9,
+      1
+     ],
+     "label": "2 A",
+     "value": "",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "X"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "ground": true
+    }
+   ],
+   "steps": [
+    "Step 3: add (same direction)",
+    "I(R2) = 1.5 + 1 = 2.5 A ↓",
+    "Check (nodal): (X − 12)/4 + X/4 = 2",
+    "X(0.5) = 5 → X = 10 V → 10/4 = 2.5 A ✓",
+    "! current source OFF = open, not short"
+   ],
+   "answer": "I(R2) = 2.5 A downward",
+   "narration": "Step three: both partial currents flow downward, so they add: one point five plus one, two point five amperes. Let's check with nodal analysis: X minus twelve over four plus X over four equals two, which gives X equals ten volts, and ten over four is two point five amperes. The same answer. Remember: a current source switched off is an open circuit, never a short."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Two voltage sources, and power",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      6.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "R2",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R3",
+     "value": "1 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "6 V",
+     "value": "",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "X"
+    }
+   ],
+   "given": [
+    "10 V with R1 = 2 Ω (left)",
+    "6 V with R2 = 2 Ω (right, + on top)",
+    "R3 = 1 Ω in the middle"
+   ],
+   "ask": "current and power in R3\n(is power superposable?)",
+   "narration": "Problem two. A ten volt source with two ohms on the left, a six volt source with two ohms on the right, and a one ohm resistor R3 in the middle. Find the current in R3 by superposition, and then check whether its power can be found by adding powers."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Two voltage sources, and power",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      6.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "R2",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R3",
+     "value": "1 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "6 V",
+     "value": "",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "X"
+    }
+   ],
+   "steps": [
+    "Step 1: 10 V alone (6 V → short)",
+    "R2 ∥ R3 = 2×1/3 = 0.667 Ω",
+    "V_X = 10 × 0.667 / (2 + 0.667) = 2.5 V",
+    "I' = 2.5 / 1 = 2.5 A ↓",
+    "Step 2: 6 V alone (10 V → short)",
+    "V_X = 6 × 0.667 / 2.667 = 1.5 V → I'' = 1.5 A ↓"
+   ],
+   "answer": "",
+   "narration": "Step one: ten volts alone, with the six volt source shorted. Then R2 and R3 are in parallel, two thirds of an ohm. By the voltage divider, the middle node is at ten times zero point six six seven over two point six six seven, two point five volts, so R3 carries two point five amperes down. Step two: six volts alone, with the ten volt source shorted. By the same reasoning, the middle node is at six times zero point two five, one point five volts, and R3 carries one point five amperes down."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Two voltage sources, and power",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.8,
+      1
+     ],
+     "b": [
+      4.2,
+      1
+     ],
+     "label": "R1",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.2,
+      1
+     ],
+     "b": [
+      6.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      6.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "R2",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R3",
+     "value": "1 Ω"
+    },
+    {
+     "t": "V",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "6 V",
+     "value": "",
+     "plus": "a"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "X"
+    }
+   ],
+   "steps": [
+    "Step 3: add",
+    "I(R3) = 2.5 + 1.5 = 4 A ↓",
+    "Step 4: power, the right way",
+    "P = I²R = 4² × 1 = 16 W",
+    "! wrong: 2.5² + 1.5² = 6.25 + 2.25 = 8.5 W",
+    "power is NOT superposable"
+   ],
+   "answer": "I(R3) = 4 A · P = 16 W (not 8.5 W)",
+   "narration": "Step three: both flow down, so I equals two point five plus one point five, four amperes. Step four: the power in R3 is four squared times one, sixteen watts. If we wrongly added the powers from each source, we would get two point five squared plus one point five squared, only eight point five watts. That is badly wrong, because power depends on current squared. Always add currents first, then find power."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. When switching a source off, a voltage source becomes a short circuit and a current source becomes an open circuit. Dependent sources are never switched off. Mark the direction of each partial current and add with signs. And never add powers: find the total current first.",
+   "title": "Exam tips: superposition",
+   "parts": [
+    {
+     "id": "a",
+     "label": "V-source OFF → short",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "I-source OFF → open",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Dependent sources stay ON",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Add with directions",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Never add powers",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, we find Thevenin and Norton equivalents, including a circuit with a dependent source.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Superposition Theorem Numericals Solved Step by Step | Network Theory Numericals #8",
+  "description": "Network Theory numericals - Part 8.\nProblem 1: voltage source and current source, checked with nodal analysis\nProblem 2: two voltage sources, and proof that power is not superposable (16 W vs 8.5 W)\nPlus exam tips.\n\n#NetworkTheory #Superposition #Numericals #ECE",
+  "tags": [
+   "superposition theorem problems",
+   "superposition numericals",
+   "network theorems problems",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
