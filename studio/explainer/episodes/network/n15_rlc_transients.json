@@ -1,0 +1,733 @@
+{
+ "title": "Network Theory Numericals 15: RLC Transients",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "RLC Transients Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 15",
+   "narration": "Welcome back. Today we classify second order RLC responses. With one inductor and one capacitor, we find the natural frequency and the damping factor, then decide whether the response is overdamped, critically damped or underdamped, for three different resistors.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "RLC TRANSIENTS",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Classify the response",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "?"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "0.5 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "0.02 F"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Series RLC: L = 0.5 H, C = 0.02 F",
+    "Cases: R = 4 Ω, 10 Ω, 20 Ω"
+   ],
+   "ask": "ω₀, critical R, and the type\nof response for each R",
+   "narration": "Problem one. A series RLC circuit has L equal to zero point five henries and C equal to zero point zero two farads. Find the natural frequency and the critical resistance, then classify the response for four ohms, ten ohms and twenty ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Classify the response",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "?"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "0.5 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "0.02 F"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: natural frequency",
+    "ω₀ = 1 / √(LC) = 1 / √(0.5 × 0.02)",
+    "ω₀ = 1 / √0.01 = 10 rad/s",
+    "Step 2: critical resistance (α = ω₀)",
+    "α = R / 2L = 10 → R = 2 × 0.5 × 10",
+    "R_crit = 10 Ω  (= 2√(L/C))"
+   ],
+   "answer": "",
+   "narration": "Step one: omega zero equals one over the square root of L C. L C is zero point zero one, its square root is zero point one, so omega zero is ten radians per second. Step two: critical damping happens when alpha equals omega zero. Alpha is R over two L, so R equals two L omega zero: two times zero point five times ten, ten ohms. You can also use two times the square root of L over C, two times the square root of twenty five, ten ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Classify the response",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "?"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "0.5 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "0.02 F"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: each case (α = R / 2L = R)",
+    "R = 4 Ω: α = 4 < 10 → UNDERDAMPED",
+    "R = 10 Ω: α = 10 = ω₀ → CRITICAL",
+    "R = 20 Ω: α = 20 > 10 → OVERDAMPED"
+   ],
+   "answer": "ω₀ = 10 rad/s · R_crit = 10 Ω",
+   "narration": "Step three: here, two L equals one, so alpha simply equals R. With four ohms, alpha is four, less than ten: underdamped. With ten ohms, alpha equals omega zero: critically damped. With twenty ohms, alpha is twenty, greater than ten: overdamped."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · The roots for each case",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "?"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "0.5 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "0.02 F"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Same circuit",
+    "Characteristic equation s² + 2αs + ω₀² = 0"
+   ],
+   "ask": "the roots s₁, s₂ and ω_d\nfor each case",
+   "narration": "Problem two. For the same circuit, find the roots of the characteristic equation in each case, and the damped frequency for the underdamped case."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · The roots for each case",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "?"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "0.5 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "0.02 F"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Roots: s = −α ± √(α² − ω₀²)",
+    "R = 4: s = −4 ± √(16 − 100) = −4 ± j9.17",
+    "ω_d = √(100 − 16) = 9.17 rad/s, ζ = 0.4",
+    "R = 10: s = −10, −10 (repeated)"
+   ],
+   "answer": "",
+   "narration": "The roots are minus alpha plus or minus the square root of alpha squared minus omega zero squared. With four ohms: sixteen minus one hundred is negative, so the roots are complex: minus four plus or minus j nine point one seven. The damped frequency is nine point one seven radians per second, and the damping ratio is four over ten, zero point four. With ten ohms, the square root is zero, so both roots are minus ten."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · The roots for each case",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "?"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "0.5 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "0.02 F"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "R = 20: s = −20 ± √(400 − 100)",
+    "s₁ = −20 + 17.32 = −2.68",
+    "s₂ = −20 − 17.32 = −37.32",
+    "complex → rings · repeated → fastest",
+    "two real → slow, no overshoot"
+   ],
+   "answer": "under: −4 ± j9.17 · critical: −10 · over: −2.68, −37.32",
+   "narration": "With twenty ohms: four hundred minus one hundred is three hundred, whose square root is seventeen point three two. So the roots are minus two point six eight and minus thirty seven point three two, two different real numbers. Complex roots mean ringing, a repeated root means the fastest response without overshoot, and two real roots mean a slow response with no overshoot."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Omega zero is one over root L C. For a series circuit, alpha is R over two L, but for a parallel circuit it is one over two R C. The critical resistance of a series circuit is two root L over C. Compare alpha with omega zero to decide the type, and use omega d equals root of omega zero squared minus alpha squared for ringing.",
+   "title": "Exam tips: RLC transients",
+   "parts": [
+    {
+     "id": "a",
+     "label": "ω₀ = 1/√(LC)",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Series: α = R/2L · Parallel: α = 1/2RC",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "R_crit = 2√(L/C) (series)",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "α vs ω₀ decides the type",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "ω_d = √(ω₀² − α²)",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, resonance problems: resonant frequency, Q factor, bandwidth and choosing components.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "RLC Transient Numericals: Overdamped, Critical, Underdamped | Network Theory Numericals #15",
+  "description": "Network Theory numericals - Part 15.\nProblem 1: ω₀, critical resistance, and classifying R = 4, 10, 20 Ω\nProblem 2: roots of the characteristic equation and ω_d\nPlus exam tips.\n\n#NetworkTheory #RLC #Transients #ECE",
+  "tags": [
+   "rlc transient problems",
+   "overdamped underdamped problems",
+   "second order circuit numericals",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

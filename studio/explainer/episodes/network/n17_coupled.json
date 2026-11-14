@@ -1,0 +1,751 @@
+{
+ "title": "Network Theory Numericals 17: Coupled Circuits and Transformers",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Coupled Circuits and Transformers Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 17",
+   "narration": "Welcome back. Today we solve problems on mutual inductance and transformers: finding M from the coupling coefficient, series aiding and opposing inductance, and a transformer's currents and reflected impedance.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "COUPLED CIRCUITS & TRANSFORMERS",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Mutual inductance",
+   "circuit": [
+    {
+     "t": "L",
+     "a": [
+      2,
+      3
+     ],
+     "b": [
+      4.5,
+      3
+     ],
+     "label": "L1",
+     "value": "0.2 H"
+    },
+    {
+     "t": "L",
+     "a": [
+      5.5,
+      3
+     ],
+     "b": [
+      8,
+      3
+     ],
+     "label": "L2",
+     "value": "0.8 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.5,
+      3
+     ],
+     "b": [
+      5.5,
+      3
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      2,
+      3
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      3
+     ],
+     "b": [
+      9,
+      3
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "L1 = 0.2 H, L2 = 0.8 H",
+    "Coupling coefficient k = 0.9"
+   ],
+   "ask": "M, and the total inductance\nseries aiding and opposing",
+   "narration": "Problem one. Two coils of zero point two and zero point eight henries have a coupling coefficient of zero point nine. Find the mutual inductance, and the total inductance when they are connected in series aiding and in series opposing."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Mutual inductance",
+   "circuit": [
+    {
+     "t": "L",
+     "a": [
+      2,
+      3
+     ],
+     "b": [
+      4.5,
+      3
+     ],
+     "label": "L1",
+     "value": "0.2 H"
+    },
+    {
+     "t": "L",
+     "a": [
+      5.5,
+      3
+     ],
+     "b": [
+      8,
+      3
+     ],
+     "label": "L2",
+     "value": "0.8 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.5,
+      3
+     ],
+     "b": [
+      5.5,
+      3
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      2,
+      3
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      3
+     ],
+     "b": [
+      9,
+      3
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: mutual inductance",
+    "M = k √(L1 L2) = 0.9 √(0.2 × 0.8)",
+    "M = 0.9 × √0.16 = 0.9 × 0.4 = 0.36 H",
+    "Step 2: series aiding",
+    "L = L1 + L2 + 2M = 0.2 + 0.8 + 0.72 = 1.72 H"
+   ],
+   "answer": "",
+   "narration": "Step one: M equals k times the square root of L1 L2. L1 times L2 is zero point one six, whose square root is zero point four, so M is zero point nine times zero point four, zero point three six henries. Step two: series aiding adds two M: zero point two plus zero point eight plus zero point seven two, one point seven two henries."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Mutual inductance",
+   "circuit": [
+    {
+     "t": "L",
+     "a": [
+      2,
+      3
+     ],
+     "b": [
+      4.5,
+      3
+     ],
+     "label": "L1",
+     "value": "0.2 H"
+    },
+    {
+     "t": "L",
+     "a": [
+      5.5,
+      3
+     ],
+     "b": [
+      8,
+      3
+     ],
+     "label": "L2",
+     "value": "0.8 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.5,
+      3
+     ],
+     "b": [
+      5.5,
+      3
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      3
+     ],
+     "b": [
+      2,
+      3
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      3
+     ],
+     "b": [
+      9,
+      3
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: series opposing",
+    "L = L1 + L2 − 2M = 1.0 − 0.72 = 0.28 H",
+    "Check: M = (1.72 − 0.28) / 4 = 0.36 H ✓",
+    "! it is 2M, not M"
+   ],
+   "answer": "M = 0.36 H · aiding 1.72 H · opposing 0.28 H",
+   "narration": "Step three: series opposing subtracts two M: one minus zero point seven two, zero point two eight henries. Check: the difference between the two totals, divided by four, gives back M, zero point three six. Remember it is two M in these formulas, because the mutual voltage appears in both coils."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Transformer",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "2300 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3.4,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      3.4,
+      1
+     ],
+     "b": [
+      3.4,
+      5
+     ],
+     "label": "N1"
+    },
+    {
+     "t": "L",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      6,
+      5
+     ],
+     "label": "N2"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "load",
+     "value": "5 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      6,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      3.4,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      4.55,
+      1.2
+     ],
+     "b": [
+      4.55,
+      4.8
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      4.85,
+      1.2
+     ],
+     "b": [
+      4.85,
+      4.8
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Ideal transformer 2300 V / 230 V, 10 kVA",
+    "Secondary load: 5 Ω"
+   ],
+   "ask": "turns ratio, rated currents,\nload as seen from the primary",
+   "narration": "Problem two. An ideal transformer is rated twenty three hundred volts to two hundred and thirty volts, ten kilovolt amperes. Find the turns ratio and the rated currents on both sides. Then find what a five ohm load on the secondary looks like from the primary."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Transformer",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "2300 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3.4,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      3.4,
+      1
+     ],
+     "b": [
+      3.4,
+      5
+     ],
+     "label": "N1"
+    },
+    {
+     "t": "L",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      6,
+      5
+     ],
+     "label": "N2"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "load",
+     "value": "5 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      6,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      3.4,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      4.55,
+      1.2
+     ],
+     "b": [
+      4.55,
+      4.8
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      4.85,
+      1.2
+     ],
+     "b": [
+      4.85,
+      4.8
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: turns ratio",
+    "N1 / N2 = V1 / V2 = 2300 / 230 = 10",
+    "Step 2: rated currents (S = V I)",
+    "I1 = 10000 / 2300 = 4.35 A",
+    "I2 = 10000 / 230 = 43.5 A",
+    "current ratio = 10 (opposite) ✓"
+   ],
+   "answer": "",
+   "narration": "Step one: in an ideal transformer, the turns ratio equals the voltage ratio: twenty three hundred over two thirty, ten to one. Step two: the rating, ten thousand volt amperes, is the same on both sides. So the primary current is ten thousand over twenty three hundred, four point three five amperes, and the secondary current is ten thousand over two thirty, forty three point five amperes. The currents are in the opposite ratio: the low voltage side carries ten times the current."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Transformer",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "2300 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3.4,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      3.4,
+      1
+     ],
+     "b": [
+      3.4,
+      5
+     ],
+     "label": "N1"
+    },
+    {
+     "t": "L",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      6,
+      5
+     ],
+     "label": "N2"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "load",
+     "value": "5 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      6,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      3.4,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      4.55,
+      1.2
+     ],
+     "b": [
+      4.55,
+      4.8
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      4.85,
+      1.2
+     ],
+     "b": [
+      4.85,
+      4.8
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: reflected impedance",
+    "Z_in = Z_L × (N1/N2)² = 5 × 10²",
+    "Z_in = 500 Ω",
+    "! voltage steps down → current steps up"
+   ],
+   "answer": "10 : 1 · 4.35 A / 43.5 A · Z_in = 500 Ω",
+   "narration": "Step three: a load on the secondary appears on the primary multiplied by the turns ratio squared: five times one hundred, five hundred ohms. That is how transformers are used to match a load to a source."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. M equals k root L1 L2. For series connections use plus or minus two M, with the sign decided by the dots. For an ideal transformer, the voltage ratio equals the turns ratio, and the current ratio is the inverse. And a load is reflected to the primary multiplied by the turns ratio squared.",
+   "title": "Exam tips: coupled circuits",
+   "parts": [
+    {
+     "id": "a",
+     "label": "M = k√(L1 L2)",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Series: L1 + L2 ± 2M",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Dots decide + or −",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "V2/V1 = N2/N1 = I1/I2",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Z_in = Z_L (N1/N2)²",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, problems on network topology: graphs, trees, and counting equations.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Mutual Inductance & Transformer Numericals Solved | Network Theory Numericals #17",
+  "description": "Network Theory numericals - Part 17.\nProblem 1: M from k, series aiding and opposing inductance\nProblem 2: transformer turns ratio, rated currents and reflected impedance\nPlus exam tips.\n\n#NetworkTheory #MutualInductance #Transformer #ECE",
+  "tags": [
+   "mutual inductance problems",
+   "transformer numericals",
+   "coupled circuits problems",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

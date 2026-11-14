@@ -1,0 +1,929 @@
+{
+ "title": "Network Theory Numericals 14: RC and RL Transients",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "RC and RL Transients Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 14",
+   "narration": "Welcome back. Today we solve transient problems: a capacitor discharging, an inductor's current building up, and a capacitor that starts already charged, using the general formula. Remember the three things you always need: the initial value, the final value and the time constant.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "RC & RL TRANSIENTS",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Capacitor discharge",
+   "circuit": [
+    {
+     "t": "C",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "C",
+     "value": "10 µF, 100 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "sw",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "100 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "C = 10 µF charged to 100 V",
+    "Discharges through R = 100 kΩ at t = 0"
+   ],
+   "ask": "τ, v after 2 s, time to fall\nto 10 V, initial energy",
+   "narration": "Problem one. A ten microfarad capacitor charged to one hundred volts is discharged through a one hundred kilo-ohm resistor when the switch closes. Find the time constant, the voltage after two seconds, the time to fall to ten volts, and the energy stored at the start."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Capacitor discharge",
+   "circuit": [
+    {
+     "t": "C",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "C",
+     "value": "10 µF, 100 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "sw",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "100 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: time constant",
+    "τ = R C = 100×10³ × 10×10⁻⁶ = 1 s",
+    "Step 2: discharge equation",
+    "v(t) = 100 e^(−t/τ)",
+    "v(2) = 100 e^(−2) = 13.53 V"
+   ],
+   "answer": "",
+   "narration": "Step one: tau equals R C, one hundred thousand times ten times ten to the minus six, one second. Step two: a discharging capacitor follows v equals V zero times e to the minus t over tau. At two seconds: one hundred times e to the minus two, thirteen point five three volts."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Capacitor discharge",
+   "circuit": [
+    {
+     "t": "C",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "C",
+     "value": "10 µF, 100 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "sw",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "100 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: time to reach 10 V",
+    "10 = 100 e^(−t) → e^(−t) = 0.1",
+    "t = ln 10 = 2.303 s",
+    "Step 4: initial energy",
+    "E = ½ C V² = 0.5 × 10×10⁻⁶ × 100² = 0.05 J"
+   ],
+   "answer": "τ = 1 s · 13.53 V · 2.30 s · 0.05 J",
+   "narration": "Step three: to find when it reaches ten volts, set ten equals one hundred e to the minus t. Then e to the minus t is zero point one, and t is the natural log of ten, two point three zero three seconds. Step four: the initial energy is one half C V squared, half times ten to the minus five times ten thousand, zero point zero five joules."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · RL current build-up",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "sw",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "R",
+     "a": [
+      3,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "R",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "L",
+     "value": "4 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "V = 24 V, R = 8 Ω, L = 4 H",
+    "Switch closed at t = 0, no initial current"
+   ],
+   "ask": "τ, final current,\ni at 0.5 s and 1 s",
+   "narration": "Problem two. A twenty four volt source is switched onto an eight ohm resistor in series with a four henry inductor. Find the time constant, the final current, and the current after zero point five and one second."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · RL current build-up",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "sw",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "R",
+     "a": [
+      3,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "R",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "L",
+     "value": "4 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: time constant",
+    "τ = L / R = 4 / 8 = 0.5 s",
+    "Step 2: final current (L → short)",
+    "I_∞ = 24 / 8 = 3 A",
+    "Step 3: current equation",
+    "i(t) = 3 (1 − e^(−t/0.5)) = 3(1 − e^(−2t))"
+   ],
+   "answer": "",
+   "narration": "Step one: for an RL circuit, tau equals L over R, four over eight, zero point five seconds. Step two: in the final state, the inductor acts like a wire, so the current is twenty four over eight, three amperes. Step three: the current rises as three times one minus e to the minus t over zero point five, which is e to the minus two t."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · RL current build-up",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "24 V"
+    },
+    {
+     "t": "sw",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "R",
+     "a": [
+      3,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "R",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "L",
+     "value": "4 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "i(0.5) = 3(1 − e^(−1)) = 3 × 0.632 = 1.90 A",
+    "i(1.0) = 3(1 − e^(−2)) = 3 × 0.865 = 2.59 A",
+    "Check: i(0⁺) = 0 (inductor current can't jump) ✓",
+    "! τ = L/R, not RL"
+   ],
+   "answer": "τ = 0.5 s · I∞ = 3 A · 1.90 A · 2.59 A",
+   "narration": "At zero point five seconds, one time constant: three times zero point six three two, one point nine amperes. At one second, two time constants: three times zero point eight six five, two point five nine amperes. And at t equals zero, the current is zero, because an inductor's current cannot jump. Remember: tau equals L over R, not R times L."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Starting from a charged capacitor",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "sw",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "R",
+     "a": [
+      3,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "R",
+     "value": "2 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "500 µF, v(0) = 4 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "12 V source, R = 2 kΩ, C = 500 µF",
+    "Capacitor already at 4 V before t = 0"
+   ],
+   "ask": "v(t), v at 1 s,\ntime to reach 10 V",
+   "narration": "Problem three. A five hundred microfarad capacitor already charged to four volts is connected through two kilo-ohms to a twelve volt source. Find v of t, the voltage after one second, and when it reaches ten volts."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Starting from a charged capacitor",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "sw",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "R",
+     "a": [
+      3,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "R",
+     "value": "2 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "500 µF, v(0) = 4 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: the three values",
+    "initial v(0⁺) = 4 V (can't jump)",
+    "final v(∞) = 12 V (C → open)",
+    "τ = R C = 2000 × 500×10⁻⁶ = 1 s",
+    "Step 2: general formula",
+    "v(t) = 12 + (4 − 12) e^(−t) = 12 − 8 e^(−t)"
+   ],
+   "answer": "",
+   "narration": "Step one: find the three values. The initial voltage is four volts, because a capacitor's voltage cannot jump. The final voltage is twelve volts, because in the end the capacitor acts like an open circuit and no current flows. Tau is two thousand times five hundred micro, one second. Step two: the general formula, v equals final plus initial minus final times e to the minus t over tau: twelve plus four minus twelve, e to the minus t, which is twelve minus eight e to the minus t."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Starting from a charged capacitor",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "sw",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      3,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "R",
+     "a": [
+      3,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "R",
+     "value": "2 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "500 µF, v(0) = 4 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: at t = 1 s",
+    "v(1) = 12 − 8 × 0.368 = 9.06 V",
+    "Step 4: time to reach 10 V",
+    "12 − 8 e^(−t) = 10 → e^(−t) = 0.25",
+    "t = ln 4 = 1.386 s",
+    "! start from 4 V, not from 0"
+   ],
+   "answer": "v(t) = 12 − 8e^(−t) V · 9.06 V · 1.39 s",
+   "narration": "Step three: at one second, twelve minus eight times zero point three six eight, nine point zero six volts. Step four: set twelve minus eight e to the minus t equal to ten. Then e to the minus t is a quarter, so t is the natural log of four, one point three nine seconds. The classic mistake is to use the plain charging formula, which assumes the capacitor starts at zero."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Always find the initial value, the final value and the time constant first. Capacitor voltage and inductor current never jump. Tau is R C for capacitors and L over R for inductors. Use the general formula for any starting value, and use the natural log to solve for time.",
+   "title": "Exam tips: transients",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Find x(0⁺), x(∞), τ first",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "v_C, i_L never jump at t = 0",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "RC: τ = RC · RL: τ = L/R",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "x(t) = x∞ + (x0 − x∞)e^(−t/τ)",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Use ln to find time",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, second order circuits: classifying and solving RLC transient responses.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "RC & RL Transient Numericals Solved Step by Step | Network Theory Numericals #14",
+  "description": "Network Theory numericals - Part 14.\nProblem 1: capacitor discharge - τ, voltage after 2 s, time to 10 V, energy\nProblem 2: RL current build-up\nProblem 3: capacitor starting at 4 V - general formula\nPlus exam tips.\n\n#NetworkTheory #Transients #RCcircuit #ECE",
+  "tags": [
+   "transient analysis problems",
+   "rc circuit numericals",
+   "rl circuit problems",
+   "time constant problems",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

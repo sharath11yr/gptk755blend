@@ -1,0 +1,695 @@
+{
+ "title": "Network Theory Numericals 16: Resonance",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Resonance Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 16",
+   "narration": "Welcome back. Today we solve resonance problems: the resonant frequency, Q factor, bandwidth and voltage magnification of a series circuit, and choosing a capacitor to tune a circuit to a given frequency, just like tuning a radio.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "RESONANCE",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Series resonance",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "20 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "100 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "10 µF"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "V = 10 V (variable frequency)",
+    "R = 20 Ω, L = 100 mH, C = 10 µF"
+   ],
+   "ask": "f₀, current at f₀, Q,\nbandwidth, V_L at resonance",
+   "narration": "Problem one. A series circuit has twenty ohms, one hundred millihenries and ten microfarads, driven by ten volts at variable frequency. Find the resonant frequency, the current at resonance, the Q factor, the bandwidth and the inductor voltage at resonance."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Series resonance",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "20 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "100 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "10 µF"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: resonant frequency",
+    "f₀ = 1 / (2π√(LC)) = 1 / (2π√(0.1 × 10⁻⁵))",
+    "f₀ = 1 / (2π × 10⁻³) ≈ 159.2 Hz",
+    "Step 2: current at f₀ (Z = R)",
+    "I₀ = V / R = 10 / 20 = 0.5 A"
+   ],
+   "answer": "",
+   "narration": "Step one: f zero equals one over two pi root L C. L C is zero point one times ten to the minus five, ten to the minus six, whose square root is ten to the minus three. So f zero is one over two pi times ten to the minus three, about one hundred and fifty nine point two hertz. Step two: at resonance the impedance is just R, so the current is ten over twenty, half an ampere."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Series resonance",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ],
+     "label": "R",
+     "value": "20 Ω"
+    },
+    {
+     "t": "L",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      7,
+      1
+     ],
+     "label": "L",
+     "value": "100 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      7,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "10 µF"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: Q and bandwidth",
+    "X_L = 2π f₀ L = 100 Ω → Q = X_L / R = 5",
+    "BW = f₀ / Q = 159.2 / 5 ≈ 31.8 Hz",
+    "Step 4: voltage magnification",
+    "V_L = V_C = I₀ X_L = 0.5 × 100 = 50 V = Q × V ✓"
+   ],
+   "answer": "f₀ ≈ 159.2 Hz · 0.5 A · Q = 5 · BW ≈ 31.8 Hz · V_L = 50 V",
+   "narration": "Step three: at f zero, X L equals two pi f zero L, which is exactly one hundred ohms. Q is X L over R, one hundred over twenty, five. The bandwidth is f zero over Q, about thirty one point eight hertz. Step four: the inductor voltage is half an ampere times one hundred ohms, fifty volts, five times the source voltage. That is Q times V, the voltage magnification of series resonance."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Tuning a circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "1 kHz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "L",
+     "value": "50 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C = ?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "L = 50 mH",
+    "Required resonant frequency f₀ = 1 kHz"
+   ],
+   "ask": "capacitance C",
+   "narration": "Problem two. You have a fifty millihenry inductor and want the circuit to resonate at one kilohertz. What capacitor do you need?"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Tuning a circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "1 kHz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "L",
+     "value": "50 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C = ?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: rearrange f₀ = 1 / (2π√(LC))",
+    "(2πf₀)² = 1 / (LC)",
+    "C = 1 / ((2πf₀)² L)",
+    "Step 2: substitute",
+    "2πf₀ = 2π × 1000 = 6283 rad/s"
+   ],
+   "answer": "",
+   "narration": "Step one: rearrange the resonance formula. Square both sides of f zero equals one over two pi root L C, and you get C equals one over two pi f zero squared, times L. Step two: two pi times one thousand is six thousand two hundred and eighty three radians per second."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Tuning a circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "1 kHz"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "L",
+     "value": "50 mH"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C = ?",
+     "hi": true
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "C = 1 / (6283² × 0.05)",
+    "C = 1 / (3.948×10⁷ × 0.05)",
+    "C ≈ 0.507 µF",
+    "Check: f₀ = 1 / (2π√(0.05 × 0.507×10⁻⁶)) ≈ 1000 Hz ✓"
+   ],
+   "answer": "C ≈ 0.507 µF",
+   "narration": "Its square is about three point nine four eight times ten to the seven. Multiply by zero point zero five henries, and take the reciprocal: C is about zero point five zero seven microfarads. Check by putting it back into the formula: the resonant frequency comes out at one thousand hertz. In a radio, turning the tuning knob changes this capacitance to select a different station."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. The resonant frequency is one over two pi root L C: do not forget the two pi. At series resonance, the impedance equals R and the current is maximum. Q is X L over R, and the bandwidth is f zero over Q. The inductor and capacitor voltages are Q times the source voltage. And to choose a capacitor, use C equals one over two pi f zero squared L.",
+   "title": "Exam tips: resonance",
+   "parts": [
+    {
+     "id": "a",
+     "label": "f₀ = 1/(2π√LC) — don't forget 2π",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "At f₀ (series): Z = R, I max",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Q = X_L/R · BW = f₀/Q",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "V_L = V_C = Q × V",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "C = 1/((2πf₀)² L)",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, problems on mutual inductance and transformers.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Resonance Numericals: f₀, Q Factor, Bandwidth Solved | Network Theory Numericals #16",
+  "description": "Network Theory numericals - Part 16.\nProblem 1: series resonance - f₀, current, Q, bandwidth, voltage magnification\nProblem 2: choosing C to resonate at 1 kHz\nPlus exam tips.\n\n#NetworkTheory #Resonance #QFactor #ECE",
+  "tags": [
+   "resonance problems",
+   "q factor numericals",
+   "bandwidth problems",
+   "series resonance numericals",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
