@@ -1,0 +1,924 @@
+{
+ "title": "Network Theory Numericals 18: Network Topology",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Network Topology Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 18",
+   "narration": "Welcome back. Today's numericals are on network topology. First, counting twigs, links and equations for a graph. Then, writing the fundamental tie sets and cut sets for a chosen tree. These questions are quick marks if you follow the rules carefully.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "NETWORK TOPOLOGY",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Counting",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "3"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "4",
+     "dy": 50
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "5",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "6",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "A connected graph",
+    "n = 6 nodes, b = 8 branches"
+   ],
+   "ask": "twigs, links, independent\nKCL and KVL equations",
+   "narration": "Problem one. A connected graph has six nodes and eight branches, as shown. Find the number of twigs and links in any tree, and the number of independent KCL and KVL equations."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Counting",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "3"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "4",
+     "dy": 50
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "5",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "6",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: twigs = n − 1",
+    "twigs = 6 − 1 = 5",
+    "Step 2: links = b − n + 1",
+    "links = 8 − 6 + 1 = 3"
+   ],
+   "answer": "",
+   "narration": "Step one: every tree connects all six nodes without a loop, so it always has n minus one, five twigs. Step two: the remaining branches are links: b minus n plus one, eight minus six plus one, three links."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Counting",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "3"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "4",
+     "dy": 50
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "5",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "6",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 3: equations",
+    "independent KCL (node / cut-set) = n − 1 = 5",
+    "independent KVL (loop / tie-set) = b − n + 1 = 3",
+    "total = 5 + 3 = 8 = b ✓",
+    "one equation per branch current"
+   ],
+   "answer": "5 twigs · 3 links · 5 KCL · 3 KVL",
+   "narration": "Step three: the number of independent KCL equations equals the number of twigs, five, and the number of independent KVL equations equals the number of links, three. Together, eight equations, exactly one for each of the eight branch currents. That is a neat check."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Tie-sets and cut-sets",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "A"
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "B"
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "C"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "D",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "Branches: 1 = A-D, 2 = A-B, 3 = B-D,",
+    "4 = B-C, 5 = C-D",
+    "Chosen tree: twigs {1, 3, 5}"
+   ],
+   "ask": "links, fundamental tie-sets\nand cut-sets",
+   "narration": "Problem two. Use the graph from the topology part: branch one from A to D, two from A to B, three from B to D, four from B to C, and five from C to D. With the tree made of twigs one, three and five, find the links, the fundamental tie sets and the fundamental cut sets."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Tie-sets and cut-sets",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "A"
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "B"
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "C"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "D",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: links = branches not in the tree",
+    "links: {2, 4}  (b − n + 1 = 5 − 4 + 1 = 2 ✓)",
+    "Step 2: tie-set = one link + twigs forming a loop",
+    "link 2: {2, 3, 1}  (A-B-D-A)",
+    "link 4: {4, 5, 3}  (B-C-D-B)"
+   ],
+   "answer": "",
+   "narration": "Step one: the links are the branches not in the tree: two and four. That is two links, which matches b minus n plus one. Step two: adding each link to the tree closes exactly one loop. Link two closes A, B, D, giving the tie set two, three, one. Link four closes B, C, D, giving the tie set four, five, three."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Tie-sets and cut-sets",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ]
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "A"
+    },
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "B"
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "C"
+    },
+    {
+     "at": [
+      5,
+      5
+     ],
+     "label": "D",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 3: cut-set = one twig + links crossing",
+    "twig 1 (isolates A): {1, 2}",
+    "twig 3 (isolates B): {3, 2, 4}",
+    "twig 5 (isolates C): {5, 4}",
+    "each tie-set has exactly ONE link ✓",
+    "each cut-set has exactly ONE twig ✓"
+   ],
+   "answer": "tie-sets {2,3,1}, {4,5,3} · cut-sets {1,2}, {3,2,4}, {5,4}",
+   "narration": "Step three: removing each twig splits the tree into two parts, and the cut set is that twig plus the links that cross the cut. Removing twig one isolates node A: the cut set is one and two. Removing twig three isolates B: three, two and four. Removing twig five isolates C: five and four. Check the rules: every tie set has exactly one link, and every cut set has exactly one twig."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Twigs equal n minus one and links equal b minus n plus one. A tree must reach every node without a loop. Every fundamental tie set contains exactly one link, and every fundamental cut set contains exactly one twig. And the number of independent KCL equations equals the twigs, while KVL equations equal the links.",
+   "title": "Exam tips: topology",
+   "parts": [
+    {
+     "id": "a",
+     "label": "twigs = n − 1 · links = b − n + 1",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Tree: all nodes, no loop",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Tie-set: exactly one link",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Cut-set: exactly one twig",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "KCL eqs = twigs · KVL eqs = links",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, two-port network problems: Z, Y, h and ABCD parameters.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Network Topology Numericals: Twigs, Links, Tie-sets, Cut-sets | Network Theory Numericals #18",
+  "description": "Network Theory numericals - Part 18.\nProblem 1: twigs, links and number of independent equations\nProblem 2: fundamental tie-sets and cut-sets for a chosen tree\nPlus exam tips.\n\n#NetworkTheory #GraphTheory #ECE",
+  "tags": [
+   "network topology problems",
+   "tie set cut set problems",
+   "graph theory network numericals",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

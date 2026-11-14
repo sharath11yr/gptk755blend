@@ -1,0 +1,919 @@
+{
+ "title": "Network Theory Numericals 19: Two-Port Networks",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Two-Port Networks Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 19",
+   "narration": "Welcome back. Today we find all four sets of two port parameters for one network, a T network, step by step: the Z parameters by open circuit tests, and then Y, ABCD and h from them, with checks for reciprocity.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "TWO-PORT NETWORKS",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Z and Y parameters",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "Za",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      5.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "Zb",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "Zc",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "1'",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "2'",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "T network: Za = 3 Ω (port 1 side)",
+    "Zb = 6 Ω (port 2 side), Zc = 2 Ω (shunt)"
+   ],
+   "ask": "Z parameters, then\nY parameters",
+   "narration": "Problem one. A T network has three ohms on the port one side, six ohms on the port two side, and two ohms in the shunt branch. Find its Z parameters, then its Y parameters."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Z and Y parameters",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "Za",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      5.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "Zb",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "Zc",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "1'",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "2'",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: z11 (port 2 open)",
+    "z11 = Za + Zc = 3 + 2 = 5 Ω",
+    "z21 = Zc = 2 Ω (voltage across Zc)",
+    "Step 2: z22 (port 1 open)",
+    "z22 = Zb + Zc = 6 + 2 = 8 Ω",
+    "z12 = Zc = 2 Ω  → reciprocal ✓"
+   ],
+   "answer": "",
+   "narration": "Step one: open port two and drive port one. The current flows through Z a and Z c, so z eleven is three plus two, five ohms. The voltage at port two is the voltage across Z c, so z twenty one is two ohms. Step two: open port one and drive port two: z twenty two is six plus two, eight ohms, and z twelve is two ohms, equal to z twenty one, as expected for a reciprocal network."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Z and Y parameters",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "Za",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      5.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "Zb",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "Zc",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "1'",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "2'",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 3: Y = Z⁻¹",
+    "Δz = z11 z22 − z12 z21 = 40 − 4 = 36",
+    "y11 = z22/Δz = 8/36 = 0.222 S",
+    "y12 = y21 = −z12/Δz = −2/36 = −0.056 S",
+    "y22 = z11/Δz = 5/36 = 0.139 S",
+    "! Y is the matrix inverse, not 1/z"
+   ],
+   "answer": "z = [5 2; 2 8] Ω · y = [0.222 −0.056; −0.056 0.139] S",
+   "narration": "Step three: the Y matrix is the inverse of the Z matrix. The determinant is five times eight minus two times two, thirty six. Then y eleven is z twenty two over thirty six, zero point two two two siemens. y twelve and y twenty one are minus two over thirty six, minus zero point zero five six. And y twenty two is five over thirty six, zero point one three nine. Note that y eleven is not one over z eleven."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · ABCD and h parameters",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "Za",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      5.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "Zb",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "Zc",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "1'",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "2'",
+     "dy": 50
+    }
+   ],
+   "given": [
+    "Same T network",
+    "z11 = 5, z12 = z21 = 2, z22 = 8 Ω, Δz = 36"
+   ],
+   "ask": "ABCD and h parameters,\nand the reciprocity checks",
+   "narration": "Problem two. For the same network, find the ABCD parameters and the h parameters from the Z parameters, and check the reciprocity conditions."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · ABCD and h parameters",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "Za",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      5.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "Zb",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "Zc",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "1'",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "2'",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 1: ABCD from Z",
+    "A = z11/z21 = 5/2 = 2.5",
+    "B = Δz/z21 = 36/2 = 18 Ω",
+    "C = 1/z21 = 1/2 = 0.5 S",
+    "D = z22/z21 = 8/2 = 4",
+    "Check: AD − BC = 10 − 9 = 1 ✓"
+   ],
+   "answer": "",
+   "narration": "Step one: the conversion formulas from Z to ABCD. A is z eleven over z twenty one, two point five. B is the determinant over z twenty one, eighteen ohms. C is one over z twenty one, zero point five siemens. D is z twenty two over z twenty one, four. Check: A D minus B C is ten minus nine, exactly one, as it must be for a reciprocal network."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · ABCD and h parameters",
+   "circuit": [
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      4.4,
+      1
+     ],
+     "label": "Za",
+     "value": "3 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      4.4,
+      1
+     ],
+     "b": [
+      5.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5.6,
+      1
+     ],
+     "b": [
+      8.4,
+      1
+     ],
+     "label": "Zb",
+     "value": "6 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8.4,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "Zc",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      9,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      1,
+      1
+     ],
+     "label": "1"
+    },
+    {
+     "at": [
+      1,
+      5
+     ],
+     "label": "1'",
+     "dy": 50
+    },
+    {
+     "at": [
+      9,
+      1
+     ],
+     "label": "2"
+    },
+    {
+     "at": [
+      9,
+      5
+     ],
+     "label": "2'",
+     "dy": 50
+    }
+   ],
+   "steps": [
+    "Step 2: h from Z",
+    "h11 = Δz/z22 = 36/8 = 4.5 Ω",
+    "h12 = z12/z22 = 2/8 = 0.25",
+    "h21 = −z21/z22 = −0.25",
+    "h22 = 1/z22 = 0.125 S",
+    "Check: h12 = −h21 ✓ (reciprocal)"
+   ],
+   "answer": "A = 2.5, B = 18 Ω, C = 0.5 S, D = 4 · h = [4.5, 0.25; −0.25, 0.125]",
+   "narration": "Step two: from Z to h. h eleven is the determinant over z twenty two, four point five ohms. h twelve is z twelve over z twenty two, zero point two five. h twenty one is minus z twenty one over z twenty two, minus zero point two five. h twenty two is one over z twenty two, zero point one two five siemens. And h twelve equals minus h twenty one, the reciprocity condition for h parameters."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Find Z parameters with open circuit tests. Y is the matrix inverse of Z, so always compute the determinant first. Learn the conversion formulas, like A equals z eleven over z twenty one. And use the reciprocity checks to catch mistakes: z twelve equals z twenty one, A D minus B C equals one, and h twelve equals minus h twenty one.",
+   "title": "Exam tips: two-ports",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Z: open-circuit tests",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Y = Z⁻¹ (use Δz)",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "ABCD: A = z11/z21 ...",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Reciprocal: z12 = z21, AD − BC = 1",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "h12 = −h21 (reciprocal)",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, the final numericals: solving circuits with the Laplace transform.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Two-Port Network Numericals: Z, Y, ABCD, h Parameters Solved | Network Theory Numericals #19",
+  "description": "Network Theory numericals - Part 19.\nProblem 1: Z parameters of a T network and Y = Z⁻¹\nProblem 2: ABCD and h parameters with reciprocity checks\nPlus exam tips.\n\n#NetworkTheory #TwoPort #ECE",
+  "tags": [
+   "two port network problems",
+   "z parameters problems",
+   "abcd parameters numericals",
+   "h parameters problems",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

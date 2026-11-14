@@ -1,0 +1,925 @@
+{
+ "title": "Network Theory Numericals 20: Laplace Transform",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Laplace Transform Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 20",
+   "narration": "Welcome to the final numericals video of our Network Theory course. Today we solve three circuits with the Laplace transform: an RL circuit switched on, a charged capacitor discharging using an initial condition source, and a step response checked with the initial and final value theorems.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "LAPLACE TRANSFORM",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · RL step with Laplace",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R",
+     "value": "5 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "L",
+     "value": "1 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "10 V switched on at t = 0",
+    "R = 5 Ω, L = 1 H, no initial current"
+   ],
+   "ask": "i(t) using Laplace",
+   "narration": "Problem one. Ten volts is switched onto a five ohm resistor in series with a one henry inductor, with no initial current. Find the current using the Laplace transform."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · RL step with Laplace",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R",
+     "value": "5 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "L",
+     "value": "1 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: transform the circuit",
+    "10 V step → 10/s · L → sL = s",
+    "Step 2: Ohm's law in s-domain",
+    "I(s) = (10/s) / (5 + s) = 10 / (s(s + 5))",
+    "Step 3: partial fractions",
+    "10/(s(s+5)) = A/s + B/(s+5)",
+    "A = 10/5 = 2, B = 10/(−5) = −2"
+   ],
+   "answer": "",
+   "narration": "Step one: transform the circuit. The ten volt step becomes ten over s, and the inductor becomes s L, which is just s. Step two: Ohm's law: I of s equals ten over s, divided by five plus s, which is ten over s times s plus five. Step three: split into partial fractions, A over s plus B over s plus five. Cover up each factor: A is ten over five, two, and B is ten over minus five, minus two."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · RL step with Laplace",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "10 V step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R",
+     "value": "5 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "L",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "L",
+     "value": "1 H"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "I(s) = 2/s − 2/(s + 5)",
+    "Step 4: inverse transform",
+    "i(t) = 2 − 2e^(−5t) = 2(1 − e^(−5t)) A",
+    "Check: τ = L/R = 0.2 s → e^(−t/0.2) = e^(−5t) ✓",
+    "i(0) = 0 ✓ · i(∞) = 10/5 = 2 A ✓"
+   ],
+   "answer": "i(t) = 2(1 − e^(−5t)) A",
+   "narration": "So I of s is two over s minus two over s plus five. Step four: inverse transform using the table: two over s gives two, and two over s plus five gives two e to the minus five t. So i of t is two times one minus e to the minus five t amperes. Check: the time constant L over R is zero point two seconds, which matches e to the minus five t. The current starts at zero and ends at ten over five, two amperes. All correct."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Initial condition source",
+   "circuit": [
+    {
+     "t": "C",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "C",
+     "value": "0.5 F, 4 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "sw",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "C = 0.5 F charged to 4 V",
+    "Discharges through R = 2 Ω at t = 0"
+   ],
+   "ask": "i(t) using Laplace",
+   "narration": "Problem two. A zero point five farad capacitor charged to four volts discharges through two ohms. Find the current using Laplace, with the initial condition source."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Initial condition source",
+   "circuit": [
+    {
+     "t": "C",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "C",
+     "value": "0.5 F, 4 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "sw",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: charged capacitor in s-domain",
+    "1/(sC) = 1/(0.5s) = 2/s, in series with",
+    "an initial source v(0)/s = 4/s",
+    "Step 2: Ohm's law",
+    "I(s) = (4/s) / (2 + 2/s)",
+    "multiply top and bottom by s: I(s) = 4 / (2s + 2)"
+   ],
+   "answer": "",
+   "narration": "Step one: a charged capacitor in the s domain is its impedance, one over s C, which is two over s, in series with an initial condition source, v zero over s, which is four over s. This source represents the energy already stored. Step two: Ohm's law: I of s equals four over s, divided by two plus two over s. Multiply top and bottom by s: four over two s plus two."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Initial condition source",
+   "circuit": [
+    {
+     "t": "C",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "C",
+     "value": "0.5 F, 4 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "sw",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      6,
+      1
+     ],
+     "label": "t = 0"
+    },
+    {
+     "t": "w",
+     "a": [
+      6,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "2 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "I(s) = 2 / (s + 1)",
+    "Step 3: inverse transform",
+    "i(t) = 2 e^(−t) A",
+    "Check: i(0) = 4 V / 2 Ω = 2 A ✓",
+    "τ = RC = 2 × 0.5 = 1 s ✓",
+    "! never forget the v(0)/s source"
+   ],
+   "answer": "i(t) = 2e^(−t) A",
+   "narration": "Simplify: two over s plus one. Step three: from the table, this is two e to the minus t amperes. Check: at the start, the current is four volts over two ohms, two amperes, and the time constant R C is one second, matching e to the minus t. Forgetting the initial condition source would give zero current, which is clearly wrong."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Transfer function and step response",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "unit step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R",
+     "value": "1 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "1 mF (V_out)"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "R = 1 kΩ, C = 1 mF",
+    "Output: voltage across C",
+    "Input: unit step"
+   ],
+   "ask": "H(s), the pole, v_out(t),\ncheck with IVT and FVT",
+   "narration": "Problem three. An RC low pass circuit with one kilo-ohm and one millifarad, output across the capacitor. Find the transfer function, its pole, and the step response, and check it with the initial and final value theorems."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Transfer function and step response",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "unit step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R",
+     "value": "1 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "1 mF (V_out)"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: transfer function (divider)",
+    "H(s) = (1/sC) / (R + 1/sC) = 1 / (1 + sRC)",
+    "RC = 1000 × 0.001 = 1 s → H(s) = 1/(1 + s)",
+    "pole: s = −1 (left half → stable)",
+    "Step 2: step input 1/s",
+    "V_out(s) = 1 / (s(s + 1)) = 1/s − 1/(s + 1)"
+   ],
+   "answer": "",
+   "narration": "Step one: the transfer function is a voltage divider in the s domain: the capacitor's one over s C, divided by R plus one over s C, which simplifies to one over one plus s R C. With R C equal to one second, H of s is one over one plus s, with one pole at s equals minus one, in the left half plane, so the circuit is stable. Step two: a unit step input is one over s, so V out of s is one over s times s plus one, which splits into one over s minus one over s plus one."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Transfer function and step response",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "unit step"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      1.6,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      1.6,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R",
+     "value": "1 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "C",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "C",
+     "value": "1 mF (V_out)"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "v_out(t) = 1 − e^(−t) V",
+    "Step 3: checks",
+    "IVT: v(0⁺) = lim s→∞ s·V(s) = lim 1/(s+1) = 0 ✓",
+    "FVT: v(∞) = lim s→0 s·V(s) = 1/(0+1) = 1 ✓",
+    "pole at −1 ↔ e^(−t) in the answer ✓"
+   ],
+   "answer": "H(s) = 1/(1 + s) · v_out = 1 − e^(−t) V",
+   "narration": "So v out of t is one minus e to the minus t volts. Step three: check with the theorems. The initial value theorem: s times V of s as s goes to infinity is one over s plus one, which goes to zero: the capacitor starts empty. The final value theorem: as s goes to zero, it goes to one: the output finally equals the input. Both correct, and the pole at minus one shows up as e to the minus t in the answer."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. A step of V volts becomes V over s. Inductors become s L and capacitors one over s C. For initial conditions, add v zero over s for a capacitor, or L times i zero for an inductor. Use the cover up method for partial fractions. And always check your answer with the initial and final value theorems.",
+   "title": "Exam tips: Laplace",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Step V → V/s",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "L → sL · C → 1/(sC)",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Charged C: add v(0)/s · L: add L·i(0)",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Partial fractions: cover-up method",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Check with IVT and FVT",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Course complete",
+   "narration": "Congratulations! You have completed the entire Network Theory course, the full theory and the numericals for every topic. If this playlist helped you, share it with your friends who are preparing for their exams. Keep practising, keep learning, and we will see you in the next course.",
+   "title": "NETWORK THEORY COMPLETE",
+   "lines": [
+    "33 theory parts",
+    "20 numericals videos",
+    "Share with friends"
+   ],
+   "cta": "Subscribe for the next course"
+  }
+ ],
+ "yt": {
+  "title": "Laplace Transform Circuit Numericals Solved Step by Step | Network Theory Numericals #20",
+  "description": "Network Theory numericals - Part 20 (final).\nProblem 1: RL step response with partial fractions\nProblem 2: charged capacitor with the initial-condition source\nProblem 3: transfer function, pole, step response, IVT and FVT checks\nThis completes the Network Theory course: 33 theory parts + 20 numericals videos.\n\n#NetworkTheory #LaplaceTransform #ECE",
+  "tags": [
+   "laplace transform problems",
+   "laplace circuit numericals",
+   "partial fractions circuits",
+   "network theory numericals",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
