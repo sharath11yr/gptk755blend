@@ -1,0 +1,398 @@
+{
+ "title": "Norton's Theorem - Network Theory Part 19",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Norton",
+ "cover": "Norton's Theorem",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  4,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 19 · Norton's theorem",
+   "narration": "Welcome back. Thevenin's theorem replaced a whole circuit with a voltage source and a series resistor. Norton's theorem is its twin. It replaces the same circuit with a current source and a resistor in parallel. Some problems, especially those with current sources or parallel loads, become even easier in Norton form. And because of source transformation, once you know one, you know the other.",
+   "kicker": "NETWORK THEORY · PART 19",
+   "title": "NORTON'S THEOREM",
+   "subtitle": "Any circuit = one current source + one parallel resistor"
+  },
+  {
+   "type": "diagram",
+   "chapter": "19.1 · The theorem",
+   "narration": "Norton's theorem: any linear circuit, seen from two terminals A and B, can be replaced by a single current source, called I Norton, in parallel with a single resistor, called R Norton. Again, the load sees exactly the same voltage and current. And R Norton is exactly the same as R Thevenin.",
+   "title": "Norton's theorem",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Any linear circuit (seen from A-B)",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "I_N in parallel with R_N",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "R_N = R_th",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     "="
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Same resistance as Thevenin"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "19.2 · Step 1: find I N",
+   "narration": "Step one. Remove the load and connect a short circuit, a plain wire, between A and B. The current through that short is I Norton. In our example circuit, the short connects the middle node to ground. The twelve volt source pushes twelve over four, three amperes into the short, and the six volt source pushes six over four, one point five amperes. Together: four point five amperes. So I N equals four point five amperes.",
+   "formula": "I_N = I_short-circuit",
+   "terms": [
+    [
+     "From 12 V",
+     "12 / 4 = 3 A"
+    ],
+    [
+     "From 6 V",
+     "6 / 4 = 1.5 A"
+    ]
+   ],
+   "example": [
+    "I_N = 3 + 1.5 = 4.5 A"
+   ]
+  },
+  {
+   "type": "theorem",
+   "chapter": "19.3 · Step 2: find R N",
+   "narration": "Step two is the same as for Thevenin. Switch off the independent sources, and find the resistance seen from the terminals. With both voltage sources shorted, R1 and R3 are in parallel: two ohms. So R N equals two ohms, the same as R th.",
+   "mode": "rth"
+  },
+  {
+   "type": "srctx",
+   "chapter": "19.4 · Thevenin and Norton are the same",
+   "narration": "Now look at both equivalents side by side. On the left, the Thevenin form: nine volts in series with two ohms. On the right, the Norton form: four point five amperes in parallel with two ohms. This is exactly source transformation from Part 11: I N equals V th divided by R th, nine over two, four point five. Watch the meters as the load changes. They always agree, and they always match our original circuit.",
+   "vs": 9,
+   "r": 2,
+   "rl": [
+    4,
+    1,
+    7
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "19.5 · The connection",
+   "narration": "So the three quantities are linked by one simple relation. V th equals I N times R th. If you know any two, you get the third. This gives a powerful shortcut: R th equals V th divided by I N, the open circuit voltage divided by the short circuit current. That is the method we use when the circuit has dependent sources.",
+   "formula": "V_th = I_N × R_th",
+   "terms": [
+    [
+     "R_th = R_N",
+     "V_th / I_N"
+    ]
+   ],
+   "example": [
+    "9 V = 4.5 A × 2 Ω ✓"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "19.6 · Load current from Norton",
+   "narration": "With the Norton equivalent, the load is in parallel with R N, so we use the current divider. The load current equals I N times R N divided by R N plus R L. For our four ohm load: four point five times two over six, which is one point five amperes. The same answer as always.",
+   "formula": "I_L = I_N × R_N / (R_N + R_L)",
+   "terms": [
+    [
+     "Current divider",
+     "from Part 8"
+    ]
+   ],
+   "example": [
+    "4.5 × 2 / (2 + 4) = 1.5 A ✓"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "19.7 · Common mistakes",
+   "narration": "Mistakes to avoid. One: finding I N with the load still connected: you must short the terminals, replacing the load. Two: drawing the current source arrow the wrong way: it must point towards the terminal that was positive in the Thevenin form. Three: putting R N in series instead of in parallel. Four: switching off dependent sources when finding R N.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Short A-B to find I_N (load removed)",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Arrow points to the + terminal",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "R_N in PARALLEL",
+     "x": 25,
+     "y": 68,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Dependent sources stay on",
+     "x": 75,
+     "y": 68,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "19.8 · Where it is used",
+   "narration": "Norton form is natural whenever things are connected in parallel or when sources behave like current sources. A transistor's output is often modelled as a Norton current source. Solar cells behave like current sources, so Norton form describes them well. And when several circuits are connected in parallel to one load, their Norton currents simply add.",
+   "title": "Norton at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "NORTON",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Transistor outputs",
+     "x": 20,
+     "y": 22
+    },
+    {
+     "id": "b",
+     "label": "Solar cells",
+     "x": 80,
+     "y": 22
+    },
+    {
+     "id": "c",
+     "label": "Parallel-connected sources",
+     "x": 20,
+     "y": 80
+    },
+    {
+     "id": "d",
+     "label": "Easy current-divider loads",
+     "x": 80,
+     "y": 80
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Norton's theorem replaces any linear circuit with I N in parallel with R N. I N is the short circuit current at the terminals. R N is the same as R th. And V th equals I N times R th, so Thevenin and Norton are just source transformations of each other.",
+   "title": "Norton in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Circuit = I_N ∥ R_N",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "I_N: short-circuit current",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "R_N = R_th",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "V_th = I_N × R_th",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We can now replace any circuit with a simple equivalent. So here is a practical question: which load resistance gets the most power out of it? The answer is the maximum power transfer theorem, our next part.",
+   "title": "NEXT: MAXIMUM POWER TRANSFER",
+   "lines": [
+    "I_N = short-circuit I",
+    "R_N = R_th",
+    "V_th = I_N·R_th"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Norton's Theorem Explained Step by Step from Zero | Network Theory #20",
+  "description": "Network Theory from absolute zero - Part 20: Norton's theorem.\n- Norton equivalent: current source in parallel with R\n- Step 1: I_N = short-circuit current\n- Step 2: R_N = R_th\n- Thevenin and Norton side by side (animated, same results)\n- V_th = I_N × R_th\n- Load current by current divider\n- Common mistakes and real uses\n\nPrevious: Thevenin's theorem. Next: Maximum power transfer.\n\n#NetworkTheory #NortonTheorem #ECE #NetworkTheorems",
+  "tags": [
+   "norton theorem",
+   "norton equivalent",
+   "thevenin norton",
+   "network theorems",
+   "network theory",
+   "circuit analysis",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

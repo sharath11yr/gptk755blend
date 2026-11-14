@@ -1,0 +1,342 @@
+{
+ "title": "Maximum Power Transfer Theorem - Network Theory Part 20",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Power",
+ "cover": "Max Power Transfer",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  3,
+  4
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 20 · Maximum power transfer",
+   "narration": "Welcome back. Using Thevenin's theorem, any circuit becomes a source with an internal resistance. Now a very practical question: if we can choose the load, which load resistance takes the most power from the source? Too small, and the voltage across it collapses. Too large, and the current becomes tiny. Somewhere in between is the best value. That is the maximum power transfer theorem.",
+   "kicker": "NETWORK THEORY · PART 20",
+   "title": "MAXIMUM POWER TRANSFER",
+   "subtitle": "Which load gets the most power?"
+  },
+  {
+   "type": "mpt",
+   "chapter": "20.1 · Watch the power",
+   "narration": "Here is our Thevenin equivalent from before: nine volts with two ohms inside. Watch as the load resistance grows from very small to very large, and watch the power curve being drawn. At first, the power rises. Then it reaches a peak, and after that it falls again. Notice where the peak is: exactly when the load resistance equals two ohms, the same as R th. At that point the load gets about ten point one three watts, the most it can ever get.",
+   "vth": 9,
+   "rth": 2
+  },
+  {
+   "type": "diagram",
+   "chapter": "20.2 · Why there is a peak",
+   "narration": "Why does the power have a peak? Power in the load is current squared times R L. With a very small load, like a short circuit, the current is big, but the voltage across the load is almost zero, so the power is almost zero. With a very large load, like an open circuit, the voltage is big, but the current is almost zero, so again the power is almost zero. In between, both current and voltage are reasonable, and their product reaches a maximum.",
+   "title": "Two extremes, both zero power",
+   "parts": [
+    {
+     "id": "a",
+     "label": "R_L → 0: big I, V ≈ 0 → P ≈ 0",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "R_L → ∞: big V, I ≈ 0 → P ≈ 0",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "In between: maximum P",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "c",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "20.3 · The theorem",
+   "narration": "The maximum power transfer theorem: a load receives maximum power from a source when the load resistance equals the Thevenin resistance of the source. R L equals R th. At that point, the current is V th over two R th, and the maximum power is V th squared divided by four R th. For our circuit: nine squared, eighty one, divided by four times two, which is ten point one two five watts.",
+   "formula": "R_L = R_th     P_max = V_th² / (4 R_th)",
+   "terms": [
+    [
+     "Current at max",
+     "I = V_th / (2 R_th)"
+    ]
+   ],
+   "example": [
+    "V_th = 9 V, R_th = 2 Ω",
+    "P_max = 81 / 8 = 10.125 W"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "20.4 · Efficiency at maximum power",
+   "narration": "There is a catch. At maximum power transfer, the current flows through R th and R L, which are equal. So exactly the same power is wasted inside the source as is delivered to the load. The efficiency is only fifty percent. Half the energy is lost. That is fine when the signal is small and precious, but terrible for delivering bulk energy.",
+   "formula": "η = P_load / P_total = 50%",
+   "terms": [
+    [
+     "Power in R_L",
+     "10.125 W"
+    ],
+    [
+     "Power in R_th",
+     "10.125 W (wasted)"
+    ]
+   ],
+   "example": [
+    "Efficiency at maximum power = 50%"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "20.5 · When we use it, and when we don't",
+   "narration": "So engineers use maximum power transfer only where getting the most signal matters more than efficiency. In audio, an amplifier is matched to its speaker. In radio, an antenna is matched to its cable and receiver, often at fifty or seventy five ohms. But power stations and the electricity grid never do this. They want efficiency close to one hundred percent, so their loads are far larger than the source resistance.",
+   "title": "Matching vs efficiency",
+   "parts": [
+    {
+     "id": "a",
+     "label": "USE IT: signals (audio, antennas, sensors)",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "AVOID IT: power systems (want high η)",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Matching: R_L = R_th · Grid: R_L ≫ R_source",
+     "x": 50,
+     "y": 78
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Most power"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Most efficiency"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "steps",
+   "chapter": "20.6 · The method",
+   "narration": "Here is how to solve maximum power transfer problems. One: remove the load whose value you can choose. Two: find the Thevenin equivalent at its terminals, V th and R th. Three: set R L equal to R th. Four: calculate the maximum power with V th squared over four R th.",
+   "title": "Maximum power transfer step by step",
+   "items": [
+    "Remove the variable load",
+    "Find V_th and R_th at its terminals",
+    "Choose R_L = R_th",
+    "P_max = V_th² / (4 R_th)"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "20.7 · Common mistakes",
+   "narration": "Common mistakes. One: setting R L equal to some resistor in the circuit, instead of R th seen from the load terminals. Two: using V th squared over R th, forgetting the four. Three: thinking maximum power means maximum efficiency: it means only fifty percent. Four: forgetting that the theorem is about choosing the load for a fixed source, not choosing the source resistance.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "R_L = R_th (seen from the load)",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Don't forget the 4: V_th²/(4R_th)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Max power ≠ max efficiency (50%)",
+     "x": 25,
+     "y": 68,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "It's about choosing the load",
+     "x": 75,
+     "y": 68,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A load gets maximum power when its resistance equals the Thevenin resistance of the source. The maximum power is V th squared over four R th. At that point the efficiency is only fifty percent. So we match loads for signals, like speakers and antennas, but never for power distribution.",
+   "title": "Max power transfer in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "R_L = R_th",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "P_max = V_th²/(4R_th)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Efficiency = 50%",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Signals: yes · Power grid: no",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We have covered the big theorems. Next, a set of shorter but important ones that exams love: the reciprocity theorem, Millman's theorem for parallel sources, the substitution theorem, and Tellegen's theorem.",
+   "title": "NEXT: RECIPROCITY & MILLMAN",
+   "lines": [
+    "R_L = R_th",
+    "P_max = V_th²/4R_th",
+    "η = 50%"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Maximum Power Transfer Theorem Explained from Zero | Network Theory #21",
+  "description": "Network Theory from absolute zero - Part 21: maximum power transfer.\n- Power curve as the load changes (animated)\n- Why there is a peak\n- R_L = R_th, P_max = V_th²/(4R_th)\n- Efficiency at maximum power: 50%\n- When engineers use matching (audio, antennas) and when not (power grid)\n- Method and common mistakes\n\nPrevious: Norton's theorem. Next: Reciprocity & Millman's theorem.\n\n#NetworkTheory #MaximumPowerTransfer #ECE #NetworkTheorems",
+  "tags": [
+   "maximum power transfer theorem",
+   "impedance matching",
+   "network theorems",
+   "network theory",
+   "circuit analysis",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

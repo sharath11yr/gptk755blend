@@ -712,4 +712,58 @@ export const NodalScene: React.FC<any> = ({ dur, mode = "label" }) => {
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ the theorems circuit: V1=12 —R1=4— X —R3=4— V2=6, load RL=4 from X to ground
+// {"mode":"both"|"v1"|"v2"|"open"|"rth"}
+//  both: I_L = 1.5 A · v1: V2 shorted → 1 A · v2: V1 shorted → 0.5 A · open: load removed, V_th = 9 V · rth: sources shorted, R_th = 2 Ω
+export const TheoremScene: React.FC<any> = ({ dur, mode = "both" }) => {
+  const f = useCurrentFrame();
+  const on1 = mode !== "v2" && mode !== "rth", on2 = mode !== "v1" && mode !== "rth";
+  const loadIn = mode !== "open" && mode !== "rth";
+  const X = (on1 ? 12 : 0) * 0 + (() => { const v1 = on1 ? 12 : 0, v2 = on2 ? 6 : 0; const g = 1 / 4 + 1 / 4 + (loadIn ? 1 / 4 : 0); return (v1 / 4 + v2 / 4) / g; })();
+  const IL = loadIn ? X / 4 : 0;
+  const src = (x: number, v: number, on: boolean) => on ? <Battery x={x} y={530} v={v} />
+    : <g><rect x={x - 50} y={470} width={100} height={120} fill={L.bg0} /><line x1={x} y1={460} x2={x} y2={600} stroke={L.red} strokeWidth={8} />
+      <text x={x + (x < 960 ? -20 : 20)} y={540} textAnchor={x < 960 ? "end" : "start"} fill={L.red} fontFamily={MONO} fontSize={26} fontWeight={700}>shorted (0 V)</text></g>;
+  const loop1 = [[360, 260], [960, 260], [960, 800], [360, 800], [360, 260]];
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {[[[360, 260], [1560, 260]], [[360, 260], [360, 800]], [[360, 800], [1560, 800]], [[1560, 260], [1560, 800]]].map((w, i) => <polyline key={i} points={w.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />)}
+    {loadIn && <polyline points="960,260 960,800" fill="none" stroke={L.wire} strokeWidth={6} />}
+    {loadIn && IL > 0.01 && <Dots pts={[[960, 300], [960, 760]]} t={f / 30} speed={60 + IL * 120} />}
+    {src(360, 12, on1)}{src(1560, 6, on2)}
+    <Res x={660} y={260} ohm={4} label="R1" horizontal /><Res x={1260} y={260} ohm={4} label="R3" horizontal />
+    {loadIn ? <Res x={960} y={530} ohm={4} label="LOAD RL" /> : <g><circle cx={960} cy={300} r={10} fill={L.text} /><circle cx={960} cy={760} r={10} fill={L.text} />
+      <rect x={880} y={470} width={160} height={120} rx={14} fill={L.panel} stroke={mode === "rth" ? L.amber : L.green} strokeWidth={4} />
+      <text x={960} y={515} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>{mode === "rth" ? "ohmmeter" : "voltmeter"}</text>
+      <text x={960} y={560} textAnchor="middle" fill={mode === "rth" ? L.amber : L.green} fontFamily={MONO} fontSize={34} fontWeight={800}>{mode === "rth" ? "2 Ω" : `${+X.toFixed(2)} V`}</text></g>}
+    <text x={985} y={250} fill={L.text} fontFamily={MONO} fontSize={34} fontWeight={800}>A</text><text x={985} y={850} fill={L.text} fontFamily={MONO} fontSize={34} fontWeight={800}>B</text>
+    {loadIn && <g><rect x={1010} y={600} width={220} height={60} rx={10} fill={L.panel} stroke={L.cyan} strokeWidth={4} /><text x={1120} y={641} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={32} fontWeight={800}>{+IL.toFixed(2)} A</text></g>}
+    <text x={960} y={150} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={38} fontWeight={700}>{
+      mode === "both" ? "Both sources on → load current 1.5 A" : mode === "v1" ? "Only the 12 V source (6 V replaced by a short) → 1 A" : mode === "v2" ? "Only the 6 V source (12 V replaced by a short) → 0.5 A"
+      : mode === "open" ? "Load removed → open-circuit voltage = V_th = 9 V" : "Sources shorted, load removed → resistance seen = R_th = 4 ∥ 4 = 2 Ω"}</text>
+    {mode === "rth" && <text x={960} y={950} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={30}>looking back into the terminals: R1 and R3 are now in parallel</text>}
+  </svg></AbsoluteFill>;
+};
+
+// ------------------------------------------------------------------ maximum power transfer: {"vth":9,"rth":2}
+export const MptScene: React.FC<any> = ({ dur, vth = 9, rth = 2 }) => {
+  const f = useCurrentFrame();
+  const p = interpolate(f, [dur * 0.08, dur * 0.85], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const RL = 0.2 * Math.pow(50, p); const I = vth / (rth + RL); const P = I * I * RL; const Pmax = (vth * vth) / (4 * rth);
+  const X0 = 1000, Y0 = 820, GW = 760, GH = 520; const lx = (r: number) => X0 + (Math.log(r / 0.2) / Math.log(50)) * GW; const ly = (pw: number) => Y0 - (pw / (Pmax * 1.15)) * GH;
+  const curve = Array.from({ length: 80 }, (_, k) => { const r = 0.2 * Math.pow(50, (k / 79) * p); const i = vth / (rth + r); return `${lx(r)},${ly(i * i * r)}`; }).join(" ");
+  const loop = [[220, 300], [700, 300], [700, 760], [220, 760], [220, 300]];
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <polyline points={loop.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />
+    <Dots pts={loop} t={f / 30} speed={40 + I * 50} />
+    <Battery x={220} y={530} v={vth} /><Res x={460} y={300} ohm={rth} label="R_th" horizontal /><Res x={700} y={530} ohm={RL} label="LOAD" heat={P / Pmax} />
+    <Meter x={460} y={860} kind="A" value={I} />
+    <rect x={330} y={920} width={260} height={64} rx={12} fill={L.panel} stroke={L.amber} strokeWidth={4} /><text x={460} y={963} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>P = {P.toFixed(2)} W</text>
+    <line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - GH - 30} stroke={L.dim} strokeWidth={3} />
+    <text x={X0 + GW} y={Y0 + 44} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>load resistance →</text><text x={X0 - 14} y={Y0 - GH - 10} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>power ↑</text>
+    <line x1={lx(rth)} y1={Y0} x2={lx(rth)} y2={ly(Pmax)} stroke={L.green} strokeWidth={3} strokeDasharray="8 8" opacity={p > 0.45 ? 1 : 0} />
+    <text x={lx(rth)} y={ly(Pmax) - 24} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={26} fontWeight={800} opacity={p > 0.45 ? 1 : 0}>max {Pmax.toFixed(2)} W at R_L = R_th</text>
+    <polyline points={curve} fill="none" stroke={L.amber} strokeWidth={6} />
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

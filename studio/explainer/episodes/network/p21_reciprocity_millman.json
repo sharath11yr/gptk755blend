@@ -1,0 +1,416 @@
+{
+ "title": "Reciprocity, Millman, Substitution & Tellegen - Network Theory Part 21",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Millman",
+ "cover": "Reciprocity & Millman",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  4,
+  7
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 21 · More network theorems",
+   "narration": "Welcome back. We have learned the big theorems: superposition, Thevenin, Norton and maximum power transfer. To complete the set, today we meet four shorter theorems that appear often in exams and in real circuits: the reciprocity theorem, Millman's theorem, the substitution theorem and Tellegen's theorem. Each has one simple idea, and we will see them all on our example circuit.",
+   "kicker": "NETWORK THEORY · PART 21",
+   "title": "RECIPROCITY, MILLMAN & MORE",
+   "subtitle": "Reciprocity, Millman, substitution and Tellegen"
+  },
+  {
+   "type": "theorem",
+   "chapter": "21.1 · Reciprocity: the setup",
+   "narration": "Start with only the twelve volt source on the left, the six volt source replaced by a short. The ammeter on the middle branch reads one ampere, as we found in the superposition part. Remember this: twelve volts on the left gives one ampere in the middle.",
+   "mode": "v1"
+  },
+  {
+   "type": "formula",
+   "chapter": "21.2 · Reciprocity: swap them",
+   "narration": "Now swap the source and the ammeter. Put the twelve volt source in the middle branch, in series with the four ohm resistor, and short the left side where the source was, with the ammeter there. The source now sees four ohms in series with R1 and R3 in parallel, two ohms: six ohms in total, so it delivers two amperes. That splits equally, and one ampere flows through R1 to the left. The ammeter reads one ampere, exactly as before. That is the reciprocity theorem.",
+   "formula": "12 V in middle: I = 12 / (4 + 4∥4) = 2 A",
+   "terms": [
+    [
+     "Splits equally",
+     "1 A through R1, 1 A through R3"
+    ]
+   ],
+   "example": [
+    "Before swap: 1 A · after swap: 1 A ✓"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "21.3 · Reciprocity: the theorem",
+   "narration": "The reciprocity theorem says: in a linear, bilateral network with a single source, if a voltage source in branch one produces a current in branch two, then moving the same source to branch two produces the same current in branch one. In other words, the ratio of voltage to current stays the same when the source and the meter swap places. It works only with one independent source, and not with dependent sources or one way elements like diodes.",
+   "title": "Reciprocity theorem",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Source in branch 1 → current in branch 2",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Source in branch 2 → same current in branch 1",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Linear, bilateral, single source only",
+     "x": 50,
+     "y": 75
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     "swap"
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Not with diodes or dependent sources"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "21.4 · Millman's theorem",
+   "narration": "Millman's theorem is a shortcut for several branches connected in parallel between two nodes, each with a voltage source and a resistor. The common voltage across them equals the sum of each source voltage divided by its resistance, divided by the sum of all the conductances. For our circuit: twelve over four, plus six over four, plus zero over four for the plain load branch, gives four point five. Divided by one quarter plus one quarter plus one quarter, zero point seven five. The answer: six volts across the load.",
+   "formula": "V = (Σ V_k / R_k) / (Σ 1 / R_k)",
+   "terms": [
+    [
+     "Numerator",
+     "12/4 + 6/4 + 0/4 = 4.5"
+    ],
+    [
+     "Denominator",
+     "1/4 + 1/4 + 1/4 = 0.75"
+    ]
+   ],
+   "example": [
+    "V = 4.5 / 0.75 = 6 V → I_L = 6/4 = 1.5 A ✓"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "21.5 · Why Millman works",
+   "narration": "Millman's theorem is really source transformation and nodal analysis in one line. Each branch, a voltage source with a series resistor, is converted into a current source V over R in parallel with R. All the current sources add up, and all the conductances add up. Then the voltage is total current divided by total conductance. That is exactly the formula.",
+   "title": "Millman = source transformation + KCL",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Each branch: V_k/R_k current source",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Currents add · conductances add",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "V = total current / total conductance",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "21.6 · Substitution theorem",
+   "narration": "The substitution theorem says: if you know the voltage across a branch, or the current through it, you can replace that branch with an ideal voltage source of that voltage, or an ideal current source of that current, and nothing else in the circuit changes. In our circuit, the load has six volts across it. We could replace it with a six volt source, and every other current would stay the same. This is useful for breaking big circuits into smaller pieces.",
+   "title": "Substitution theorem",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Branch with known V or I",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Replace by an ideal source of that V or I",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Rest of the circuit unchanged",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Load: 6 V, 1.5 A"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "→ a 6 V source"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "21.7 · Tellegen's theorem",
+   "narration": "Tellegen's theorem says: in any circuit, the sum of the powers of all branches is zero, when each branch power is its voltage times its current, using the passive sign convention. It is conservation of energy written for a whole circuit. Let's check ours. The load absorbs six times one point five, nine watts. R1 carries one point five amperes with six volts across it: nine watts. R3 carries zero amperes, since both its ends are at six volts. The twelve volt source delivers one point five amperes: eighteen watts. Absorbed nine plus nine plus zero equals delivered eighteen.",
+   "formula": "Σ v_k · i_k = 0",
+   "terms": [
+    [
+     "Absorbed",
+     "R_L 9 W + R1 9 W + R3 0 W = 18 W"
+    ],
+    [
+     "Delivered",
+     "12 V × 1.5 A = 18 W · 6 V source: 0 A → 0 W"
+    ]
+   ],
+   "example": [
+    "18 − 18 = 0 ✓"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "21.8 · Common mistakes",
+   "narration": "Common mistakes with these theorems. Applying reciprocity when there are two independent sources, or dependent sources, or diodes: it fails. In Millman, forgetting a branch that has no source: it still adds zero to the top and its conductance to the bottom. Mixing up signs of source voltages in Millman when sources face opposite ways. And in Tellegen, using the wrong sign convention for sources versus resistors.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Reciprocity: one source, linear, bilateral",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Millman: include source-free branches",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Millman: mind source polarities",
+     "x": 25,
+     "y": 68,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Tellegen: consistent sign convention",
+     "x": 75,
+     "y": 68,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Reciprocity: swap a single source and an ammeter, the reading stays the same. Millman: the voltage across parallel source branches is the sum of V over R, divided by the sum of one over R. Substitution: a branch with known voltage or current can be replaced by an ideal source. And Tellegen: the powers of all branches add up to zero.",
+   "title": "Four theorems in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Reciprocity: swap source & meter",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Millman: Σ(V/R) / Σ(1/R)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Substitution: branch → ideal source",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Tellegen: Σ v·i = 0",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "That completes the DC network theorems. Now we enter a new world: alternating current, where voltages and currents keep changing direction. In the next part we learn the sine wave, frequency, peak, RMS and phase, the language of every AC circuit, including the supply in your home.",
+   "title": "NEXT: AC FUNDAMENTALS",
+   "lines": [
+    "Reciprocity",
+    "Millman",
+    "Substitution",
+    "Tellegen"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Reciprocity, Millman's, Substitution & Tellegen's Theorem Explained | Network Theory #22",
+  "description": "Network Theory from absolute zero - Part 22.\n- Reciprocity theorem: swap the source and the ammeter (worked example)\n- Millman's theorem for parallel source branches\n- Why Millman works (source transformation + KCL)\n- Substitution theorem\n- Tellegen's theorem: power balance checked on a real circuit\n- Common mistakes\n\nPrevious: Maximum power transfer. Next: AC fundamentals.\n\n#NetworkTheory #ReciprocityTheorem #MillmansTheorem #ECE",
+  "tags": [
+   "reciprocity theorem",
+   "millman theorem",
+   "substitution theorem",
+   "tellegen theorem",
+   "network theorems",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

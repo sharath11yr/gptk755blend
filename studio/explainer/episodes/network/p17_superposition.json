@@ -1,0 +1,485 @@
+{
+ "title": "Superposition Theorem - Network Theory Part 17",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Superposition",
+ "cover": "Superposition",
+ "tag": "GETYR ECE",
+ "short": [
+  3,
+  4,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 17 · Superposition theorem",
+   "narration": "Welcome back. We can now solve any circuit with mesh or nodal analysis. But when a circuit has several sources, the equations can get long. Network theorems are smart shortcuts. The first one is the superposition theorem. Its idea is beautifully simple: instead of dealing with all the sources at once, take them one at a time, and add up the results.",
+   "kicker": "NETWORK THEORY · PART 17",
+   "title": "SUPERPOSITION THEOREM",
+   "subtitle": "One source at a time, then add"
+  },
+  {
+   "type": "theorem",
+   "chapter": "17.1 · The circuit",
+   "narration": "Here is our example circuit: a twelve volt source on the left with R1 of four ohms, a six volt source on the right with R3 of four ohms, and a four ohm load in the middle. Both sources push current into the load. Look at the meter on the load: one point five amperes. We could find this with nodal analysis. But let's discover a different way, by looking at each source separately.",
+   "mode": "both"
+  },
+  {
+   "type": "diagram",
+   "chapter": "17.2 · The idea",
+   "narration": "Here is the superposition theorem. In a linear circuit with several independent sources, the current or voltage in any element equals the sum of the currents or voltages produced by each source acting alone. Acting alone means all the other independent sources are switched off. Linear means every element follows a straight line relationship, like resistors, so effects simply add.",
+   "title": "Superposition",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Turn ON one source at a time",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Find its effect on the load",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "ADD all the effects",
+     "x": 50,
+     "y": 72,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Total = sum of the parts"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "17.3 · Switching a source off",
+   "narration": "How do we switch a source off? This is where most students make mistakes, so watch carefully. A voltage source switched off must give zero volts, and the only thing with zero volts across it is a plain wire. So a voltage source is replaced by a short circuit. A current source switched off must give zero amperes, and the only thing that carries zero current is a gap. So a current source is replaced by an open circuit. And any internal resistance of a source stays in place.",
+   "title": "Switching sources off",
+   "parts": [
+    {
+     "id": "v",
+     "label": "Voltage source OFF → short circuit (0 V)",
+     "x": 25,
+     "y": 32,
+     "shape": "pill"
+    },
+    {
+     "id": "i",
+     "label": "Current source OFF → open circuit (0 A)",
+     "x": 75,
+     "y": 32,
+     "shape": "pill"
+    },
+    {
+     "id": "r",
+     "label": "Internal resistances stay in the circuit",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "v"
+     ],
+     "note": "Replace with a wire"
+    },
+    {
+     "highlight": [
+      "i"
+     ],
+     "note": "Replace with a gap"
+    },
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "theorem",
+   "chapter": "17.4 · Source 1 alone",
+   "narration": "Now let's keep only the twelve volt source. The six volt source is switched off, so it becomes a short circuit, shown by the red wire. Look at the circuit now: R1 in series with R3 and the load, which are now in parallel, four in parallel with four, two ohms. Total: four plus two, six ohms, so the source gives twelve over six, two amperes. This splits equally between R3 and the load. The meter shows one ampere through the load.",
+   "mode": "v1"
+  },
+  {
+   "type": "theorem",
+   "chapter": "17.5 · Source 2 alone",
+   "narration": "Now the opposite. Keep only the six volt source, and replace the twelve volt source with a short. By the same reasoning, R3 is in series with R1 and the load in parallel, again six ohms. The source gives six over six, one ampere, and half of it flows through the load. The meter shows zero point five amperes.",
+   "mode": "v2"
+  },
+  {
+   "type": "formula",
+   "chapter": "17.6 · Add the effects",
+   "narration": "Now add the two effects. One ampere from the twelve volt source, plus zero point five amperes from the six volt source, both flowing downward through the load. The total is one point five amperes, exactly what the meter showed with both sources on. Superposition worked. Remember to add with signs: if one source pushed current up and the other down, you would subtract.",
+   "formula": "I_L = I' + I'' = 1 + 0.5 = 1.5 A",
+   "terms": [
+    [
+     "I'",
+     "load current from 12 V alone"
+    ],
+    [
+     "I''",
+     "load current from 6 V alone"
+    ]
+   ],
+   "example": [
+    "Both on: 1.5 A ✓"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "17.7 · Where it does NOT work",
+   "narration": "Superposition has two important limits. First, it only works for linear circuits. Diodes and transistors used as switches are not linear, so effects do not simply add. Second, it works for voltage and current, but never for power. Power depends on current squared, and the square of a sum is not the sum of the squares. Check it: one squared times four plus zero point five squared times four gives five watts, but the real power is one point five squared times four, which is nine watts. So always find the total current first, then calculate power.",
+   "title": "Limits of superposition",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Linear circuits only",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Voltage & current: YES · Power: NO",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "1²·4 + 0.5²·4 = 5 W ≠ 1.5²·4 = 9 W",
+     "x": 50,
+     "y": 75
+    }
+   ],
+   "arrows": [
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Power doesn't add"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "17.8 · Common mistakes",
+   "narration": "Here are the silly mistakes students make with superposition. One: replacing a voltage source with an open circuit instead of a short. Two: removing a current source by shorting it instead of opening it. Three: switching off dependent sources. Never do that: dependent sources stay in every sub circuit, because they are controlled by the circuit itself. Four: adding currents without checking their directions. Five: adding powers.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "V-source OFF = SHORT (not open)",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "I-source OFF = OPEN (not short)",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Dependent sources: NEVER switch off",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Add with directions (signs)",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Never add powers",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "17.9 · Where it is used",
+   "narration": "Superposition is everywhere in engineering. In amplifiers, a transistor has a fixed DC bias and a small AC signal on top. Engineers analyse the DC part and the AC part separately, then add them: that is superposition. In audio mixers, several signals pass through the same circuit and add. And in AC circuits with sources of different frequencies, each frequency is analysed alone, then the results are added.",
+   "title": "Superposition at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "SUPERPOSITION",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Amplifiers: DC bias + AC signal",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Audio mixing",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Multi-frequency AC circuits",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Proving other theorems",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Superposition: in a linear circuit, any current or voltage is the sum of the effects of each independent source acting alone. Switch off voltage sources by shorting them, current sources by opening them, and never switch off dependent sources. Add with signs. And never use superposition for power.",
+   "title": "Superposition in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "One source at a time → add",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "V off = short · I off = open",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Dependent sources stay",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Linear only · not for power",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Superposition looks at sources one at a time. The next theorem does something even more powerful: it replaces an entire circuit, however big, with just one source and one resistor. It is Thevenin's theorem, one of the most used ideas in all of electronics.",
+   "title": "NEXT: THEVENIN'S THEOREM",
+   "lines": [
+    "One source at a time",
+    "V off = short",
+    "I off = open"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Superposition Theorem Explained from Zero (with Example) | Network Theory #18",
+  "description": "Network Theory from absolute zero - Part 18: superposition theorem.\n- The idea: one source at a time, then add (animated)\n- How to switch sources off: V-source = short, I-source = open\n- Worked example: 1 A + 0.5 A = 1.5 A\n- Why it fails for power (5 W vs 9 W)\n- Common mistakes students make\n- Real uses: amplifiers (DC + AC), mixers\n\nPrevious: Supernode. Next: Thevenin's theorem.\n\n#NetworkTheory #Superposition #ECE #NetworkTheorems",
+  "tags": [
+   "superposition theorem",
+   "network theorems",
+   "superposition theorem example",
+   "network theory",
+   "circuit analysis",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

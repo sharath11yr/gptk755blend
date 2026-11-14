@@ -1,0 +1,464 @@
+{
+ "title": "Thevenin's Theorem - Network Theory Part 18",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Thevenin",
+ "cover": "Thevenin's Theorem",
+ "tag": "GETYR ECE",
+ "short": [
+  3,
+  4,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 18 · Thevenin's theorem",
+   "narration": "Welcome back. Imagine a big circuit with many sources and resistors, and you only care about one part of it, say a load connected at two terminals. Every time the load changes, you would have to solve the whole circuit again. Thevenin's theorem saves us. It says the entire circuit, as seen from those two terminals, can be replaced by just one voltage source and one resistor. Solve it once, and every load becomes a one line calculation.",
+   "kicker": "NETWORK THEORY · PART 18",
+   "title": "THEVENIN'S THEOREM",
+   "subtitle": "Any circuit = one voltage source + one resistor"
+  },
+  {
+   "type": "diagram",
+   "chapter": "18.1 · The theorem",
+   "narration": "Here is Thevenin's theorem. Any linear circuit, seen from two terminals A and B, can be replaced by an equivalent circuit made of a single voltage source, called V Thevenin, in series with a single resistor, called R Thevenin. The load connected to A and B will see exactly the same voltage and current. We need to find just two numbers: V th and R th.",
+   "title": "Thevenin's theorem",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Any linear circuit (seen from A-B)",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "V_th in series with R_th",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Same voltage & current at the load",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     "="
+    ],
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Just two numbers"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "theorem",
+   "chapter": "18.2 · The circuit",
+   "narration": "Let's use our example circuit: a twelve volt source on the left with R1 of four ohms, a six volt source on the right with R3 of four ohms, and a four ohm load in the middle. With the load connected, the meter shows one point five amperes. Our goal: replace everything except the load by a Thevenin equivalent.",
+   "mode": "both"
+  },
+  {
+   "type": "theorem",
+   "chapter": "18.3 · Step 1: find V th",
+   "narration": "Step one. Remove the load, leaving terminals A and B open. Then find the voltage across the open terminals. This open circuit voltage is V Thevenin. Watch the voltmeter. With no load, the same current flows through R1 and R3 in one loop: twelve minus six, six volts, over eight ohms, zero point seven five amperes. The voltage at the middle is twelve minus three, which is nine volts. The meter reads nine volts. So V th equals nine volts.",
+   "mode": "open"
+  },
+  {
+   "type": "theorem",
+   "chapter": "18.4 · Step 2: find R th",
+   "narration": "Step two. Switch off all independent sources: short the voltage sources, open any current sources. Then look back into the terminals and find the resistance. This is R Thevenin. Watch: with both sources shorted, R1 and R3 both connect from the top node to the bottom wire, so they are in parallel. Four in parallel with four is two ohms. The ohmmeter reads two ohms. So R th equals two ohms.",
+   "mode": "rth"
+  },
+  {
+   "type": "source",
+   "chapter": "18.5 · Step 3: use the equivalent",
+   "narration": "Step three. Draw the Thevenin equivalent: a nine volt source with a two ohm resistor in series, and connect the load. With our four ohm load: nine divided by two plus four, which is one point five amperes, exactly what the full circuit gave. Now watch the load change. The graph shows how the load voltage falls as the current rises, and every point matches the original circuit. No more solving the whole network for each load.",
+   "mode": "practical-v",
+   "v": 9,
+   "ri": 2
+  },
+  {
+   "type": "formula",
+   "chapter": "18.6 · The formula",
+   "narration": "Once you have the Thevenin equivalent, the load current is simply V th divided by R th plus R L. And the load voltage is the load current times R L. For a four ohm load: one point five amperes and six volts. For a seven ohm load: nine over nine, one ampere. For a one ohm load: nine over three, three amperes. Each takes one line instead of a full analysis.",
+   "formula": "I_L = V_th / (R_th + R_L)",
+   "terms": [
+    [
+     "V_th",
+     "open-circuit voltage at A-B"
+    ],
+    [
+     "R_th",
+     "resistance seen at A-B, sources off"
+    ]
+   ],
+   "example": [
+    "R_L = 4 Ω → 1.5 A · R_L = 7 Ω → 1 A",
+    "R_L = 1 Ω → 3 A"
+   ]
+  },
+  {
+   "type": "steps",
+   "chapter": "18.7 · The method",
+   "narration": "Here is Thevenin's method as a recipe. One: identify the two terminals and remove the load. Two: find the open circuit voltage at those terminals, using any method: this is V th. Three: switch off the independent sources, voltage sources shorted and current sources opened, and find the resistance seen at the terminals: this is R th. Four: draw V th in series with R th. Five: reconnect the load and find what you need.",
+   "title": "Thevenin step by step",
+   "items": [
+    "Remove the load, mark terminals A and B",
+    "V_th = open-circuit voltage at A-B",
+    "Sources off → R_th = resistance seen at A-B",
+    "Draw V_th in series with R_th",
+    "Reconnect the load: I_L = V_th/(R_th + R_L)"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "18.8 · Dependent sources",
+   "narration": "If the circuit contains dependent sources, step three changes, because dependent sources must never be switched off. Instead, we find R th in another way: either find the short circuit current between A and B, and divide, R th equals V th over I short circuit. Or apply a test source of one volt at the terminals, find the current it delivers, and R th equals one over that current. We will practise these in the numericals series.",
+   "title": "With dependent sources",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Never switch off dependent sources",
+     "x": 50,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "R_th = V_th / I_sc",
+     "x": 25,
+     "y": 62,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Or: apply 1 V test source → R_th = 1 / I_test",
+     "x": 75,
+     "y": 62,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ],
+    [
+     "a",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Short-circuit current method"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Test source method"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "18.9 · Common mistakes",
+   "narration": "The silly mistakes to avoid. One: forgetting to remove the load before finding V th. Two: switching off sources the wrong way: voltage sources become shorts, current sources become opens. Three: switching off dependent sources. Four: finding R th from the wrong side, looking into the source instead of into the terminals A and B. Five: forgetting that V th has a polarity, so the plus side must stay on the correct terminal.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Remove the load first",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "V off = short · I off = open",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Don't switch off dependent sources",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "R_th seen from A-B",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Keep V_th polarity",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "18.10 · Where it is used",
+   "narration": "Thevenin's theorem is used everywhere. Every battery, power supply and signal source can be described by a Thevenin equivalent, which is exactly the practical voltage source with internal resistance we met in Part 4. Amplifier stages are connected by thinking of each stage's output as a Thevenin source. And it is the foundation of maximum power transfer, which tells us how to get the most power into a speaker or an antenna.",
+   "title": "Thevenin at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "THEVENIN",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Batteries & power supplies",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Amplifier stages",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Choosing the best load",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Max power transfer",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": "Coming up"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Thevenin's theorem replaces any linear circuit seen from two terminals with V th in series with R th. V th is the open circuit voltage. R th is the resistance seen with independent sources switched off, or V th over the short circuit current. Then the load current is V th over R th plus R L.",
+   "title": "Thevenin in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Circuit = V_th + series R_th",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "V_th: open-circuit voltage",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "R_th: sources off (or V_th/I_sc)",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "I_L = V_th/(R_th + R_L)",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Thevenin used a voltage source with a series resistor. But remember source transformation: that can always be turned into a current source with a parallel resistor. That form has its own name, Norton's theorem, our next part.",
+   "title": "NEXT: NORTON'S THEOREM",
+   "lines": [
+    "V_th = open-circuit V",
+    "R_th = sources off",
+    "I_L = V_th/(R_th+R_L)"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Thevenin's Theorem Explained Step by Step from Zero | Network Theory #19",
+  "description": "Network Theory from absolute zero - Part 19: Thevenin's theorem.\n- Why Thevenin: solve once, try any load\n- Step 1: V_th = open-circuit voltage (animated)\n- Step 2: R_th with sources switched off\n- Step 3: the equivalent circuit, checked against the full circuit\n- Circuits with dependent sources (V_th/I_sc, test source)\n- Common mistakes\n- Real uses\n\nPrevious: Superposition. Next: Norton's theorem.\n\n#NetworkTheory #TheveninTheorem #ECE #NetworkTheorems",
+  "tags": [
+   "thevenin theorem",
+   "thevenin equivalent",
+   "network theorems",
+   "thevenin theorem example",
+   "network theory",
+   "circuit analysis",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
