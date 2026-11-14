@@ -69,7 +69,7 @@ const Wolf: React.FC<{ x: number; y: number; f: number }> = ({ x, y, f }) => { c
 // Aru: an original character whose look changes with the era
 const Hero: React.FC<{ x: number; y: number; era: string; pose: string; expr: string; f: number; role?: string; flip?: boolean }> = ({ x, y, era, pose, expr, f, role = "kai", flip }) => {
   const R = role; const sc = R === "leo" ? 0.62 : R === "zor" ? 1.15 : R === "mia" ? 0.94 : R === "nana" ? 0.9 : 1;
-  const skin = era === "ancestor" ? "#6b4a33" : R === "zor" ? "#7d5236" : R === "mia" ? "#b47a52" : "#a8714a";
+  const skin = era === "ancestor" ? "#6b4a33" : R === "zor" ? "#7d5236" : R === "mia" ? "#c98d63" : "#a8714a";
   const hair = era === "ancestor" ? "#3a2618" : R === "nana" ? "#cfcfcf" : "#2b1d14";
   const fur = era === "ancestor" ? null : R === "zor" ? "#3d2a1d" : R === "mia" ? "#b0643a" : R === "nana" ? "#7d6a55" : era === "hunter" ? "#8a5a2b" : "#c7a46b";
   const walk = pose === "walk" ? Math.sin(f / 5) * 20 : 0; const crouch = pose === "crouch" || pose === "scared" ? 50 : 0;
@@ -98,6 +98,9 @@ const Hero: React.FC<{ x: number; y: number; era: string; pose: string; expr: st
       <path d={era === "ancestor" ? "M-92 -10 Q-80 -110 0 -105 Q80 -110 92 -10 Q60 -60 0 -55 Q-60 -60 -92 -10 Z" : "M-84 -20 Q-90 -120 0 -112 Q90 -120 84 -20 Q70 -70 20 -78 Q-40 -60 -84 -20 Z"} fill={hair} />
       {era === "ancestor" && <ellipse cx={0} cy={40} rx={55} ry={38} fill="#8a6447" />}
       {R === "mia" && <path d="M-88 -30 Q-120 120 -70 190 L-50 60 Q-70 0 -80 -20 Z M88 -30 Q120 120 70 190 L50 60 Q70 0 80 -20 Z" fill={hair} />}
+      {R === "mia" && <g><path d="M-48 -8 l-14 -10 M-44 -12 l-8 -14 M48 -8 l14 -10 M44 -12 l8 -14" stroke="#1b120d" strokeWidth={4} strokeLinecap="round" />
+        <ellipse cx={-52} cy={30} rx={16} ry={9} fill="#ff8fa3" opacity={0.6} /><ellipse cx={52} cy={30} rx={16} ry={9} fill="#ff8fa3" opacity={0.6} />
+        <g transform="translate(62 -78)">{[0, 72, 144, 216, 288].map((a) => <ellipse key={a} cx={0} cy={-14} rx={9} ry={15} fill="#ff6f91" transform={`rotate(${a})`} />)}<circle r={8} fill="#ffd166" /></g></g>}
       {R === "mia" && <g>{[-40, -20, 0, 20, 40].map((k, i) => <circle key={i} cx={k} cy={118 + Math.abs(k) * 0.3} r={9} fill={i % 2 ? "#e8c26a" : "#d9e7f2"} />)}</g>}
       {R === "nana" && <path d="M-88 -30 Q-100 60 -80 110 L-70 0 Z M88 -30 Q100 60 80 110 L70 0 Z" fill={hair} />}
       {R === "nana" && <path d="M-40 -48 Q-30 -40 -20 -48 M20 -48 Q30 -40 40 -48 M-50 70 Q0 80 50 70" fill="none" stroke="#7d5a40" strokeWidth={4} />}
