@@ -1,0 +1,429 @@
+{
+ "title": "Source Transformation - Network Theory Part 11",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Source",
+ "cover": "Source Transformation",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  4
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 11 · Source transformation",
+   "narration": "Welcome back. With KCL and KVL we can now solve circuits. But some circuits are much easier to solve if we first reshape them. Remember Part 4, where we saw that a real voltage source has a resistance in series, and a real current source has a resistance in parallel? Today we discover that these two are secretly interchangeable. This trick is called source transformation, and it can turn a messy circuit into a simple one in a few steps.",
+   "kicker": "NETWORK THEORY · PART 11",
+   "title": "SOURCE TRANSFORMATION",
+   "subtitle": "Swap a voltage source for a current source, and back"
+  },
+  {
+   "type": "srctx",
+   "chapter": "11.1 · Two sources, same behaviour",
+   "narration": "On the left, a twelve volt source with a four ohm resistor in series. On the right, a three ampere current source with the same four ohm resistor in parallel. Now we connect the same load to both. Watch the meters. With an eight ohm load, both give one ampere and eight volts. Now the load changes to two ohms: both give two amperes and four volts. And with twenty ohms: both give half an ampere and ten volts. Whatever load we connect, the two circuits behave exactly the same. From the outside, you cannot tell them apart.",
+   "vs": 12,
+   "r": 4,
+   "rl": [
+    8,
+    2,
+    20
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "11.2 · The rule",
+   "narration": "Here is the rule. A voltage source V s in series with a resistor R can be replaced by a current source I s in parallel with the same resistor R, where I s equals V s divided by R. And it works the other way too: a current source I s in parallel with R becomes a voltage source V s equals I s times R, in series with R. The resistor value never changes. Only its position changes, from series to parallel.",
+   "formula": "I_s = V_s / R          V_s = I_s × R",
+   "terms": [
+    [
+     "R",
+     "stays the same: series ↔ parallel"
+    ],
+    [
+     "V_s",
+     "voltage source value"
+    ],
+    [
+     "I_s",
+     "current source value"
+    ]
+   ],
+   "example": [
+    "12 V with 4 Ω in series",
+    "⇄ 3 A with 4 Ω in parallel"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "11.3 · Why it works",
+   "narration": "Why are they the same? Look at the terminals. With nothing connected, the voltage source circuit gives its full twelve volts, because no current flows through R. The current source circuit pushes all three amperes through the four ohm resistor, which also gives twelve volts. Now short the terminals together. The voltage source pushes twelve over four, three amperes. The current source sends all three amperes through the short. Same open circuit voltage, same short circuit current, so the same straight line for every load in between.",
+   "formula": "V_open = 12 V     I_short = 3 A",
+   "terms": [
+    [
+     "Open circuit",
+     "both give V_s"
+    ],
+    [
+     "Short circuit",
+     "both give V_s / R = I_s"
+    ]
+   ],
+   "example": [
+    "Same two end points → same line → same behaviour"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "11.4 · Direction matters",
+   "narration": "One detail you must never get wrong is the direction. The arrow of the current source must point towards the terminal that was the positive terminal of the voltage source. Think about it: the voltage source pushes current out of its plus terminal, so the current source must push current out at that same point. If you flip the arrow, every answer will come out with the wrong sign.",
+   "title": "Keep the polarity",
+   "parts": [
+    {
+     "id": "v",
+     "label": "Voltage source: + terminal on top",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "i",
+     "label": "Current arrow points to that same terminal",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "r",
+     "label": "Current leaves at + in both circuits",
+     "x": 50,
+     "y": 78,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "v",
+     "i",
+     ""
+    ],
+    [
+     "i",
+     "r",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "v"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "i"
+     ],
+     "note": "Arrow → towards +"
+    },
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "11.5 · When it does not work",
+   "narration": "Source transformation has two limits. First, it only works for practical sources. An ideal voltage source has no series resistor, so dividing by zero gives an infinite current: impossible. An ideal current source has no parallel resistor, so there is nothing to convert. Second, the two circuits are equivalent only at the terminals. Inside, they can behave differently. For example, with no load connected, the current source circuit still burns power in its resistor, while the voltage source circuit burns none. So use the swap to find load voltages and currents, not internal power.",
+   "title": "Two limits",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Needs a resistor: R ≠ 0 (and not ∞)",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Equivalent only at the terminals",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Use it for load values, not internal power",
+     "x": 50,
+     "y": 78
+    }
+   ],
+   "arrows": [
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "No swap for ideal sources"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "steps",
+   "chapter": "11.6 · Using it to simplify",
+   "narration": "Here is how engineers use it. Suppose two practical voltage sources are connected in parallel to a load. Adding them directly is messy. So follow these steps. One: convert each voltage source into a current source with its resistor in parallel. Two: now the current sources are all in parallel, so simply add them. Three: combine the parallel resistors into one. Four: if you want, convert back into a single voltage source with one series resistor. Now the whole circuit is one source and one resistor feeding the load.",
+   "title": "Simplify with source transformation",
+   "items": [
+    "Convert each V-source + series R → I-source + parallel R",
+    "Add parallel current sources",
+    "Combine the parallel resistors",
+    "Convert back to one V-source + series R (optional)"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "11.7 · A worked example",
+   "narration": "Let's do it. Source one: twelve volts with four ohms. Source two: six volts with two ohms. Both are connected in parallel to a load. Convert: twelve over four gives three amperes with four ohms, and six over two gives three amperes with two ohms. Add the currents: six amperes. Combine the resistors: four in parallel with two is eight over six, about one point three three ohms. Convert back: six amperes times one point three three ohms is eight volts. So the two sources act like one eight volt source with one point three three ohms in series. With a two point six seven ohm load, the current is eight divided by four, two amperes.",
+   "formula": "12 V,4 Ω ∥ 6 V,2 Ω  →  8 V with 1.33 Ω",
+   "terms": [
+    [
+     "Step 1",
+     "3 A ∥ 4 Ω and 3 A ∥ 2 Ω"
+    ],
+    [
+     "Step 2",
+     "6 A"
+    ],
+    [
+     "Step 3",
+     "4 ∥ 2 = 1.33 Ω"
+    ],
+    [
+     "Step 4",
+     "6 × 1.33 = 8 V"
+    ]
+   ],
+   "example": [
+    "Load 2.67 Ω → I = 8 / (1.33 + 2.67) = 2 A"
+   ]
+  },
+  {
+   "type": "srctx",
+   "chapter": "11.8 · Check with the meters",
+   "narration": "Let's check that final result is truly equivalent. On the left is our eight volt source with one point three three ohms in series. On the right, its current source form: six amperes with one point three three ohms in parallel. Watch both meters as the load changes. They always agree. This is how we can trust a simplified circuit: it gives exactly the same answers at the terminals.",
+   "vs": 8,
+   "r": 1.333,
+   "rl": [
+    2.667,
+    4,
+    1
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "11.9 · Where you will use it",
+   "narration": "Source transformation is a tool you will use again and again. It simplifies circuits before mesh or nodal analysis, so you need fewer equations. It is the bridge between Thevenin's theorem and Norton's theorem, which we will meet soon: a Thevenin circuit is a voltage source with series R, a Norton circuit is a current source with parallel R, and source transformation converts one into the other. And it is used to model transistors and amplifiers in whichever form is easier.",
+   "title": "Where it is used",
+   "parts": [
+    {
+     "id": "x",
+     "label": "SOURCE TRANSFORMATION",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Fewer equations before mesh / nodal",
+     "x": 18,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Thevenin ⇄ Norton",
+     "x": 82,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Combining parallel sources",
+     "x": 18,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Transistor & amplifier models",
+     "x": 82,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": "Coming soon"
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A voltage source with a series resistor is equivalent to a current source with the same resistor in parallel. I s equals V s over R, and V s equals I s times R. The current arrow points towards the old positive terminal. It works only for practical sources, and only at the terminals. And it lets us combine sources and simplify circuits before solving them.",
+   "title": "Source transformation in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "V_s + series R ⇄ I_s + parallel R",
+     "x": 50,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "I_s = V_s / R · R unchanged",
+     "x": 25,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Arrow points to old + terminal",
+     "x": 75,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Practical sources only · terminals only",
+     "x": 50,
+     "y": 88,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Source transformation helped when resistors were in series or in parallel. But some networks have resistors connected in a triangle or a Y shape, which are neither series nor parallel. In the next part, we learn the star-delta transformation, which turns these tricky shapes into simple ones.",
+   "title": "NEXT: STAR-DELTA TRANSFORMATION",
+   "lines": [
+    "V ⇄ I source",
+    "I_s = V_s / R",
+    "Keep polarity"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Source Transformation Explained from Zero (with Example) | Network Theory #12",
+  "description": "Network Theory from absolute zero - Part 12: source transformation.\n- A voltage source with series R behaves exactly like a current source with parallel R (shown live with meters)\n- The rule: Is = Vs/R, Vs = Is·R\n- Why it works: same open-circuit voltage and short-circuit current\n- Polarity rule\n- Limits: practical sources only, equivalent only at the terminals\n- Step-by-step method and a worked example\n- Where it is used: mesh/nodal, Thevenin-Norton\n\nPrevious: KVL. Next: Star-delta transformation.\n\n#NetworkTheory #SourceTransformation #ECE #CircuitAnalysis",
+  "tags": [
+   "source transformation",
+   "voltage source to current source",
+   "network theory",
+   "circuit analysis",
+   "thevenin norton",
+   "ece",
+   "basic electrical engineering"
+  ],
+  "playlist": "Network Theory"
+ }
+}

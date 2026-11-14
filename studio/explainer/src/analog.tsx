@@ -581,4 +581,38 @@ export const KvlScene: React.FC<any> = ({ dur, v = 12, r = [100, 200, 300] }) =>
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ source transformation: V-source + series R  <->  I-source + parallel R
+// {"vs":12,"r":4,"rl":[8,2,20]} the same loads are connected to both; meters match exactly
+export const SrcTxScene: React.FC<any> = ({ dur, vs = 12, r = 4, rl = [8, 2, 20], dir = "v2i" }) => {
+  const f = useCurrentFrame();
+  const is = vs / r;
+  const k = Math.min(rl.length - 1, Math.floor(interpolate(f, [dur * 0.3, dur * 0.95], [0, rl.length], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })));
+  const RL = rl[k]; const I = vs / (r + RL); const V = I * RL;
+  const show2 = fade(f, dur * 0.15, 14);
+  const left = (ox: number) => { const loop = [[ox + 120, 300], [ox + 600, 300], [ox + 600, 760], [ox + 120, 760], [ox + 120, 300]];
+    return <g><polyline points={loop.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />
+      <Dots pts={loop} t={f / 30} speed={60 + I * 40} />
+      <g><circle cx={ox + 120} cy={530} r={60} fill={L.bg0} stroke={L.text} strokeWidth={6} /><text x={ox + 120} y={515} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={34} fontWeight={800}>+</text><text x={ox + 120} y={570} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={34} fontWeight={800}>−</text>
+        <text x={ox + 40} y={540} textAnchor="end" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>{vs} V</text></g>
+      <Res x={ox + 360} y={300} ohm={r} label="R (series)" horizontal />
+      <Res x={ox + 600} y={530} ohm={RL} label="LOAD" />
+      <Meter x={ox + 360} y={860} kind="A" value={I} /><Meter x={ox + 360} y={950} kind="V" value={V} /></g>; };
+  const right = (ox: number) => { const loop = [[ox + 120, 300], [ox + 600, 300], [ox + 600, 760], [ox + 120, 760], [ox + 120, 300]];
+    return <g opacity={show2}><polyline points={loop.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />
+      <polyline points={`${ox + 330},300 ${ox + 330},460`} fill="none" stroke={L.wire} strokeWidth={6} /><polyline points={`${ox + 330},600 ${ox + 330},760`} fill="none" stroke={L.wire} strokeWidth={6} />
+      <Dots pts={[[ox + 330, 300], [ox + 600, 300], [ox + 600, 760], [ox + 330, 760]]} t={f / 30} speed={60 + I * 40} />
+      <g><circle cx={ox + 120} cy={530} r={60} fill={L.bg0} stroke={L.text} strokeWidth={6} /><line x1={ox + 120} y1={572} x2={ox + 120} y2={492} stroke={L.text} strokeWidth={6} /><path d={`M${ox + 102} ${510} L${ox + 120} ${480} L${ox + 138} ${510} Z`} fill={L.text} />
+        <text x={ox + 40} y={540} textAnchor="end" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>{+is.toFixed(2)} A</text></g>
+      <Res x={ox + 330} y={530} ohm={r} label="R (parallel)" />
+      <Res x={ox + 600} y={530} ohm={RL} label="LOAD" />
+      <Meter x={ox + 360} y={860} kind="A" value={I} /><Meter x={ox + 360} y={950} kind="V" value={V} /></g>; };
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {left(150)}{right(1090)}
+    <text x={960} y={540} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={60} fontWeight={800} opacity={show2}>⇄</text>
+    <text x={510} y={170} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={700}>Voltage source + series R</text>
+    <text x={1450} y={170} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={700} opacity={show2}>Current source + parallel R</text>
+    <text x={960} y={250} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={30} fontWeight={700} opacity={show2}>I_s = V_s / R = {vs} / {r} = {+is.toFixed(2)} A · same R</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
