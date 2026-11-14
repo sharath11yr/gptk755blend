@@ -876,4 +876,39 @@ export const DampScene: React.FC<any> = ({ dur, show = ["over", "crit", "under"]
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ series resonance: L = 10 mH, C = 10 µF, V = 10 V
+// {"mode":"react"|"curve","r":[10,30]}
+export const ResScene: React.FC<any> = ({ dur, mode = "curve", r = [10, 30] }) => {
+  const f = useCurrentFrame(); const Lh = 0.01, Cf = 10e-6, V = 10; const f0 = 1 / (2 * Math.PI * Math.sqrt(Lh * Cf));
+  const p = interpolate(f, [dur * 0.06, dur * 0.8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const X0 = 260, Y0 = 840, GW = 1400, GH = 560, fmax = 1200; const X = (fr: number) => X0 + (fr / fmax) * GW;
+  const axes = <g><line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - GH - 30} stroke={L.dim} strokeWidth={3} />
+    {[0, 200, 400, 600, 800, 1000, 1200].map((k) => <text key={k} x={X(k)} y={Y0 + 40} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{k}</text>)}
+    <text x={X0 + GW} y={Y0 + 84} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={26}>frequency (Hz) →</text>
+    <line x1={X(f0)} y1={Y0} x2={X(f0)} y2={Y0 - GH - 10} stroke={L.green} strokeWidth={3} strokeDasharray="10 8" />
+    <text x={X(f0) + 12} y={Y0 - GH} fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>f₀ = {f0.toFixed(1)} Hz</text></g>;
+  const fend = 20 + p * (fmax - 20);
+  if (mode === "react") {
+    const xl = (fr: number) => 2 * Math.PI * fr * Lh, xc = (fr: number) => 1 / (2 * Math.PI * fr * Cf); const Ymax = 100; const Y = (v: number) => Y0 - (Math.min(v, Ymax) / Ymax) * GH;
+    const line = (fn: (x: number) => number, f1 = 20) => Array.from({ length: 200 }, (_, k) => { const fr = f1 + (k / 199) * Math.max(0, fend - f1); return `${X(fr)},${Y(fn(fr))}`; }).join(" ");
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{axes}
+      <polyline points={line(xl)} fill="none" stroke={L.cyan} strokeWidth={6} />{fend > 160 && <polyline points={line(xc, 160)} fill="none" stroke={L.amber} strokeWidth={6} />}
+      <text x={X0 + 24} y={200} fill={L.cyan} fontFamily={MONO} fontSize={30} fontWeight={800}>X_L = 2πfL (rises)</text>
+      <text x={X0 + 24} y={244} fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>X_C = 1/(2πfC) (falls)</text>
+      <text x={X0 - 14} y={Y0 - GH + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>100 Ω</text>
+      <rect x={X(f0) + 20} y={Y(31.6) + 90} width={300} height={44} rx={8} fill={L.bg0} opacity={p > 0.45 ? 0.92 : 0} /><text x={X(f0) + 170} y={Y(31.6) + 122} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={26} fontWeight={800} opacity={p > 0.45 ? 1 : 0}>X_L = X_C ≈ 31.6 Ω</text>
+    </svg></AbsoluteFill>;
+  }
+  const I = (fr: number, R: number) => V / Math.hypot(R, 2 * Math.PI * fr * Lh - 1 / (2 * Math.PI * fr * Cf)); const Imax = V / Math.min(...r); const Y = (v: number) => Y0 - (v / Imax) * GH;
+  const cols = [L.cyan, L.amber];
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{axes}
+    <text x={X0 - 14} y={Y0 - GH + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{Imax} A</text>
+    {r.map((R: number, i: number) => { const pts = Array.from({ length: 300 }, (_, k) => { const fr = 20 + (k / 299) * (fend - 20); return `${X(fr)},${Y(I(fr, R))}`; }).join(" ");
+      const bw = R / (2 * Math.PI * Lh); const Q = f0 / bw; const yh = Y((V / R) * 0.707);
+      return <g key={i}><polyline points={pts} fill="none" stroke={cols[i]} strokeWidth={6} />
+        {p > 0.9 && <g><line x1={X(f0 - bw / 2)} y1={yh} x2={X(f0 + bw / 2)} y2={yh} stroke={cols[i]} strokeWidth={3} strokeDasharray="6 6" /></g>}
+        <text x={1240} y={200 + i * 50} fill={cols[i]} fontFamily={MONO} fontSize={28} fontWeight={800}>R = {R} Ω · Q = {Q.toFixed(2)} · BW = {bw.toFixed(0)} Hz</text></g>; })}
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

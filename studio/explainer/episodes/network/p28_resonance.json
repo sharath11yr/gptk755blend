@@ -1,0 +1,480 @@
+{
+ "title": "Resonance - Network Theory Part 28",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Resonance",
+ "cover": "Resonance",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  3,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 28 · Resonance",
+   "narration": "Welcome back. We have seen that an inductor's reactance rises with frequency, while a capacitor's reactance falls. So at one special frequency, they must be exactly equal. At that frequency, their effects cancel completely, and the circuit behaves in a remarkable way. This is resonance. It is how every radio and TV tunes to one station out of hundreds, and how filters pick out the frequencies we want.",
+   "kicker": "NETWORK THEORY · PART 28",
+   "title": "RESONANCE",
+   "subtitle": "Series and parallel resonance, Q factor and bandwidth"
+  },
+  {
+   "type": "resonance",
+   "chapter": "28.1 · Where the reactances meet",
+   "narration": "Here is a series circuit with a ten millihenry inductor, a ten microfarad capacitor and a resistor, driven by a ten volt AC source whose frequency we can change. Watch the blue line: the inductor's reactance rises steadily with frequency. Watch the amber curve: the capacitor's reactance falls. They cross at one frequency, where both equal about thirty one point six ohms. That crossing point is the resonant frequency, f zero, about five hundred and three hertz.",
+   "mode": "react"
+  },
+  {
+   "type": "formula",
+   "chapter": "28.2 · The resonant frequency",
+   "narration": "At resonance, X L equals X C. So two pi f L equals one over two pi f C. Solving for f gives f zero equals one over two pi times the square root of L C. For our circuit: one over two pi times the square root of zero point zero one times ten to the minus five, which is about five hundred and three point three hertz. Notice that this matches the natural frequency omega zero from the last part: omega zero equals two pi f zero.",
+   "formula": "f₀ = 1 / (2π√(LC))",
+   "terms": [
+    [
+     "At f₀",
+     "X_L = X_C"
+    ],
+    [
+     "ω₀",
+     "= 2πf₀ = 1/√(LC)"
+    ]
+   ],
+   "example": [
+    "L = 10 mH, C = 10 µF → f₀ ≈ 503.3 Hz"
+   ]
+  },
+  {
+   "type": "resonance",
+   "chapter": "28.3 · The current peak",
+   "narration": "Now watch the current as we sweep the frequency, for two resistors. At low frequency, the capacitor blocks most current. At high frequency, the inductor blocks it. But at f zero, the reactances cancel, the impedance becomes just R, and the current shoots up to its maximum. With ten ohms, the blue curve peaks at one ampere: ten volts over ten ohms. With thirty ohms, the amber curve peaks lower and is much wider.",
+   "mode": "curve",
+   "r": [
+    10,
+    30
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "28.4 · Series resonance facts",
+   "narration": "At series resonance, four things happen together. The impedance is at its minimum and equals R. The current is at its maximum, V over R. The current is in phase with the voltage, so the power factor is one. And the voltages across the inductor and the capacitor are equal and opposite, cancelling each other, even though each one can be much larger than the source voltage.",
+   "title": "At series resonance",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Z = R (minimum)",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "I = V/R (maximum)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "I in phase with V · pf = 1",
+     "x": 25,
+     "y": 68,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "V_L = V_C, opposite, can be > V",
+     "x": 75,
+     "y": 68,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "28.5 · Voltage magnification",
+   "narration": "Let's check that surprising last point. At resonance, the current is one ampere. The inductor's reactance is thirty one point six ohms, so its voltage is thirty one point six volts, from a ten volt source. The capacitor also has thirty one point six volts, but opposite in phase, so they cancel. The ratio, three point one six, is called the quality factor, Q. Series resonance magnifies voltage by Q, which is why high voltage can appear inside a tuned circuit.",
+   "formula": "Q = X_L / R = (1/R)√(L/C)",
+   "terms": [
+    [
+     "V_L = V_C",
+     "= Q × V_source"
+    ]
+   ],
+   "example": [
+    "Q = 31.6 / 10 = 3.16",
+    "V_L = 3.16 × 10 = 31.6 V"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "28.6 · Bandwidth and selectivity",
+   "narration": "How sharp is the peak? The bandwidth is the range of frequencies where the current is at least zero point seven zero seven of its maximum, the half power points, marked by the dashed lines. Bandwidth equals f zero divided by Q, which for a series circuit equals R over two pi L. With ten ohms, the bandwidth is about one hundred and fifty nine hertz. With thirty ohms, Q is only about one point zero five and the bandwidth is about four hundred and seventy seven hertz. A higher Q gives a narrower, sharper peak, which means better selectivity.",
+   "formula": "BW = f₀ / Q = R / (2πL)",
+   "terms": [
+    [
+     "Half-power points",
+     "I = 0.707 I_max"
+    ],
+    [
+     "High Q",
+     "narrow, selective"
+    ]
+   ],
+   "example": [
+    "R = 10 Ω: Q = 3.16, BW ≈ 159 Hz",
+    "R = 30 Ω: Q = 1.05, BW ≈ 477 Hz"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "28.7 · Parallel resonance",
+   "narration": "Now connect the inductor and capacitor in parallel instead. At the same resonant frequency, the inductor's current and the capacitor's current are equal and opposite, so they cancel in the supply line. Energy circulates between L and C inside the loop, and very little current comes from the source. So a parallel resonant circuit has maximum impedance and minimum supply current, the opposite of series resonance. It is often called a tank circuit, because it stores energy like a tank.",
+   "title": "Series vs parallel resonance",
+   "parts": [
+    {
+     "id": "s",
+     "label": "SERIES: Z minimum, I maximum",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "p",
+     "label": "PARALLEL (tank): Z maximum, I minimum",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Both at f₀ = 1/(2π√LC) (ideal)",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "s",
+     "c",
+     ""
+    ],
+    [
+     "p",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "s"
+     ],
+     "note": "Acceptor circuit"
+    },
+    {
+     "highlight": [
+      "p"
+     ],
+     "note": "Rejector circuit"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "28.8 · Common mistakes",
+   "narration": "Common mistakes with resonance. One: using f zero equals one over root L C, forgetting the two pi: that gives omega zero, not f zero. Two: thinking the total impedance is zero at series resonance: it is R. Three: mixing up series and parallel: series gives minimum impedance, parallel gives maximum. Four: forgetting to convert millihenries and microfarads. Five: thinking higher resistance gives sharper tuning: it does the opposite in a series circuit.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "f₀ = 1/(2π√LC) · ω₀ = 1/√LC",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Series at f₀: Z = R, not 0",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Series: Z min · Parallel: Z max",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "mH, µF → H, F",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "More R → lower Q → wider BW",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "28.9 · Where resonance is used",
+   "narration": "Resonance is one of the most useful ideas in electronics. In a radio, turning the tuning knob changes a capacitor, which moves f zero onto the station you want, and the high Q circuit rejects all the others. Filters in audio systems and phones use resonant circuits. Wireless chargers use resonant coils to transfer energy efficiently. Induction heaters, metal detectors and oscillators all depend on resonance. But it can also be dangerous: in power systems, unexpected resonance can create very high voltages.",
+   "title": "Resonance at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "RESONANCE",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Radio & TV tuning",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Filters",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Wireless charging",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Oscillators, induction heating",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Resonance happens when X L equals X C, at f zero equals one over two pi root L C. In series resonance, impedance is minimum and equal to R, current is maximum and in phase, and the L and C voltages are magnified by Q. Bandwidth equals f zero over Q. In parallel resonance, impedance is maximum and supply current minimum.",
+   "title": "Resonance in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "f₀ = 1/(2π√LC)",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Series: Z = R, I max",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Q = X_L/R · BW = f₀/Q",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Parallel: Z max (tank)",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "So far, each inductor had its own magnetic field. But when two coils are close together, the field of one passes through the other, and they start to influence each other. That is mutual inductance, the principle behind every transformer. It is our next part: coupled circuits and the dot convention.",
+   "title": "NEXT: COUPLED CIRCUITS",
+   "lines": [
+    "f₀ = 1/2π√LC",
+    "Q factor",
+    "Bandwidth",
+    "Tank circuit"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Series & Parallel Resonance Explained: f₀, Q Factor, Bandwidth | Network Theory #29",
+  "description": "Network Theory from absolute zero - Part 29: resonance.\n- X_L and X_C crossing (animated)\n- f₀ = 1/(2π√LC) with a worked example (503.3 Hz)\n- The current peak, swept live for two resistors\n- Series resonance facts and voltage magnification\n- Q factor and bandwidth (half-power points)\n- Parallel (tank) resonance\n- Common mistakes\n- Real uses: radio tuning, filters, wireless charging\n\nPrevious: RLC transients. Next: Coupled circuits.\n\n#NetworkTheory #Resonance #QFactor #ECE",
+  "tags": [
+   "resonance",
+   "series resonance",
+   "parallel resonance",
+   "q factor",
+   "bandwidth",
+   "resonant frequency",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
