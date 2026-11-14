@@ -32,6 +32,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "A coil with inertia!",
+   "narration": "An inductor is a coil of wire. Current through it builds a magnetic field that stores energy. Like a heavy flywheel, it resists any sudden change, starting or stopping."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

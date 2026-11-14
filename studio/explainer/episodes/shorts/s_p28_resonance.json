@@ -33,6 +33,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Two effects cancel!",
+   "narration": "An inductor blocks high frequencies, a capacitor blocks low ones. At one frequency they cancel each other perfectly, and only that station gets through strongly."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

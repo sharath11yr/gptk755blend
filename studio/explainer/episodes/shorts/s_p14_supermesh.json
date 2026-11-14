@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Merge the two loops!",
+   "narration": "A current source in a shared branch blocks normal mesh analysis, because its voltage is unknown. So we merge the two meshes into one bigger loop and skip the source."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

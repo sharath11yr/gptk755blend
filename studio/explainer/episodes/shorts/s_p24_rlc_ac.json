@@ -33,6 +33,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "They peak at different times!",
+   "narration": "In AC, the inductor's voltage peaks a quarter cycle before the resistor's. Since they don't peak together, you can't just add the numbers. You add them like arrows at right angles."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

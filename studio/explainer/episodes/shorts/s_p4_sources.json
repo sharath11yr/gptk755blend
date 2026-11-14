@@ -31,6 +31,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "There's a hidden resistor!",
+   "narration": "Every real battery has a small resistance inside it. The more current you pull, the more voltage is lost inside the battery itself, so less reaches your lights."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

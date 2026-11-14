@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Linear circuits are fair!",
+   "narration": "In a linear circuit with one source, the path works the same in both directions. That's why swapping the source and the meter gives the same reading."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

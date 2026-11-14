@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Like rooms in a house!",
+   "narration": "Think of a circuit like a house plan. Nodes are the doorways where paths meet, branches are the corridors, and meshes are the rooms with no wall inside them."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Wrap both nodes together!",
+   "narration": "A voltage source between two nodes has unknown current. So we wrap both nodes in one boundary. The source current stays inside and never appears in our equation."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

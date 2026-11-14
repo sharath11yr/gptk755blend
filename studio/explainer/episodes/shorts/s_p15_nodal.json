@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Voltages first, then currents!",
+   "narration": "Pick one point as zero volts. Find the voltage at every other junction using KCL. Once you know the voltages, every current is just Ohm's law."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

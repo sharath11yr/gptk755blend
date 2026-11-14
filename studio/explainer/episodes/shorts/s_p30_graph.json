@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Only the connections matter!",
+   "narration": "Remove what each part is, and keep only how things connect: dots and lines. From that map, a computer knows exactly how many equations it needs."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

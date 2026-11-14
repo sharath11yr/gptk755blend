@@ -31,6 +31,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Some current does no work!",
+   "narration": "With motors, the current lags behind the voltage. Part of it just flows back and forth without doing work, but it still heats the cables. A capacitor supplies that part locally."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

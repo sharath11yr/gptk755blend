@@ -32,6 +32,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Calculus becomes algebra!",
+   "narration": "Laplace changes time into a new variable, s. Derivatives become simple multiplication, so a hard differential equation becomes easy algebra, then we convert back."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

@@ -35,6 +35,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Two forms, same behaviour!",
+   "narration": "A real voltage source and a real current source can behave exactly the same at their terminals. So we can swap one for the other, whichever makes the circuit easier."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

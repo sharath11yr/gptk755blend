@@ -36,6 +36,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "It squeezes the flow!",
+   "narration": "Inside a resistor, electrons keep bumping into atoms. Each bump slows them down and turns some energy into heat. So a resistor squeezes the current down to a safe level."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

@@ -52,6 +52,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Power × time = energy!",
+   "narration": "Power is how fast energy is used, in watts. Leave it on for hours and the energy adds up. One thousand watts for one hour is one unit on your bill."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

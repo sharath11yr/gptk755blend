@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "One loop current per window!",
+   "narration": "Instead of guessing every branch current, give each loop its own current. Shared branches carry the difference. Then KVL around each loop gives you the equations."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

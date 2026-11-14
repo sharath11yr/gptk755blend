@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Waves become arrows!",
+   "narration": "Every sine wave can be drawn as a rotating arrow. Its length is the size, its angle is the phase. Adding waves becomes adding arrows, tip to tail."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

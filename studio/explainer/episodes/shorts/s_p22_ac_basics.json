@@ -30,6 +30,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "The heating-equal value!",
+   "narration": "AC keeps changing, so we ask: what DC voltage would heat a heater the same amount? That value is RMS, about seventy one percent of the peak."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

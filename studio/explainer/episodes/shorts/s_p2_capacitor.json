@@ -32,6 +32,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Two plates, a tiny gap!",
+   "narration": "A capacitor is just two metal plates with an insulator between them. Charge piles up on the plates like water filling a tank, and stays there until something lets it out."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

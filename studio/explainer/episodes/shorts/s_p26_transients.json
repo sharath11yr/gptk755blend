@@ -32,6 +32,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Fast at first, then slower!",
+   "narration": "A capacitor charges quickly when empty, then slower and slower as it fills, like filling a bottle under a tap that gets weaker. The time constant R C sets the speed."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

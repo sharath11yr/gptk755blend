@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Input in, output out!",
+   "narration": "We don't need to know what's inside the box. Four measured numbers tell us exactly how the output responds to any input, like a recipe card for the circuit."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

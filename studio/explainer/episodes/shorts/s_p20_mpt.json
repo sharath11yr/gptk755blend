@@ -30,6 +30,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Too small or too big is bad!",
+   "narration": "A very small load gets lots of current but almost no voltage. A very big load gets voltage but almost no current. The best balance is when the load matches the source."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

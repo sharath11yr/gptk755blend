@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Like water in a pipe!",
+   "narration": "Think of water in a pipe. The battery is like a pump that creates pressure: that's voltage. The water flowing is current. And a narrow part of the pipe that slows the flow is resistance."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

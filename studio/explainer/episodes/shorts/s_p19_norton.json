@@ -35,6 +35,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Same thing, current form!",
+   "narration": "Norton replaces the circuit with a current source and a parallel resistor instead. It's the same circuit in disguise, linked by Ohm's law."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

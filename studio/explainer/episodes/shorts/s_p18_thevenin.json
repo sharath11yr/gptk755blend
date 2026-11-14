@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Any circuit = a battery + resistor!",
+   "narration": "Seen from two terminals, even a huge circuit acts like one battery with one resistor. Find the open circuit voltage and the resistance once, and you're done."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

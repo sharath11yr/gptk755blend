@@ -33,6 +33,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Energy swings like a swing!",
+   "narration": "The capacitor and inductor pass energy back and forth, like a swing. The resistor is like air resistance: too little and it keeps swinging, enough and it stops smoothly."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

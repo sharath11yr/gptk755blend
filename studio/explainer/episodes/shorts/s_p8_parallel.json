@@ -38,6 +38,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "More paths, more current!",
+   "narration": "In parallel, each appliance gets its own path from the supply. Every path you add lets more current flow from the main line, just like opening more taps on one water pipe."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

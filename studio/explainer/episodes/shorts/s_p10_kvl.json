@@ -34,6 +34,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Like climbing a hill!",
+   "narration": "Voltage is like height. The battery lifts the charges up, and each resistor brings them down a little. Back at the start, you're at the same height: total up equals total down."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

@@ -30,6 +30,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Magnetism carries the power!",
+   "narration": "A changing current in one coil makes a changing magnetic field. When that field passes through a second coil, it creates a voltage there, with no wire between them."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

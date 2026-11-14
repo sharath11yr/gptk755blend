@@ -29,6 +29,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Take them one by one!",
+   "narration": "In a linear circuit, effects simply add. So switch off all sources but one, find its effect, repeat for each source, and add the results with their directions."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

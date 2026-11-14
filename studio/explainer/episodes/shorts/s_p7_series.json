@@ -37,6 +37,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Same current, shared voltage!",
+   "narration": "In series, the same current flows through everything, one after another. So the voltage gets shared, and the bigger resistor takes the bigger share."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",

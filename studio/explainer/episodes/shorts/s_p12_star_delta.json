@@ -34,6 +34,14 @@
   },
   {
    "type": "stick",
+   "chapter": "How it works",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Change the shape, not the behaviour!",
+   "narration": "Three resistors in a triangle can be replaced by three in a Y shape. From the outside, nobody can tell the difference, but now the math becomes simple."
+  },
+  {
+   "type": "stick",
    "chapter": "The answer",
    "pose": "happy",
    "name": "Volt",
