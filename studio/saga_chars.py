@@ -7,7 +7,7 @@ def reset():
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene; sc.render.engine = "BLENDER_EEVEE_NEXT"
     sc.render.resolution_x, sc.render.resolution_y = 1080, 1920
-    sc.view_settings.view_transform = "AgX"; sc.view_settings.look = "AgX - Medium High Contrast"
+    sc.view_settings.view_transform = "Standard"; sc.render.use_freestyle = True; sc.render.line_thickness = 1.6
     return sc
 
 def mat(name, rgb, rough=0.6, emit=0):
@@ -28,11 +28,11 @@ def sph(name, loc, r, m, sc=(1, 1, 1)):
     o.scale = sc; o.data.materials.append(m); bpy.ops.object.shade_smooth(); return o
 
 LOOKS = {
- "john": dict(skin=(0.62, 0.40, 0.27), hair=(0.12, 0.08, 0.05), cloth=(0.45, 0.28, 0.14), h=1.0, hairstyle="short", prop="spear"),
- "mia":  dict(skin=(0.74, 0.50, 0.35), hair=(0.10, 0.06, 0.04), cloth=(0.62, 0.32, 0.18), h=0.94, hairstyle="long", prop="flower"),
- "leo":  dict(skin=(0.66, 0.43, 0.29), hair=(0.12, 0.08, 0.05), cloth=(0.50, 0.33, 0.18), h=0.62, hairstyle="short", prop=None),
- "nana": dict(skin=(0.58, 0.38, 0.27), hair=(0.82, 0.82, 0.82), cloth=(0.40, 0.34, 0.27), h=0.9, hairstyle="bun", prop="stick"),
- "zor":  dict(skin=(0.45, 0.29, 0.19), hair=(0.05, 0.04, 0.03), cloth=(0.20, 0.14, 0.10), h=1.12, hairstyle="beard", prop="club"),
+ "john": dict(skin=(0.55, 0.30, 0.17), hair=(0.06, 0.035, 0.02), cloth=(0.45, 0.20, 0.06), h=1.0, hairstyle="short", prop="spear"),
+ "mia":  dict(skin=(0.68, 0.40, 0.24), hair=(0.05, 0.03, 0.02), cloth=(0.70, 0.22, 0.12), h=0.94, hairstyle="long", prop="flower"),
+ "leo":  dict(skin=(0.60, 0.34, 0.20), hair=(0.06, 0.035, 0.02), cloth=(0.20, 0.35, 0.15), h=0.62, hairstyle="short", prop=None),
+ "nana": dict(skin=(0.50, 0.30, 0.19), hair=(0.85, 0.85, 0.85), cloth=(0.25, 0.18, 0.35), h=0.9, hairstyle="bun", prop="stick"),
+ "zor":  dict(skin=(0.38, 0.20, 0.11), hair=(0.02, 0.015, 0.01), cloth=(0.08, 0.06, 0.05), h=1.12, hairstyle="beard", prop="club"),
 }
 
 def character(key, x=0, expr="happy"):
@@ -47,7 +47,12 @@ def character(key, x=0, expr="happy"):
     box(key + "armL", (x - 0.5 * s, 0, z0 + 1.25 * s), (0.22 * s, 0.24 * s, 0.75 * s), skin)
     box(key + "armR", (x + 0.5 * s, 0, z0 + 1.25 * s), (0.22 * s, 0.24 * s, 0.75 * s), skin)
     hz = z0 + 1.95 * s; hs = 0.72 * s * (1.15 if key == "leo" else 1)
-    box(key + "head", (x, 0, hz), (hs, hs * 0.9, hs), skin, bevel=0.1 * s)
+    box(key + "head", (x, 0, hz), (hs, hs * 0.9, hs), skin, bevel=0.26 * s)
+    sph(key + "nose", (x, -hs * 0.47, hz - 0.04 * s), 0.07 * s, skin, (1, 0.8, 0.9))
+    for dx in (-1, 1): sph(key + "ear", (x + dx * hs * 0.52, 0, hz), 0.09 * s, skin, (0.5, 1, 1.2))
+    for dx in (-1, 1): sph(key + "hand", (x + dx * 0.5 * s, 0, z0 + 0.82 * s), 0.13 * s, skin)
+    for dx in (-1, 1): box(key + "boot", (x + dx * 0.16 * s, -0.04, z0 + 0.06 * s), (0.3 * s, 0.38 * s, 0.14 * s), mat(key + "boot", (0.18, 0.1, 0.05), 0.9), bevel=0.05)
+    for k in range(6): box(key + "hem", (x - 0.33 * s + k * 0.13 * s, 0, z0 + 0.78 * s), (0.11 * s, 0.47 * s, 0.14 * s), cloth, bevel=0.01, rot=(0, (0.5 if k % 2 else -0.5), 0))
     # eyes: big, expressive
     ey = -hs * 0.46
     for dx in (-0.16, 0.16):
@@ -85,10 +90,18 @@ def character(key, x=0, expr="happy"):
     if L["prop"] == "stick":
         bpy.ops.mesh.primitive_cylinder_add(radius=0.03, depth=1.7, location=(x + 0.62 * s, -0.1, 0.85)); bpy.context.object.data.materials.append(wood)
 
-def stage(sc, bg=(0.95, 0.7, 0.45)):
+def stage(sc, bg=(0.98, 0.55, 0.28)):
     w = bpy.data.worlds.new("w"); w.use_nodes = True; w.node_tree.nodes["Background"].inputs[0].default_value = (*bg, 1)
-    w.node_tree.nodes["Background"].inputs[1].default_value = 0.8; sc.world = w
-    box("ground", (0, 0, -0.05), (30, 30, 0.1), mat("g", (0.55, 0.42, 0.22), 0.9), bevel=0)
+    w.node_tree.nodes["Background"].inputs[1].default_value = 0.9; sc.world = w
+    box("ground", (0, 0, -0.05), (60, 60, 0.1), mat("g", (0.62, 0.45, 0.16), 0.95), bevel=0)
+    import random; random.seed(3); gm = mat("grass", (0.55, 0.42, 0.10), 0.9)
+    for i in range(140):
+        gx, gy = random.uniform(-9, 9), random.uniform(0.8, 14)
+        box("gr", (gx, gy, 0.25), (0.05, 0.05, random.uniform(0.3, 0.8)), gm, bevel=0, rot=(random.uniform(-0.3, 0.3), random.uniform(-0.3, 0.3), 0))
+    trunk = mat("trunk", (0.25, 0.15, 0.08), 0.9); leaf = mat("leaf", (0.22, 0.32, 0.08), 0.9)
+    box("trunk", (4.5, 9, 1.6), (0.35, 0.35, 3.2), trunk, bevel=0.05)
+    sph("canopy", (4.5, 9, 3.4), 1.8, leaf, (1.6, 1.2, 0.35))
+    sph("sun", (-3, 30, 6), 2.2, mat("sun", (1.0, 0.85, 0.5), emit=4))
     bpy.ops.object.light_add(type="SUN", rotation=(math.radians(50), 0, math.radians(30))); bpy.context.object.data.energy = 3.5
     bpy.ops.object.light_add(type="AREA", location=(0, -5, 4)); bpy.context.object.data.energy = 400; bpy.context.object.data.size = 5
 
