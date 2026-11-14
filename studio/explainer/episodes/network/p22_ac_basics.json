@@ -1,0 +1,396 @@
+{
+ "title": "AC Fundamentals - Network Theory Part 22",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "AC",
+ "cover": "AC Fundamentals",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  5,
+  8
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 22 · AC fundamentals",
+   "narration": "Welcome back. Until now, every source in this course pushed current in one direction only. That is direct current, DC. But the electricity in your home is different. It keeps reversing direction, fifty times every second. That is alternating current, AC. In this part we learn the language of AC from the beginning: the sine wave, frequency, peak value, RMS value and phase. Everything in the rest of this course is built on these words.",
+   "kicker": "NETWORK THEORY · PART 22",
+   "title": "AC FUNDAMENTALS",
+   "subtitle": "Sine wave, frequency, peak, RMS and phase"
+  },
+  {
+   "type": "diagram",
+   "chapter": "22.1 · Why AC?",
+   "narration": "Why do homes use AC instead of DC? The main reason is the transformer. A transformer can raise or lower an AC voltage easily and efficiently, but it does not work with steady DC. Power stations raise the voltage to hundreds of thousands of volts to send power far away with small losses, then transformers lower it to two hundred and thirty volts near your home. Also, generators in power plants naturally produce AC, because their coils rotate.",
+   "title": "Why alternating current?",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Transformers change AC voltage easily",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "High voltage → low loss over long distance",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Generators naturally make AC",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "phasor",
+   "chapter": "22.2 · The sine wave",
+   "narration": "Let's see where the AC shape comes from. Inside a generator, a coil rotates in a magnetic field. We show this as the blue arrow rotating around the circle. Watch its height. As it turns, the tip rises, reaches the top, comes down through zero, goes below, and returns. Now follow the dashed line to the right: the height of the arrow is drawn against time. That smooth shape is a sine wave. One full turn of the arrow, three hundred and sixty degrees, gives one complete cycle of the wave.",
+   "mode": "gen",
+   "vm": 325,
+   "cycles": 2
+  },
+  {
+   "type": "formula",
+   "chapter": "22.3 · The equation",
+   "narration": "The sine wave is written as v equals V m times sine of omega t. V m is the peak value, the largest voltage the wave reaches. Omega is the angular frequency, how fast the arrow turns, in radians per second. Omega equals two pi f, where f is the frequency in hertz, the number of cycles per second. The time for one cycle is the period T, which is one over f. In India, f is fifty hertz, so one cycle takes twenty milliseconds, and omega is about three hundred and fourteen radians per second.",
+   "formula": "v(t) = Vm · sin(ωt)",
+   "terms": [
+    [
+     "Vm",
+     "peak (maximum) value"
+    ],
+    [
+     "ω = 2πf",
+     "angular frequency (rad/s)"
+    ],
+    [
+     "f",
+     "frequency (Hz) · T = 1/f"
+    ]
+   ],
+   "example": [
+    "India: f = 50 Hz → T = 20 ms",
+    "ω = 2π × 50 ≈ 314 rad/s"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "22.4 · Peak and average",
+   "narration": "The peak value V m is the top of the wave. The peak to peak value, from the lowest point to the highest, is two V m. What about the average? Over a full cycle, the positive half and the negative half cancel exactly, so the average is zero. That is why we define the average over half a cycle instead: it is two over pi times V m, about zero point six three seven V m. Rectifier circuits, which convert AC to DC, use this half cycle average.",
+   "formula": "V_avg (half cycle) = 2Vm/π ≈ 0.637 Vm",
+   "terms": [
+    [
+     "Peak-to-peak",
+     "2 Vm"
+    ],
+    [
+     "Average over a full cycle",
+     "0"
+    ]
+   ],
+   "example": [
+    "Vm = 325 V → V_avg ≈ 207 V"
+   ]
+  },
+  {
+   "type": "phasor",
+   "chapter": "22.5 · RMS value",
+   "narration": "Now the most important AC value: RMS. How can we compare AC with DC, when the AC keeps changing? We ask which DC voltage would heat a resistor by the same amount. Heating depends on voltage squared. Watch: the amber curve is the wave squared, always positive. Its average, the green line, is exactly half of V m squared. Taking the square root gives V m over root two, about zero point seven zero seven V m, the red line. This is the root mean square, or RMS value: the square root of the mean of the square.",
+   "mode": "rms",
+   "vm": 325,
+   "cycles": 2
+  },
+  {
+   "type": "formula",
+   "chapter": "22.6 · Your home supply",
+   "narration": "When we say the home supply is two hundred and thirty volts, that is the RMS value. It means it heats a geyser exactly like two hundred and thirty volts of DC would. The peak is higher: two hundred and thirty times root two, about three hundred and twenty five volts. Every multimeter on AC shows RMS, and every appliance rating uses RMS. So unless a value is clearly called peak, assume it is RMS.",
+   "formula": "V_rms = Vm / √2 ≈ 0.707 Vm",
+   "terms": [
+    [
+     "Vm = √2 · V_rms",
+     "≈ 1.414 V_rms"
+    ]
+   ],
+   "example": [
+    "230 V RMS → Vm ≈ 325 V peak",
+    "Same heating as 230 V DC"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "22.7 · Form factor and peak factor",
+   "narration": "Two ratios describe the shape of a wave, and exams love them. The form factor is RMS divided by average: for a sine wave, zero point seven zero seven over zero point six three seven, which is about one point one one. The peak factor, also called crest factor, is peak divided by RMS: root two, about one point four one four. Other shapes, like square or triangle waves, have different values, which is how instruments recognise wave shapes.",
+   "formula": "Form factor = V_rms / V_avg ≈ 1.11     Peak factor = Vm / V_rms ≈ 1.414",
+   "terms": [
+    [
+     "For a sine wave",
+     "these exact values"
+    ]
+   ],
+   "example": [
+    "Square wave: both = 1"
+   ]
+  },
+  {
+   "type": "phasor",
+   "chapter": "22.8 · Phase",
+   "narration": "Now let's put two waves together, a voltage in blue and a current in amber, at the same frequency. Watch the two arrows rotate together, always keeping the same angle between them. That fixed angle is the phase difference, phi, here sixty degrees. Look at the waves on the right: the amber current reaches its peak later than the blue voltage. We say the current lags the voltage by sixty degrees. If it peaked earlier, we would say it leads. In the next parts we will see that capacitors and inductors create exactly such phase differences.",
+   "mode": "phase",
+   "vm": 325,
+   "phi": 60
+  },
+  {
+   "type": "formula",
+   "chapter": "22.9 · Writing phase",
+   "narration": "With a phase angle, the equation becomes i equals I m sine of omega t minus phi for a lagging current, or plus phi for a leading one. Remember: an angle in the equation must be in the same unit as omega t. Since omega t is in radians, sixty degrees must be written as pi over three radians. Mixing degrees and radians is one of the most common mistakes.",
+   "formula": "i(t) = Im · sin(ωt − φ)",
+   "terms": [
+    [
+     "− φ",
+     "lags (peaks later)"
+    ],
+    [
+     "+ φ",
+     "leads (peaks earlier)"
+    ],
+    [
+     "60°",
+     "= π/3 rad"
+    ]
+   ],
+   "example": [
+    "degrees × π/180 = radians"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "22.10 · Common mistakes",
+   "narration": "The silly mistakes students make with AC. One: mixing peak and RMS: two hundred and thirty volts is RMS, the peak is three hundred and twenty five. Two: using degrees and radians together in one calculation. Three: forgetting that omega is two pi f, not f. Four: thinking the average of AC is zero means AC does no work: heating depends on RMS, not average. Five: calculating with frequency in kilohertz or milliseconds without converting units.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Peak vs RMS (325 V vs 230 V)",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Degrees vs radians",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "ω = 2πf, not f",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Average 0 ≠ no power (use RMS)",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Convert kHz, ms to Hz, s",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "bars",
+   "chapter": "22.11 · AC around the world",
+   "narration": "Different countries use different AC supplies. The United States uses one hundred and twenty volts at sixty hertz. India and Europe use two hundred and thirty volts at fifty hertz. And between any two lines of a three phase supply in India, the voltage is four hundred and fifteen volts, which is used for motors and large buildings. All these values are RMS. The overhead distribution lines carry eleven thousand volts, which transformers bring down to these levels.",
+   "title": "Supply voltages (RMS)",
+   "unit": "V",
+   "items": [
+    [
+     "USA (60 Hz)",
+     120
+    ],
+    [
+     "India (50 Hz)",
+     230
+    ],
+    [
+     "Europe (50 Hz)",
+     230
+    ],
+    [
+     "Three-phase line (India)",
+     415
+    ]
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. AC follows a sine wave, v equals V m sine omega t, made by a rotating coil. Frequency f is cycles per second, the period is one over f, and omega is two pi f. The half cycle average is zero point six three seven V m. RMS is V m over root two, the value that heats like DC, and the value we always quote. And phase tells which of two waves leads or lags.",
+   "title": "AC in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "v = Vm sin(ωt) · ω = 2πf",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "T = 1/f · India 50 Hz",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "RMS = Vm/√2 · 230 V is RMS",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Phase: leads / lags by φ",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Working with sine waves directly is hard: adding two waves with different phases needs trigonometry. Engineers found a brilliant shortcut: represent each sine wave by its rotating arrow, called a phasor, and use complex numbers. That is our next part, and it makes AC circuits as easy as DC.",
+   "title": "NEXT: PHASORS & COMPLEX NUMBERS",
+   "lines": [
+    "Sine wave",
+    "ω = 2πf",
+    "RMS = Vm/√2",
+    "Phase"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "AC Fundamentals Explained from Zero: Sine Wave, RMS, Phase | Network Theory #23",
+  "description": "Network Theory from absolute zero - Part 23: AC fundamentals.\n- Why AC (transformers, generators)\n- The sine wave from a rotating arrow (animated)\n- v = Vm sin(ωt), ω = 2πf, T = 1/f\n- Peak, peak-to-peak, average (0.637 Vm)\n- RMS value derived visually: Vm/√2 (230 V = RMS, 325 V peak)\n- Form factor and peak factor\n- Phase: leading and lagging\n- Common mistakes\n\nPrevious: Reciprocity & Millman. Next: Phasors and complex numbers.\n\n#NetworkTheory #ACCircuits #RMS #ECE",
+  "tags": [
+   "ac fundamentals",
+   "rms value",
+   "sine wave",
+   "phase difference",
+   "form factor",
+   "peak factor",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

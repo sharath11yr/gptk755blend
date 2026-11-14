@@ -766,4 +766,40 @@ export const MptScene: React.FC<any> = ({ dur, vth = 9, rth = 2 }) => {
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ rotating phasor -> sine wave
+// {"mode":"gen"|"phase"|"rms","vm":325,"phi":60,"label2":"current"}
+export const PhasorScene: React.FC<any> = ({ dur, mode = "gen", vm = 325, phi = 60, cycles = 2, label1 = "voltage", label2 = "current" }) => {
+  const f = useCurrentFrame();
+  const t = interpolate(f, [dur * 0.06, dur * 0.92], [0, cycles], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const th = t * 2 * Math.PI; const cx = 380, cy = 520, R = 220; const X0 = 700, GW = 1120, A = 220;
+  const ph = (phi * Math.PI) / 180; const two = mode === "phase";
+  const wave = (off: number, k = 1, sq = false) => Array.from({ length: 240 }, (_, i) => { const a = (i / 239) * th; const v = Math.sin(a + off) * k;
+    return `${X0 + (a / (2 * Math.PI * cycles)) * GW},${cy - (sq ? v * v : v) * A}`; }).join(" ");
+  const tipx = cx + R * Math.cos(th), tipy = cy - R * Math.sin(th);
+  const tip2x = cx + R * 0.7 * Math.cos(th - ph), tip2y = cy - R * 0.7 * Math.sin(th - ph);
+  const curX = X0 + (th / (2 * Math.PI * cycles)) * GW;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <circle cx={cx} cy={cy} r={R} fill="none" stroke={L.grid2 || L.dim} strokeWidth={2} strokeDasharray="6 8" />
+    <line x1={cx - R - 30} y1={cy} x2={cx + R + 30} y2={cy} stroke={L.dim} strokeWidth={2} /><line x1={cx} y1={cy - R - 30} x2={cx} y2={cy + R + 30} stroke={L.dim} strokeWidth={2} />
+    <line x1={X0} y1={cy} x2={X0 + GW} y2={cy} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={cy - A - 40} x2={X0} y2={cy + A + 40} stroke={L.dim} strokeWidth={3} />
+    {mode !== "rms" && <g><line x1={cx} y1={cy} x2={tipx} y2={tipy} stroke={L.cyan} strokeWidth={8} strokeLinecap="round" /><circle cx={tipx} cy={tipy} r={10} fill={L.cyan} />
+      <line x1={tipx} y1={tipy} x2={curX} y2={tipy} stroke={L.cyan} strokeWidth={2} strokeDasharray="6 6" /></g>}
+    {two && <g><line x1={cx} y1={cy} x2={tip2x} y2={tip2y} stroke={L.amber} strokeWidth={8} strokeLinecap="round" /><circle cx={tip2x} cy={tip2y} r={10} fill={L.amber} />
+      <path d={`M${cx + 70 * Math.cos(th - ph)} ${cy - 70 * Math.sin(th - ph)} A70 70 0 0 0 ${cx + 70 * Math.cos(th)} ${cy - 70 * Math.sin(th)}`} fill="none" stroke={L.green} strokeWidth={4} />
+      <text x={cx} y={cy + R + 80} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={30} fontWeight={800}>φ = {phi}° ({label2} lags)</text></g>}
+    <polyline points={wave(0)} fill="none" stroke={L.cyan} strokeWidth={6} />
+    {two && <polyline points={wave(-ph, 0.7)} fill="none" stroke={L.amber} strokeWidth={6} />}
+    {mode === "rms" && <g><polyline points={wave(0, 1, true)} fill="none" stroke={L.amber} strokeWidth={5} opacity={0.9} />
+      <line x1={X0} y1={cy - 0.5 * A} x2={X0 + GW} y2={cy - 0.5 * A} stroke={L.green} strokeWidth={4} strokeDasharray="12 8" />
+      <text x={X0 + GW - 10} y={cy - 0.5 * A + 36} textAnchor="end" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>average of v² = Vm²/2</text>
+      <line x1={X0} y1={cy - 0.707 * A} x2={X0 + GW} y2={cy - 0.707 * A} stroke={L.red} strokeWidth={3} strokeDasharray="6 8" />
+      <rect x={X0 + GW - 300} y={cy - 0.707 * A - 50} width={300} height={40} rx={8} fill={L.bg0} opacity={0.9} /><text x={X0 + GW - 10} y={cy - 0.707 * A - 20} textAnchor="end" fill={L.red} fontFamily={MONO} fontSize={28} fontWeight={800}>RMS = 0.707 Vm</text>
+      <text x={cx} y={cy - 40} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={32} fontWeight={800}>blue: v</text><text x={cx} y={cy + 20} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={32} fontWeight={800}>amber: v²</text></g>}
+    <text x={X0 + GW} y={cy + 44} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>time →</text>
+    <text x={X0 - 14} y={cy - A + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>+{vm} V</text>
+    <text x={X0 - 14} y={cy + A + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>−{vm} V</text>
+    <text x={X0 + GW / 2} y={170} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={32} fontWeight={700}>{mode === "gen" ? `angle = ${Math.round((th * 180) / Math.PI) % 360}°   ·   v = Vm sin(θ)` : two ? `${label1} (blue) and ${label2} (amber)` : "squaring the wave, then averaging"}</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
