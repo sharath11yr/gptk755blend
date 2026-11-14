@@ -1,0 +1,1026 @@
+{
+ "title": "Network Theory Numericals 3: Series, Parallel and Dividers",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Series, Parallel and Dividers Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 3",
+   "narration": "Welcome back. Today's numericals are about combining resistors. We solve a series parallel circuit and find every current and voltage, we see what happens when a load is connected to a voltage divider, a very common exam trap, and we use the current divider rule. In each problem, we simplify step by step and then check with KVL or KCL.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "SERIES, PARALLEL & DIVIDERS",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Series-parallel circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R3",
+     "value": "12 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "A"
+    }
+   ],
+   "given": [
+    "V = 12 V",
+    "R1 = 4 Ω in series",
+    "R2 = 6 Ω ∥ R3 = 12 Ω"
+   ],
+   "ask": "total current, current in\nR2 and R3, voltage across R1",
+   "narration": "Problem one. A twelve volt source feeds R1, four ohms, in series with R2, six ohms, and R3, twelve ohms, which are in parallel. Find the total current, the current in each parallel resistor, and the voltage across R1. Look carefully at the circuit: R2 and R3 are both connected between node A and the bottom wire, so they are in parallel."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Series-parallel circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R3",
+     "value": "12 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "A"
+    }
+   ],
+   "steps": [
+    "Step 1: combine the parallel pair",
+    "R2 ∥ R3 = (6 × 12) / (6 + 12)",
+    "= 72 / 18 = 4 Ω",
+    "Step 2: total resistance",
+    "R_total = R1 + 4 = 4 + 4 = 8 Ω",
+    "Step 3: total current",
+    "I = 12 / 8 = 1.5 A"
+   ],
+   "answer": "",
+   "narration": "Step one: combine the parallel pair with product over sum. Six times twelve is seventy two, over six plus twelve, eighteen, gives four ohms. Step two: this four ohms is in series with R1, so the total is eight ohms. Step three: the total current is twelve over eight, one point five amperes."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Series-parallel circuit",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      2,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      5,
+      1
+     ],
+     "label": "R1",
+     "value": "4 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      9,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R2",
+     "value": "6 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      9,
+      1
+     ],
+     "b": [
+      9,
+      5
+     ],
+     "label": "R3",
+     "value": "12 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      9,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "label": "A"
+    }
+   ],
+   "steps": [
+    "Step 4: voltages",
+    "V_R1 = 1.5 × 4 = 6 V",
+    "V_A = 1.5 × 4 Ω (pair) = 6 V",
+    "Step 5: split of current",
+    "I2 = 6 / 6 = 1 A · I3 = 6 / 12 = 0.5 A",
+    "Check KCL: 1 + 0.5 = 1.5 A ✓",
+    "Check KVL: 6 + 6 = 12 V ✓"
+   ],
+   "answer": "I = 1.5 A · I2 = 1 A · I3 = 0.5 A · V_R1 = 6 V",
+   "narration": "Step four: the voltage across R1 is one point five times four, six volts. The parallel pair also gets one point five amperes through its combined four ohms, so the voltage across it is six volts. Step five: each parallel resistor has six volts across it. R2 carries six over six, one ampere. R3 carries six over twelve, half an ampere. Now check. KCL at node A: one plus half equals one point five amperes. KVL: six plus six equals twelve volts. Both correct."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Loaded voltage divider",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      4,
+      3
+     ],
+     "label": "R1",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      3
+     ],
+     "b": [
+      4,
+      5
+     ],
+     "label": "R2",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      4,
+      3
+     ],
+     "b": [
+      8,
+      3
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      3
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_L",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      4,
+      3
+     ],
+     "label": "Vout",
+     "dx": 80,
+     "dy": -18
+    }
+   ],
+   "given": [
+    "V_in = 12 V",
+    "R1 = R2 = 10 kΩ",
+    "Load R_L = 10 kΩ across R2"
+   ],
+   "ask": "V_out without load,\nV_out with the load",
+   "narration": "Problem two, a very common trap. Two ten kilo-ohm resistors divide twelve volts. Find the output voltage across R2. Then connect a ten kilo-ohm load across R2, and find the output again."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Loaded voltage divider",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      4,
+      3
+     ],
+     "label": "R1",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      3
+     ],
+     "b": [
+      4,
+      5
+     ],
+     "label": "R2",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      4,
+      3
+     ],
+     "b": [
+      8,
+      3
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      3
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_L",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      4,
+      3
+     ],
+     "label": "Vout",
+     "dx": 80,
+     "dy": -18
+    }
+   ],
+   "steps": [
+    "Step 1: no load",
+    "V_out = V_in × R2 / (R1 + R2)",
+    "V_out = 12 × 10k / 20k = 6 V",
+    "Step 2: with load",
+    "R2 ∥ R_L = 10k ∥ 10k = 5 kΩ"
+   ],
+   "answer": "",
+   "narration": "Step one, without the load: the divider formula, V in times R2 over R1 plus R2. Twelve times ten over twenty, six volts. Step two, with the load: the load is in parallel with R2, so first combine them. Ten kilo-ohms in parallel with ten kilo-ohms is five kilo-ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Loaded voltage divider",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      1,
+      5
+     ],
+     "b": [
+      1,
+      1
+     ],
+     "label": "12 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      1,
+      1
+     ],
+     "b": [
+      4,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      1
+     ],
+     "b": [
+      4,
+      3
+     ],
+     "label": "R1",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "R",
+     "a": [
+      4,
+      3
+     ],
+     "b": [
+      4,
+      5
+     ],
+     "label": "R2",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      4,
+      3
+     ],
+     "b": [
+      8,
+      3
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      3
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R_L",
+     "value": "10 kΩ"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      1,
+      5
+     ]
+    }
+   ],
+   "nodes": [
+    {
+     "at": [
+      4,
+      3
+     ],
+     "label": "Vout",
+     "dx": 80,
+     "dy": -18
+    }
+   ],
+   "steps": [
+    "Step 3: divider again",
+    "V_out = 12 × 5k / (10k + 5k)",
+    "V_out = 12 × 5 / 15 = 4 V",
+    "! the load pulls 6 V down to 4 V",
+    "Rule: R_L ≫ R2 keeps V_out steady"
+   ],
+   "answer": "Without load: 6 V · with load: 4 V",
+   "narration": "Step three: use the divider again with five kilo-ohms at the bottom. Twelve times five over fifteen, four volts. The load pulled the output down from six to four volts. That is why a voltage divider only works well when the load resistance is much larger than R2, roughly ten times or more."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Current divider",
+   "circuit": [
+    {
+     "t": "I",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "3 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R1",
+     "value": "20 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R2",
+     "value": "30 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Total current I = 3 A",
+    "R1 = 20 Ω ∥ R2 = 30 Ω"
+   ],
+   "ask": "current in each resistor",
+   "narration": "Problem three. A three ampere current splits between a twenty ohm and a thirty ohm resistor in parallel. Find the current in each."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Current divider",
+   "circuit": [
+    {
+     "t": "I",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "3 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R1",
+     "value": "20 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R2",
+     "value": "30 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: current divider rule",
+    "I1 = I × R2 / (R1 + R2)",
+    "I1 = 3 × 30 / 50 = 1.8 A",
+    "I2 = I × R1 / (R1 + R2)",
+    "I2 = 3 × 20 / 50 = 1.2 A"
+   ],
+   "answer": "",
+   "narration": "Step one, the current divider rule. The current in R1 equals the total times the other resistor, R2, divided by the sum: three times thirty over fifty, one point eight amperes. The current in R2 equals three times twenty over fifty, one point two amperes."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Current divider",
+   "circuit": [
+    {
+     "t": "I",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "3 A"
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      5,
+      1
+     ],
+     "b": [
+      5,
+      5
+     ],
+     "label": "R1",
+     "value": "20 Ω"
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R2",
+     "value": "30 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Check KCL: 1.8 + 1.2 = 3 A ✓",
+    "Check voltage: 1.8 × 20 = 36 V",
+    "1.2 × 30 = 36 V (same, parallel) ✓",
+    "! use the OTHER resistor on top",
+    "smaller R takes more current"
+   ],
+   "answer": "I(20 Ω) = 1.8 A · I(30 Ω) = 1.2 A",
+   "narration": "Now check. KCL: one point eight plus one point two is three amperes. And both resistors must have the same voltage, because they are in parallel: one point eight times twenty is thirty six volts, and one point two times thirty is also thirty six volts. The key point: the other resistor goes on top, and the smaller resistor always takes the larger current."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Exam tips. Identify parallel resistors by checking whether they share the same two nodes. Simplify one step at a time and redraw if needed. For a loaded divider, always combine the load with the bottom resistor first. In the current divider, the other resistor goes on top. And finish every problem with a quick KCL or KVL check.",
+   "title": "Exam tips: series & parallel",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Find parallel pairs: same two nodes",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Simplify step by step, redraw",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Loaded divider: combine R_L ∥ R2 first",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Current divider: OTHER R on top",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Check with KCL and KVL",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Next, we use Kirchhoff's laws, KCL and KVL, to solve circuits that series and parallel rules alone cannot handle.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Series, Parallel, Voltage & Current Divider Numericals (Solved) | Network Theory Numericals #3",
+  "description": "Network Theory numericals - Part 3.\nProblem 1: series-parallel circuit, every current and voltage, with KCL/KVL check\nProblem 2: loaded voltage divider - why 6 V becomes 4 V\nProblem 3: current divider rule\nPlus exam tips.\n\n#NetworkTheory #Numericals #VoltageDivider #ECE",
+  "tags": [
+   "series parallel numericals",
+   "voltage divider problems",
+   "current divider problems",
+   "network theory numericals",
+   "solved problems",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

@@ -1,0 +1,721 @@
+{
+ "title": "Network Theory Numericals 1: Ohm's Law, Power and Energy",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Numericals",
+ "cover": "Ohm's Law, Power and Energy Numericals",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  2,
+  3
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Numericals 1",
+   "narration": "Welcome to the numericals series of our Network Theory course. In each video, we solve two or three problems, step by step, exactly the way you would write them in an exam. For every problem: first we read what is given and what we must find, then we pick the right formula, put in the numbers with units, and finally check the answer. In this first one, we practise Ohm's law, power and energy, including how to calculate your electricity bill.",
+   "kicker": "NETWORK THEORY · NUMERICALS",
+   "title": "OHM'S LAW, POWER & ENERGY",
+   "subtitle": "Solved problems, step by step"
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1",
+   "stage": "problem",
+   "title": "Problem 1 · Ohm's law and power",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "24 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "V = 24 V",
+    "R = 8 Ω",
+    "Time = 2 hours"
+   ],
+   "ask": "current I, power P,\nenergy used in 2 h",
+   "narration": "Problem one. A twenty four volt battery is connected across an eight ohm resistor. Find the current, the power used by the resistor, and the energy it uses in two hours. Before solving, notice what is given: the voltage, the resistance and the time. Pause the video and try it yourself first."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Ohm's law and power",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "24 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: current, Ohm's law",
+    "I = V / R",
+    "I = 24 / 8",
+    "I = 3 A"
+   ],
+   "answer": "",
+   "narration": "Step one, the current. Ohm's law says I equals V divided by R. Twenty four divided by eight gives three amperes. Always write the unit with the answer."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 1 · solution",
+   "stage": "solve",
+   "title": "Problem 1 · Ohm's law and power",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "24 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "R",
+     "value": "8 Ω"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 2: power",
+    "P = V × I = 24 × 3 = 72 W",
+    "check: P = I²R = 3² × 8 = 72 W ✓",
+    "Step 3: energy",
+    "E = P × t = 72 W × 2 h = 144 Wh",
+    "E = 0.144 kWh (units)"
+   ],
+   "answer": "I = 3 A · P = 72 W · E = 0.144 kWh",
+   "narration": "Step two, the power. P equals V times I, twenty four times three, seventy two watts. Let's check with the second formula, I squared R: three squared is nine, times eight is seventy two watts. Both agree. Step three, the energy. Energy equals power times time: seventy two watts times two hours is one hundred and forty four watt hours. Divide by one thousand to get kilowatt hours: zero point one four four kilowatt hours, or units."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2",
+   "stage": "problem",
+   "title": "Problem 2 · Heater and electricity bill",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "230 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "heater",
+     "value": "1000 W"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Heater: 1000 W, 230 V",
+    "Use: 3 hours/day for 30 days",
+    "Tariff: ₹7 per unit (kWh)"
+   ],
+   "ask": "current, resistance,\nmonthly cost",
+   "narration": "Problem two, a real life one. An electric heater is rated one thousand watts at two hundred and thirty volts. It is used three hours a day for thirty days, and electricity costs seven rupees per unit. Find the current it draws, its resistance, and the monthly cost."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Heater and electricity bill",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "230 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "heater",
+     "value": "1000 W"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: current",
+    "P = V × I  →  I = P / V",
+    "I = 1000 / 230",
+    "I ≈ 4.35 A",
+    "Step 2: resistance",
+    "P = V² / R  →  R = V² / P",
+    "R = 230² / 1000 = 52900 / 1000",
+    "R = 52.9 Ω"
+   ],
+   "answer": "",
+   "narration": "Step one, the current. From P equals V times I, the current is P divided by V: one thousand divided by two hundred and thirty, about four point three five amperes. Step two, the resistance. We know P and V, so we use P equals V squared over R, rearranged to R equals V squared over P. Two hundred and thirty squared is fifty two thousand nine hundred, divided by one thousand: fifty two point nine ohms."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 2 · solution",
+   "stage": "solve",
+   "title": "Problem 2 · Heater and electricity bill",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "230 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "heater",
+     "value": "1000 W"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 3: energy in a month",
+    "E = P × t = 1 kW × (3 h × 30)",
+    "E = 1 × 90 = 90 kWh = 90 units",
+    "Step 4: cost",
+    "Cost = 90 × ₹7 = ₹630",
+    "! convert W → kW before the bill"
+   ],
+   "answer": "I ≈ 4.35 A · R = 52.9 Ω · ₹630",
+   "narration": "Step three, the energy in one month. First convert the power to kilowatts: one thousand watts is one kilowatt. The heater runs three hours a day for thirty days, ninety hours. So the energy is one kilowatt times ninety hours, ninety kilowatt hours, which is ninety units. Step four, the cost: ninety units times seven rupees, six hundred and thirty rupees. The most common mistake here is forgetting to convert watts into kilowatts before calculating units."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3",
+   "stage": "problem",
+   "title": "Problem 3 · Bulb on the wrong voltage",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "115 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "bulb",
+     "value": "60 W @230 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "given": [
+    "Bulb rated 60 W at 230 V",
+    "Connected to 115 V",
+    "Assume resistance stays constant"
+   ],
+   "ask": "power on 115 V",
+   "narration": "Problem three, a classic exam question. A bulb is rated sixty watts at two hundred and thirty volts. What power does it use if connected to one hundred and fifteen volts? Assume its resistance does not change. Many students simply halve the power. Let's see why that is wrong."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Bulb on the wrong voltage",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "115 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "bulb",
+     "value": "60 W @230 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Step 1: find R from the rating",
+    "R = V² / P = 230² / 60",
+    "R ≈ 881.7 Ω (stays the same)",
+    "Step 2: power at 115 V",
+    "P = V² / R = 115² / 881.7",
+    "P = 15 W"
+   ],
+   "answer": "",
+   "narration": "The key idea: the rating tells us the bulb's resistance, and the resistance stays the same. Step one: R equals V squared over P, two hundred and thirty squared divided by sixty, about eight hundred and eighty one point seven ohms. Step two: on one hundred and fifteen volts, P equals one hundred and fifteen squared divided by eight hundred and eighty one point seven, which is fifteen watts."
+  },
+  {
+   "type": "solve",
+   "chapter": "Problem 3 · solution",
+   "stage": "solve",
+   "title": "Problem 3 · Bulb on the wrong voltage",
+   "circuit": [
+    {
+     "t": "V",
+     "a": [
+      2,
+      5
+     ],
+     "b": [
+      2,
+      1
+     ],
+     "label": "115 V",
+     "value": ""
+    },
+    {
+     "t": "w",
+     "a": [
+      2,
+      1
+     ],
+     "b": [
+      8,
+      1
+     ]
+    },
+    {
+     "t": "R",
+     "a": [
+      8,
+      1
+     ],
+     "b": [
+      8,
+      5
+     ],
+     "label": "bulb",
+     "value": "60 W @230 V"
+    },
+    {
+     "t": "w",
+     "a": [
+      8,
+      5
+     ],
+     "b": [
+      2,
+      5
+     ]
+    }
+   ],
+   "nodes": [],
+   "steps": [
+    "Shortcut: P ∝ V² (R constant)",
+    "Half the voltage → (1/2)² = 1/4 power",
+    "60 W × 1/4 = 15 W ✓",
+    "! not 30 W: power is not ∝ V"
+   ],
+   "answer": "P = 15 W (one quarter, not half)",
+   "narration": "Here is the faster way. With constant resistance, power depends on voltage squared. Half the voltage gives one half squared, one quarter of the power. Sixty times one quarter is fifteen watts. So the answer is fifteen watts, not thirty. Halving the power is the most common mistake in this question."
+  },
+  {
+   "type": "diagram",
+   "chapter": "Exam tips",
+   "narration": "Before we finish, some exam tips. Always write the formula before putting in numbers, because examiners give marks for the method. Choose between V I, I squared R and V squared over R based on what is given. For bills, convert watts to kilowatts, then multiply by hours. When a device is used at a different voltage, find its resistance from the rating first. And always write units with every answer.",
+   "title": "Exam tips: Ohm's law & power",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Write the formula first, then numbers",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Pick P = VI, I²R or V²/R by what you know",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Bill: W → kW, then × hours",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Rating gives R; R stays constant",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Always write units",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "In the next numericals video, we solve problems on the resistor colour code, capacitors and inductors: reading values, charge, energy and time constants.",
+   "title": "PRACTICE MAKES PERFECT",
+   "lines": [
+    "Read the question",
+    "Draw the circuit",
+    "Write units",
+    "Check the answer"
+   ],
+   "cta": "Next numericals coming up"
+  }
+ ],
+ "yt": {
+  "title": "Ohm's Law, Power & Energy Numericals (Solved Step by Step) | Network Theory Numericals #1",
+  "description": "Network Theory numericals - Part 1: Ohm's law, power and energy.\nProblem 1: 24 V across 8 Ω - current, power, energy\nProblem 2: 1000 W heater - current, resistance and monthly electricity bill\nProblem 3: 60 W/230 V bulb on 115 V - why the power is 15 W, not 30 W\nPlus exam tips.\n\n#NetworkTheory #Numericals #OhmsLaw #ECE",
+  "tags": [
+   "ohm's law numericals",
+   "electric power problems",
+   "electricity bill calculation",
+   "network theory numericals",
+   "solved problems",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

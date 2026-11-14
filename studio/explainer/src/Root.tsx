@@ -8,6 +8,8 @@ import { DOMAIN_SCENES } from "./domains";
 import { STORY_SCENES } from "./story";
 import { VISUAL_SCENES } from "./visuals";
 import { ANALOG_SCENES } from "./analog";
+import { SolveScene } from "./solve";
+const SOLVE_SCENES: Record<string, any> = { solve: SolveScene };
 import { ChannelIntro, ChannelOutro } from "./brand";
 import { FlowIntro, FlowOutro } from "./flow";
 import { FlowIntro2, FlowOutro2 } from "./flow2";
@@ -31,7 +33,7 @@ const Film: React.FC<{ ep: any; pick?: number[]; hook?: string; short?: boolean 
     <AbsoluteFill style={{ background: C.bg0 }}>
       {hook && <Sequence durationInFrames={75}><Hook text={hook} tag={ep.tag} /></Sequence>}
       {scenes.map((s: any) => {
-        const d = framesOf(s); const from = at; at += d; const Comp = LAB_SCENES[s.type] || DOMAIN_SCENES[s.type] || STORY_SCENES[s.type] || VISUAL_SCENES[s.type] || ANALOG_SCENES[s.type] || SCENES[s.type];
+        const d = framesOf(s); const from = at; at += d; const Comp = LAB_SCENES[s.type] || DOMAIN_SCENES[s.type] || STORY_SCENES[s.type] || VISUAL_SCENES[s.type] || ANALOG_SCENES[s.type] || SOLVE_SCENES[s.type] || SCENES[s.type];
         const vis = s.type === "cover" && s.visual ? (LAB_SCENES[s.visual.type] || DOMAIN_SCENES[s.visual.type] || STORY_SCENES[s.visual.type] || VISUAL_SCENES[s.visual.type]) : undefined;
         // opening and ending play over the lesson's main animation (never a static card)
         const bgScene = lab && (s.type === "lab-title" || s.type === "lab-outro") ? mainVisual(ep) : null;
