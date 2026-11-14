@@ -199,6 +199,205 @@
   },
   {
    "type": "diagram",
+   "chapter": "15.10 · Same answers, so why two methods?",
+   "narration": "A very common question: mesh and nodal analysis gave exactly the same answers for our circuit, so why learn both? Because both are built from the same three laws, Ohm's law, KCL and KVL, they must always agree. The difference is not the answer. The difference is the amount of work. Mesh analysis needs one equation for every mesh. Nodal analysis needs one equation for every node except ground. On some circuits one method needs one equation while the other needs four. Choosing the right method can turn a ten minute problem into a one minute problem.",
+   "title": "Same answer, different amount of work",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Both use Ohm + KCL + KVL",
+     "x": 50,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "m",
+     "label": "Mesh: b − n + 1 equations",
+     "x": 25,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "n",
+     "label": "Nodal: n − 1 equations",
+     "x": 75,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "w",
+     "label": "Pick the one with FEWER equations",
+     "x": 50,
+     "y": 88,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "m",
+     ""
+    ],
+    [
+     "a",
+     "n",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "So the answers always match"
+    },
+    {
+     "highlight": [
+      "m"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "n"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "w"
+     ],
+     "note": "Less work, fewer mistakes"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "15.11 · When nodal wins, when mesh wins",
+   "narration": "Let's see two extreme examples. First, five resistors all connected in parallel between the same two wires, with a source. There are only two nodes, so nodal analysis needs just one equation. But there are five branches, so mesh analysis needs five minus two plus one, four equations. Nodal wins easily. Now the opposite: one long loop with five elements in series. There is only one mesh, so mesh analysis needs one equation. But there are five nodes, so nodal needs four equations. Mesh wins. So count first, then choose.",
+   "title": "Count before you choose",
+   "parts": [
+    {
+     "id": "p",
+     "label": "5 elements in PARALLEL: n = 2, b = 5",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "p1",
+     "label": "Nodal: 1 equation · Mesh: 4",
+     "x": 25,
+     "y": 62
+    },
+    {
+     "id": "s",
+     "label": "5 elements in a SERIES loop: n = 5, b = 5",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "s1",
+     "label": "Mesh: 1 equation · Nodal: 4",
+     "x": 75,
+     "y": 62
+    },
+    {
+     "id": "r",
+     "label": "Many parallel paths → nodal · long loops → mesh",
+     "x": 50,
+     "y": 90,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "p",
+     "p1",
+     ""
+    ],
+    [
+     "s",
+     "s1",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "p",
+      "p1"
+     ],
+     "note": "Nodal wins"
+    },
+    {
+     "highlight": [
+      "s",
+      "s1"
+     ],
+     "note": "Mesh wins"
+    },
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "15.12 · More ways to decide",
+   "narration": "Three more clues help you choose. One: the sources. Current sources fix mesh currents, so they make mesh analysis easier. Voltage sources connected to ground fix node voltages, so they make nodal analysis easier. Two: what the question asks. If it asks for voltages at points, nodal gives them directly. If it asks for loop currents, mesh gives them directly. Three: the shape. Mesh analysis only works for circuits that can be drawn flat, called planar. Nodal works for every circuit, which is why computer simulators always use nodal analysis.",
+   "title": "Three more clues",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Current sources → mesh · V-sources to ground → nodal",
+     "x": 50,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Asked for voltages → nodal · currents → mesh",
+     "x": 50,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Non-planar circuit → nodal only (simulators use nodal)",
+     "x": 50,
+     "y": 88,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Sources"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "What is asked"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Shape of the circuit"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
    "chapter": "Recap",
    "narration": "Let's bring it together. Nodal analysis picks a ground node at zero volts and uses node voltages as unknowns. At each unknown node, write KCL with every current as a voltage difference over resistance. Solve, and every current follows. It needs n minus one equations, and with conductances it can be written by inspection.",
    "title": "Nodal analysis in one picture",
@@ -275,7 +474,7 @@
  ],
  "yt": {
   "title": "Nodal Analysis Explained Step by Step from Zero | Network Theory #16",
-  "description": "Network Theory from absolute zero - Part 16: nodal analysis.\n- Ground (reference node) and node voltages\n- Current from node voltages: I = ΔV / R\n- KCL at each node, step by step (animated)\n- Solving, and checking against mesh analysis\n- The 5-step method\n- Conductance matrix by inspection\n- Mesh or nodal: which to choose\n\nPrevious: Supermesh. Next: Supernode.\n\n#NetworkTheory #NodalAnalysis #ECE #CircuitAnalysis",
+  "description": "Network Theory from absolute zero - Part 16: nodal analysis.\n- Ground (reference node) and node voltages\n- Current from node voltages: I = ΔV / R\n- KCL at each node, step by step (animated)\n- Solving, and checking against mesh analysis\n- The 5-step method\n- Conductance matrix by inspection\n- Mesh vs nodal: same answers, so why two methods? When each one wins (with examples)\n\nPrevious: Supermesh. Next: Supernode.\n\n#NetworkTheory #NodalAnalysis #ECE #CircuitAnalysis",
   "tags": [
    "nodal analysis",
    "node voltage method",
