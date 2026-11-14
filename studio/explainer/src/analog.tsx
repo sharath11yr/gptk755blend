@@ -680,4 +680,36 @@ export const MeshScene: React.FC<any> = ({ dur, mode = "label" }) => {
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ nodal analysis on the same circuit as MeshScene
+// nodes: Va (top middle), Vb (top right), ground = bottom wire. {"mode":"label"|"kcla"|"kclb"|"solve"|"supernode"}
+export const NodalScene: React.FC<any> = ({ dur, mode = "label" }) => {
+  const f = useCurrentFrame(); const sn = mode === "supernode";
+  const wires = [[[360, 260], [1560, 260]], [[360, 260], [360, 800]], [[360, 800], [1560, 800]], [[960, 260], [960, 800]], [[1560, 260], [1560, 800]]];
+  const eq = mode === "kcla" ? ["KCL at node Va (currents leaving = 0):", "(Va − 12)/2 + Va/4 + (Va − Vb)/2 = 0", "→ 1.25·Va − 0.5·Vb = 6"]
+    : mode === "kclb" ? ["KCL at node Vb:", "(Vb − Va)/2 + Vb/2 = 0", "→ −0.5·Va + Vb = 0"]
+    : mode === "solve" ? ["Solve:", "Va = 6 V,  Vb = 3 V", "I(R1) = (12 − 6)/2 = 3 A  ✓ same as mesh"]
+    : sn ? ["Voltage source between Va and Vb → SUPERNODE", "Va − Vb = 2  (source equation)", "KCL around the whole supernode"]
+    : ["Ground = 0 V (bottom wire)", "Unknowns: Va and Vb", "node with the battery's + side: 12 V (known)"];
+  const nodeTag = (x: number, y: number, t: string, c: string, o = 1) => <g opacity={o}><circle cx={x} cy={y} r={20} fill={c} /><rect x={x - Math.max(70, t.length * 10 + 18)} y={y - 92} width={Math.max(140, t.length * 20 + 36)} height={52} rx={10} fill={L.panel} stroke={c} strokeWidth={3} />
+    <text x={x} y={y - 55} textAnchor="middle" fill={c} fontFamily={MONO} fontSize={30} fontWeight={800}>{t}</text></g>;
+  const solved = mode === "solve";
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {wires.map((w, i) => <polyline key={i} points={w.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={6} />)}
+    {sn && <ellipse cx={1260} cy={260} rx={400} ry={110} fill={L.green} opacity={0.1} stroke={L.green} strokeWidth={4} strokeDasharray="14 10" />}
+    <Battery x={360} y={530} v={12} />
+    <Res x={660} y={260} ohm={2} label="R1" horizontal />
+    {sn ? <g><circle cx={1260} cy={260} r={50} fill={L.bg0} stroke={L.text} strokeWidth={6} /><text x={1232} y={272} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={32} fontWeight={800}>+</text><text x={1290} y={272} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={32} fontWeight={800}>−</text>
+      <text x={1260} y={350} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>2 V</text></g> : <Res x={1260} y={260} ohm={2} label="R2" horizontal />}
+    <Res x={960} y={530} ohm={4} label="R3" /><Res x={1560} y={530} ohm={2} label="R4" />
+    <g><line x1={960} y1={800} x2={960} y2={850} stroke={L.wire} strokeWidth={6} />{[0, 1, 2].map((k) => <line key={k} x1={960 - 40 + k * 12} y1={850 + k * 14} x2={960 + 40 - k * 12} y2={850 + k * 14} stroke={L.text} strokeWidth={5} />)}</g>
+    {nodeTag(360, 260, "12 V", L.red, 0.9)}
+    {nodeTag(960, 260, solved ? "Va = 6 V" : sn ? "Va" : "Va", L.cyan, mode === "kclb" ? 0.35 : 1)}
+    {nodeTag(1560, 260, solved ? "Vb = 3 V" : "Vb", L.amber, mode === "kcla" ? 0.35 : 1)}
+    {mode === "kcla" && <circle cx={960} cy={260} r={60} fill="none" stroke={L.cyan} strokeWidth={5} />}
+    {mode === "kclb" && <circle cx={1560} cy={260} r={60} fill="none" stroke={L.amber} strokeWidth={5} />}
+    <g opacity={fade(f, dur * 0.18, 12)}><rect x={360} y={900} width={1200} height={160} rx={18} fill={L.panel} stroke={L.green} strokeWidth={3} />
+      {eq.map((t, i) => <text key={i} x={960} y={945 + i * 48} textAnchor="middle" fill={i === 2 ? L.green : L.text} fontFamily={MONO} fontSize={i === 0 ? 26 : 34} fontWeight={i ? 800 : 600} opacity={fade(f, dur * 0.18 + i * dur * 0.15, 10)}>{t}</text>)}</g>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

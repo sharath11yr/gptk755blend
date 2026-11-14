@@ -1,0 +1,290 @@
+{
+ "title": "Nodal Analysis - Network Theory Part 15",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Nodal",
+ "cover": "Nodal Analysis",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  3,
+  6
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 15 · Nodal analysis",
+   "narration": "Welcome back. Mesh analysis solved circuits with KVL around loops. Now we learn its partner, nodal analysis, which uses KCL at nodes instead. Here the unknowns are not currents but node voltages. Once we know the voltage at every node, every current follows from Ohm's law. Nodal analysis is the method computer circuit simulators use, and it often needs fewer equations than mesh analysis.",
+   "kicker": "NETWORK THEORY · PART 15",
+   "title": "NODAL ANALYSIS",
+   "subtitle": "KCL at each node, node voltages as unknowns"
+  },
+  {
+   "type": "nodal",
+   "chapter": "15.1 · Ground and node voltages",
+   "narration": "Here is the same circuit we solved with mesh analysis: twelve volts, R1 and R2 of two ohms on top, R3 of four ohms in the middle, R4 of two ohms on the right. Step one: choose a reference node, the ground, and call its voltage zero. We pick the bottom wire, because it touches the most elements. See the ground symbol. Now every other node gets a voltage measured from ground. The top left node is connected straight to the battery's plus terminal, so it is known: twelve volts. The two remaining nodes, Va and Vb, are our unknowns.",
+   "mode": "label"
+  },
+  {
+   "type": "formula",
+   "chapter": "15.2 · Current from node voltages",
+   "narration": "The key tool is simple. The current through a resistor between two nodes equals the voltage difference divided by the resistance. Current flows from the higher voltage to the lower one. So the current leaving node Va through R1 towards the twelve volt node is Va minus twelve, divided by two. If it comes out negative, the current actually flows the other way, into Va. That is fine: the sign takes care of itself.",
+   "formula": "I = (V_this − V_other) / R",
+   "terms": [
+    [
+     "V_this",
+     "the node we are writing KCL at"
+    ],
+    [
+     "V_other",
+     "the node at the other end"
+    ],
+    [
+     "Negative result",
+     "current flows the other way"
+    ]
+   ],
+   "example": [
+    "R1 current leaving Va: (Va − 12) / 2"
+   ]
+  },
+  {
+   "type": "nodal",
+   "chapter": "15.3 · KCL at node Va",
+   "narration": "Now write KCL at node Va. We will add up all currents leaving Va and set the total to zero. Through R1, towards the twelve volt node: Va minus twelve over two. Down through R3 to ground: Va minus zero, over four. Through R2 towards node Vb: Va minus Vb over two. Their sum is zero. Collecting the terms: one point two five Va minus zero point five Vb equals six.",
+   "mode": "kcla"
+  },
+  {
+   "type": "nodal",
+   "chapter": "15.4 · KCL at node Vb",
+   "narration": "Now node Vb. Currents leaving Vb: through R2 towards Va, Vb minus Va over two. Down through R4 to ground, Vb over two. Their sum is zero. Collecting: minus zero point five Va plus Vb equals zero. So Vb is exactly half of Va.",
+   "mode": "kclb"
+  },
+  {
+   "type": "formula",
+   "chapter": "15.5 · Solve",
+   "narration": "Two equations, two unknowns. From the second, Vb equals half of Va. Put it into the first: one point two five Va minus zero point two five Va equals six. So Va equals six volts, and Vb equals three volts. Now every current follows. R1 carries twelve minus six over two, three amperes. R3 carries six over four, one point five amperes. R2 carries six minus three over two, one point five amperes.",
+   "formula": "1.25·Va − 0.5·Vb = 6     −0.5·Va + Vb = 0",
+   "terms": [
+    [
+     "From eq. 2",
+     "Vb = 0.5·Va"
+    ],
+    [
+     "Into eq. 1",
+     "1.25·Va − 0.25·Va = 6"
+    ]
+   ],
+   "example": [
+    "Va = 6 V · Vb = 3 V"
+   ]
+  },
+  {
+   "type": "nodal",
+   "chapter": "15.6 · Same answer as mesh",
+   "narration": "Look at the result on the screen: Va is six volts and Vb is three volts. The current in R1 is three amperes, exactly the I1 we found with mesh analysis, and R2 and R4 carry one point five amperes, our I2. Two completely different methods, the same answers. That is a great way to check your work in an exam.",
+   "mode": "solve"
+  },
+  {
+   "type": "steps",
+   "chapter": "15.7 · The method",
+   "narration": "Here is nodal analysis as a recipe. One: choose a ground node, usually the one with the most connections. Two: label the voltage of every other node. Nodes tied to ground through a voltage source are known directly. Three: at each unknown node, write KCL, with every current written as a voltage difference over resistance. Four: solve the equations. Five: find any current from the node voltages.",
+   "title": "Nodal analysis step by step",
+   "items": [
+    "Choose the ground (0 V) node",
+    "Label the other node voltages",
+    "KCL at each unknown node: Σ (V − V_other)/R = 0",
+    "Solve the equations",
+    "Find currents: I = ΔV / R"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "15.8 · Nodal by inspection",
+   "narration": "Just like mesh analysis, nodal equations follow a pattern when the circuit has only current sources and resistors. Use conductance, G equals one over R. The coefficient of a node's own voltage is the sum of conductances connected to it. The coefficient of a neighbour's voltage is minus the conductance between them. The right side is the source current flowing into the node. This builds the conductance matrix directly.",
+   "formula": "[G] [V] = [I]",
+   "terms": [
+    [
+     "Diagonal",
+     "sum of conductances at the node"
+    ],
+    [
+     "Off-diagonal",
+     "− conductance between the two nodes"
+    ],
+    [
+     "Right side",
+     "source currents into the node"
+    ]
+   ],
+   "example": [
+    "Mesh: [R][I] = [V] · Nodal: [G][V] = [I]"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "15.9 · Mesh or nodal?",
+   "narration": "Which method should you use? Count the equations. Mesh analysis needs one equation per mesh, b minus n plus one. Nodal analysis needs one equation per node, minus one for ground, so n minus one. Choose the method with fewer equations. Also, voltage sources make nodal analysis easier, because they fix node voltages, while current sources make mesh analysis easier, because they fix mesh currents. And nodal analysis works for non planar circuits too.",
+   "title": "Choosing the method",
+   "parts": [
+    {
+     "id": "m",
+     "label": "MESH: b − n + 1 equations",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "n",
+     "label": "NODAL: n − 1 equations",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Fewer equations wins",
+     "x": 50,
+     "y": 65
+    },
+    {
+     "id": "b",
+     "label": "Nodal also works for non-planar circuits",
+     "x": 50,
+     "y": 90
+    }
+   ],
+   "arrows": [
+    [
+     "m",
+     "a",
+     ""
+    ],
+    [
+     "n",
+     "a",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "m"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "n"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Used by circuit simulators (SPICE)"
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Nodal analysis picks a ground node at zero volts and uses node voltages as unknowns. At each unknown node, write KCL with every current as a voltage difference over resistance. Solve, and every current follows. It needs n minus one equations, and with conductances it can be written by inspection.",
+   "title": "Nodal analysis in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Ground = 0 V",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Unknowns: node voltages",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "KCL: Σ (V − V_other)/R = 0",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "n − 1 equations",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Nodal analysis loves voltage sources connected to ground. But what if a voltage source sits between two nodes, with neither end at ground? Its current is unknown, so we cannot write KCL at either node on its own. The answer is the supernode, our next part.",
+   "title": "NEXT: SUPERNODE",
+   "lines": [
+    "Ground",
+    "Node voltages",
+    "KCL per node"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Nodal Analysis Explained Step by Step from Zero | Network Theory #16",
+  "description": "Network Theory from absolute zero - Part 16: nodal analysis.\n- Ground (reference node) and node voltages\n- Current from node voltages: I = ΔV / R\n- KCL at each node, step by step (animated)\n- Solving, and checking against mesh analysis\n- The 5-step method\n- Conductance matrix by inspection\n- Mesh or nodal: which to choose\n\nPrevious: Supermesh. Next: Supernode.\n\n#NetworkTheory #NodalAnalysis #ECE #CircuitAnalysis",
+  "tags": [
+   "nodal analysis",
+   "node voltage method",
+   "kcl",
+   "network theory",
+   "circuit analysis",
+   "ece",
+   "basic electrical engineering"
+  ],
+  "playlist": "Network Theory"
+ }
+}

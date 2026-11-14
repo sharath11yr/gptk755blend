@@ -1,0 +1,327 @@
+{
+ "title": "Supernode - Network Theory Part 16",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Supernode",
+ "cover": "Supernode",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  3,
+  4
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 16 · Supernode",
+   "narration": "Welcome back. Nodal analysis writes KCL at each node, with every current written as a voltage difference over a resistance. But a voltage source has no resistance, so its current cannot be written that way. Its current depends on the rest of the circuit. When a voltage source connects two unknown nodes, neither of them at ground, we need a new idea: the supernode. It is the exact partner of the supermesh.",
+   "kicker": "NETWORK THEORY · PART 16",
+   "title": "SUPERNODE",
+   "subtitle": "Nodal analysis with a floating voltage source"
+  },
+  {
+   "type": "diagram",
+   "chapter": "16.1 · Two kinds of voltage source",
+   "narration": "Again there are two situations. If a voltage source connects a node to ground, that node voltage is simply known: it equals the source voltage. One unknown disappears, like the twelve volt node in our circuit. But if a voltage source connects two nodes and neither one is ground, we call it a floating voltage source. Its current is unknown, so KCL at either node alone cannot be written. That case needs a supernode.",
+   "title": "Where is the voltage source?",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Node to ground → node voltage known",
+     "x": 25,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Between two nodes (floating) → SUPERNODE",
+     "x": 75,
+     "y": 35,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Its current is unknown → can't write KCL at one node",
+     "x": 75,
+     "y": 78
+    }
+   ],
+   "arrows": [
+    [
+     "b",
+     "c",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "Easy case"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "nodal",
+   "chapter": "16.2 · The supernode",
+   "narration": "Here is our circuit again, but now R2 is replaced by a two volt source between node Va and node Vb, with plus on the Va side. Watch the green dashed outline. We wrap both nodes and the source inside one boundary. This region is the supernode. Remember from the KCL part: KCL works for any closed boundary. So we can write KCL for the whole supernode at once, and the unknown source current stays inside, never appearing in the equation.",
+   "mode": "supernode"
+  },
+  {
+   "type": "formula",
+   "chapter": "16.3 · Equation from the source",
+   "narration": "First, the voltage source gives a direct equation. Its plus side is at Va and its minus side at Vb, and it holds them exactly two volts apart. So Va minus Vb equals two. This is the constraint equation, and it replaces one of the KCL equations we cannot write.",
+   "formula": "Va − Vb = 2",
+   "terms": [
+    [
+     "+ side",
+     "node Va"
+    ],
+    [
+     "− side",
+     "node Vb"
+    ]
+   ],
+   "example": [
+    "Constraint equation"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "16.4 · KCL around the supernode",
+   "narration": "Now add all currents leaving the supernode boundary. From Va through R1 to the twelve volt node: Va minus twelve over two. From Va down through R3: Va over four. From Vb down through R4: Vb over two. The source current stays inside the boundary, so it does not appear. The sum is zero.",
+   "formula": "(Va − 12)/2 + Va/4 + Vb/2 = 0",
+   "terms": [
+    [
+     "Leaving via R1",
+     "(Va − 12)/2"
+    ],
+    [
+     "Leaving via R3",
+     "Va/4"
+    ],
+    [
+     "Leaving via R4",
+     "Vb/2"
+    ]
+   ],
+   "example": [
+    "The voltage source current never appears"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "16.5 · Solve",
+   "narration": "From the constraint, Va equals Vb plus two. Substitute: Vb plus two minus twelve, over two, plus Vb plus two over four, plus Vb over two, equals zero. Multiply everything by four: two Vb minus twenty, plus Vb plus two, plus two Vb, equals zero. So five Vb equals eighteen, and Vb equals three point six volts. Then Va equals five point six volts. Check: five point six minus three point six is two. Correct.",
+   "formula": "2(Vb − 10) + (Vb + 2) + 2·Vb = 0",
+   "terms": [
+    [
+     "5·Vb = 18",
+     "Vb = 3.6 V"
+    ],
+    [
+     "Va = Vb + 2",
+     "Va = 5.6 V"
+    ]
+   ],
+   "example": [
+    "Check: 5.6 − 3.6 = 2 V ✓"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "16.6 · Finding the source current",
+   "narration": "Even though the source current never appeared, we can find it afterwards with KCL at one node. Look at node Vb. Current into Vb from the source must equal current leaving down through R4: three point six over two, one point eight amperes. So the voltage source carries one point eight amperes from Va to Vb. Nothing is lost by using the supernode.",
+   "formula": "I_source = Vb / 2 = 1.8 A",
+   "terms": [
+    [
+     "KCL at Vb",
+     "current in from source = current out through R4"
+    ]
+   ],
+   "example": [
+    "1.8 A flows through the 2 V source, from Va to Vb"
+   ]
+  },
+  {
+   "type": "steps",
+   "chapter": "16.7 · The method",
+   "narration": "Here is the supernode recipe. One: choose ground and label node voltages as usual. Two: find any voltage source between two non ground nodes, and draw a boundary around it and both its nodes. Three: write the constraint equation: the difference of the two node voltages equals the source voltage. Four: write KCL for the whole supernode, adding all currents leaving the boundary. Five: write KCL for any other nodes, and solve everything together.",
+   "title": "Supernode step by step",
+   "items": [
+    "Ground + node voltages",
+    "Floating V-source → boundary around it and both nodes",
+    "Constraint: Va − Vb = V_source",
+    "KCL for the whole supernode",
+    "KCL for other nodes → solve"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "16.8 · Supermesh and supernode",
+   "narration": "Notice the beautiful symmetry. In mesh analysis, a current source shared by two meshes is the problem, and the supermesh is the fix. In nodal analysis, a voltage source between two nodes is the problem, and the supernode is the fix. In both cases, the source gives one constraint equation, and one combined KVL or KCL equation does the rest.",
+   "title": "Two partner tricks",
+   "parts": [
+    {
+     "id": "m",
+     "label": "SUPERMESH: shared current source",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "n",
+     "label": "SUPERNODE: floating voltage source",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "m1",
+     "label": "constraint + KVL around supermesh",
+     "x": 25,
+     "y": 72
+    },
+    {
+     "id": "n1",
+     "label": "constraint + KCL around supernode",
+     "x": 75,
+     "y": 72
+    }
+   ],
+   "arrows": [
+    [
+     "m",
+     "m1",
+     ""
+    ],
+    [
+     "n",
+     "n1",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "m",
+      "m1"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "n",
+      "n1"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A voltage source from a node to ground fixes that node voltage. A voltage source between two non ground nodes makes a supernode. Write the constraint equation, the difference of node voltages equals the source, then KCL for the whole supernode, where the source current never appears. Solve, and find the source current afterwards with KCL if needed.",
+   "title": "Supernode in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Source to ground → V known",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Floating source → supernode",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Constraint: Va − Vb = V_s",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "KCL around supernode",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We now have complete methods to solve any circuit. Next, we start the network theorems, powerful shortcuts that make big circuits easy. The first is the superposition theorem: how to handle a circuit with many sources by taking them one at a time.",
+   "title": "NEXT: SUPERPOSITION THEOREM",
+   "lines": [
+    "Floating V-source",
+    "Constraint equation",
+    "KCL around supernode"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Supernode Explained Step by Step from Zero | Network Theory #17",
+  "description": "Network Theory from absolute zero - Part 17: supernode.\n- Why voltage sources are a problem in nodal analysis\n- Grounded vs floating voltage source\n- Forming the supernode (animated)\n- Constraint equation and KCL around the supernode\n- Solved example, and finding the source current\n- The 5-step method\n- Supermesh vs supernode\n\nPrevious: Nodal analysis. Next: Superposition theorem.\n\n#NetworkTheory #Supernode #NodalAnalysis #ECE",
+  "tags": [
+   "supernode",
+   "supernode analysis",
+   "nodal analysis voltage source",
+   "network theory",
+   "circuit analysis",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
