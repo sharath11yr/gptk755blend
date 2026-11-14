@@ -97,10 +97,20 @@ export const DiagramScene: React.FC<any> = ({ dur, title, parts = [], arrows = [
   // box geometry: width from the text, kept fully inside the frame
   const geo: Record<string, any> = {};
   for (const p of parts) {
-    const fs = p.label.length > 38 ? 24 : p.label.length > 28 ? 27 : 30;
-    const w = p.shape === "circle" ? 156 : Math.min(1500, Math.max(180, p.label.length * fs * 0.6 + 56)); const h = p.shape === "circle" ? 156 : 96;
-    const x = Math.min(1600 - 24 - w / 2, Math.max(24 + w / 2, 80 + (p.x / 100) * 1440)); const y = 120 + (p.y / 100) * 600;
-    geo[p.id] = { ...p, x, y, w, h, fs };
+    // room on this row: half the distance to the nearest box on the same row, on each side
+    const cx = 80 + (p.x / 100) * 1440;
+    const near = parts.filter((q: any) => q !== p && Math.abs(q.y - p.y) < 14).map((q: any) => Math.abs(80 + (q.x / 100) * 1440 - cx));
+    const avail = near.length ? Math.min(...near) - 36 : 1500;
+    let lines: string[] = [p.label]; let fs = p.label.length > 38 ? 24 : p.label.length > 28 ? 27 : 30;
+    const width = (ls: string[], f: number) => Math.max(...ls.map((l) => l.length)) * f * 0.6 + 56;
+    if (p.shape !== "circle" && width(lines, fs) > avail) {
+      const words = p.label.split(" "); let best = [p.label], bw = 1e9;
+      for (let i = 1; i < words.length; i++) { const ls = [words.slice(0, i).join(" "), words.slice(i).join(" ")]; const m = Math.max(ls[0].length, ls[1].length); if (m < bw) { bw = m; best = ls; } }
+      lines = best; fs = 30; while (fs > 18 && width(lines, fs) > avail) fs -= 1;
+    }
+    const w = p.shape === "circle" ? 156 : Math.min(1500, Math.max(180, width(lines, fs))); const h = p.shape === "circle" ? 156 : lines.length > 1 ? 70 + fs * 1.3 : 96;
+    const x = Math.min(1600 - 24 - w / 2, Math.max(24 + w / 2, cx)); const y = 120 + (p.y / 100) * 600;
+    geo[p.id] = { ...p, x, y, w, h, fs, lines };
   }
   // where a line from the centre towards (dx,dy) leaves the box, plus a small gap
   const edge = (g: any, dx: number, dy: number) => {
@@ -126,8 +136,8 @@ export const DiagramScene: React.FC<any> = ({ dur, title, parts = [], arrows = [
         {parts.map((p: any, i: number) => { const g = geo[p.id]; const on = hot.includes(p.id);
           return <g key={p.id} opacity={fade(f, i * 4)}>
             {g.shape === "circle" ? <circle cx={g.x} cy={g.y} r={g.w / 2} fill={on ? `${L.amber}33` : L.panel} stroke={on ? L.amber : L.cyan} strokeWidth={on ? 7 : 4} />
-              : <rect x={g.x - g.w / 2} y={g.y - g.h / 2} width={g.w} height={g.h} rx={g.shape === "pill" ? 48 : 16} fill={on ? `${L.amber}33` : L.panel} stroke={on ? L.amber : L.cyan} strokeWidth={on ? 7 : 4} />}
-            <text x={g.x} y={g.y + g.fs / 3} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={g.fs} fontWeight={800}>{p.label}</text></g>; })}
+              : <rect x={g.x - g.w / 2} y={g.y - g.h / 2} width={g.w} height={g.h} rx={g.shape === "pill" ? Math.min(48, g.h / 2) : 16} fill={on ? `${L.amber}33` : L.panel} stroke={on ? L.amber : L.cyan} strokeWidth={on ? 7 : 4} />}
+            <text x={g.x} y={g.y + g.fs / 3 - (g.lines.length - 1) * g.fs * 0.65} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={g.fs} fontWeight={800}>{g.lines.map((l: string, k: number) => <tspan key={k} x={g.x} dy={k ? g.fs * 1.3 : 0}>{l}</tspan>)}</text></g>; })}
       </svg>
       {steps[k]?.note && <div style={{ position: "absolute", bottom: "8%", width: "100%", textAlign: "center", fontFamily: SANS, fontWeight: 600, fontSize: 36 * u, color: L.text,
         opacity: fade((f - 10) % per, 0, 6) }}>{steps[k].note}</div>}
