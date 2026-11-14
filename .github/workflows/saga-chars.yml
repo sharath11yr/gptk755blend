@@ -1,6 +1,6 @@
 name: Saga characters (Blender)
 on: {workflow_dispatch: {}}
-permissions: {contents: read}
+permissions: {contents: write}
 jobs:
   chars:
     runs-on: ubuntu-latest
@@ -12,3 +12,7 @@ jobs:
       - run: /opt/blender-4.2.3-linux-x64/blender -b -noaudio -P studio/saga_chars.py -- out
       - uses: actions/upload-artifact@v4
         with: {name: saga-chars, path: out/, retention-days: 3}
+      - name: Share stills on a preview branch
+        run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          B=preview-saga-${{ github.run_id }}; git checkout -q -b $B; mkdir -p previews; cp out/*.png previews/; git add previews; git commit -qm "saga preview"; git push -q origin $B
