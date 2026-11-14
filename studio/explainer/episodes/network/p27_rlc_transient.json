@@ -1,0 +1,452 @@
+{
+ "title": "RLC Transients - Network Theory Part 27",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "RLC",
+ "cover": "RLC Transients",
+ "tag": "GETYR ECE",
+ "short": [
+  3,
+  4,
+  6
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 27 · RLC transients",
+   "narration": "Welcome back. In the last part, RC and RL circuits had just one energy store, so after a switch they simply rose or fell smoothly. Now we put a resistor, an inductor and a capacitor together. With two energy stores, energy can swing back and forth between the capacitor's electric field and the inductor's magnetic field, like a pendulum. Depending on the resistance, the circuit may settle slowly, settle quickly, or ring before settling. These are the three kinds of second order response.",
+   "kicker": "NETWORK THEORY · PART 27",
+   "title": "RLC TRANSIENTS",
+   "subtitle": "Overdamped, critically damped and underdamped"
+  },
+  {
+   "type": "diagram",
+   "chapter": "27.1 · A pendulum of energy",
+   "narration": "Think of a swing. Pull it back and let go: it swings to the other side and back, again and again, while air resistance slowly stops it. In an RLC circuit, the capacitor's stored energy pushes current into the inductor. The inductor then keeps the current going and charges the capacitor the other way. Energy swings between them. The resistor is like air resistance: it turns energy into heat and slows the swinging down.",
+   "title": "Energy swings between L and C",
+   "parts": [
+    {
+     "id": "c",
+     "label": "Capacitor: energy in electric field",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "l",
+     "label": "Inductor: energy in magnetic field",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "r",
+     "label": "Resistor: damping (turns energy into heat)",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "c",
+     "l",
+     "⇄"
+    ],
+    [
+     "r",
+     "c",
+     ""
+    ],
+    [
+     "r",
+     "l",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "l"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": "Like air resistance on a swing"
+    }
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "27.2 · Two key numbers",
+   "narration": "A series RLC circuit is described by two numbers. The first is the natural frequency, omega zero, equal to one over the square root of L C. It is how fast the energy would swing if there were no resistance. The second is the damping factor, alpha, equal to R over two L, which tells how strongly the resistor slows things down. Our example uses L equals one henry and C equals zero point two five farads, so omega zero equals one over the square root of zero point two five, which is two radians per second.",
+   "formula": "ω₀ = 1/√(LC)     α = R / (2L)",
+   "terms": [
+    [
+     "ω₀",
+     "natural (undamped) frequency, rad/s"
+    ],
+    [
+     "α",
+     "damping factor, 1/s"
+    ]
+   ],
+   "example": [
+    "L = 1 H, C = 0.25 F → ω₀ = 2 rad/s"
+   ]
+  },
+  {
+   "type": "damp",
+   "chapter": "27.3 · Three responses",
+   "narration": "Now we close a switch to connect a DC source, and watch the capacitor voltage for three different resistors. The blue curve, with ten ohms, rises slowly and never overshoots: overdamped. The green curve, with four ohms, rises as fast as possible without overshooting: critically damped. The amber curve, with only one ohm, rises fast, overshoots the final value, swings below it, and rings before settling: underdamped.",
+   "show": [
+    "over",
+    "crit",
+    "under"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "27.4 · Which one will it be?",
+   "narration": "Compare alpha with omega zero. If alpha is greater than omega zero, the circuit is overdamped. If alpha equals omega zero, critically damped. If alpha is less than omega zero, underdamped. With L equals one henry: ten ohms gives alpha equals five, greater than two, overdamped. Four ohms gives alpha equals two, exactly equal, critically damped. One ohm gives alpha equals zero point five, less than two, underdamped. So the critical resistance is two times the square root of L over C, which here is four ohms.",
+   "formula": "α > ω₀: over · α = ω₀: critical · α < ω₀: under",
+   "terms": [
+    [
+     "R = 10 Ω",
+     "α = 5 → overdamped"
+    ],
+    [
+     "R = 4 Ω",
+     "α = 2 → critically damped"
+    ],
+    [
+     "R = 1 Ω",
+     "α = 0.5 → underdamped"
+    ]
+   ],
+   "example": [
+    "R_critical = 2√(L/C) = 4 Ω"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "27.5 · The characteristic equation",
+   "narration": "Where do these cases come from? Writing KVL around the series RLC circuit gives a second order differential equation. Its solution depends on the roots of the characteristic equation s squared plus two alpha s plus omega zero squared equals zero. The roots are minus alpha plus or minus the square root of alpha squared minus omega zero squared. Two different real roots: overdamped. Two equal real roots: critically damped. Complex roots: underdamped, which means oscillation.",
+   "formula": "s² + 2αs + ω₀² = 0     s = −α ± √(α² − ω₀²)",
+   "terms": [
+    [
+     "Real, different",
+     "overdamped"
+    ],
+    [
+     "Real, equal",
+     "critically damped"
+    ],
+    [
+     "Complex",
+     "underdamped (oscillates)"
+    ]
+   ],
+   "example": [
+    "Complex roots ↔ ringing"
+   ]
+  },
+  {
+   "type": "damp",
+   "chapter": "27.6 · The underdamped response",
+   "narration": "Let's look closely at the underdamped case, with one ohm. Watch the amber curve. It overshoots the final value by about forty four percent at about one point six two seconds, then swings back below, then above again, each swing smaller than the last, decaying with the envelope e to the minus alpha t. It rings at the damped frequency, omega d, equal to the square root of omega zero squared minus alpha squared: the square root of four minus zero point two five, about one point nine four radians per second.",
+   "show": [
+    "under"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "27.7 · Damped frequency",
+   "narration": "So in the underdamped case, the response oscillates at omega d, slightly slower than omega zero, and its amplitude shrinks by the factor e to the minus alpha t. The bigger alpha is, the faster the ringing dies out. Engineers also use the damping ratio, zeta, equal to alpha over omega zero. Zeta greater than one is overdamped, equal to one is critical, and less than one is underdamped.",
+   "formula": "ω_d = √(ω₀² − α²)     ζ = α / ω₀",
+   "terms": [
+    [
+     "Example",
+     "ω_d = √(4 − 0.25) ≈ 1.94 rad/s"
+    ],
+    [
+     "ζ",
+     "0.25 (underdamped)"
+    ]
+   ],
+   "example": [
+    "Overshoot ≈ 44% at t ≈ 1.62 s"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "27.8 · Common mistakes",
+   "narration": "Common mistakes with RLC transients. One: using alpha equals R over two L for a parallel RLC circuit: for parallel, alpha equals one over two R C. Two: confusing omega zero with omega d. Three: thinking more resistance makes the response faster: beyond critical damping, more resistance makes it slower. Four: forgetting initial conditions: the capacitor voltage and inductor current at t equals zero plus. Five: mixing radians per second with hertz.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Series: α = R/2L · Parallel: α = 1/(2RC)",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "ω₀ ≠ ω_d",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Overdamped is SLOWER than critical",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Use v_C(0⁺) and i_L(0⁺)",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "rad/s vs Hz: ω = 2πf",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "27.9 · Where it matters",
+   "narration": "Engineers choose the damping on purpose. Car suspensions are designed close to critical damping, so the car settles quickly after a bump without bouncing. Measuring instruments with needles are damped so the needle does not overshoot. In power electronics, unwanted ringing in RLC circuits causes voltage spikes and noise, so snubber resistors add damping. And radio oscillators use very lightly damped LC circuits on purpose, to keep them ringing.",
+   "title": "Damping in practice",
+   "parts": [
+    {
+     "id": "x",
+     "label": "RLC DAMPING",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Car suspension ≈ critical",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Meter needles",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Snubbers stop ringing",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Oscillators ring on purpose",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. An RLC circuit stores energy in both L and C, so energy can swing between them. The natural frequency is one over root L C, and for a series circuit the damping factor is R over two L. Alpha greater than omega zero: overdamped. Equal: critically damped, the fastest without overshoot. Less: underdamped, ringing at omega d.",
+   "title": "RLC transients in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "ω₀ = 1/√(LC)",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "α = R/2L (series)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "α >, =, < ω₀: over, critical, under",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "ω_d = √(ω₀² − α²)",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We saw energy swing between L and C at a natural frequency. What happens if we drive an RLC circuit with an AC source at exactly that frequency? The reactances cancel, and the current can become very large. That is resonance, our next part, and it is how every radio picks one station out of many.",
+   "title": "NEXT: RESONANCE",
+   "lines": [
+    "ω₀ = 1/√LC",
+    "α = R/2L",
+    "Over · critical · under"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "RLC Transient Response: Overdamped, Critically Damped, Underdamped | Network Theory #28",
+  "description": "Network Theory from absolute zero - Part 28: second-order transients.\n- Energy swinging between L and C\n- ω₀ = 1/√(LC) and α = R/2L\n- Three responses drawn exactly (animated): R = 10, 4, 1 Ω\n- Characteristic equation and its roots\n- Underdamped ringing, ω_d, damping ratio ζ\n- Common mistakes (series vs parallel α)\n- Real uses: suspensions, meters, snubbers, oscillators\n\nPrevious: RC & RL transients. Next: Resonance.\n\n#NetworkTheory #RLCcircuit #Transients #ECE",
+  "tags": [
+   "rlc transient",
+   "overdamped",
+   "underdamped",
+   "critically damped",
+   "second order circuit",
+   "damping ratio",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

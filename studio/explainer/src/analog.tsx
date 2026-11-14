@@ -850,4 +850,30 @@ export const ComplexScene: React.FC<any> = ({ dur, mode = "plane", re = 3, im = 
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ series RLC step response: L=1 H, C=0.25 F (ω0 = 2), R = 10 / 4 / 1 Ω
+// {"show":["over","crit","under"]}
+const rlcStep = (R: number, t: number) => { const L0 = 1, C0 = 0.25, w0 = 1 / Math.sqrt(L0 * C0), a = R / (2 * L0);
+  if (Math.abs(a - w0) < 1e-9) return 1 - (1 + w0 * t) * Math.exp(-w0 * t);
+  if (a > w0) { const d = Math.sqrt(a * a - w0 * w0), s1 = -a + d, s2 = -a - d; return 1 + (s2 * Math.exp(s1 * t) - s1 * Math.exp(s2 * t)) / (s1 - s2); }
+  const wd = Math.sqrt(w0 * w0 - a * a); return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+export const DampScene: React.FC<any> = ({ dur, show = ["over", "crit", "under"] }) => {
+  const f = useCurrentFrame();
+  const T = 8; const p = interpolate(f, [dur * 0.06, dur * 0.85], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const X0 = 260, Y0 = 820, GW = 1400, GH = 360;
+  const curves: Record<string, [number, string, string]> = { over: [10, L.cyan, "overdamped (R = 10 Ω)"], crit: [4, L.green, "critically damped (R = 4 Ω)"], under: [1, L.amber, "underdamped (R = 1 Ω)"] };
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - GH * 1.7} stroke={L.dim} strokeWidth={3} />
+    <line x1={X0} y1={Y0 - GH} x2={X0 + GW} y2={Y0 - GH} stroke={L.dim} strokeDasharray="10 8" strokeWidth={2} />
+    <text x={X0 - 14} y={Y0 - GH + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={26}>final</text>
+    <text x={X0 + GW} y={Y0 + 84} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={26}>time (s) →</text>
+    {Array.from({ length: 9 }, (_, k) => <text key={k} x={X0 + (k / 8) * GW} y={Y0 + 40} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{k}</text>)}
+    {show.map((key: string, i: number) => { const [R, col, lab] = curves[key];
+      const pts = Array.from({ length: 300 }, (_, k) => { const t = (k / 299) * T * p; return `${X0 + (t / T) * GW},${Y0 - rlcStep(R, t) * GH}`; }).join(" ");
+      return <g key={key}><polyline points={pts} fill="none" stroke={col} strokeWidth={6} />
+        <rect x={1240} y={170 + i * 60} width={36} height={14} rx={7} fill={col} /><text x={1290} y={186 + i * 60} fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={700}>{lab}</text></g>; })}
+    <text x={X0 + 24} y={186} fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>capacitor voltage after the switch closes</text>
+    <text x={X0 + 24} y={230} fill={L.dim} fontFamily={MONO} fontSize={26}>L = 1 H · C = 0.25 F · ω₀ = 2 rad/s</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
