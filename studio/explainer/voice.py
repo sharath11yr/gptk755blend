@@ -137,6 +137,81 @@ def bed(scenes, path, offset=0):
     mix = mix / max(1.0, float(np.abs(mix).max()) / 0.85)   # never clip
     sf.write(str(path), np.stack([mix, mix], axis=1), SR)
 
+# ---------------- story (saga) soundtrack: mood music per scene + scene sound effects
+def _noise(d, k=60):
+    x = rng.standard_normal(int(d * SR)).astype(np.float32); return np.convolve(x, np.ones(k) / k, mode="same")
+def heartbeat(d):
+    out = np.zeros(int(d * SR), np.float32); b = layer(tone(55, 0.18, 0.9, 18), tone(110, 0.1, 0.3, 25))
+    for t0 in np.arange(0, d, 0.8):
+        for off in (0, 0.22):
+            a = int((t0 + off) * SR); e = min(len(out), a + len(b)); out[a:e] += b[: e - a]
+    return out
+def growl(d=1.6):
+    t = np.arange(int(d * SR)) / SR; n = _noise(d, 20) * 3
+    return (n * (0.6 + 0.4 * np.sin(2 * np.pi * 28 * t)) * np.sin(np.pi * t / d) * 0.5).astype(np.float32)
+def howl(d=2.2):
+    t = np.arange(int(d * SR)) / SR; f = 420 + 260 * np.sin(np.pi * t / d)
+    return (0.25 * np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * t / d)).astype(np.float32)
+def thunder(d=2.5):
+    t = np.arange(int(d * SR)) / SR; return (_noise(d, 200) * 9 * np.exp(-1.5 * t)).astype(np.float32)
+def crackle(d):
+    out = np.zeros(int(d * SR), np.float32)
+    for a in rng.integers(0, len(out) - 500, int(d * 14)): out[a:a + 300] += rng.standard_normal(300).astype(np.float32) * 0.08 * np.exp(-np.arange(300) / 60)
+    return out + _noise(d, 400) * 0.6
+def wind(d):
+    t = np.arange(int(d * SR)) / SR; return (_noise(d, 300) * 2.2 * (0.6 + 0.4 * np.sin(2 * np.pi * t / 3))).astype(np.float32)
+def drums(d):
+    out = np.zeros(int(d * SR), np.float32); k = layer(tone(60, 0.35, 0.9, 10), tone(120, 0.2, 0.4, 16))
+    for i, t0 in enumerate(np.arange(0, d, 0.36)):
+        a = int(t0 * SR); e = min(len(out), a + len(k)); out[a:e] += k[: e - a] * (1 if i % 4 in (0, 3) else 0.55)
+    return out
+MOODS = {  # chords (Hz) + level
+    "mystery": ([[110, 130.81, 164.81], [103.83, 130.81, 155.56]], 0.20),
+    "fear":    ([[73.42, 87.31, 103.83], [69.30, 82.41, 103.83]], 0.24),
+    "action":  ([[82.41, 98, 123.47], [73.42, 92.5, 110]], 0.22),
+    "love":    ([[261.63, 329.63, 392], [220, 261.63, 329.63], [174.61, 220, 261.63], [196, 246.94, 293.66]], 0.16),
+    "hope":    ([[196, 246.94, 293.66], [261.63, 329.63, 392]], 0.16),
+    "sad":     ([[220, 261.63, 329.63], [174.61, 220, 261.63]], 0.15),
+}
+def scene_mood(sc):
+    t = (sc.get("caption", "") + " " + sc.get("narration", "")).lower()
+    if sc.get("heart") or any(w in t for w in ("kiss", "love", "smiled", "hand", "arms", "baby")): return "love"
+    if sc.get("animal") in ("lion", "wolf") or any(w in t for w in ("charge", "leapt", "club", "fight", "raid", "attack")): return "action"
+    if any(w in t for w in ("blood", "dark", "scream", "howl", "watching", "storm", "fell", "taken", "shake")): return "fear"
+    if any(w in t for w in ("peace", "home", "together", "fire.", "journey")): return "hope"
+    return "mystery"
+def saga_bed(scenes, path, offset=0):
+    seconds = offset + sum(sc["frames"] for sc in scenes) / FPS; n = int((seconds + 1) * SR)
+    mus = np.zeros(n, np.float32); fx = np.zeros(n, np.float32)
+    def put(buf, x, at, g=1.0):
+        a = int(at * SR); e = min(len(buf), a + len(x))
+        if 0 <= a < len(buf): buf[a:e] += x[: e - a] * g
+    at = offset
+    for i, sc in enumerate(scenes):
+        d = sc["frames"] / FPS; mood = scene_mood(sc) if sc.get("type") == "saga" else "mystery"
+        chords, lvl = MOODS[mood]; t = np.arange(int(d * SR)) / SR
+        seg = np.zeros_like(t)
+        idx = ((t + at) // 2.0).astype(int) % len(chords)
+        for k in range(3):
+            f = np.array([c[k] for c in chords])[idx]; seg += np.sin(2 * np.pi * f * t) + 0.3 * np.sin(4 * np.pi * f * t)
+        seg += 1.4 * np.sin(2 * np.pi * chords[0][0] / 2 * t)                   # low drone
+        env = np.minimum(1, np.minimum(t / 0.4, (d - t) / 0.4)).clip(0, 1)
+        put(mus, (seg * env * lvl * 0.25).astype(np.float32), at)
+        if mood == "fear": put(fx, heartbeat(d), at, 0.8)
+        if mood == "action": put(fx, drums(d), at, 0.7)
+        if sc.get("animal") == "lion": put(fx, growl(), at + 0.3, 1.0)
+        if sc.get("animal") == "wolf": put(fx, howl(), at + 0.2, 1.0)
+        if sc.get("fire"): put(fx, crackle(d), at, 0.7)
+        if sc.get("bg") == "ice": put(fx, wind(d), at, 0.6)
+        if "storm" in (sc.get("caption", "") + sc.get("narration", "")).lower() or "thunder" in sc.get("narration", "").lower(): put(fx, thunder(), at + 0.2, 1.0)
+        if i > 0: put(fx, whoosh(0.4, 0.15), max(0, at - 0.1))
+        at += d
+    mix = mus + fx; mix = mix / max(1.0, float(np.abs(mix).max()) / 0.8)
+    sf.write(str(path), np.stack([mix, mix], axis=1), SR)
+
+if ep.get("saga"):
+    saga_bed(ep.get("short_scenes", []), pub / "music_short.wav")
+    print("saga soundtrack ready"); raise SystemExit
 bed(ep["scenes"], pub / "music.wav")
 if ep.get("short_scenes"):
     bed(ep["short_scenes"], pub / "music_short.wav")
