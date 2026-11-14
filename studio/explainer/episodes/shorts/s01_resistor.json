@@ -1,0 +1,95 @@
+{
+ "title": "Why did my LED burn?",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "scenes": [],
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "happy",
+   "name": "Ravi",
+   "say": "New LED! Let's connect it straight to my 9 V battery!",
+   "prop": "circuit",
+   "circuit": {
+    "state": "off",
+    "label": "9 V"
+   },
+   "narration": "This is Ravi. He just bought a shiny new LED, and he connects it straight to a nine volt battery."
+  },
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Ravi",
+   "say": "POP! Why did it burn?!",
+   "prop": "circuit",
+   "circuit": {
+    "state": "burn",
+    "label": "9 V",
+    "meter": "0.5 A!"
+   },
+   "narration": "Watch the current rush through. Way too much! The LED flashes, and pop, it's burnt. Ravi has no idea why."
+  },
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Ravi",
+   "say": "Nothing was stopping the current…",
+   "prop": "circuit",
+   "circuit": {
+    "state": "off",
+    "label": "9 V"
+   },
+   "narration": "Here's the problem. Nothing in the circuit was controlling the current. An LED only wants about twenty milliamps."
+  },
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "point",
+   "name": "Ravi",
+   "say": "Enter the RESISTOR!",
+   "prop": "circuit",
+   "circuit": {
+    "state": "ok",
+    "label": "9 V",
+    "resistor": true,
+    "rlabel": "350 Ω",
+    "meter": "20 mA"
+   },
+   "narration": "Now he adds a resistor in the path. Look at the meter: just twenty milliamps. The LED glows bright and safe."
+  },
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "happy",
+   "name": "Ravi",
+   "card": "R = (9 − 2) / 0.02 = 350 Ω",
+   "say": "The resistor limits the current!",
+   "narration": "The resistor limits the current. The LED uses about two volts, so the resistor takes the other seven: seven divided by twenty milliamps gives three hundred and fifty ohms.",
+   "prop": "circuit",
+   "circuit": {
+    "state": "ok",
+    "label": "9 V",
+    "resistor": true,
+    "rlabel": "350 Ω",
+    "meter": "20 mA"
+   }
+  },
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "wave",
+   "name": "Ravi",
+   "say": "Watch the full Resistor video on our channel!",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course.",
+   "card": "▶ NETWORK THEORY · PART 2"
+  }
+ ]
+}
