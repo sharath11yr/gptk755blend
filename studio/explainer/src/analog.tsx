@@ -803,7 +803,7 @@ export const PhasorScene: React.FC<any> = ({ dur, mode = "gen", vm = 325, phi = 
 };
 
 // ------------------------------------------------------------------ complex plane: {"mode":"plane"|"j"|"add","re":3,"im":4}
-export const ComplexScene: React.FC<any> = ({ dur, mode = "plane", re = 3, im = 4 }) => {
+export const ComplexScene: React.FC<any> = ({ dur, mode = "plane", re = 3, im = 4, k = 1, unit = "" }) => {
   const f = useCurrentFrame();
   const O = [700, 560], U = 70; const P = (x: number, y: number) => [O[0] + x * U, O[1] - y * U];
   const arrow = (a: number[], b: number[], c: string, w = 8, o = 1) => { const dx = b[0] - a[0], dy = b[1] - a[1], L2 = Math.hypot(dx, dy) || 1, ux = dx / L2, uy = dy / L2;
@@ -834,12 +834,13 @@ export const ComplexScene: React.FC<any> = ({ dur, mode = "plane", re = 3, im = 
   const show = fade(f, dur * 0.1, 12);
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{axes}
     <line x1={P(re, 0)[0]} y1={P(re, 0)[1]} x2={P(re, im)[0]} y2={P(re, im)[1]} stroke={L.amber} strokeWidth={4} strokeDasharray="10 8" opacity={show} />
-    <text x={P(re / 2, 0)[0]} y={O[1] + 44} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>{re}</text>
-    <text x={P(re, im / 2)[0] + 16} y={P(re, im / 2)[1]} fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>j{im}</text>
+    <text x={P(re / 2, 0)[0]} y={O[1] + 44} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>{re * k}</text>
+    <text x={P(re, im / 2)[0] + 16} y={P(re, im / 2)[1]} fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>{im < 0 ? "−" : ""}j{Math.abs(im * k)}</text>
     {arrow(O, P(re, im), L.cyan)}
-    <path d={`M${O[0] + 90} ${O[1]} A90 90 0 0 0 ${O[0] + 90 * Math.cos((ang * Math.PI) / 180)} ${O[1] - 90 * Math.sin((ang * Math.PI) / 180)}`} fill="none" stroke={L.green} strokeWidth={4} />
+    <path d={`M${O[0] + 90} ${O[1]} A90 90 0 0 ${ang < 0 ? 1 : 0} ${O[0] + 90 * Math.cos((ang * Math.PI) / 180)} ${O[1] - 90 * Math.sin((ang * Math.PI) / 180)}`} fill="none" stroke={L.green} strokeWidth={4} />
     <text x={O[0] + 110} y={O[1] - 30} fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>θ</text>
-    {panel([`rectangular: ${re} + j${im}`, `r = √(${re}² + ${im}²) = ${+r.toFixed(2)}`, `θ = tan⁻¹(${im}/${re}) = ${ang.toFixed(2)}°`, `polar: ${+r.toFixed(2)} ∠ ${ang.toFixed(2)}°`])}
+    {(() => { const R2 = re * k, I2 = im * k, M = r * k, sg = I2 < 0 ? "−" : "+";
+      return panel([`rectangular: ${R2} ${sg} j${Math.abs(I2)}${unit}`, `r = √(${R2}² + ${Math.abs(I2)}²) = ${+M.toFixed(2)}${unit}`, `θ = tan⁻¹(${I2}/${R2}) = ${ang.toFixed(2)}°`, `polar: ${+M.toFixed(2)} ∠ ${ang.toFixed(2)}°${unit}`]); })()}
   </svg></AbsoluteFill>;
 };
 

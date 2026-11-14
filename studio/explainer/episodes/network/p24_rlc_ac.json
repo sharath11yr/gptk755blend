@@ -1,0 +1,447 @@
+{
+ "title": "R, L, C in AC and Impedance - Network Theory Part 24",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Impedance",
+ "cover": "Impedance",
+ "tag": "GETYR ECE",
+ "short": [
+  2,
+  4,
+  7
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 24 · R, L and C in AC",
+   "narration": "Welcome back. We now have phasors and complex numbers. Today we use them for real. We connect a resistor, an inductor and a capacitor, one at a time, to an AC supply and watch what happens to the current. One keeps the current in step with the voltage, one makes it fall behind, and one makes it run ahead. From this we get reactance and impedance, the AC versions of resistance, and Ohm's law works again.",
+   "kicker": "NETWORK THEORY · PART 24",
+   "title": "R, L, C IN AC · IMPEDANCE",
+   "subtitle": "Reactance, impedance and phase"
+  },
+  {
+   "type": "phasor",
+   "chapter": "24.1 · Resistor: in phase",
+   "narration": "First, a resistor across an AC voltage. A resistor has no memory and stores no energy. At every instant, the current is simply the voltage divided by R. So when the voltage peaks, the current peaks. When the voltage is zero, the current is zero. Watch the blue voltage and the amber current: they rise and fall together. The phase difference is zero. We say they are in phase. On the phasor diagram, both arrows point the same way.",
+   "mode": "phase",
+   "vm": 325,
+   "phi": 0
+  },
+  {
+   "type": "phasor",
+   "chapter": "24.2 · Inductor: current lags",
+   "narration": "Now an inductor. Remember from Part 3: an inductor fights any change in current, creating a voltage V equals L di by dt. The voltage is biggest when the current is changing fastest, which happens as the current crosses zero. Watch the waves: the amber current reaches its peak a quarter cycle after the blue voltage. In an inductor, the current lags the voltage by exactly ninety degrees. See the arrows: the current arrow is ninety degrees behind.",
+   "mode": "phase",
+   "vm": 325,
+   "phi": 90
+  },
+  {
+   "type": "formula",
+   "chapter": "24.3 · Inductive reactance",
+   "narration": "How much does an inductor oppose AC? This opposition is called inductive reactance, X L, measured in ohms. X L equals two pi f L, or omega L. Notice it grows with frequency: the faster the current tries to change, the harder the inductor fights. At zero frequency, which is DC, X L is zero, and the inductor is just a wire, exactly as we saw before. For example, a zero point one two seven four henry inductor at fifty hertz has a reactance of about forty ohms.",
+   "formula": "X_L = 2πfL = ωL",
+   "terms": [
+    [
+     "X_L",
+     "inductive reactance (Ω)"
+    ],
+    [
+     "f",
+     "frequency (Hz)"
+    ],
+    [
+     "L",
+     "inductance (H)"
+    ]
+   ],
+   "example": [
+    "L = 0.1274 H, f = 50 Hz → X_L ≈ 40 Ω",
+    "DC (f = 0) → X_L = 0"
+   ]
+  },
+  {
+   "type": "phasor",
+   "chapter": "24.4 · Capacitor: current leads",
+   "narration": "Now a capacitor. Its current is the rate at which charge flows onto the plates, and that is biggest when the voltage is changing fastest, as the voltage crosses zero. So the current reaches its peak before the voltage does. Watch: the amber current peaks a quarter cycle earlier. In a capacitor, the current leads the voltage by ninety degrees. A simple way to remember all of this is the word CIVIL: in a C, I comes before V. V comes before I in an L.",
+   "mode": "phase",
+   "vm": 325,
+   "phi": -90
+  },
+  {
+   "type": "formula",
+   "chapter": "24.5 · Capacitive reactance",
+   "narration": "The capacitor's opposition is capacitive reactance, X C, also in ohms. X C equals one over two pi f C. Notice it falls as frequency rises: at high frequency the capacitor charges and discharges so quickly that current flows easily. At zero frequency, DC, X C is infinite, an open circuit, exactly as we saw in Part 2. For example, a seventy nine point six microfarad capacitor at fifty hertz has a reactance of about forty ohms.",
+   "formula": "X_C = 1 / (2πfC) = 1/(ωC)",
+   "terms": [
+    [
+     "X_C",
+     "capacitive reactance (Ω)"
+    ],
+    [
+     "C",
+     "capacitance (F)"
+    ]
+   ],
+   "example": [
+    "C = 79.6 µF, f = 50 Hz → X_C ≈ 40 Ω",
+    "DC (f = 0) → X_C = ∞"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "24.6 · Impedance",
+   "narration": "Now we combine everything with complex numbers. Every element gets an impedance, Z, the AC version of resistance. A resistor's impedance is just R, a real number. An inductor's impedance is plus j X L: the j means its voltage is ninety degrees ahead of its current. A capacitor's impedance is minus j X C: ninety degrees behind. With impedances, Ohm's law works again, V equals I times Z, and so do KCL, KVL, series and parallel rules, mesh, nodal and all the theorems.",
+   "title": "Impedance Z",
+   "parts": [
+    {
+     "id": "r",
+     "label": "Resistor: Z = R",
+     "x": 20,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "l",
+     "label": "Inductor: Z = +jX_L",
+     "x": 50,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Capacitor: Z = −jX_C",
+     "x": 80,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "o",
+     "label": "V = I × Z (Ohm's law for AC)",
+     "x": 50,
+     "y": 75,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [
+    [
+     "r",
+     "o",
+     ""
+    ],
+    [
+     "l",
+     "o",
+     ""
+    ],
+    [
+     "c",
+     "o",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "r"
+     ],
+     "note": "In phase"
+    },
+    {
+     "highlight": [
+      "l"
+     ],
+     "note": "+90°"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "−90°"
+    },
+    {
+     "highlight": [
+      "o"
+     ],
+     "note": "All DC methods work again"
+    }
+   ]
+  },
+  {
+   "type": "complex",
+   "chapter": "24.7 · Series RL circuit",
+   "narration": "Let's solve a series circuit: a thirty ohm resistor and an inductor with forty ohms of reactance, on two hundred and thirty volts, fifty hertz. In series, impedances add: Z equals thirty plus j forty ohms. Watch it on the complex plane: thirty along the real axis, forty up the imaginary axis. The magnitude is fifty ohms, at an angle of fifty three point one three degrees. This right angled triangle is called the impedance triangle.",
+   "mode": "plane",
+   "re": 3,
+   "im": 4,
+   "k": 10,
+   "unit": " Ω"
+  },
+  {
+   "type": "formula",
+   "chapter": "24.8 · Current and phase",
+   "narration": "Now Ohm's law. The current equals the voltage divided by the impedance: two hundred and thirty angle zero, divided by fifty angle fifty three point one three, gives four point six amperes at an angle of minus fifty three point one three degrees. So the current is four point six amperes, lagging the voltage by fifty three point one three degrees. Check the parts: the resistor drops four point six times thirty, one hundred and thirty eight volts. The inductor drops four point six times forty, one hundred and eighty four volts. They do not add to two hundred and thirty directly, because they are ninety degrees apart: the square root of one thirty eight squared plus one eighty four squared is exactly two hundred and thirty.",
+   "formula": "I = V / Z = 230∠0° / 50∠53.13° = 4.6∠−53.13° A",
+   "terms": [
+    [
+     "V_R",
+     "4.6 × 30 = 138 V"
+    ],
+    [
+     "V_L",
+     "4.6 × 40 = 184 V"
+    ]
+   ],
+   "example": [
+    "√(138² + 184²) = 230 V ✓ (phasor sum, not 322 V)"
+   ]
+  },
+  {
+   "type": "phasor",
+   "chapter": "24.9 · The lagging current",
+   "narration": "Here is that circuit's current on the waves. The blue voltage and the amber current, lagging by about fifty three degrees. A circuit with resistance and inductance always has its current between zero and ninety degrees behind the voltage. If we used a capacitor instead, with thirty ohms and minus j forty ohms, the impedance would be fifty angle minus fifty three point one three, and the current would lead by the same angle.",
+   "mode": "phase",
+   "vm": 325,
+   "phi": 53
+  },
+  {
+   "type": "formula",
+   "chapter": "24.10 · Power factor",
+   "narration": "The cosine of the angle between voltage and current is called the power factor. For our circuit, cos fifty three point one three is zero point six. It tells how much of the current does useful work. A power factor of one, with a pure resistor, is ideal. A low power factor means extra current flows back and forth without doing work, heating wires and transformers. We will study this fully in the AC power part.",
+   "formula": "pf = cos φ = R / |Z|",
+   "terms": [
+    [
+     "φ",
+     "angle between V and I"
+    ],
+    [
+     "Lagging",
+     "inductive (motors)"
+    ],
+    [
+     "Leading",
+     "capacitive"
+    ]
+   ],
+   "example": [
+    "cos 53.13° = 30/50 = 0.6 lagging"
+   ]
+  },
+  {
+   "type": "bars",
+   "chapter": "24.11 · Reactance and frequency",
+   "narration": "Here is how the reactances depend on frequency, for our forty ohm inductor and forty ohm capacitor at fifty hertz. At one hundred hertz, the inductor's reactance doubles to eighty ohms, while the capacitor's halves to twenty. At twenty five hertz, the opposite. This opposite behaviour is the basis of filters: inductors block high frequencies, capacitors block low frequencies.",
+   "title": "Reactance vs frequency (Ω)",
+   "unit": "Ω",
+   "items": [
+    [
+     "X_L at 25 Hz",
+     20
+    ],
+    [
+     "X_L at 50 Hz",
+     40
+    ],
+    [
+     "X_L at 100 Hz",
+     80
+    ],
+    [
+     "X_C at 25 Hz",
+     80
+    ],
+    [
+     "X_C at 50 Hz",
+     40
+    ],
+    [
+     "X_C at 100 Hz",
+     20
+    ]
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "24.12 · Common mistakes",
+   "narration": "Common mistakes. One: adding voltages across R and L as plain numbers: one thirty eight plus one eighty four is three hundred and twenty two, which is wrong. They must be added as phasors. Two: forgetting the j, or using plus j for a capacitor. Three: writing X L equals f L instead of two pi f L. Four: putting microfarads into the formula without converting to farads. Five: mixing up lead and lag. Remember CIVIL.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Add voltages as phasors, not numbers",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "L: +jX_L · C: −jX_C",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "X_L = 2πfL (don't forget 2π)",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "µF → F before calculating",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "CIVIL: C leads, L lags",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": "138 + 184 ≠ 230"
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. In a resistor, current is in phase. In an inductor, current lags by ninety degrees, with reactance X L equals two pi f L. In a capacitor, current leads by ninety degrees, with reactance X C equals one over two pi f C. Impedances are R, plus j X L and minus j X C. Then Ohm's law V equals I Z, and every DC method, works for AC. And the power factor is cos phi.",
+   "title": "R, L, C in AC in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "R: in phase · Z = R",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "L: I lags 90° · Z = jωL",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "C: I leads 90° · Z = −j/(ωC)",
+     "x": 25,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "V = I Z · pf = cos φ",
+     "x": 75,
+     "y": 58,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "CIVIL",
+     "x": 50,
+     "y": 88,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "We saw that a low power factor wastes current. But what exactly is the power in an AC circuit, when voltage and current are out of step? Next, we meet real power, reactive power and apparent power, the power triangle, and how industries correct a poor power factor.",
+   "title": "NEXT: AC POWER",
+   "lines": [
+    "X_L = 2πfL",
+    "X_C = 1/2πfC",
+    "Z = R + jX",
+    "V = IZ"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "R, L, C in AC: Reactance, Impedance & Phase Explained | Network Theory #25",
+  "description": "Network Theory from absolute zero - Part 25.\n- Resistor in AC: in phase (animated)\n- Inductor: current lags 90°, X_L = 2πfL\n- Capacitor: current leads 90°, X_C = 1/(2πfC)\n- CIVIL memory trick\n- Impedance: R, +jX_L, −jX_C; V = IZ\n- Series RL example: Z = 30 + j40 = 50∠53.13°, I = 4.6 A lagging\n- Why 138 V + 184 V gives 230 V (phasor sum)\n- Power factor, reactance vs frequency\n- Common mistakes\n\nPrevious: Phasors. Next: AC power.\n\n#NetworkTheory #Impedance #Reactance #ECE",
+  "tags": [
+   "impedance",
+   "inductive reactance",
+   "capacitive reactance",
+   "rl circuit",
+   "rlc circuit ac",
+   "power factor",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
