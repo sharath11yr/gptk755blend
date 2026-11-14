@@ -786,7 +786,7 @@ export const PhasorScene: React.FC<any> = ({ dur, mode = "gen", vm = 325, phi = 
       <line x1={tipx} y1={tipy} x2={curX} y2={tipy} stroke={L.cyan} strokeWidth={2} strokeDasharray="6 6" /></g>}
     {two && <g><line x1={cx} y1={cy} x2={tip2x} y2={tip2y} stroke={L.amber} strokeWidth={8} strokeLinecap="round" /><circle cx={tip2x} cy={tip2y} r={10} fill={L.amber} />
       <path d={`M${cx + 70 * Math.cos(th - ph)} ${cy - 70 * Math.sin(th - ph)} A70 70 0 0 0 ${cx + 70 * Math.cos(th)} ${cy - 70 * Math.sin(th)}`} fill="none" stroke={L.green} strokeWidth={4} />
-      <text x={cx} y={cy + R + 80} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={30} fontWeight={800}>φ = {phi}° ({label2} lags)</text></g>}
+      <text x={cx} y={cy + R + 80} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={30} fontWeight={800}>{phi === 0 ? `φ = 0° (in phase)` : phi > 0 ? `φ = ${phi}° (${label2} lags)` : `φ = ${-phi}° (${label2} leads)`}</text></g>}
     <polyline points={wave(0)} fill="none" stroke={L.cyan} strokeWidth={6} />
     {two && <polyline points={wave(-ph, 0.7)} fill="none" stroke={L.amber} strokeWidth={6} />}
     {mode === "rms" && <g><polyline points={wave(0, 1, true)} fill="none" stroke={L.amber} strokeWidth={5} opacity={0.9} />
@@ -802,4 +802,45 @@ export const PhasorScene: React.FC<any> = ({ dur, mode = "gen", vm = 325, phi = 
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ complex plane: {"mode":"plane"|"j"|"add","re":3,"im":4}
+export const ComplexScene: React.FC<any> = ({ dur, mode = "plane", re = 3, im = 4 }) => {
+  const f = useCurrentFrame();
+  const O = [700, 560], U = 70; const P = (x: number, y: number) => [O[0] + x * U, O[1] - y * U];
+  const arrow = (a: number[], b: number[], c: string, w = 8, o = 1) => { const dx = b[0] - a[0], dy = b[1] - a[1], L2 = Math.hypot(dx, dy) || 1, ux = dx / L2, uy = dy / L2;
+    return <g opacity={o}><line x1={a[0]} y1={a[1]} x2={b[0] - ux * 18} y2={b[1] - uy * 18} stroke={c} strokeWidth={w} strokeLinecap="round" />
+      <path d={`M${b[0]} ${b[1]} L${b[0] - ux * 26 - uy * 13} ${b[1] - uy * 26 + ux * 13} L${b[0] - ux * 26 + uy * 13} ${b[1] - uy * 26 - ux * 13} Z`} fill={c} /></g>; };
+  const axes = <g>{Array.from({ length: 13 }, (_, k) => k - 6).map((k) => <g key={k}><line x1={P(k, -6)[0]} y1={P(k, -6)[1]} x2={P(k, 6)[0]} y2={P(k, 6)[1]} stroke={L.grid2 || "#ddd"} strokeWidth={1} /><line x1={P(-6, k)[0]} y1={P(-6, k)[1]} x2={P(6, k)[0]} y2={P(6, k)[1]} stroke={L.grid2 || "#ddd"} strokeWidth={1} /></g>)}
+    <line x1={P(-6.5, 0)[0]} y1={O[1]} x2={P(6.5, 0)[0]} y2={O[1]} stroke={L.text} strokeWidth={3} /><line x1={O[0]} y1={P(0, 6.5)[1]} x2={O[0]} y2={P(0, -6.5)[1]} stroke={L.text} strokeWidth={3} />
+    <text x={P(6.5, 0)[0] + 10} y={O[1] + 10} fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>real</text>
+    <text x={O[0] + 14} y={P(0, 6.5)[1] - 8} fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>imaginary (j)</text></g>;
+  const panel = (lines: string[]) => <g><rect x={1300} y={300} width={560} height={70 + lines.length * 62} rx={18} fill={L.panel} stroke={L.green} strokeWidth={3} />
+    {lines.map((t, i) => <text key={i} x={1580} y={360 + i * 62} textAnchor="middle" fill={i === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={34} fontWeight={800} opacity={fade(f, dur * 0.15 + i * dur * 0.15, 10)}>{t}</text>)}</g>;
+  if (mode === "j") {
+    const k = Math.min(3, Math.floor(interpolate(f, [dur * 0.12, dur * 0.85], [0, 4], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })));
+    const pts = [[4, 0], [0, 4], [-4, 0], [0, -4]]; const names = ["1 × 4 = 4", "j × 4 = j4", "j² × 4 = −4", "j³ × 4 = −j4"];
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{axes}
+      {pts.map((q, i) => i <= k && arrow(O, P(q[0], q[1]), i === k ? L.cyan : L.dim, i === k ? 9 : 4, i === k ? 1 : 0.5))}
+      {panel(["multiply by j → turn 90°", names[k], "j² = −1"])}</svg></AbsoluteFill>;
+  }
+  if (mode === "add") {
+    const t = interpolate(f, [dur * 0.25, dur * 0.6], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    const A = [4, 0], B = [0, 4]; const Bstart = [t * A[0], t * A[1]];
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{axes}
+      {arrow(O, P(A[0], A[1]), L.cyan)}{arrow(P(Bstart[0], Bstart[1]), P(Bstart[0] + B[0], Bstart[1] + B[1]), L.amber)}
+      {t > 0.98 && arrow(O, P(4, 4), L.green, 9)}
+      {panel(["A = 4∠0°  ·  B = 4∠90°", "A + B = 4 + j4", "= 5.66 ∠ 45°"])}</svg></AbsoluteFill>;
+  }
+  const r = Math.hypot(re, im); const ang = (Math.atan2(im, re) * 180) / Math.PI;
+  const show = fade(f, dur * 0.1, 12);
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{axes}
+    <line x1={P(re, 0)[0]} y1={P(re, 0)[1]} x2={P(re, im)[0]} y2={P(re, im)[1]} stroke={L.amber} strokeWidth={4} strokeDasharray="10 8" opacity={show} />
+    <text x={P(re / 2, 0)[0]} y={O[1] + 44} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>{re}</text>
+    <text x={P(re, im / 2)[0] + 16} y={P(re, im / 2)[1]} fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>j{im}</text>
+    {arrow(O, P(re, im), L.cyan)}
+    <path d={`M${O[0] + 90} ${O[1]} A90 90 0 0 0 ${O[0] + 90 * Math.cos((ang * Math.PI) / 180)} ${O[1] - 90 * Math.sin((ang * Math.PI) / 180)}`} fill="none" stroke={L.green} strokeWidth={4} />
+    <text x={O[0] + 110} y={O[1] - 30} fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>θ</text>
+    {panel([`rectangular: ${re} + j${im}`, `r = √(${re}² + ${im}²) = ${+r.toFixed(2)}`, `θ = tan⁻¹(${im}/${re}) = ${ang.toFixed(2)}°`, `polar: ${+r.toFixed(2)} ∠ ${ang.toFixed(2)}°`])}
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };

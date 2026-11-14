@@ -1,0 +1,428 @@
+{
+ "title": "Phasors and Complex Numbers - Network Theory Part 23",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Phasors",
+ "cover": "Phasors",
+ "tag": "GETYR ECE",
+ "short": [
+  3,
+  5,
+  7
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 23 · Phasors & complex numbers",
+   "narration": "Welcome back. In the last part, every AC voltage and current became a sine wave with a peak, a frequency and a phase. But here is the problem: to add two sine waves with different phases, you need messy trigonometry, and circuits are full of such additions. Engineers found a brilliant shortcut. Represent each sine wave by an arrow, called a phasor, and use complex numbers to do the maths. Then AC circuits become almost as easy as DC.",
+   "kicker": "NETWORK THEORY · PART 23",
+   "title": "PHASORS & COMPLEX NUMBERS",
+   "subtitle": "Turning sine waves into arrows"
+  },
+  {
+   "type": "phasor",
+   "chapter": "23.1 · From wave to arrow",
+   "narration": "Remember the rotating arrow that draws the sine wave? In a circuit, every voltage and current rotates at the same speed, because they all have the same frequency. So the speed carries no new information. We only need two things: how long the arrow is, the size of the wave, and its angle, the phase. If we freeze the arrow at time zero, we get a phasor: a fixed arrow with a length and an angle. Watch the two arrows here: they turn together, and their angle difference never changes.",
+   "mode": "phase",
+   "vm": 325,
+   "phi": 60
+  },
+  {
+   "type": "diagram",
+   "chapter": "23.2 · What a phasor keeps",
+   "narration": "So a phasor keeps only what matters. The sine wave v equals V m sine of omega t plus phi, becomes the phasor V, angle phi. The frequency is the same everywhere in the circuit, so we simply remember it and leave it out. Most textbooks use the RMS value as the phasor length, because power and meters use RMS. Some use the peak value. Both work, as long as you use the same one everywhere in a problem.",
+   "title": "Sine wave → phasor",
+   "parts": [
+    {
+     "id": "a",
+     "label": "v = Vm sin(ωt + φ)",
+     "x": 25,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Phasor: V ∠ φ",
+     "x": 75,
+     "y": 30,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Length: RMS (or peak) · Angle: phase",
+     "x": 50,
+     "y": 75
+    }
+   ],
+   "arrows": [
+    [
+     "a",
+     "b",
+     "freeze"
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Frequency is the same everywhere"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": "Be consistent: RMS or peak"
+    }
+   ]
+  },
+  {
+   "type": "complex",
+   "chapter": "23.3 · The complex plane",
+   "narration": "To do maths with arrows, we place them on a special graph, the complex plane. The horizontal axis is the real axis. The vertical axis is the imaginary axis, marked with j. Here is an arrow that goes three units right and four units up. We write it as three plus j four. This is called rectangular form. In maths books the letter i is used for the imaginary unit, but engineers use j, because i is already used for current.",
+   "mode": "plane",
+   "re": 3,
+   "im": 4
+  },
+  {
+   "type": "formula",
+   "chapter": "23.4 · Polar form",
+   "narration": "The same arrow can also be described by its length and its angle. This is polar form. The length, or magnitude, r, comes from Pythagoras: the square root of three squared plus four squared, which is five. The angle theta comes from the inverse tangent of four over three, which is fifty three point one three degrees. So three plus j four equals five, angle fifty three point one three degrees. To go back, x equals r cos theta and y equals r sine theta.",
+   "formula": "x + jy = r ∠ θ",
+   "terms": [
+    [
+     "r",
+     "√(x² + y²)"
+    ],
+    [
+     "θ",
+     "tan⁻¹(y/x)"
+    ],
+    [
+     "Back",
+     "x = r cos θ · y = r sin θ"
+    ]
+   ],
+   "example": [
+    "3 + j4 = 5 ∠ 53.13°"
+   ]
+  },
+  {
+   "type": "complex",
+   "chapter": "23.5 · What j really means",
+   "narration": "Now a beautiful idea. What does j actually do? Watch: start with an arrow of length four on the real axis. Multiply by j, and it turns ninety degrees, pointing straight up: j four. Multiply by j again, and it turns another ninety degrees, pointing left: minus four. That is why j squared equals minus one. Multiply again: it points down. So multiplying by j simply rotates an arrow by ninety degrees. This is exactly what inductors and capacitors do to current, as we will see in the next part.",
+   "mode": "j"
+  },
+  {
+   "type": "formula",
+   "chapter": "23.6 · Adding and multiplying",
+   "narration": "Each form is good at different jobs. To add or subtract, use rectangular form: add the real parts and the imaginary parts separately. To multiply or divide, use polar form: multiply the magnitudes and add the angles, or divide the magnitudes and subtract the angles. For example, five angle fifty three point one three, times two angle thirty, gives ten angle eighty three point one three. And ten angle sixty divided by two angle twenty gives five angle forty.",
+   "formula": "add/subtract: rectangular     multiply/divide: polar",
+   "terms": [
+    [
+     "Multiply",
+     "r₁r₂ ∠ (θ₁ + θ₂)"
+    ],
+    [
+     "Divide",
+     "(r₁/r₂) ∠ (θ₁ − θ₂)"
+    ]
+   ],
+   "example": [
+    "5∠53.13° × 2∠30° = 10∠83.13°",
+    "10∠60° ÷ 2∠20° = 5∠40°"
+   ]
+  },
+  {
+   "type": "complex",
+   "chapter": "23.7 · Adding two waves",
+   "narration": "Here is why phasors are so powerful. Suppose two voltages are added: four sine omega t, and four sine of omega t plus ninety degrees. With trigonometry, that is painful. With phasors, watch: the blue arrow, four angle zero, and the amber arrow, four angle ninety. Place them tip to tail, and the green arrow from start to end is the sum: four plus j four, which is five point six six angle forty five degrees. So the total voltage is five point six six sine of omega t plus forty five degrees. One picture replaced the trigonometry.",
+   "mode": "add"
+  },
+  {
+   "type": "formula",
+   "chapter": "23.8 · A real example",
+   "narration": "Let's convert a real voltage. Your home supply could be written as v equals three hundred and twenty five sine of three hundred and fourteen t plus thirty degrees. The peak is three hundred and twenty five volts, so the RMS is two hundred and thirty volts. The phase is thirty degrees. So the RMS phasor is two hundred and thirty angle thirty degrees volts. In rectangular form: two hundred and thirty times cos thirty, about one hundred and ninety nine point two, plus j two hundred and thirty times sine thirty, which is j one hundred and fifteen.",
+   "formula": "V = 230 ∠ 30° V",
+   "terms": [
+    [
+     "From",
+     "v = 325 sin(314t + 30°)"
+    ],
+    [
+     "Rectangular",
+     "199.2 + j115 V"
+    ]
+   ],
+   "example": [
+    "Peak 325 → RMS 230"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "23.9 · Common mistakes",
+   "narration": "The silly mistakes students make with phasors. One: calculator in radian mode while using degrees. Always check. Two: the angle of a point on the left side. For minus three plus j four, the calculator's inverse tangent gives minus fifty three point one three, but the arrow points up and left, so the real angle is one hundred and twenty six point eight seven degrees. Draw a quick sketch to see the quadrant. Three: adding numbers in polar form directly. Four: mixing peak and RMS phasors. Five: using phasors for waves of different frequencies: they only work at one frequency.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Calculator: degree mode!",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Check the quadrant: −3 + j4 = 5∠126.87°",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Never add in polar form",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Don't mix peak and RMS",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Same frequency only",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": "Sketch the arrow first"
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "23.10 · Where phasors are used",
+   "narration": "Phasors are the everyday language of electrical engineering. Power engineers describe every voltage and current in the grid as phasors, and modern grids even measure them live with devices called phasor measurement units. Electronics engineers use them to design filters and amplifiers. And in the next parts, we will use them to handle resistors, inductors and capacitors in AC circuits with the same simple laws we already know: Ohm's law, KCL and KVL.",
+   "title": "Phasors at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "PHASORS",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Power grids (PMUs)",
+     "x": 20,
+     "y": 22
+    },
+    {
+     "id": "b",
+     "label": "Filters & amplifiers",
+     "x": 80,
+     "y": 22
+    },
+    {
+     "id": "c",
+     "label": "AC circuit analysis",
+     "x": 20,
+     "y": 80
+    },
+    {
+     "id": "d",
+     "label": "Motors & three-phase systems",
+     "x": 80,
+     "y": 80
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": "Next part"
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. A phasor is a frozen rotating arrow: its length is the size of the wave, usually RMS, and its angle is the phase. On the complex plane, it is written x plus j y, or r angle theta. Multiplying by j rotates it by ninety degrees, and j squared is minus one. Add in rectangular form, multiply and divide in polar form. And watch your calculator mode and the quadrant.",
+   "title": "Phasors in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Wave → arrow: V ∠ φ",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "x + jy = r ∠ θ",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "× j = rotate 90° · j² = −1",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "Add: rect · Multiply: polar",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "Now we have the tools. Next, we put a resistor, an inductor and a capacitor into an AC circuit, and see what each does to the current: which one keeps it in step, which one makes it lag, and which one makes it lead. That gives us reactance and impedance, the AC version of resistance.",
+   "title": "NEXT: R, L, C IN AC · IMPEDANCE",
+   "lines": [
+    "Phasor",
+    "x + jy = r∠θ",
+    "j = 90° turn"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Phasors & Complex Numbers for AC Circuits Explained from Zero | Network Theory #24",
+  "description": "Network Theory from absolute zero - Part 24: phasors.\n- Why phasors: adding sine waves without trigonometry\n- From rotating arrow to phasor\n- The complex plane, j instead of i\n- Rectangular and polar form (3 + j4 = 5∠53.13°)\n- What j means: a 90° rotation (animated)\n- Adding, multiplying and dividing phasors\n- Adding two waves tip-to-tail (animated)\n- Converting a real voltage to a phasor\n- Common mistakes (calculator mode, quadrant)\n\nPrevious: AC fundamentals. Next: R, L, C in AC and impedance.\n\n#NetworkTheory #Phasors #ComplexNumbers #ECE",
+  "tags": [
+   "phasors",
+   "phasor diagram",
+   "complex numbers in ac circuits",
+   "polar form",
+   "rectangular form",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}
