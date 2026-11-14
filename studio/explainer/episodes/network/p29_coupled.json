@@ -1,0 +1,395 @@
+{
+ "title": "Coupled Circuits - Network Theory Part 29",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "cover_highlight": "Coupled",
+ "cover": "Coupled Circuits",
+ "tag": "GETYR ECE",
+ "short": [
+  1,
+  4,
+  5
+ ],
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Part 29 · Coupled circuits",
+   "narration": "Welcome back. In Part 3, an inductor's changing current created a voltage in its own coil, called self inductance. Now we place two coils close together. The magnetic field of the first coil passes through the second, so a changing current in one coil creates a voltage in the other, without any wire connecting them. This is mutual inductance, the principle behind every transformer, wireless charger and induction cooker.",
+   "kicker": "NETWORK THEORY · PART 29",
+   "title": "COUPLED CIRCUITS",
+   "subtitle": "Mutual inductance, dot convention and transformers"
+  },
+  {
+   "type": "coupled",
+   "chapter": "29.1 · Mutual inductance",
+   "narration": "Here are two coils. Coil one, in amber, carries a changing AC current. Watch its magnetic flux lines. Some of them, in blue, stay around coil one only. Others, in green, pass through coil two as well. These shared lines link the two coils. As the current in coil one changes, the shared flux through coil two changes, and by Faraday's law a voltage appears in coil two. Look at the meters: the voltage in coil two is biggest when the current in coil one is changing fastest, and zero when that current is at its peak.",
+   "mode": "mutual",
+   "k": 0.5
+  },
+  {
+   "type": "formula",
+   "chapter": "29.2 · The equation",
+   "narration": "The induced voltage in coil two equals M times the rate of change of current in coil one, written M di one by dt. M is the mutual inductance, measured in henries, like L. It works both ways: a changing current in coil two also induces a voltage in coil one, with the same M. So coil one now has two voltages: its own self induced voltage, L one di one by dt, plus the mutually induced voltage, M di two by dt.",
+   "formula": "v₂ = M · di₁/dt",
+   "terms": [
+    [
+     "M",
+     "mutual inductance (H)"
+    ],
+    [
+     "Coil 1 total",
+     "v₁ = L₁ di₁/dt ± M di₂/dt"
+    ]
+   ],
+   "example": [
+    "Same M in both directions"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "29.3 · Coupling coefficient",
+   "narration": "How strongly are the coils linked? The coupling coefficient, k, is the fraction of flux shared between them, from zero for no coupling to one for perfect coupling. M equals k times the square root of L one times L two. For example, with L one equals four millihenries, L two equals nine millihenries and k equals zero point five: M equals zero point five times the square root of thirty six, which is three millihenries. Coils wound on the same iron core can have k close to zero point nine nine. Coils far apart in air may have k below zero point one.",
+   "formula": "M = k √(L₁ L₂)     0 ≤ k ≤ 1",
+   "terms": [
+    [
+     "k = 1",
+     "all flux shared (ideal)"
+    ],
+    [
+     "k = 0",
+     "no coupling"
+    ]
+   ],
+   "example": [
+    "L₁ = 4 mH, L₂ = 9 mH, k = 0.5 → M = 3 mH"
+   ]
+  },
+  {
+   "type": "coupled",
+   "chapter": "29.4 · The dot convention",
+   "narration": "There is one problem: is the induced voltage plus or minus? It depends on which way each coil is wound, which you cannot see in a circuit diagram. So we mark one end of each coil with a dot. The rule is: if current enters coil one at its dotted end, the induced voltage in coil two is positive at its dotted end. If the current enters at the undotted end, the induced voltage is positive at the undotted end. The dots tell you the sign of M in every equation.",
+   "mode": "dots",
+   "k": 0.5
+  },
+  {
+   "type": "formula",
+   "chapter": "29.5 · Series aiding and opposing",
+   "narration": "Now connect the two coils in series. If the current enters both coils at their dotted ends, their fluxes add, and the total inductance is L one plus L two plus two M. This is series aiding. If it enters one at the dot and the other at the undotted end, the fluxes oppose, and the total is L one plus L two minus two M. For our example: aiding gives four plus nine plus six, nineteen millihenries. Opposing gives four plus nine minus six, seven millihenries. Measuring both is a practical way to find M: M equals the difference divided by four.",
+   "formula": "L = L₁ + L₂ ± 2M",
+   "terms": [
+    [
+     "+2M",
+     "series aiding (both currents enter dots)"
+    ],
+    [
+     "−2M",
+     "series opposing"
+    ]
+   ],
+   "example": [
+    "Aiding: 4 + 9 + 6 = 19 mH",
+    "Opposing: 4 + 9 − 6 = 7 mH",
+    "M = (19 − 7) / 4 = 3 mH"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "29.6 · The ideal transformer",
+   "narration": "Wind both coils tightly on a shared iron core, so k is almost one, and you get a transformer. For an ideal transformer, the voltage ratio equals the turns ratio: V two over V one equals N two over N one. The current ratio is the opposite: I two over I one equals N one over N two. So power in equals power out. A phone charger's transformer turns two hundred and thirty volts into a much lower voltage. To get twelve volts from two hundred and thirty, the turns ratio must be about nineteen point two to one.",
+   "formula": "V₂/V₁ = N₂/N₁ = I₁/I₂",
+   "terms": [
+    [
+     "Step-down",
+     "N₂ < N₁"
+    ],
+    [
+     "Step-up",
+     "N₂ > N₁"
+    ],
+    [
+     "Ideal",
+     "P_in = P_out"
+    ]
+   ],
+   "example": [
+    "230 V → 12 V: N₁/N₂ ≈ 19.2"
+   ]
+  },
+  {
+   "type": "formula",
+   "chapter": "29.7 · Impedance reflection",
+   "narration": "A transformer also changes how a load looks from the source. A load Z L on the secondary appears on the primary as Z L times N one over N two, squared. For example, an eight ohm speaker connected through a ten to one transformer looks like eight times one hundred, eight hundred ohms, to the amplifier. This is how transformers are used for impedance matching, connecting back to maximum power transfer.",
+   "formula": "Z_in = Z_L × (N₁/N₂)²",
+   "terms": [
+    [
+     "Matching",
+     "make Z_in equal R_th of the source"
+    ]
+   ],
+   "example": [
+    "8 Ω speaker, 10:1 → 800 Ω"
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "29.8 · Common mistakes",
+   "narration": "Common mistakes with coupled circuits. One: ignoring the dots and guessing the sign of M. Two: using L one plus L two plus M instead of plus two M for series aiding. Three: forgetting that M also induces a voltage back into coil one. Four: thinking a transformer works on DC: with steady DC, there is no changing flux, so no voltage is induced. Five: inverting the current ratio: when voltage steps down, current steps up.",
+   "title": "Common mistakes",
+   "parts": [
+    {
+     "id": "a",
+     "label": "Use the dots for the sign of M",
+     "x": 25,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "Series: ±2M, not ±M",
+     "x": 75,
+     "y": 22,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "M acts in both coils",
+     "x": 25,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "No transformer action on DC",
+     "x": 75,
+     "y": 55,
+     "shape": "pill"
+    },
+    {
+     "id": "e",
+     "label": "Voltage down → current up",
+     "x": 50,
+     "y": 86,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "e"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "29.9 · Where coupling is used",
+   "narration": "Coupled coils are everywhere. Power transformers step voltage up at power stations and down near your home. Phone chargers use small high frequency transformers. Wireless charging pads couple a coil in the pad to a coil in the phone. Induction cooktops induce currents in the pan itself. And current transformers measure large currents safely by coupling, without touching the main wire.",
+   "title": "Coupling at work",
+   "parts": [
+    {
+     "id": "x",
+     "label": "MUTUAL INDUCTANCE",
+     "x": 50,
+     "y": 50,
+     "shape": "pill"
+    },
+    {
+     "id": "a",
+     "label": "Power transformers",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "id": "b",
+     "label": "Chargers (SMPS)",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "id": "c",
+     "label": "Wireless charging",
+     "x": 20,
+     "y": 82
+    },
+    {
+     "id": "d",
+     "label": "Induction cooking, CTs",
+     "x": 80,
+     "y": 82
+    }
+   ],
+   "arrows": [
+    [
+     "x",
+     "a",
+     ""
+    ],
+    [
+     "x",
+     "b",
+     ""
+    ],
+    [
+     "x",
+     "c",
+     ""
+    ],
+    [
+     "x",
+     "d",
+     ""
+    ]
+   ],
+   "steps": [
+    {
+     "highlight": [
+      "x",
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "x",
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "diagram",
+   "chapter": "Recap",
+   "narration": "Let's bring it together. Two coils sharing flux are coupled by mutual inductance M: v two equals M di one by dt. M equals k root L one L two, with k from zero to one. Dots decide the sign. In series, L equals L one plus L two plus or minus two M. And an ideal transformer has V two over V one equals N two over N one, with impedance reflected by the turns ratio squared.",
+   "title": "Coupled circuits in one picture",
+   "parts": [
+    {
+     "id": "a",
+     "label": "v₂ = M di₁/dt",
+     "x": 25,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "b",
+     "label": "M = k√(L₁L₂)",
+     "x": 75,
+     "y": 25,
+     "shape": "pill"
+    },
+    {
+     "id": "c",
+     "label": "Dots → sign · L = L₁+L₂±2M",
+     "x": 25,
+     "y": 70,
+     "shape": "pill"
+    },
+    {
+     "id": "d",
+     "label": "V₂/V₁ = N₂/N₁",
+     "x": 75,
+     "y": 70,
+     "shape": "pill"
+    }
+   ],
+   "arrows": [],
+   "steps": [
+    {
+     "highlight": [
+      "a"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "b"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "c"
+     ],
+     "note": ""
+    },
+    {
+     "highlight": [
+      "d"
+     ],
+     "note": ""
+    }
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "narration": "For large networks, engineers need a systematic way to describe how branches and nodes are connected, so that a computer can write all the equations automatically. That is network topology, using graphs, trees, tie sets and cut sets. It is our next part.",
+   "title": "NEXT: NETWORK TOPOLOGY",
+   "lines": [
+    "Mutual inductance",
+    "Dot convention",
+    "±2M",
+    "Transformer"
+   ],
+   "cta": "Next part coming up"
+  }
+ ],
+ "yt": {
+  "title": "Mutual Inductance, Dot Convention & Transformers Explained | Network Theory #30",
+  "description": "Network Theory from absolute zero - Part 30: coupled circuits.\n- Mutual inductance with shared flux (animated)\n- v₂ = M di₁/dt\n- Coupling coefficient k, M = k√(L₁L₂)\n- The dot convention\n- Series aiding and opposing: L₁ + L₂ ± 2M\n- Ideal transformer: turns, voltage and current ratios\n- Impedance reflection\n- Common mistakes\n\nPrevious: Resonance. Next: Network topology.\n\n#NetworkTheory #MutualInductance #DotConvention #ECE",
+  "tags": [
+   "mutual inductance",
+   "dot convention",
+   "coupled circuits",
+   "coupling coefficient",
+   "transformer",
+   "network theory",
+   "ece"
+  ],
+  "playlist": "Network Theory"
+ }
+}

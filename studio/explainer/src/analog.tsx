@@ -911,4 +911,24 @@ export const ResScene: React.FC<any> = ({ dur, mode = "curve", r = [10, 30] }) =
   </svg></AbsoluteFill>;
 };
 
-export const ANALOG_SCENES: Record<string, React.FC<any>> = { resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+// ------------------------------------------------------------------ two coupled coils: {"mode":"mutual"|"dots","k":0.5}
+export const CoupledScene: React.FC<any> = ({ dur, mode = "mutual", k = 0.5 }) => {
+  const f = useCurrentFrame(); const t = f / 30; const i1 = Math.sin(t * 1.6); const di = Math.cos(t * 1.6);
+  const coil = (cx: number, col: string) => Array.from({ length: 6 }, (_, j) => <ellipse key={j} cx={cx - 125 + j * 50} cy={520} rx={22} ry={110} fill="none" stroke={col} strokeWidth={8} />);
+  const shared = Math.round(6 * k);
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    {Array.from({ length: 6 }, (_, j) => { const share = j < shared; const ry = 150 + j * 34; const rx = share ? 640 + j * 20 : 240 + j * 18; const cx = share ? 960 : 600;
+      return <ellipse key={j} cx={cx} cy={520} rx={rx} ry={ry} fill="none" stroke={share ? L.green : L.cyan} strokeWidth={3} strokeDasharray="14 10" strokeDashoffset={-f * 2 * Math.sign(i1)} opacity={0.25 + 0.65 * Math.abs(i1)} />; })}
+    {coil(600, L.amber)}{coil(1320, L.red)}
+    {mode === "dots" && <g><circle cx={460} cy={390} r={16} fill={L.text} /><circle cx={1180} cy={390} r={16} fill={L.text} />
+      <text x={460} y={350} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={700}>dot</text><text x={1180} y={350} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={700}>dot</text></g>}
+    <rect x={470} y={688} width={260} height={46} rx={10} fill={L.bg0} /><rect x={1190} y={688} width={260} height={46} rx={10} fill={L.bg0} /><text x={600} y={720} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={32} fontWeight={800}>coil 1 (L₁)</text>
+    <text x={1320} y={720} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={32} fontWeight={800}>coil 2 (L₂)</text>
+    <rect x={410} y={780} width={380} height={70} rx={12} fill={L.panel} stroke={L.amber} strokeWidth={3} /><text x={600} y={826} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>i₁ = {(i1 * 2).toFixed(2)} A</text>
+    <rect x={1130} y={780} width={380} height={70} rx={12} fill={L.panel} stroke={L.red} strokeWidth={3} /><text x={1320} y={826} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={30} fontWeight={800}>v₂ = {(di * 3).toFixed(2)} V</text>
+    <text x={960} y={160} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={36} fontWeight={700}>{mode === "dots" ? "current INTO a dot → induced + at the other dot" : `green flux links both coils · coupling k = ${k}`}</text>
+    <text x={960} y={960} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={30}>v₂ = M · di₁/dt : biggest when i₁ changes fastest, zero at its peaks</text>
+  </svg></AbsoluteFill>;
+};
+
+export const ANALOG_SCENES: Record<string, React.FC<any>> = { coupled: CoupledScene, resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
