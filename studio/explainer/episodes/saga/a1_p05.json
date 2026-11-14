@@ -1,0 +1,106 @@
+{
+ "title": "The Spark",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 5: The Spark",
+ "cover_highlight": "Spark",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "cave",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "expr": "curious"
+    }
+   ],
+   "caption": "Mia's secret.",
+   "narration": "As John healed, Mia showed him a secret. Two stones. She struck them together. A spark jumped."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "expr": "happy"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 780,
+     "expr": "happy"
+    }
+   ],
+   "caption": "FIRE.",
+   "narration": "She fed the spark with dry grass, and it grew into flame. Fire. Light in the dark. Warmth in the cold.",
+   "fire": true,
+   "firex": 540
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 440,
+     "expr": "love",
+     "tilt": 8
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 600,
+     "expr": "love",
+     "tilt": -8,
+     "pose": "hug"
+    }
+   ],
+   "caption": "Their first kiss.",
+   "narration": "In the firelight, John took her hand. And under the stars, for the very first time, they kissed.",
+   "heart": true
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "expr": "angry"
+    }
+   ],
+   "caption": "But the fire could be seen…",
+   "narration": "But fire can be seen from very far away. And on the hill, someone was watching.",
+   "partcard": "PART 6 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 5: The Spark #shorts",
+  "description": "The Human Journey — Part 5: The Spark\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

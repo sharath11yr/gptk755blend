@@ -1,0 +1,95 @@
+{
+ "title": "Zor",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 4: Zor",
+ "cover_highlight": "Zor",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "Zor.",
+   "narration": "It was Zor. The strongest warrior of Mia's tribe. And the man her father had promised her to."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 330,
+     "expr": "angry"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 700,
+     "expr": "fear"
+    }
+   ],
+   "caption": "\"She is mine.\"",
+   "narration": "Mia belongs to me, Zor growled. Come home now, or this stranger dies."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "expr": "angry"
+    }
+   ],
+   "caption": "She made a choice.",
+   "narration": "Mia looked at John, wounded and weak. Then she looked at Zor. And she made a choice."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "\"Then you'll both burn.\"",
+   "narration": "She stayed. Zor's face went dark. Then you will both pay, he said, and vanished into the night.",
+   "partcard": "PART 5 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 4: Zor #shorts",
+  "description": "The Human Journey — Part 4: Zor\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

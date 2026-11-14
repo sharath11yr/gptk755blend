@@ -1,0 +1,101 @@
+{
+ "title": "Wolves",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 7: Wolves",
+ "cover_highlight": "Wolves",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "Eyes in the dark.",
+   "narration": "Yellow eyes glowed in the dark. One wolf. Then three. Then seven.",
+   "animal": "wolf"
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "pose": "brave",
+     "expr": "angry"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 780,
+     "expr": "fear"
+    }
+   ],
+   "caption": "\"The ember, Mia!\"",
+   "narration": "The ember! John shouted. Mia blew on it with shaking breath, and a tiny flame came back to life.",
+   "fire": true,
+   "firex": 540
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "Fire versus fear.",
+   "narration": "John grabbed a burning stick and swung it at the pack. The wolves yelped and scattered into the night.",
+   "fire": true,
+   "firex": 760
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "expr": "fear"
+    }
+   ],
+   "caption": "\"John… I have to tell you something.\"",
+   "narration": "Breathless, Mia held his arm. John, she whispered. I have to tell you something.",
+   "partcard": "PART 8 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 7: Wolves #shorts",
+  "description": "The Human Journey — Part 7: Wolves\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

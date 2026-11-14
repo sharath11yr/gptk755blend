@@ -1,0 +1,115 @@
+{
+ "title": "The Secret",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 8: The Secret",
+ "cover_highlight": "Secret",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 380,
+     "expr": "curious"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 640,
+     "expr": "happy"
+    }
+   ],
+   "caption": "\"We're going to have a baby.\"",
+   "narration": "We're going to have a baby. John froze. Then he laughed, and lifted her into the air.",
+   "fire": true,
+   "firex": 540
+  },
+  {
+   "type": "saga",
+   "bg": "village",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "expr": "happy"
+    },
+    {
+     "role": "nana",
+     "name": "Nana",
+     "flip": true,
+     "x": 720,
+     "expr": "happy"
+    }
+   ],
+   "caption": "They found a home.",
+   "narration": "They found a small village by the river, where a wise old woman called Nana welcomed them."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 430,
+     "expr": "love",
+     "tilt": 8
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 610,
+     "expr": "love",
+     "tilt": -8,
+     "pose": "hug"
+    }
+   ],
+   "caption": "Months of happiness.",
+   "narration": "For months, life was beautiful. Warm fires. Full bellies. Love.",
+   "fire": true,
+   "firex": 860,
+   "heart": true
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "But Zor never forgot.",
+   "narration": "But far away, Zor was gathering warriors. He had never forgotten.",
+   "partcard": "PART 9 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 8: The Secret #shorts",
+  "description": "The Human Journey — Part 8: The Secret\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "title": "Home",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 14: Home",
+ "cover_highlight": "Home",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 230,
+     "expr": "love"
+    },
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 420,
+     "expr": "happy"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 640,
+     "expr": "love"
+    }
+   ],
+   "caption": "Together again.",
+   "narration": "Leo ran into his parents' arms. Mia kissed his forehead. John held them both, and didn't let go.",
+   "heart": true
+  },
+  {
+   "type": "saga",
+   "bg": "village",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "expr": "happy"
+    },
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 720,
+     "expr": "calm",
+     "flip": true
+    }
+   ],
+   "caption": "Enemies… or friends?",
+   "narration": "Days later, Zor came to the village. Not with a club. With his tribe, asking to learn fire."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 200,
+     "expr": "happy"
+    },
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 360,
+     "expr": "happy"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 860,
+     "expr": "love"
+    }
+   ],
+   "caption": "Peace, at last.",
+   "narration": "That night, two tribes sat around one fire. For the first time, there was peace.",
+   "fire": true,
+   "firex": 560
+  },
+  {
+   "type": "saga",
+   "bg": "ice",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 420,
+     "expr": "fear"
+    }
+   ],
+   "caption": "Then the cold came.",
+   "narration": "But far in the north, the sky was turning white. The great cold was coming.",
+   "partcard": "PART 15 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 14: Home #shorts",
+  "description": "The Human Journey — Part 14: Home\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

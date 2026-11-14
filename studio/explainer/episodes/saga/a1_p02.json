@@ -1,0 +1,93 @@
+{
+ "title": "The Lion",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 2: The Lion",
+ "cover_highlight": "Lion",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "caption": "A LION.",
+   "narration": "A lion. Huge. Hungry. Its golden eyes locked on John. He had only a wooden spear.",
+   "animal": "lion"
+  },
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "He didn't run.",
+   "narration": "Every instinct screamed run. But Mia was behind him. John planted his feet, and raised the spear.",
+   "animal": "lion"
+  },
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "The lion leapt.",
+   "narration": "The lion leapt. Claws flashed. John screamed and thrust with everything he had.",
+   "animal": "lion"
+  },
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 600,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "caption": "Then… silence.",
+   "narration": "Then silence. Mia ran to the grass. And saw blood. A lot of blood.",
+   "partcard": "PART 3 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 2: The Lion #shorts",
+  "description": "The Human Journey — Part 2: The Lion\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

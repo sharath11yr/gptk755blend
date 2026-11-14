@@ -1,0 +1,112 @@
+{
+ "title": "The Great Cold",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 15: The Great Cold",
+ "cover_highlight": "Cold",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "ice",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "walk",
+     "expr": "fear"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 700,
+     "pose": "walk",
+     "expr": "fear"
+    }
+   ],
+   "caption": "Snow. Everywhere.",
+   "narration": "The winters grew longer. Rivers froze. The animals vanished south."
+  },
+  {
+   "type": "saga",
+   "bg": "ice",
+   "cast": [
+    {
+     "role": "nana",
+     "name": "Nana",
+     "flip": false,
+     "x": 540,
+     "expr": "calm"
+    }
+   ],
+   "caption": "Nana's warning.",
+   "narration": "Nana gathered the tribes. If we stay, we die, she said. We must walk to where the sun is warm."
+  },
+  {
+   "type": "saga",
+   "bg": "ice",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 230,
+     "pose": "walk",
+     "expr": "calm"
+    },
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 420,
+     "pose": "walk",
+     "expr": "calm"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 640,
+     "pose": "walk",
+     "expr": "calm"
+    }
+   ],
+   "caption": "The great journey begins.",
+   "narration": "So they walked. Hundreds of people, into the unknown, with only fire and each other."
+  },
+  {
+   "type": "saga",
+   "bg": "ice",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 420,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "caption": "The ground began to shake.",
+   "narration": "Then, on the fifth day, the ground began to shake. Something enormous was coming.",
+   "partcard": "ARC 2 COMING"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 15: The Great Cold #shorts",
+  "description": "The Human Journey — Part 15: The Great Cold\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

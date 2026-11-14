@@ -1,0 +1,112 @@
+{
+ "title": "The Wound",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 3: The Wound",
+ "cover_highlight": "Wound",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "crouch",
+     "expr": "fear"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 650,
+     "pose": "crouch",
+     "expr": "fear"
+    }
+   ],
+   "caption": "He was alive. Barely.",
+   "narration": "John was alive. The lion had fled, but three deep claw marks tore across his chest."
+  },
+  {
+   "type": "saga",
+   "bg": "cave",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "crouch",
+     "expr": "calm"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 650,
+     "expr": "calm"
+    }
+   ],
+   "caption": "She didn't leave him.",
+   "narration": "Mia dragged him to a cave. For three nights, she cleaned his wounds with river water and healing leaves."
+  },
+  {
+   "type": "saga",
+   "bg": "cave",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 420,
+     "expr": "love",
+     "tilt": 6
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 600,
+     "expr": "love",
+     "tilt": -6,
+     "pose": "hug"
+    }
+   ],
+   "caption": "Why did you save me?",
+   "narration": "On the third night, he opened his eyes. Why did you stay? he whispered. Mia only touched his face."
+  },
+  {
+   "type": "saga",
+   "bg": "cave",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "expr": "curious"
+    }
+   ],
+   "caption": "Footsteps outside.",
+   "narration": "Then, outside the cave, heavy footsteps. Someone had followed her.",
+   "partcard": "PART 4 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 3: The Wound #shorts",
+  "description": "The Human Journey — Part 3: The Wound\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

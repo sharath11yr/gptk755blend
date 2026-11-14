@@ -1,0 +1,101 @@
+{
+ "title": "Taken",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 10: Taken",
+ "cover_highlight": "Taken",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 380,
+     "pose": "brave",
+     "expr": "angry"
+    },
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 720,
+     "expr": "fear"
+    }
+   ],
+   "caption": "Zor.",
+   "narration": "Zor stepped out of the shadows and grabbed the boy. Your father took what was mine. Now I take what is his."
+  },
+  {
+   "type": "saga",
+   "bg": "village",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "expr": "fear"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 700,
+     "expr": "fear"
+    }
+   ],
+   "caption": "\"LEO!\"",
+   "narration": "In the village, Mia screamed his name. Only Leo's tiny footprints, and much bigger ones beside them."
+  },
+  {
+   "type": "saga",
+   "bg": "village",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 420,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "John picked up his spear.",
+   "narration": "John picked up his spear. Mia grabbed a burning torch. I'm coming too, she said."
+  },
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "walk",
+     "expr": "angry"
+    }
+   ],
+   "caption": "Into the Dark Forest.",
+   "narration": "The tracks led into the Dark Forest, where no one had ever come back.",
+   "partcard": "PART 11 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 10: Taken #shorts",
+  "description": "The Human Journey — Part 10: Taken\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

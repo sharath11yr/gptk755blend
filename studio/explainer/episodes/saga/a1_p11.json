@@ -1,0 +1,100 @@
+{
+ "title": "The Dark Forest",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 11: The Dark Forest",
+ "cover_highlight": "Forest",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "walk",
+     "expr": "fear"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 700,
+     "pose": "walk",
+     "expr": "fear"
+    }
+   ],
+   "caption": "Every shadow moved.",
+   "narration": "In the Dark Forest, every shadow seemed to move. Every sound was a warning."
+  },
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "caption": "The wolves returned.",
+   "narration": "The wolves had come back. And this time they were hungry.",
+   "animal": "wolf"
+  },
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "Mia raised the torch.",
+   "narration": "Mia raised the torch high. The flame roared. The wolves backed away, one by one."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 540,
+     "expr": "fear"
+    }
+   ],
+   "caption": "A small voice: \"Papa…\"",
+   "narration": "Then, from a clearing ahead, a small voice. Papa…",
+   "fire": true,
+   "firex": 820,
+   "partcard": "PART 12 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 11: The Dark Forest #shorts",
+  "description": "The Human Journey — Part 11: The Dark Forest\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

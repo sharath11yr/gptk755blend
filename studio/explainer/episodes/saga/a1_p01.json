@@ -1,0 +1,101 @@
+{
+ "title": "The Hunter",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 1: The Hunter",
+ "cover_highlight": "Hunter",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 420,
+     "pose": "walk"
+    }
+   ],
+   "caption": "300,000 years ago…",
+   "narration": "Three hundred thousand years ago, on the African grasslands, lived a young hunter named John. Strong. Fearless. And completely alone."
+  },
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "expr": "curious"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 760,
+     "expr": "happy"
+    }
+   ],
+   "caption": "Then he saw her.",
+   "narration": "One morning, at the river, he saw her. Mia. A girl from another tribe, laughing as she caught fish with her bare hands."
+  },
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 380,
+     "expr": "happy"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 640,
+     "expr": "happy"
+    }
+   ],
+   "caption": "Their eyes met.",
+   "narration": "Their eyes met. John forgot how to breathe. Mia smiled, just for a second."
+  },
+  {
+   "type": "saga",
+   "bg": "savanna",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "caption": "The grass moved…",
+   "narration": "But behind him, the tall grass moved. Slowly. Silently.",
+   "animal": "lion",
+   "partcard": "PART 2 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 1: The Hunter #shorts",
+  "description": "The Human Journey — Part 1: The Hunter\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

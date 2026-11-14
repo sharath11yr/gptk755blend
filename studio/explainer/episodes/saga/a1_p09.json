@@ -1,0 +1,107 @@
+{
+ "title": "Leo",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 9: Leo",
+ "cover_highlight": "Leo",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "village",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "expr": "happy"
+    }
+   ],
+   "caption": "A cry in the night.",
+   "narration": "On a cold spring night, a cry filled the village. A baby boy."
+  },
+  {
+   "type": "saga",
+   "bg": "village",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "expr": "love"
+    },
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 520,
+     "expr": "happy"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 760,
+     "expr": "love"
+    }
+   ],
+   "caption": "They named him Leo.",
+   "narration": "They named him Leo. Brave like a lion. John promised he would protect him, always."
+  },
+  {
+   "type": "saga",
+   "bg": "village",
+   "cast": [
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 380,
+     "pose": "walk",
+     "expr": "happy"
+    },
+    {
+     "role": "nana",
+     "name": "Nana",
+     "flip": true,
+     "x": 700,
+     "expr": "happy"
+    }
+   ],
+   "caption": "Years passed.",
+   "narration": "Years passed. Leo grew fast, curious, fearless, always running ahead."
+  },
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 420,
+     "expr": "fear"
+    }
+   ],
+   "caption": "Leo went too far.",
+   "narration": "One evening, Leo chased a rabbit into the forest. Too far. And he wasn't alone.",
+   "partcard": "PART 10 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 9: Leo #shorts",
+  "description": "The Human Journey — Part 9: Leo\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

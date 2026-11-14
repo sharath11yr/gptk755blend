@@ -1,0 +1,107 @@
+{
+ "title": "Face to Face",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 12: Face to Face",
+ "cover_highlight": "Face",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 380,
+     "pose": "brave",
+     "expr": "angry"
+    },
+    {
+     "role": "leo",
+     "name": "Leo",
+     "x": 720,
+     "expr": "fear"
+    }
+   ],
+   "caption": "Zor was waiting.",
+   "narration": "Leo was tied beside a fire. Zor stood over him, club in hand. He had been waiting.",
+   "fire": true,
+   "firex": 540
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "pose": "brave",
+     "expr": "angry"
+    },
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 760,
+     "pose": "brave",
+     "expr": "angry",
+     "flip": true
+    }
+   ],
+   "caption": "Spear against club.",
+   "narration": "John charged. Spear against club. Strength against rage.",
+   "fire": true,
+   "firex": 540
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "crouch",
+     "expr": "fear"
+    }
+   ],
+   "caption": "John fell.",
+   "narration": "Zor was stronger. John fell hard, his old wound tearing open."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "Zor raised the club…",
+   "narration": "Zor raised his club for the final blow.",
+   "partcard": "PART 13 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 12: Face to Face #shorts",
+  "description": "The Human Journey — Part 12: Face to Face\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

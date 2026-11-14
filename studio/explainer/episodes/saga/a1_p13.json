@@ -1,0 +1,96 @@
+{
+ "title": "Mercy",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 13: Mercy",
+ "cover_highlight": "Mercy",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "pose": "brave",
+     "expr": "angry"
+    }
+   ],
+   "caption": "\"STOP!\"",
+   "narration": "Stop! Mia stepped between them, torch blazing. Zor hesitated. He had loved her, once."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "brave",
+     "expr": "angry"
+    },
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 720,
+     "pose": "crouch",
+     "expr": "fear",
+     "flip": true
+    }
+   ],
+   "caption": "John had the spear at his throat.",
+   "narration": "In that moment, John rose and knocked him down. The spear point rested at Zor's throat."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 540,
+     "expr": "calm"
+    }
+   ],
+   "caption": "He lowered the spear.",
+   "narration": "Kill him, the forest seemed to whisper. But John looked at Leo. And lowered the spear."
+  },
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "zor",
+     "name": "Zor",
+     "x": 520,
+     "expr": "curious"
+    }
+   ],
+   "caption": "\"Why?\"",
+   "narration": "Why? Zor asked. Because my son is watching, John said.",
+   "partcard": "PART 14 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 13: Mercy #shorts",
+  "description": "The Human Journey — Part 13: Mercy\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}

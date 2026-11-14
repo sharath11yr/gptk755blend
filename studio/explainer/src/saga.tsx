@@ -67,18 +67,18 @@ const Wolf: React.FC<{ x: number; y: number; f: number }> = ({ x, y, f }) => { c
   </g>; };
 
 // Aru: an original character whose look changes with the era
-const Hero: React.FC<{ x: number; y: number; era: string; pose: string; expr: string; f: number; role?: string; flip?: boolean }> = ({ x, y, era, pose, expr, f, role = "kai", flip }) => {
+const Hero: React.FC<{ x: number; y: number; era: string; pose: string; expr: string; f: number; role?: string; flip?: boolean; tilt?: number }> = ({ x, y, era, pose, expr, f, role = "kai", flip, tilt = 0 }) => {
   const R = role; const sc = R === "leo" ? 0.62 : R === "zor" ? 1.15 : R === "mia" ? 0.94 : R === "nana" ? 0.9 : 1;
   const skin = era === "ancestor" ? "#6b4a33" : R === "zor" ? "#7d5236" : R === "mia" ? "#c98d63" : "#a8714a";
   const hair = era === "ancestor" ? "#3a2618" : R === "nana" ? "#cfcfcf" : "#2b1d14";
   const fur = era === "ancestor" ? null : R === "zor" ? "#3d2a1d" : R === "mia" ? "#b0643a" : R === "nana" ? "#7d6a55" : era === "hunter" ? "#8a5a2b" : "#c7a46b";
   const walk = pose === "walk" ? Math.sin(f / 5) * 20 : 0; const crouch = pose === "crouch" || pose === "scared" ? 50 : 0;
   const lean = era === "ancestor" ? 12 : 0;
-  const armR = pose === "point" ? [190, -120] : pose === "brave" ? [150, -230] : pose === "scared" ? [70, -150] : [60, 120 + walk];
-  const armL = pose === "scared" ? [-70, -150] : pose === "brave" ? [-80, 60] : [-60, 120 - walk];
+  const armR = pose === "hug" ? [120, -40] : pose === "point" ? [190, -120] : pose === "brave" ? [150, -230] : pose === "scared" ? [70, -150] : [60, 120 + walk];
+  const armL = pose === "hug" ? [40, 20] : pose === "scared" ? [-70, -150] : pose === "brave" ? [-80, 60] : [-60, 120 - walk];
   const eyes = expr === "fear" ? 13 : 9;
-  const mouth = expr === "happy" ? "M-26 40 Q0 64 26 40" : expr === "fear" ? "" : expr === "angry" ? "M-24 52 L24 44" : expr === "curious" ? "M-12 48 Q0 40 12 48" : "M-20 46 L20 46";
-  return <g transform={`translate(${x} ${y + crouch + (1 - sc) * 420}) scale(${flip ? -sc : sc} ${sc}) rotate(${lean + (R === "nana" ? 6 : 0)})`}>
+  const mouth = expr === "love" ? "M-14 46 Q0 54 14 46" : expr === "happy" ? "M-26 40 Q0 64 26 40" : expr === "fear" ? "" : expr === "angry" ? "M-24 52 L24 44" : expr === "curious" ? "M-12 48 Q0 40 12 48" : "M-20 46 L20 46";
+  return <g transform={`translate(${x} ${y + crouch + (1 - sc) * 420}) scale(${flip ? -sc : sc} ${sc}) rotate(${lean + tilt + (R === "nana" ? 6 : 0)})`}>
     <ellipse cx={0} cy={420 - crouch} rx={140} ry={20} fill="#000" opacity={0.15} />
     <line x1={-30} y1={200} x2={-60 - walk} y2={410 - crouch} stroke={skin} strokeWidth={46} strokeLinecap="round" />
     <line x1={30} y1={200} x2={60 + walk} y2={410 - crouch} stroke={skin} strokeWidth={46} strokeLinecap="round" />
@@ -108,8 +108,8 @@ const Hero: React.FC<{ x: number; y: number; era: string; pose: string; expr: st
       {R === "zor" && <path d="M30 -40 L60 30" stroke="#c0392b" strokeWidth={6} />}
       {R === "zor" && <g>{[-50, -25, 0, 25, 50].map((k, i) => <path key={i} d={`M${k} 120 l-6 26 l12 0 z`} fill="#efe6d2" />)}</g>}
       <path d="M-50 -18 L-14 -22 M50 -18 L14 -22" stroke={hair} strokeWidth={10} strokeLinecap="round" transform={expr === "angry" ? "rotate(8)" : ""} />
-      <circle cx={-32} cy={4} r={eyes} fill="#1b120d" /><circle cx={32} cy={4} r={eyes} fill="#1b120d" />
-      <circle cx={-29} cy={0} r={3} fill="#fff" /><circle cx={35} cy={0} r={3} fill="#fff" />
+      {expr === "love" ? <path d="M-46 4 Q-32 16 -18 4 M18 4 Q32 16 46 4" fill="none" stroke="#1b120d" strokeWidth={6} strokeLinecap="round" /> : <><circle cx={-32} cy={4} r={eyes} fill="#1b120d" /><circle cx={32} cy={4} r={eyes} fill="#1b120d" />
+      <circle cx={-29} cy={0} r={3} fill="#fff" /><circle cx={35} cy={0} r={3} fill="#fff" /></>}
       {expr === "fear" ? <ellipse cx={0} cy={50} rx={14} ry={20} fill="#3b2412" /> : <path d={mouth} fill={expr === "happy" ? "#3b2412" : "none"} stroke="#3b2412" strokeWidth={7} strokeLinecap="round" />}
       {expr === "fear" && <path d="M70 -60 q10 20 0 30 q-10 -10 0 -30" fill="#7fc6ff" />}
     </g>
@@ -124,10 +124,11 @@ export const SagaScene: React.FC<any> = ({ dur, bg = "savanna", era = "hunter", 
     {fire && <Fire x={firex ?? 760} y={1500} f={f} />}
     {animal === "lion" && <Lion x={lionX} y={1420} f={f} />}
     {animal === "wolf" && <Wolf x={interpolate(f, [0, dur * 0.7], [1300, 830], { extrapolateRight: "clamp" })} y={1460} f={f} />}
-    {cast ? cast.map((c: any, i: number) => <g key={i}><Hero x={c.x} y={1100} era={c.era || era} pose={c.pose || "stand"} expr={c.expr || "calm"} f={f + i * 7} role={c.role} flip={c.flip} />
+    {cast ? cast.map((c: any, i: number) => <g key={i}><Hero x={c.x} y={1100} era={c.era || era} pose={c.pose || "stand"} expr={c.expr || "calm"} f={f + i * 7} role={c.role} flip={c.flip} tilt={c.tilt || 0} />
         <text x={c.x} y={1620} textAnchor="middle" fill="#fff" stroke="#000" strokeWidth={2} fontFamily={SANS} fontSize={40} fontWeight={800}>{c.name || ""}</text></g>)
       : <Hero x={animal === "lion" ? 330 : 420} y={1100} era={era} pose={pose} expr={expr} f={f} />}
-    {heart && <g transform={`translate(540 ${820 - (f % 60)})`} opacity={0.9 - (f % 60) / 80}><path d="M0 30 C-60 -20 -40 -70 0 -40 C40 -70 60 -20 0 30 Z" fill="#ff5d7a" /></g>}
+    {heart && [0, 1, 2].map((k) => <g key={k} transform={`translate(${470 + k * 70} ${800 - ((f + k * 20) % 60) * 2})`} opacity={0.9 - ((f + k * 20) % 60) / 70}><path d="M0 30 C-60 -20 -40 -70 0 -40 C40 -70 60 -20 0 30 Z" fill="#ff5d7a" /></g>)}
+    {false && <g transform={`translate(540 ${820 - (f % 60)})`} opacity={0.9 - (f % 60) / 80}><path d="M0 30 C-60 -20 -40 -70 0 -40 C40 -70 60 -20 0 30 Z" fill="#ff5d7a" /></g>}
     {!cast && name && <text x={animal === "lion" ? 330 : 420} y={1620} textAnchor="middle" fill="#fff" stroke="#000" strokeWidth={2} fontFamily={SANS} fontSize={44} fontWeight={800}>{name}</text>}
     {caption && <g opacity={interpolate(f, [4, 14], [0, 1], { extrapolateRight: "clamp" })}><rect x={60} y={180} width={960} height={190} rx={28} fill="#000" opacity={0.55} />
       <text x={540} y={295} textAnchor="middle" fill="#fff" fontFamily={SANS} fontSize={Math.min(64, Math.floor(900 / (String(caption).length * 0.5)))} fontWeight={900}>{caption}</text></g>}

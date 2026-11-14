@@ -1,0 +1,100 @@
+{
+ "title": "The Storm",
+ "style": "lab",
+ "theme": "ent",
+ "badge": "GETYR ENT",
+ "tag": "GETYR ENT",
+ "engine": "kokoro",
+ "kokoro_voice": "am_michael",
+ "speed": 1.0,
+ "story": true,
+ "saga": true,
+ "scenes": [],
+ "cover": "Part 6: The Storm",
+ "cover_highlight": "Storm",
+ "short_scenes": [
+  {
+   "type": "saga",
+   "bg": "night",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 300,
+     "expr": "fear"
+    },
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": true,
+     "x": 780,
+     "expr": "fear"
+    }
+   ],
+   "caption": "The sky cracked open.",
+   "narration": "That night, the sky cracked open. Thunder. Lightning. Rain like falling rivers.",
+   "fire": true,
+   "firex": 540
+  },
+  {
+   "type": "saga",
+   "bg": "cave",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "pose": "crouch",
+     "expr": "fear"
+    }
+   ],
+   "caption": "The fire was dying.",
+   "narration": "Their only fire began to die. Without it, wolves would come. Without it, the cold would kill them."
+  },
+  {
+   "type": "saga",
+   "bg": "cave",
+   "cast": [
+    {
+     "role": "mia",
+     "name": "Mia",
+     "flip": false,
+     "x": 540,
+     "pose": "crouch",
+     "expr": "angry"
+    }
+   ],
+   "caption": "She shielded it with her body.",
+   "narration": "Mia wrapped her body around the last glowing ember, shielding it from the wind and the rain, all night long."
+  },
+  {
+   "type": "saga",
+   "bg": "forest",
+   "cast": [
+    {
+     "role": "kai",
+     "name": "John",
+     "x": 330,
+     "pose": "scared",
+     "expr": "fear"
+    }
+   ],
+   "caption": "Then they heard howling.",
+   "narration": "Then, through the storm, they heard it. Howling. Getting closer.",
+   "animal": "wolf",
+   "partcard": "PART 7 → NEXT"
+  }
+ ],
+ "yt": {
+  "title": "The Human Journey · Part 6: The Storm #shorts",
+  "description": "The Human Journey — Part 6: The Storm\nA story of love, fear and survival, from the first humans to today. Follow for the next part!\n#shorts #story #history #humanjourney",
+  "tags": [
+   "story",
+   "history",
+   "animation",
+   "human evolution",
+   "shorts"
+  ]
+ }
+}
