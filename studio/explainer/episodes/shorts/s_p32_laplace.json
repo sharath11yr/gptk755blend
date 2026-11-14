@@ -1,0 +1,62 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "No more differential equations",
+ "cover": "No more differential equations",
+ "cover_highlight": "equations",
+ "links": "network/p32_laplace.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "worry",
+   "name": "Volt",
+   "say": "Differential equations… again?!",
+   "narration": "Volt's RLC problem needs a differential equation. He groans."
+  },
+  {
+   "type": "rc",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001,
+   "chapter": "What's happening",
+   "narration": "With Laplace, derivatives become multiplication by s. Solve with algebra, look up the table, and you get this exact curve."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Laplace makes it algebra!",
+   "card": "d/dt → s",
+   "narration": "Inductors become s L, capacitors one over s C."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Laplace transform!",
+   "card": "▶ NETWORK THEORY · #33",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "No more differential equations #shorts",
+  "description": "No more differential equations — explained in under a minute with Volt.\nFull explanation: Network Theory #33 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

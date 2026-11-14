@@ -1,0 +1,62 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Why do switches spark?",
+ "cover": "Why do switches spark?",
+ "cover_highlight": "spark",
+ "links": "network/p3_inductor.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "Why did the switch spark?!",
+   "narration": "Volt switches off a motor, and a spark jumps across the switch. Where did that come from?"
+  },
+  {
+   "type": "rl",
+   "mode": "off",
+   "v": 10,
+   "r": 10,
+   "l": 10,
+   "chapter": "What's happening",
+   "narration": "The motor's coil is an inductor. It hates sudden changes in current. When the switch opens, it pushes a huge voltage to keep the current going, and that makes the spark."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Inductors fight change!",
+   "card": "V = L · di/dt",
+   "narration": "A fast change in current means a huge voltage. That's why relays need protection diodes."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: The Inductor video!",
+   "card": "▶ NETWORK THEORY · #4",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Why do switches spark? #shorts",
+  "description": "Why do switches spark? — explained in under a minute with Volt.\nFull explanation: Network Theory #4 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

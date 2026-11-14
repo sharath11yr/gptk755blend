@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Tune to 1 kHz",
+ "cover": "Tune to 1 kHz",
+ "cover_highlight": "kHz",
+ "links": "network/n16_resonance.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "L = 50 mH, f₀ = 1 kHz: C = ?",
+   "narration": "You have a fifty millihenry inductor. What capacitor makes it resonate at one kilohertz? Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Don't forget the 2π!",
+   "card": "C ≈ 0.507 µF",
+   "narration": "C equals one over two pi f squared times L: about zero point five zero seven microfarads."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #16",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Tune to 1 kHz | Can you solve it? #shorts",
+  "description": "Tune to 1 kHz — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #16 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

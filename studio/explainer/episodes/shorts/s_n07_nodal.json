@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Find the node voltage",
+ "cover": "Find the node voltage",
+ "cover_highlight": "voltage",
+ "links": "network/n07_nodal.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "(Va − 12)/2 + Va/4 + Vb/2 = 0, Va − Vb = 4",
+   "narration": "A supernode gives these two equations. Find V a and V b. Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Supernode = 1 KCL!",
+   "card": "Va = 6.4 V, Vb = 2.4 V",
+   "narration": "Substitute V a equals V b plus four: five V b equals twelve, so V b is two point four and V a is six point four."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #7",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Find the node voltage | Can you solve it? #shorts",
+  "description": "Find the node voltage — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #7 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

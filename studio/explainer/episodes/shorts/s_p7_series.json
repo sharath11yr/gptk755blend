@@ -1,0 +1,67 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Make 8 V from 12 V?",
+ "cover": "Make 8 V from 12 V?",
+ "cover_highlight": "V",
+ "links": "network/p7_series.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "I only have 12 V, I need 8 V!",
+   "narration": "Volt needs eight volts, but he only has a twelve volt battery."
+  },
+  {
+   "type": "dc",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    1000,
+    2000
+   ],
+   "show": [
+    "voltage"
+   ],
+   "chapter": "What's happening",
+   "narration": "Two resistors in series share the voltage in proportion. One kilo-ohm and two kilo-ohms: watch, four volts and eight volts."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "The voltage divider!",
+   "card": "V_out = V_in · R2/(R1+R2)",
+   "narration": "Twelve times two thousand over three thousand gives exactly eight volts."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Series circuits!",
+   "card": "▶ NETWORK THEORY · #8",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Make 8 V from 12 V? #shorts",
+  "description": "Make 8 V from 12 V? — explained in under a minute with Volt.\nFull explanation: Network Theory #8 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

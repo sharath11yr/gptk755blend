@@ -1,0 +1,60 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Which load gets the most power?",
+ "cover": "Which load gets the most power?",
+ "cover_highlight": "power",
+ "links": "network/p20_mpt.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Which speaker gets the most power?",
+   "narration": "Volt wants the loudest speaker for his amplifier. Which resistance gets the most power?"
+  },
+  {
+   "type": "mpt",
+   "vth": 9,
+   "rth": 2,
+   "chapter": "What's happening",
+   "narration": "Watch the power curve as the load changes. It peaks exactly when the load equals the source's own resistance."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Maximum power transfer!",
+   "card": "R_L = R_th",
+   "narration": "But at that point, efficiency is only fifty percent."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Maximum power transfer!",
+   "card": "▶ NETWORK THEORY · #21",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Which load gets the most power? #shorts",
+  "description": "Which load gets the most power? — explained in under a minute with Volt.\nFull explanation: Network Theory #21 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

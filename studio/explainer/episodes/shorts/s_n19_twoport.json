@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Z parameters fast",
+ "cover": "Z parameters fast",
+ "cover_highlight": "fast",
+ "links": "network/n19_twoport.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "T network: 3 Ω, 6 Ω, shunt 2 Ω: z11, z22?",
+   "narration": "A T network with three ohms, six ohms and a two ohm shunt. Find z eleven and z twenty two. Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Open-circuit tests!",
+   "card": "z11 = 5 Ω, z22 = 8 Ω, z12 = 2 Ω",
+   "narration": "Open port two: three plus two is five. Open port one: six plus two is eight. The shunt gives z twelve, two."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #19",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Z parameters fast | Can you solve it? #shorts",
+  "description": "Z parameters fast — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #19 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

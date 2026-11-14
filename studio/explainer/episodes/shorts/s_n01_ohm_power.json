@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "60 W bulb on 115 V?",
+ "cover": "60 W bulb on 115 V?",
+ "cover_highlight": "V",
+ "links": "network/n01_ohm_power.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "60 W/230 V bulb on 115 V = ?",
+   "narration": "A sixty watt, two hundred and thirty volt bulb is connected to one hundred and fifteen volts. What power does it use? Most students say thirty watts. Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Most students say 30 W!",
+   "card": "P = 15 W (not 30!)",
+   "narration": "Power goes with voltage squared. Half the voltage gives one quarter of the power: fifteen watts."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #1",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "60 W bulb on 115 V? | Can you solve it? #shorts",
+  "description": "60 W bulb on 115 V? — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #1 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Charging without wires?!",
+ "cover": "Charging without wires?!",
+ "cover_highlight": "wires",
+ "links": "network/p29_coupled.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "My phone charges with no wire?!",
+   "narration": "Volt puts his phone on a pad, and it charges with no cable. How?"
+  },
+  {
+   "type": "coupled",
+   "mode": "mutual",
+   "k": 0.5,
+   "chapter": "What's happening",
+   "narration": "The pad's coil makes a changing magnetic field. The shared flux passes through a coil in the phone and induces a voltage."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Mutual inductance!",
+   "card": "v₂ = M · di₁/dt",
+   "narration": "The same principle runs every transformer."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Coupled circuits!",
+   "card": "▶ NETWORK THEORY · #30",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Charging without wires?! #shorts",
+  "description": "Charging without wires?! — explained in under a minute with Volt.\nFull explanation: Network Theory #30 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

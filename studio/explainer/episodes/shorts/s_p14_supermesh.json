@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Current source in the middle?",
+ "cover": "Current source in the middle?",
+ "cover_highlight": "middle",
+ "links": "network/p14_supermesh.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "A current source in the shared branch?!",
+   "narration": "Volt's mesh method breaks. There's a current source between two meshes!"
+  },
+  {
+   "type": "mesh",
+   "mode": "supermesh",
+   "chapter": "What's happening",
+   "narration": "Join the two meshes into one big supermesh. The source gives one equation, KVL around the outside gives the other."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "The supermesh!",
+   "card": "I2 − I1 = I_source",
+   "narration": "Same number of equations, problem solved."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Supermesh!",
+   "card": "▶ NETWORK THEORY · #15",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Current source in the middle? #shorts",
+  "description": "Current source in the middle? — explained in under a minute with Volt.\nFull explanation: Network Theory #15 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

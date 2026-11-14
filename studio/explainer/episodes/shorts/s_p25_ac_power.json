@@ -1,0 +1,61 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Why factories get penalties",
+ "cover": "Why factories get penalties",
+ "cover_highlight": "penalties",
+ "links": "network/p25_ac_power.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "worry",
+   "name": "Volt",
+   "say": "The factory got a power factor penalty!",
+   "narration": "Volt's factory got a penalty from the electricity board for low power factor."
+  },
+  {
+   "type": "phasor",
+   "mode": "power",
+   "vm": 325,
+   "phi": 53,
+   "chapter": "What's happening",
+   "narration": "With the current lagging, some energy just sloshes back and forth. The cables carry current that does no work."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Fix it with a capacitor!",
+   "card": "pf = cos φ",
+   "narration": "A parallel capacitor cut the current from four point six to two point seven six amperes for the same power."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: AC power & power factor!",
+   "card": "▶ NETWORK THEORY · #26",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Why factories get penalties #shorts",
+  "description": "Why factories get penalties — explained in under a minute with Volt.\nFull explanation: Network Theory #26 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

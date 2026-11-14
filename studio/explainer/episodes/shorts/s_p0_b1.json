@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "What IS electricity?",
+ "cover": "What IS electricity?",
+ "cover_highlight": "electricity",
+ "links": "network/p0_b1.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "What actually flows in a wire?",
+   "narration": "Volt wonders: when you switch on a fan, what actually flows through the wire?"
+  },
+  {
+   "type": "inside",
+   "mode": "wire",
+   "chapter": "What's happening",
+   "narration": "Zoom inside a copper wire. Free electrons drift through the metal. That flow of charge is current, and the battery's push is voltage."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Push, flow and opposition!",
+   "card": "V = I × R",
+   "narration": "Voltage pushes, current flows, and resistance opposes. Three words that explain every circuit you'll ever see."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Electricity from zero!",
+   "card": "▶ NETWORK THEORY · #1",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "What IS electricity? #shorts",
+  "description": "What IS electricity? — explained in under a minute with Volt.\nFull explanation: Network Theory #1 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

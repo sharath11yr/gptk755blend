@@ -1,0 +1,68 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Why do MCBs trip?",
+ "cover": "Why do MCBs trip?",
+ "cover_highlight": "trip",
+ "links": "network/p8_parallel.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "Click! The MCB tripped!",
+   "narration": "Volt switched on the geyser while the AC was running, and the MCB tripped. Why?"
+  },
+  {
+   "type": "dc",
+   "mode": "parallel",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ],
+   "show": [
+    "current"
+   ],
+   "chapter": "What's happening",
+   "narration": "Your home is wired in parallel. Every appliance gets the full voltage, but every new path adds more current. Watch the total climb."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "More appliances, more current!",
+   "card": "I = I1 + I2 + I3",
+   "narration": "Too much total current heats the wires, so the MCB cuts the power to protect you."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Parallel circuits!",
+   "card": "▶ NETWORK THEORY · #9",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Why do MCBs trip? #shorts",
+  "description": "Why do MCBs trip? — explained in under a minute with Volt.\nFull explanation: Network Theory #9 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

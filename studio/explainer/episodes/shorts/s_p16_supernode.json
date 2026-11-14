@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "A floating voltage source?",
+ "cover": "A floating voltage source?",
+ "cover_highlight": "source",
+ "links": "network/p16_supernode.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "The voltage source isn't grounded!",
+   "narration": "Volt finds a voltage source between two nodes, neither at ground. Now what?"
+  },
+  {
+   "type": "nodal",
+   "mode": "supernode",
+   "chapter": "What's happening",
+   "narration": "Draw a boundary around both nodes and the source. That's a supernode. Write KCL for the whole region."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "The supernode!",
+   "card": "Va − Vb = V_source",
+   "narration": "One constraint, one KCL, and both voltages are found."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Supernode!",
+   "card": "▶ NETWORK THEORY · #17",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "A floating voltage source? #shorts",
+  "description": "A floating voltage source? — explained in under a minute with Volt.\nFull explanation: Network Theory #17 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

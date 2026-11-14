@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Mesh or nodal?",
+ "cover": "Mesh or nodal?",
+ "cover_highlight": "nodal",
+ "links": "network/p15_nodal.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Why are there TWO methods?",
+   "narration": "Mesh and nodal give the same answers. So why learn both?"
+  },
+  {
+   "type": "nodal",
+   "mode": "solve",
+   "chapter": "What's happening",
+   "narration": "Nodal analysis uses node voltages and KCL. Here it gives six and three volts, the same answers as mesh."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Count first, then choose!",
+   "card": "pick fewer equations",
+   "narration": "Many parallel paths: nodal. Long loops: mesh. Less work, fewer mistakes."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Nodal analysis!",
+   "card": "▶ NETWORK THEORY · #16",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Mesh or nodal? #shorts",
+  "description": "Mesh or nodal? — explained in under a minute with Volt.\nFull explanation: Network Theory #16 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

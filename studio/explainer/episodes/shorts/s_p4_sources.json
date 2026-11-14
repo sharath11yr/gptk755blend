@@ -1,0 +1,61 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Why do headlights dim?",
+ "cover": "Why do headlights dim?",
+ "cover_highlight": "dim",
+ "links": "network/p4_sources.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "worry",
+   "name": "Volt",
+   "say": "My headlights dim when I start the car!",
+   "narration": "Every time Volt starts his car, the headlights dim for a moment. Why?"
+  },
+  {
+   "type": "source",
+   "mode": "practical-v",
+   "v": 12,
+   "ri": 2,
+   "chapter": "What's happening",
+   "narration": "A real battery has internal resistance. Watch: as the load draws more current, the voltage at the terminals drops."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Every battery has a hidden resistor!",
+   "card": "V = V_s − I × r",
+   "narration": "The starter motor draws a huge current, so the battery voltage dips, and so do the lights."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Voltage & Current Sources!",
+   "card": "▶ NETWORK THEORY · #5",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Why do headlights dim? #shorts",
+  "description": "Why do headlights dim? — explained in under a minute with Volt.\nFull explanation: Network Theory #5 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

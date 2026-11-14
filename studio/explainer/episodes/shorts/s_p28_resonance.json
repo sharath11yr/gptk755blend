@@ -1,0 +1,63 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "How does a radio pick ONE station?",
+ "cover": "How does a radio pick ONE station?",
+ "cover_highlight": "station",
+ "links": "network/p28_resonance.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "How does my radio pick one station?",
+   "narration": "Hundreds of stations fill the air. How does Volt's radio pick just one?"
+  },
+  {
+   "type": "resonance",
+   "mode": "curve",
+   "r": [
+    10,
+    30
+   ],
+   "chapter": "What's happening",
+   "narration": "At one frequency, the inductor and capacitor cancel, and the current peaks. That's resonance."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Tune the capacitor!",
+   "card": "f₀ = 1 / (2π√LC)",
+   "narration": "Turning the knob changes C, which moves the peak onto your station."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Resonance!",
+   "card": "▶ NETWORK THEORY · #29",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "How does a radio pick ONE station? #shorts",
+  "description": "How does a radio pick ONE station? — explained in under a minute with Volt.\nFull explanation: Network Theory #29 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

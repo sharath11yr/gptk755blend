@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Find P, Q and S",
+ "cover": "Find P, Q and S",
+ "cover_highlight": "S",
+ "links": "network/n13_ac_power.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "230 V, 10 A, pf 0.8: P, Q, S?",
+   "narration": "Two hundred and thirty volts, ten amperes, power factor zero point eight. Find all three powers. Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "sin φ = 0.6, not 0.2!",
+   "card": "S = 2300 VA, P = 1840 W, Q = 1380 VAR",
+   "narration": "S is V times I. P is S times zero point eight. Q is S times zero point six. And they form a perfect triangle."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #13",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Find P, Q and S | Can you solve it? #shorts",
+  "description": "Find P, Q and S — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #13 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

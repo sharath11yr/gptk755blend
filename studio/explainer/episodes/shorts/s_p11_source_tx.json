@@ -1,0 +1,65 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Two batteries, one answer",
+ "cover": "Two batteries, one answer",
+ "cover_highlight": "answer",
+ "links": "network/p11_source_tx.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Two batteries in parallel? Help!",
+   "narration": "Volt connects two different batteries in parallel to one load. How do you even solve that?"
+  },
+  {
+   "type": "srctx",
+   "vs": 12,
+   "r": 4,
+   "rl": [
+    8,
+    2,
+    20
+   ],
+   "chapter": "What's happening",
+   "narration": "A voltage source with a series resistor behaves exactly like a current source with a parallel resistor. Watch, the meters always match."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Swap and simplify!",
+   "card": "I_s = V_s / R",
+   "narration": "Convert both to current sources, add them, and the problem becomes one line."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Source transformation!",
+   "card": "▶ NETWORK THEORY · #12",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Two batteries, one answer #shorts",
+  "description": "Two batteries, one answer — explained in under a minute with Volt.\nFull explanation: Network Theory #12 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

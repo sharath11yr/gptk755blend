@@ -1,0 +1,82 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "How is your bill calculated?",
+ "cover": "How is your bill calculated?",
+ "cover_highlight": "calculated",
+ "links": "network/p6_ohm_power.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "worry",
+   "name": "Volt",
+   "say": "Why is my electricity bill so high?!",
+   "narration": "Volt's electricity bill shocked him. How is it actually calculated?"
+  },
+  {
+   "type": "bars",
+   "title": "Typical appliance power",
+   "unit": "W",
+   "items": [
+    [
+     "LED bulb",
+     9
+    ],
+    [
+     "Laptop",
+     60
+    ],
+    [
+     "Ceiling fan",
+     75
+    ],
+    [
+     "Fridge",
+     200
+    ],
+    [
+     "AC",
+     1500
+    ]
+   ],
+   "chapter": "What's happening",
+   "narration": "Every appliance has a power rating in watts. The AC alone uses more than everything else together."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "1 unit = 1 kilowatt hour!",
+   "card": "Units = kW × hours",
+   "narration": "A fifteen hundred watt AC running four hours uses six units a day. Now you can check your own bill."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Ohm's law, power & energy!",
+   "card": "▶ NETWORK THEORY · #7",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "How is your bill calculated? #shorts",
+  "description": "How is your bill calculated? — explained in under a minute with Volt.\nFull explanation: Network Theory #7 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

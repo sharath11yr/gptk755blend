@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Swap the source, same reading?!",
+ "cover": "Swap the source, same reading?!",
+ "cover_highlight": "reading",
+ "links": "network/p21_reciprocity_millman.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "I swapped them and got the SAME reading!",
+   "narration": "Volt swaps the battery and the ammeter in his circuit. The reading doesn't change!"
+  },
+  {
+   "type": "theorem",
+   "mode": "v1",
+   "chapter": "What's happening",
+   "narration": "That's the reciprocity theorem. In a linear circuit with one source, swapping source and meter keeps the same current."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Plus Millman's shortcut!",
+   "card": "V = Σ(V/R) / Σ(1/R)",
+   "narration": "And Millman's theorem finds the voltage of parallel sources in one line."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Reciprocity & Millman!",
+   "card": "▶ NETWORK THEORY · #22",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Swap the source, same reading?! #shorts",
+  "description": "Swap the source, same reading?! — explained in under a minute with Volt.\nFull explanation: Network Theory #22 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

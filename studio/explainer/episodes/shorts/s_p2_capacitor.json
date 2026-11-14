@@ -1,0 +1,62 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "How does a camera flash work?",
+ "cover": "How does a camera flash work?",
+ "cover_highlight": "work",
+ "links": "network/p2_capacitor.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "How is a flash SO bright?",
+   "narration": "Volt's camera flash is far brighter than its tiny battery. How?"
+  },
+  {
+   "type": "rc",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001,
+   "chapter": "What's happening",
+   "narration": "A capacitor charges slowly from the battery, watch the voltage climb. Then it dumps all that stored energy into the flash in a split second."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Store slowly, release fast!",
+   "card": "E = ½ C V²",
+   "narration": "A capacitor stores energy, one half C V squared, and can release it almost instantly."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: The Capacitor video!",
+   "card": "▶ NETWORK THEORY · #3",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "How does a camera flash work? #shorts",
+  "description": "How does a camera flash work? — explained in under a minute with Volt.\nFull explanation: Network Theory #3 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "How do simulators solve circuits?",
+ "cover": "How do simulators solve circuits?",
+ "cover_highlight": "circuits",
+ "links": "network/p30_graph.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "How does software solve huge circuits?",
+   "narration": "Circuit simulators solve thousands of parts in seconds. How?"
+  },
+  {
+   "type": "graph",
+   "mode": "tree",
+   "chapter": "What's happening",
+   "narration": "They turn the circuit into a graph, find a tree, and count: twigs give KCL, links give KVL."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Network topology!",
+   "card": "links = b − n + 1",
+   "narration": "Exactly enough equations, written automatically."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Network topology!",
+   "card": "▶ NETWORK THEORY · #31",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "How do simulators solve circuits? #shorts",
+  "description": "How do simulators solve circuits? — explained in under a minute with Volt.\nFull explanation: Network Theory #31 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

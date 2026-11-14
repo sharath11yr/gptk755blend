@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "The bridge puzzle",
+ "cover": "The bridge puzzle",
+ "cover_highlight": "puzzle",
+ "links": "network/n05_transformations.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "Bridge: 6, 3, 2, 4, 6 Ω → R_AB = ?",
+   "narration": "A bridge of six, three, two, four and six ohms. No series, no parallel. What's the resistance between A and B? Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Use star-delta!",
+   "card": "R_AB = 4.5 Ω",
+   "narration": "Convert the delta to a star, then it's series and parallel: exactly four point five ohms."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #5",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "The bridge puzzle | Can you solve it? #shorts",
+  "description": "The bridge puzzle — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #5 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

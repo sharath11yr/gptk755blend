@@ -18,11 +18,11 @@ if not ep.get("short_scenes"):  # fallback: first sentences of the picked scenes
             if words > 130: break
     ep["short_scenes"] = picked
 if ep.get("short_scenes"):
-    if ep["short_scenes"][-1].get("type") not in ("lab-outro", "outro"):
+    if ep["short_scenes"][-1].get("type") not in ("lab-outro", "outro") and not ep.get("story"):
         ep["short_scenes"].append({"type": "lab-outro" if ep.get("style") == "lab" else "outro", "title": (ep.get("title") or "").upper()[:40],
             "lines": [], "cta": "Full video on our channel", "narration": "For the detailed explanation, watch the full video on our channel."})
     if ep.get("style") == "lab":  # first frame = bold cover (Shorts thumbnail / Reel cover)
-        order = ["rectifier", "image", "code", "network", "story", "screen", "installer", "chart", "diagram", "array", "terminal", "capacitor", "wave", "phone", "flow"]
+        order = ["stick", "rectifier", "image", "code", "network", "story", "screen", "installer", "chart", "diagram", "array", "terminal", "capacitor", "wave", "phone", "flow"]
         pool = [x for x in ep["short_scenes"] + ep["scenes"] if x.get("type") in order]
         best = min(pool, key=lambda x: order.index(x["type"]), default=None)
         ep["short_scenes"].insert(0, {"type": "cover", "cover": ep.get("cover") or ep.get("title", ""), "cover_highlight": ep.get("cover_highlight", ""),

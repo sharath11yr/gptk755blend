@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Thevenin in 30 seconds",
+ "cover": "Thevenin in 30 seconds",
+ "cover_highlight": "seconds",
+ "links": "network/n09_thevenin_norton.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "36 V, 6 Ω, 3 Ω shunt, 2 Ω: V_th, R_th?",
+   "narration": "Thirty six volts, six ohms, three ohms to ground, then two ohms to the terminals. Find the Thevenin equivalent. Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Remove the load first!",
+   "card": "V_th = 12 V, R_th = 4 Ω",
+   "narration": "Divider: thirty six times three over nine, twelve volts. Short the source: six parallel three is two, plus two, four ohms."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #9",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Thevenin in 30 seconds | Can you solve it? #shorts",
+  "description": "Thevenin in 30 seconds — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #9 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

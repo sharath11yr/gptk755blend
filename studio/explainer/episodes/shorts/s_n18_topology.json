@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Count the equations",
+ "cover": "Count the equations",
+ "cover_highlight": "equations",
+ "links": "network/n18_topology.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "n = 6 nodes, b = 8 branches: links?",
+   "narration": "A graph has six nodes and eight branches. How many links, and how many KVL equations? Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Links = KVL equations!",
+   "card": "links = 8 − 6 + 1 = 3",
+   "narration": "Twigs are n minus one, five. Links are b minus n plus one, three. Three KVL equations."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #18",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Count the equations | Can you solve it? #shorts",
+  "description": "Count the equations — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #18 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

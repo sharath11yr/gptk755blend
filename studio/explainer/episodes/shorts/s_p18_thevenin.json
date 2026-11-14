@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Any circuit = 2 parts",
+ "cover": "Any circuit = 2 parts",
+ "cover_highlight": "parts",
+ "links": "network/p18_thevenin.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "I have to solve it AGAIN for every load?!",
+   "narration": "Every time Volt changes the load, he has to solve the whole circuit again."
+  },
+  {
+   "type": "theorem",
+   "mode": "open",
+   "chapter": "What's happening",
+   "narration": "Thevenin says any circuit is just one voltage source and one resistor. Remove the load, measure nine volts, that's V Thevenin."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Solve once, done forever!",
+   "card": "I_L = V_th / (R_th + R_L)",
+   "narration": "Find two numbers once, and every load is a one line answer."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Thevenin's theorem!",
+   "card": "▶ NETWORK THEORY · #19",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Any circuit = 2 parts #shorts",
+  "description": "Any circuit = 2 parts — explained in under a minute with Volt.\nFull explanation: Network Theory #19 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

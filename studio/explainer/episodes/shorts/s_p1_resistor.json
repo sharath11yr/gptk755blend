@@ -1,0 +1,66 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Why did my LED burn?",
+ "cover": "Why did my LED burn?",
+ "cover_highlight": "burn",
+ "links": "network/p1_resistor.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "POP! My new LED burnt!",
+   "narration": "Volt connects a new LED straight to a nine volt battery. Pop! It burns out instantly."
+  },
+  {
+   "type": "dc",
+   "mode": "series",
+   "v": 9,
+   "r": [
+    450
+   ],
+   "show": [
+    "current"
+   ],
+   "chapter": "What's happening",
+   "narration": "Nothing was limiting the current. Add a resistor in the path, and watch: only twenty milliamps flow, exactly what an LED wants."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "The resistor saves it!",
+   "card": "R = (9 − 2) / 0.02 = 350 Ω",
+   "narration": "With a real LED dropping about two volts, a three hundred and fifty ohm resistor keeps it safe and bright."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: The Resistor video!",
+   "card": "▶ NETWORK THEORY · #2",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Why did my LED burn? #shorts",
+  "description": "Why did my LED burn? — explained in under a minute with Volt.\nFull explanation: Network Theory #2 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "The impossible bridge",
+ "cover": "The impossible bridge",
+ "cover_highlight": "bridge",
+ "links": "network/p12_star_delta.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "worry",
+   "name": "Volt",
+   "say": "No series, no parallel… stuck!",
+   "narration": "Volt's bridge circuit has no resistors in series and none in parallel. He's stuck."
+  },
+  {
+   "type": "stardelta",
+   "mode": "d2y",
+   "r": [
+    6,
+    12,
+    18
+   ],
+   "chapter": "What's happening",
+   "narration": "The trick: turn the triangle into a Y. Same three terminals, same behaviour, and suddenly series and parallel work again."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Star-delta to the rescue!",
+   "card": "R_A = R_AB·R_CA / ΣR",
+   "narration": "Product of the two touching, divided by the sum. The bridge becomes easy."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Star-delta transformation!",
+   "card": "▶ NETWORK THEORY · #13",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "The impossible bridge #shorts",
+  "description": "The impossible bridge — explained in under a minute with Volt.\nFull explanation: Network Theory #13 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

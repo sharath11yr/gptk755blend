@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "The loaded divider trap",
+ "cover": "The loaded divider trap",
+ "cover_highlight": "trap",
+ "links": "network/n03_series_parallel.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "Two 10 kΩ divide 12 V, add a 10 kΩ load: V_out?",
+   "narration": "Two ten kilo-ohm resistors divide twelve volts into six. Now connect a ten kilo-ohm load across the output. What's the output voltage now? Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "The load pulls it down!",
+   "card": "V_out = 4 V (not 6!)",
+   "narration": "The load sits in parallel with the bottom resistor, making five kilo-ohms. Twelve times five over fifteen: four volts."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #3",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "The loaded divider trap | Can you solve it? #shorts",
+  "description": "The loaded divider trap — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #3 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

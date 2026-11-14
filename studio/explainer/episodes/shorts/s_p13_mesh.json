@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Solve any circuit!",
+ "cover": "Solve any circuit!",
+ "cover_highlight": "circuit",
+ "links": "network/p13_mesh.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "worry",
+   "name": "Volt",
+   "say": "So many unknown currents!",
+   "narration": "Volt's circuit has currents everywhere. Where does he even start?"
+  },
+  {
+   "type": "mesh",
+   "mode": "kvl1",
+   "chapter": "What's happening",
+   "narration": "Give each window of the circuit its own loop current, all clockwise. Then write KVL around each one."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Mesh analysis!",
+   "card": "meshes = equations",
+   "narration": "Two meshes, two equations, every current found."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Mesh analysis!",
+   "card": "▶ NETWORK THEORY · #14",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Solve any circuit! #shorts",
+  "description": "Solve any circuit! — explained in under a minute with Volt.\nFull explanation: Network Theory #14 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

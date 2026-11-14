@@ -1,0 +1,62 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "How fast does it charge?",
+ "cover": "How fast does it charge?",
+ "cover_highlight": "charge",
+ "links": "network/p26_transients.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "How long until the capacitor is full?",
+   "narration": "Volt wonders how long a capacitor takes to charge."
+  },
+  {
+   "type": "rc",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001,
+   "chapter": "What's happening",
+   "narration": "Watch the curve. After one time constant, sixty three percent. After five, practically full."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "The 5-tau rule!",
+   "card": "τ = R × C",
+   "narration": "One kilo-ohm times one thousand microfarads is one second. Done after five seconds."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Transients!",
+   "card": "▶ NETWORK THEORY · #27",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "How fast does it charge? #shorts",
+  "description": "How fast does it charge? — explained in under a minute with Volt.\nFull explanation: Network Theory #27 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

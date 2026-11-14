@@ -1,0 +1,63 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "138 V + 184 V = 230 V?!",
+ "cover": "138 V + 184 V = 230 V?!",
+ "cover_highlight": "V",
+ "links": "network/p24_rlc_ac.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "138 + 184 is 322… but the supply is 230!",
+   "narration": "Volt measures one hundred and thirty eight volts on a resistor and one hundred and eighty four on an inductor, from a two hundred and thirty volt supply."
+  },
+  {
+   "type": "complex",
+   "mode": "plane",
+   "re": 3,
+   "im": 4,
+   "k": 10,
+   "unit": " Ω",
+   "chapter": "What's happening",
+   "narration": "They're ninety degrees apart, so they add like arrows. The impedance triangle shows it: thirty and forty make fifty."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Add as phasors!",
+   "card": "√(138² + 184²) = 230 V",
+   "narration": "AC voltages add as phasors, never as plain numbers."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Impedance in AC!",
+   "card": "▶ NETWORK THEORY · #25",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "138 V + 184 V = 230 V?! #shorts",
+  "description": "138 V + 184 V = 230 V?! — explained in under a minute with Volt.\nFull explanation: Network Theory #25 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

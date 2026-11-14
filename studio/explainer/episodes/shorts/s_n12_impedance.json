@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Series RL in one go",
+ "cover": "Series RL in one go",
+ "cover_highlight": "go",
+ "links": "network/n12_impedance.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "R = 6 Ω, X_L = 8 Ω, 100 V: I = ?",
+   "narration": "Six ohms and eight ohms of inductive reactance on one hundred volts. What's the current? Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Z is not 6 + 8 = 14!",
+   "card": "Z = 10 Ω → I = 10 A lagging 53.13°",
+   "narration": "The impedance is six plus j eight, ten ohms. One hundred over ten: ten amperes, lagging."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #12",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Series RL in one go | Can you solve it? #shorts",
+  "description": "Series RL in one go — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #12 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

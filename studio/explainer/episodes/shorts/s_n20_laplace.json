@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Laplace in one line",
+ "cover": "Laplace in one line",
+ "cover_highlight": "line",
+ "links": "network/n20_laplace.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "I(s) = 10 / (s(s + 5)) → i(t) = ?",
+   "narration": "Laplace gave I of s equals ten over s times s plus five. What's i of t? Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Cover-up method!",
+   "card": "i(t) = 2(1 − e^(−5t)) A",
+   "narration": "Partial fractions: two over s minus two over s plus five. That's two times one minus e to the minus five t."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #20",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Laplace in one line | Can you solve it? #shorts",
+  "description": "Laplace in one line — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #20 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

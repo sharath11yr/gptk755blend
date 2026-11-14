@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Adding waves without trig",
+ "cover": "Adding waves without trig",
+ "cover_highlight": "trig",
+ "links": "network/p23_phasors.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "worry",
+   "name": "Volt",
+   "say": "Adding two sine waves? Trigonometry nightmare!",
+   "narration": "Volt has to add two sine waves with different phases. Pages of trigonometry ahead."
+  },
+  {
+   "type": "complex",
+   "mode": "add",
+   "chapter": "What's happening",
+   "narration": "Turn each wave into an arrow, a phasor. Place them tip to tail. The result: five point six six at forty five degrees."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Phasors!",
+   "card": "4∠0° + 4∠90° = 5.66∠45°",
+   "narration": "One picture replaces the trigonometry."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Phasors & complex numbers!",
+   "card": "▶ NETWORK THEORY · #24",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Adding waves without trig #shorts",
+  "description": "Adding waves without trig — explained in under a minute with Volt.\nFull explanation: Network Theory #24 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

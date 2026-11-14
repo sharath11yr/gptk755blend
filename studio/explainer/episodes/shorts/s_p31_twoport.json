@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Just the input and output",
+ "cover": "Just the input and output",
+ "cover_highlight": "output",
+ "links": "network/p31_twoport.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "I don't care what's inside the box!",
+   "narration": "Volt only cares how his amplifier's output responds to its input."
+  },
+  {
+   "type": "twoport",
+   "mode": "open2",
+   "chapter": "What's happening",
+   "narration": "Treat it as a two port box. Open the output, push one ampere in, and measure: that's a Z parameter."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Two-port networks!",
+   "card": "V₁ = z₁₁I₁ + z₁₂I₂",
+   "narration": "Four numbers describe the whole box."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Two-port networks!",
+   "card": "▶ NETWORK THEORY · #32",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Just the input and output #shorts",
+  "description": "Just the input and output — explained in under a minute with Volt.\nFull explanation: Network Theory #32 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

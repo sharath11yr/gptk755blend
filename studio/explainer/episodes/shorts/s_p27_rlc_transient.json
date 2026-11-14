@@ -1,0 +1,63 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Why does it ring?",
+ "cover": "Why does it ring?",
+ "cover_highlight": "ring",
+ "links": "network/p27_rlc_transient.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "shock",
+   "name": "Volt",
+   "say": "Why is the voltage bouncing?!",
+   "narration": "Volt's circuit voltage overshoots and bounces before settling."
+  },
+  {
+   "type": "damp",
+   "show": [
+    "over",
+    "crit",
+    "under"
+   ],
+   "chapter": "What's happening",
+   "narration": "With an inductor and a capacitor, energy swings between them. Too little resistance, and it rings. Just right, and it settles fast."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Damping decides!",
+   "card": "α vs ω₀",
+   "narration": "Overdamped, critically damped or underdamped. Car suspensions use the same idea."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: RLC transients!",
+   "card": "▶ NETWORK THEORY · #28",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Why does it ring? #shorts",
+  "description": "Why does it ring? — explained in under a minute with Volt.\nFull explanation: Network Theory #28 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Why 230 V, not 325 V?",
+ "cover": "Why 230 V, not 325 V?",
+ "cover_highlight": "V",
+ "links": "network/p22_ac_basics.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "My socket peaks at 325 V… but it says 230 V?",
+   "narration": "Volt measures his socket on a scope. The peak is three hundred and twenty five volts, but it's called two hundred and thirty volts. Why?"
+  },
+  {
+   "type": "phasor",
+   "mode": "rms",
+   "vm": 325,
+   "chapter": "What's happening",
+   "narration": "Square the wave, average it, take the root. That's RMS, the value that heats things like DC would."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "230 V is the RMS value!",
+   "card": "V_rms = Vm / √2",
+   "narration": "Three twenty five divided by root two is two hundred and thirty."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: AC fundamentals!",
+   "card": "▶ NETWORK THEORY · #23",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Why 230 V, not 325 V? #shorts",
+  "description": "Why 230 V, not 325 V? — explained in under a minute with Volt.\nFull explanation: Network Theory #23 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Read this resistor",
+ "cover": "Read this resistor",
+ "cover_highlight": "resistor",
+ "links": "network/n02_components.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Challenge",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Can you solve this?",
+   "card": "red · red · orange · gold = ?",
+   "narration": "Red, red, orange, gold. What's the value, and how far can it really be off? Pause and try it!"
+  },
+  {
+   "type": "stick",
+   "chapter": "Answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Don't forget the tolerance!",
+   "card": "22 kΩ ± 5%",
+   "narration": "Two, two, times one thousand: twenty two kilo-ohms. Gold means five percent, so anywhere from twenty point nine to twenty three point one kilo-ohms."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Full step-by-step solution on our channel!",
+   "card": "▶ NUMERICALS #2",
+   "narration": "Want the full step by step solution, with more problems like this? Watch the numericals video on our channel."
+  }
+ ],
+ "yt": {
+  "title": "Read this resistor | Can you solve it? #shorts",
+  "description": "Read this resistor — a quick Network Theory challenge with Volt.\nFull solution: Network Theory Numericals #2 on our channel.\n#shorts #NetworkTheory #ECE #Numericals",
+  "tags": [
+   "network theory",
+   "ece",
+   "numericals",
+   "shorts"
+  ]
+ }
+}

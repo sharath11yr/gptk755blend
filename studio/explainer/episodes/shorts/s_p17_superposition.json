@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Two sources? Do one at a time!",
+ "cover": "Two sources? Do one at a time!",
+ "cover_highlight": "time",
+ "links": "network/p17_superposition.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Two sources at once… so confusing!",
+   "narration": "Volt's circuit has two batteries pushing at the same time."
+  },
+  {
+   "type": "theorem",
+   "mode": "v1",
+   "chapter": "What's happening",
+   "narration": "Switch one source off, a voltage source becomes a short, and find its effect. Then do the other one. Then add."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Superposition!",
+   "card": "1 A + 0.5 A = 1.5 A",
+   "narration": "But never add powers. Only currents and voltages."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Superposition theorem!",
+   "card": "▶ NETWORK THEORY · #18",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Two sources? Do one at a time! #shorts",
+  "description": "Two sources? Do one at a time! — explained in under a minute with Volt.\nFull explanation: Network Theory #18 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Do the voltages add up?",
+ "cover": "Do the voltages add up?",
+ "cover_highlight": "up",
+ "links": "network/p10_kvl.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Do the voltages always add up?",
+   "narration": "Volt measures the voltage across three resistors in a loop. Will they add up to the battery voltage?"
+  },
+  {
+   "type": "kvl",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ],
+   "chapter": "What's happening",
+   "narration": "Walk around the loop. Plus twelve through the battery, minus two, minus four, minus six. The sum is zero, every time."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Kirchhoff's voltage law!",
+   "card": "Σ V = 0",
+   "narration": "Around any closed loop, the rises equal the drops. It's conservation of energy."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Kirchhoff's voltage law!",
+   "card": "▶ NETWORK THEORY · #11",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Do the voltages add up? #shorts",
+  "description": "Do the voltages add up? — explained in under a minute with Volt.\nFull explanation: Network Theory #11 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Where does the current go?",
+ "cover": "Where does the current go?",
+ "cover_highlight": "go",
+ "links": "network/p9_kcl.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Current splits… but how much?",
+   "narration": "At a junction, current splits into many wires. How do engineers know how much goes where?"
+  },
+  {
+   "type": "kcl",
+   "currents": [
+    5,
+    3,
+    -2,
+    -6
+   ],
+   "chapter": "What's happening",
+   "narration": "Watch this node. Five plus three amperes in, two plus six out. What goes in always comes out."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Kirchhoff's current law!",
+   "card": "Σ I_in = Σ I_out",
+   "narration": "Charge can't pile up at a point. That one rule even powers the RCCB that protects your home."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Kirchhoff's current law!",
+   "card": "▶ NETWORK THEORY · #10",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Where does the current go? #shorts",
+  "description": "Where does the current go? — explained in under a minute with Volt.\nFull explanation: Network Theory #10 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

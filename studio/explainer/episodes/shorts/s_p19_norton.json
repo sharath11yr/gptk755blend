@@ -1,0 +1,65 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Thevenin's twin",
+ "cover": "Thevenin's twin",
+ "cover_highlight": "twin",
+ "links": "network/p19_norton.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Is there a current-source version?",
+   "narration": "Thevenin uses a voltage source. Is there a version with a current source?"
+  },
+  {
+   "type": "srctx",
+   "vs": 9,
+   "r": 2,
+   "rl": [
+    4,
+    1,
+    7
+   ],
+   "chapter": "What's happening",
+   "narration": "Yes, Norton's theorem. Nine volts with two ohms in series equals four point five amperes with two ohms in parallel. Watch the meters agree."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Norton's theorem!",
+   "card": "V_th = I_N × R_th",
+   "narration": "Short the terminals to find I N. Same resistance as Thevenin."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: Norton's theorem!",
+   "card": "▶ NETWORK THEORY · #20",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Thevenin's twin #shorts",
+  "description": "Thevenin's twin — explained in under a minute with Volt.\nFull explanation: Network Theory #20 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}

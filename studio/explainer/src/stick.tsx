@@ -99,11 +99,11 @@ const Volt: React.FC<{ x: number; y: number; pose: string; f: number; name?: str
   </g>;
 };
 
-export const StickScene: React.FC<any> = ({ dur, pose = "worry", say = "", name, prop = "none", circuit = {}, card, char }) => {
+export const StickScene: React.FC<any> = ({ dur, pose = "worry", say = "", name, prop = "none", circuit = {}, card, char, bubbleY }) => {
   const f = useCurrentFrame();
   const words = String(say).split(" "); const lines: string[] = []; let cur = "";
   for (const w of words) { if ((cur + " " + w).trim().length > 22) { lines.push(cur.trim()); cur = w; } else cur += " " + w; } if (cur.trim()) lines.push(cur.trim());
-  const by = prop === "circuit" ? 1080 : 620;
+  const by = bubbleY ?? (prop === "circuit" ? 1080 : 620);
   return <AbsoluteFill><svg viewBox="0 0 1080 1920" width="100%" height="100%">
     {prop === "circuit" && <Circuit c={circuit} f={f} dur={dur} />}
     {card && <g opacity={fade(f, 6, 10)}><rect x={140} y={prop === "circuit" ? 960 : 360} width={800} height={150} rx={24} fill={L.panel} stroke={L.amber} strokeWidth={6} />

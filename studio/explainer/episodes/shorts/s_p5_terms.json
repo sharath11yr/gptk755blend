@@ -1,0 +1,59 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "tag": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.05,
+ "story": true,
+ "scenes": [],
+ "title": "Node? Mesh? Loop?",
+ "cover": "Node? Mesh? Loop?",
+ "cover_highlight": "Loop",
+ "links": "network/p5_terms.json",
+ "short_scenes": [
+  {
+   "type": "stick",
+   "chapter": "Story",
+   "pose": "think",
+   "name": "Volt",
+   "say": "Node, branch, loop, mesh… confusing!",
+   "narration": "Volt's textbook keeps saying node, branch, loop and mesh. What do they mean?"
+  },
+  {
+   "type": "net",
+   "mode": "meshes",
+   "chapter": "What's happening",
+   "narration": "Watch this circuit. A node is where parts join. A loop is any closed path. A mesh is a loop with nothing inside it, like a window pane."
+  },
+  {
+   "type": "stick",
+   "chapter": "The answer",
+   "pose": "happy",
+   "name": "Volt",
+   "say": "Now the words make sense!",
+   "card": "meshes = b − n + 1",
+   "narration": "Five branches, four nodes, two meshes. Learn these words once and every method becomes easy."
+  },
+  {
+   "type": "stick",
+   "chapter": "Full video",
+   "pose": "wave",
+   "name": "Volt",
+   "say": "Watch the full video: The language of circuits!",
+   "card": "▶ NETWORK THEORY · #6",
+   "narration": "For the detailed explanation, watch the full video on our channel. It's part of our complete Network Theory course."
+  }
+ ],
+ "yt": {
+  "title": "Node? Mesh? Loop? #shorts",
+  "description": "Node? Mesh? Loop? — explained in under a minute with Volt.\nFull explanation: Network Theory #6 on our channel (Network Theory playlist).\n#shorts #NetworkTheory #ECE #Electronics",
+  "tags": [
+   "network theory",
+   "ece",
+   "electronics",
+   "shorts"
+  ]
+ }
+}
