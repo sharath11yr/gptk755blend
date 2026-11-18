@@ -1,0 +1,135 @@
+{
+ "title": "RL High-Pass Filter Explained | How It Works, Half-Cycle by Half-Cycle | Analog Electronics",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "short": [
+  4,
+  6
+ ],
+ "short_hook": "Why does a coil let high frequencies through?",
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "RL High-Pass Filter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "RL HIGH-PASS FILTER",
+   "subtitle": "The same job as the RC filter, done with an inductor",
+   "narration": "Welcome back. In the last video, we built a high-pass filter with a capacitor and a resistor. Today we build a high-pass filter with an inductor and a resistor: the RL high-pass filter. It does the same job, letting high frequencies through and blocking low ones, but the inductor does it in its own way. We will build it step by step and watch every half-cycle. As always, you don't need to know anything before this."
+  },
+  {
+   "type": "hpf",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "We start with the same AC source, V in. Remember, AC means the voltage keeps swinging positive, then negative. Now, instead of a capacitor, we put a resistor in series, directly in the path of the current. Then an inductor, from that point down to ground. An inductor is simply a coil of wire. This bumpy symbol shows the turns of the coil. Finally, the output. This time we take V out across the inductor. So the RL high-pass filter is: a resistor in series, and an inductor to ground, with the output across the inductor.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "compare",
+   "chapter": "RL low-pass vs RL high-pass",
+   "narration": "Compare it with the RL low-pass filter, on the right. In the low-pass version, the inductor is in series and the resistor goes to ground, with the output across the resistor. For the high-pass version, we swap them: the resistor goes in series and the inductor goes to ground, with the output across the inductor. Notice the pattern. In an RC high-pass filter the capacitor is in series. In an RL high-pass filter the inductor is to ground. The capacitor and the inductor always sit in opposite places, because they behave in opposite ways with frequency.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "sweep",
+   "chapter": "The key idea: XL",
+   "narration": "Here is the key idea. An inductor opposes changes in current. When current tries to change, the coil builds a magnetic field that pushes back. This opposition is called inductive reactance, written X L, measured in ohms. The formula is X L equals two pi f L. Notice: f is on the top this time. So it is the exact opposite of a capacitor. At low frequencies, the current changes slowly, so the inductor hardly pushes back. X L is tiny, the inductor behaves like a plain piece of wire, and it shorts the output to ground. Very little output. At high frequencies, the current tries to change very fast, the inductor fights back hard, X L becomes large, and most of the voltage appears across the inductor, which is exactly where we take our output. So again: low frequencies blocked, high frequencies passed.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 10,
+   "half": "pos",
+   "chapter": "High frequency: positive half-cycle",
+   "narration": "Let's go inside, half-cycle by half-cycle. High frequency first: ten kilohertz, ten times the cutoff. Here X L is ten kilohms, ten times bigger than the one kilohm resistor. Positive half-cycle. The input pushes current clockwise, through the resistor and down through the inductor. But the input is changing direction very fast, and the inductor fights every change, so only a small current gets through. That is why the dotted rings, which show the inductor's magnetic field, are faint here. Because the inductor's opposition is so much bigger than the resistor's, almost all of the input voltage appears across the inductor. And that is our output. Look at the graphs: V out is nearly as big as V in.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 10,
+   "half": "neg",
+   "chapter": "High frequency: negative half-cycle",
+   "narration": "Negative half-cycle. The input reverses, and the current reverses too. Again it is changing very quickly, so again the inductor pushes back hard, and again almost all the voltage appears across it. Only this time it is negative. So V out swings negative, following the input almost exactly. High frequency in, high frequency out.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 0.1,
+   "half": "pos",
+   "chapter": "Low frequency: positive half-cycle",
+   "narration": "Now a low frequency: one hundred hertz, ten times below the cutoff. X L is now only one hundred ohms. Positive half-cycle. The input rises slowly, so the current changes slowly, and the inductor barely pushes back. A bigger current flows, so the magnetic field rings are stronger now. But the voltage across an inductor depends on how fast the current changes, not on how big it is. Here it changes slowly, so the inductor behaves almost like a plain wire connected straight to ground. The output is taken across the inductor, and there is almost no voltage across a plain wire. Nearly all of the input voltage drops across the resistor instead. So V out stays tiny. Look at the output graph: it barely moves.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 0.1,
+   "half": "neg",
+   "chapter": "Low frequency: negative half-cycle",
+   "narration": "Negative half-cycle, same story. The current flows the other way, still changing slowly, so the inductor still behaves like a wire. Almost all the voltage sits across the resistor, and the output stays small. And for pure DC, frequency zero, the current doesn't change at all, so the inductor is exactly like a wire. Its voltage is zero. So V out is zero. Just like the RC version, the RL high-pass filter blocks DC completely.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 1,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "Exactly at the cutoff",
+   "narration": "Now exactly at the cutoff frequency, one kilohertz. Here X L equals R: both are one kilohm. The output comes out at seventy point seven percent of the input, minus three decibels, exactly as in the RC filter. And look at the timing. The output peak arrives before the input peak. The output leads the input by forty-five degrees. Same result as the RC high-pass filter, done by a different component.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "fc",
+   "chapter": "Finding the cutoff frequency",
+   "narration": "So how do we find the cutoff frequency? It is the frequency where X L equals R. So two pi f L equals R, and rearranging gives f c equals R divided by two pi L. Notice the formula looks different from the RC one: R is on the top. Let's use our values: R is one kilohm, L is one hundred and fifty-nine millihenry. f c equals one thousand divided by two times three point one four times zero point one five nine. That comes to about one thousand hertz, one kilohertz. At this frequency, X L equals R and the output is seventy point seven percent of the input.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 3,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: putting the inductor in series for a high-pass filter. That makes a low-pass filter. For high-pass, the inductor goes to ground, and the output is across the inductor. Two: mixing up the formulas. For RC, f c is one over two pi R C. For RL, f c is R over two pi L. R is on top for the inductor. Three: thinking an inductor blocks DC. It's the opposite. An inductor is a short circuit for DC, which is exactly why the output here is zero for DC. In practice, capacitors are used for most high-pass filters, because inductors are bigger, heavier and more expensive. But you must understand both.",
+   "kind": "rl"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BUTTERWORTH FILTER",
+   "lines": [
+    "R in series, L to ground",
+    "XL rises as frequency rises",
+    "fc = R / 2πL, output 70.7% at fc"
+   ],
+   "cta": "Butterworth filter is next",
+   "narration": "Recap. The RL high-pass filter puts the resistor in series and the inductor to ground, with the output across the inductor. At low frequencies X L is small, the inductor acts like a wire, and the output is tiny. At high frequencies X L is large and the output follows the input. The cutoff is f c equals R over two pi L, where the output is seventy point seven percent. Next, we look at the Butterworth filter: how engineers make a filter with a perfectly flat response. See you there."
+  }
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "RL High-Pass Filter Explained | How It Works, Half-Cycle by Half-Cycle | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "How an RL high-pass filter works, step by step: the circuit, what the resistor and inductor do in each half-cycle, inductive reactance XL = 2πfL, the cutoff frequency fc = R/2πL, and common mistakes.",
+  "tags": [
+   "rl high pass filter",
+   "high pass filter",
+   "analog electronics",
+   "inductive reactance",
+   "cutoff frequency",
+   "filters"
+  ]
+ }
+}
