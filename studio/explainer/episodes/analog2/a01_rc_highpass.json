@@ -1,0 +1,123 @@
+{
+ "title": "RC High-Pass Filter Explained | How It Works, Half-Cycle by Half-Cycle | Analog Electronics",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "short": [
+  4,
+  6
+ ],
+ "short_hook": "Why does a capacitor block low frequencies?",
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "RC High-Pass Filter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "RC HIGH-PASS FILTER",
+   "subtitle": "How a capacitor and a resistor let high frequencies through",
+   "narration": "Welcome back. In the last video we built a low-pass filter, which lets low frequencies through and blocks high ones. Today we build the opposite: a high-pass filter. It lets high frequencies pass, and blocks low ones. We will build it piece by piece, and then watch exactly what happens inside it during every half-cycle of the input. You do not need to know anything before this. Let's start."
+  },
+  {
+   "type": "hpf",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "First, our input. This circle is an AC source. AC means the voltage keeps changing direction: it goes positive, then negative, then positive again, like a wave. We call it V in. Next, we connect a capacitor in series. Series means it sits directly in the path of the current, so every bit of current must go through it. Then a resistor, from that point down to ground. Ground is simply our zero volt reference, the bottom wire. And finally, the output. We take the output voltage across the resistor. We call it V out. That is the whole circuit: a capacitor in series, and a resistor to ground."
+  },
+  {
+   "type": "hpf",
+   "mode": "compare",
+   "chapter": "Low-pass vs high-pass",
+   "narration": "Look at the low-pass filter from the last video, on the right. There, the resistor was in series and the capacitor went to ground, and we took the output across the capacitor. For the high-pass filter, we simply swap them. The capacitor goes in series, and the resistor goes to ground. Same two parts, swapped places, and the behaviour becomes the exact opposite. Remember this picture. It is the easiest way to never mix them up in an exam."
+  },
+  {
+   "type": "hpf",
+   "mode": "sweep",
+   "chapter": "The key idea: Xc",
+   "narration": "Now the key idea. A capacitor does not oppose all signals equally. Its opposition is called capacitive reactance, written X c, and it is measured in ohms, just like resistance. The formula is X c equals one divided by two pi f C. f is the frequency. Look at what that means. When the frequency is low, X c is huge, so the capacitor almost blocks the signal, and very little reaches the output. Watch the dot on the graph: at fifty hertz the output is tiny. As the frequency rises, X c gets smaller and smaller, so the capacitor lets more and more through. At high frequencies, X c is almost zero, the capacitor behaves almost like a plain wire, and nearly all of the input appears at the output. Low frequencies blocked, high frequencies passed. That is why it is called a high-pass filter."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 10,
+   "half": "pos",
+   "chapter": "High frequency: positive half-cycle",
+   "narration": "Now let's go inside the circuit, half-cycle by half-cycle. We feed a high frequency, ten kilohertz, ten times the cutoff. Here, X c is only one hundred ohms, much smaller than the one kilohertz resistor. Positive half-cycle. The input rises, pushing current clockwise: up from the source, through the capacitor, down through the resistor, and back to the source. The moving dots show the charge flowing. Because current flows down through the resistor, the top of the resistor is positive, so V out is positive. And because the capacitor's opposition is so small, almost all the input voltage appears across the resistor. Look at the two graphs: the output is nearly as big as the input."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 10,
+   "half": "neg",
+   "chapter": "High frequency: negative half-cycle",
+   "narration": "Negative half-cycle. Now the input reverses. The current reverses too, flowing anticlockwise: up through the resistor, back through the capacitor, into the source. Current now flows upward through the resistor, so V out becomes negative. Notice the capacitor plates: the plus and minus signs swap as it charges the other way. But the capacitor never has time to charge much, because the signal changes direction so quickly. So it barely gets in the way, and the output follows the input almost perfectly. High frequency in, high frequency out."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 0.1,
+   "half": "pos",
+   "chapter": "Low frequency: positive half-cycle",
+   "narration": "Now the same circuit with a low frequency, one hundred hertz, ten times below the cutoff. X c is now ten kilohms, ten times bigger than the resistor. Positive half-cycle. While the input is rising, current flows clockwise and the capacitor charges. Watch the plus and minus signs build up on its plates. But the input rises so slowly that the capacitor easily keeps up: its voltage almost matches the input at every moment. That leaves almost nothing across the resistor. And here is something interesting: once the input passes its peak and starts falling, the capacitor is now slightly fuller than the input, so it pushes a little charge back. The current reverses, and V out dips slightly below zero. Either way, the current is always small, so V out stays tiny. Look at the output graph: it barely moves."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 0.1,
+   "half": "neg",
+   "chapter": "Low frequency: negative half-cycle",
+   "narration": "Negative half-cycle, same story. The input slowly goes negative, the capacitor slowly charges the other way, and again it keeps up with the input. Almost all the voltage sits across the capacitor, not the resistor. So the output stays small. This is the capacitor blocking the low frequency. And for pure DC, frequency zero, the capacitor charges fully and then current stops completely. V out becomes exactly zero. A high-pass filter always blocks DC."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 1,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "Exactly at the cutoff",
+   "narration": "Now exactly at the cutoff frequency, one kilohertz. Here, X c equals R, both one kilohm. The input is shared between them, but not as a simple half and half, because a capacitor's voltage is out of step with the resistor's. The output comes out at seventy point seven percent of the input, which is called minus three decibels. Look closely at the two graphs: the output peak comes a little earlier than the input peak. The output leads the input by forty-five degrees. That early output is a signature of a high-pass filter."
+  },
+  {
+   "type": "hpf",
+   "mode": "fc",
+   "chapter": "Finding the cutoff frequency",
+   "narration": "So how do we find the cutoff frequency? The cutoff is the frequency where X c equals R. Setting one over two pi f C equal to R and solving gives: f c equals one divided by two pi R C. Let's use our values. R is one kilohm, C is zero point one five nine microfarads. f c equals one divided by two, times three point one four, times one thousand, times zero point zero zero zero zero zero zero one five nine. That comes to about one thousand hertz, one kilohertz. At this frequency, X c equals R, and the output is seventy point seven percent of the input."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 3,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "Common mistakes",
+   "narration": "Before we finish, three common mistakes students make. One: swapping the circuits. In a high-pass filter the capacitor is in series and the output is across the resistor. If the output is across the capacitor, it is a low-pass filter. Two: thinking the output is half of the input at the cutoff. It is not half. It is seventy point seven percent, which is one over root two. Three: forgetting that a high-pass filter blocks DC completely. Any steady DC voltage at the input gives zero volts at the output. Get these three right and you will never lose marks on this topic."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: RL HIGH-PASS FILTER",
+   "lines": [
+    "Capacitor in series, R to ground",
+    "Xc falls as frequency rises",
+    "fc = 1 / 2πRC, output 70.7% at fc"
+   ],
+   "cta": "RL high-pass is next",
+   "narration": "Let's recap. A high-pass filter puts the capacitor in series and takes the output across the resistor. At low frequencies X c is large and the signal is blocked. At high frequencies X c is small and the signal passes. The cutoff is f c equals one over two pi R C, where the output is seventy point seven percent of the input. In the next video, we build the same filter with an inductor and a resistor: the RL high-pass filter. See you there."
+  }
+ ],
+ "yt": {
+  "title": "RC High-Pass Filter Explained | How It Works, Half-Cycle by Half-Cycle | Analog Electronics",
+  "description": "How an RC high-pass filter works, step by step: the circuit, what the capacitor and resistor do in each half-cycle, capacitive reactance, the cutoff frequency fc = 1/2πRC, and common mistakes.",
+  "tags": [
+   "rc high pass filter",
+   "high pass filter",
+   "analog electronics",
+   "filters",
+   "capacitive reactance",
+   "cutoff frequency"
+  ]
+ }
+}

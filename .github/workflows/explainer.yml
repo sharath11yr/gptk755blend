@@ -57,6 +57,11 @@ jobs:
           mkdir -p out/stills
           for t in 5 20 40 60 80 100 120 140 160 180 200 220; do ffmpeg -y -loglevel error -ss $t -i out/video_final.mp4 -frames:v 1 -vf scale=960:-1 out/stills/v_$t.jpg || true; done
           for t in 2 10 20 30 40; do ffmpeg -y -loglevel error -ss $t -i out/short_final.mp4 -frames:v 1 -vf scale=540:-1 out/stills/s_$t.jpg || true; done
+      - name: Push a compressed preview video to a branch (for review)
+        run: |
+          mkdir -p prev && ffmpeg -y -loglevel error -i out/video_final.mp4 -vf scale=1280:-2 -c:v libx264 -crf 27 -preset veryfast -c:a aac -b:a 96k prev/video.mp4
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          b=preview-video-${{ github.run_id }}; git checkout -q -b $b; git add -f prev/video.mp4; git commit -qm preview; git push -q origin $b
       - uses: actions/upload-artifact@v4
         with:
           name: explainer-video

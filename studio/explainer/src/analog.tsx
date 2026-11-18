@@ -988,3 +988,134 @@ export const TwoPortScene: React.FC<any> = ({ dur, mode = "box" }) => {
 };
 
 export const ANALOG_SCENES: Record<string, React.FC<any>> = { twoport: TwoPortScene, graph: GraphScene, coupled: CoupledScene, resonance: ResScene, damp: DampScene, complex: ComplexScene, phasor: PhasorScene, theorem: TheoremScene, mpt: MptScene, nodal: NodalScene, mesh: MeshScene, stardelta: StarDelta, srctx: SrcTxScene, kcl: KclScene, kvl: KvlScene, net: NetScene, source: SourceScene, coil: CoilScene, rl: RLScene, rc: RCScene, capgeom: CapGeom, resistor: ResistorScene, bars: ValueBars, atom: AtomScene, water: WaterTank, dc: DCCircuit, inside: InsideWire, ohm: OhmGraph, numerical: Numerical };
+
+// ------------------------------------------------------------------ RC high-pass filter (no boxes: circuit left, waveforms right)
+/** {"type":"hpf","mode":"build"|"compare"|"run"|"sweep"|"fc","ratio":10 (f/fc),"half":"pos"|"neg"|"all","cycles":1}
+ *  R = 1 kΩ, C = 0.159 µF -> fc = 1 kHz. Every value on screen is computed from the steady-state solution. */
+export const HPFScene: React.FC<any> = ({ dur, mode = "run", ratio = 10, half = "all", cycles = 1, amp = 5 }) => {
+  const f = useCurrentFrame();
+  const p = interpolate(f, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const R = 1000, FC = 1000;
+  const sweep = mode === "sweep";
+  const r = sweep ? Math.pow(10, -1.3 + 2.6 * p) : ratio;               // f / fc
+  const g = r / Math.sqrt(1 + r * r), ph = Math.atan(1 / r);           // gain and phase lead
+  const th0 = half === "neg" ? Math.PI : 0, th1 = half === "pos" ? Math.PI : half === "neg" ? 2 * Math.PI : 2 * Math.PI * cycles;
+  const running = mode === "run";
+  const th = running ? th0 + (th1 - th0) * p : 0.0001;
+  const vin = amp * Math.sin(th), vout = amp * g * Math.sin(th + ph), vc = vin - vout;
+  const iA = vout / R;
+  const reveal = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const T = 300, B = 760, XS = 200, XC = 480, XR = 720, XO = 900, YS = 530;
+  const loop = [[XS, YS - 62], [XS, T], [XR, T], [XR, B], [XS, B], [XS, YS + 62]];
+  const fmtF = (hz: number) => hz >= 1000 ? `${+(hz / 1000).toFixed(hz < 10000 ? 2 : 1)} kHz` : `${+hz.toFixed(hz < 100 ? 1 : 0)} Hz`;
+  const fmtO = (o: number) => o >= 1000 ? `${+(o / 1000).toFixed(o < 10000 ? 2 : 1)} kΩ` : `${+o.toFixed(0)} Ω`;
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const signs = (x: number, v: number, col: string) => Array.from({ length: Math.min(5, Math.round(Math.abs(v) / amp * 5)) }, (_, k) =>
+    <text key={k} x={x} y={T - 34 + k * 18} textAnchor="middle" fill={col} fontFamily={MONO} fontSize={22} fontWeight={700}>{v >= 0 ? "+" : "−"}</text>);
+  // ---- left: the circuit
+  const circuit = <g>
+    <g opacity={reveal(0.02)}>
+      <circle cx={XS} cy={YS} r={62} fill={L.bg0} stroke={L.cyan} strokeWidth={6} />
+      <path d={`M ${XS - 36} ${YS} Q ${XS - 18} ${YS - 34} ${XS} ${YS} T ${XS + 36} ${YS}`} fill="none" stroke={L.cyan} strokeWidth={5} />
+      <text x={XS - 80} y={YS + 10} textAnchor="end" {...T1} fontSize={32} fill={L.cyan}>Vin</text>
+      {running && <text x={XS} y={YS + 110} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={26}>{vin.toFixed(2)} V</text>}
+    </g>
+    <g opacity={reveal(0.2)}>
+      <polyline points={`${XS},${YS - 62} ${XS},${T} ${XC - 16},${T}`} fill="none" stroke={L.wire} strokeWidth={6} />
+      <line x1={XC - 16} y1={T - 55} x2={XC - 16} y2={T + 55} stroke={L.amber} strokeWidth={9} />
+      <line x1={XC + 16} y1={T - 55} x2={XC + 16} y2={T + 55} stroke={L.amber} strokeWidth={9} />
+      <text x={XC} y={T - 80} textAnchor="middle" {...T1} fontSize={32}>C</text>
+      {running && <>{signs(XC - 34, vc, vc >= 0 ? L.red : L.cyan)}{signs(XC + 34, -vc, -vc >= 0 ? L.red : L.cyan)}</>}
+      {(running || sweep) && <text x={XC} y={T + 100} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={26} fontWeight={700}>Xc = {fmtO(R / r)}</text>}
+      {running && <text x={XC} y={T + 136} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={24}>Vc = {vc.toFixed(2)} V</text>}
+    </g>
+    <g opacity={reveal(0.4)}>
+      <polyline points={`${XC + 16},${T} ${XR},${T} ${XR},${YS - 70}`} fill="none" stroke={L.wire} strokeWidth={6} />
+      <polyline points={`${XR},${YS + 70} ${XR},${B} ${XS},${B} ${XS},${YS + 62}`} fill="none" stroke={L.wire} strokeWidth={6} />
+      <Res x={XR} y={YS} ohm={R} label="R" />
+      <line x1={XS + 260} y1={B} x2={XS + 260} y2={B + 30} stroke={L.wire} strokeWidth={5} />
+      {[0, 1, 2].map((k) => <line key={k} x1={XS + 260 - 30 + k * 10} y1={B + 30 + k * 10} x2={XS + 260 + 30 - k * 10} y2={B + 30 + k * 10} stroke={L.wire} strokeWidth={5} />)}
+    </g>
+    <g opacity={reveal(0.6)}>
+      <line x1={XR} y1={T} x2={XO} y2={T} stroke={L.wire} strokeWidth={6} /><line x1={XR} y1={B} x2={XO} y2={B} stroke={L.wire} strokeWidth={6} />
+      <circle cx={XO} cy={T} r={11} fill={L.amber} /><circle cx={XO} cy={B} r={11} fill={L.amber} />
+      <text x={XO} y={YS + 10} textAnchor="middle" {...T1} fontSize={32} fill={L.green}>Vout</text>
+      {running && <text x={XO} y={YS + 50} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={26}>{vout.toFixed(2)} V</text>}
+      <line x1={XO} y1={T + 30} x2={XO} y2={YS - 40} stroke={L.green} strokeWidth={3} strokeDasharray="8 8" />
+      <line x1={XO} y1={YS + 70} x2={XO} y2={B - 30} stroke={L.green} strokeWidth={3} strokeDasharray="8 8" />
+    </g>
+    {mode === "build" && <g>
+      <text x={XC} y={T - 130} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={30} fontWeight={700} opacity={reveal(0.28)}>capacitor in SERIES</text>
+      <text x={XR + 60} y={B - 40} fill={L.amber} fontFamily={SANS} fontSize={30} fontWeight={700} opacity={reveal(0.5)}>resistor to GROUND</text>
+      <text x={XO + 30} y={YS + 90} fill={L.green} fontFamily={SANS} fontSize={28} fontWeight={700} opacity={reveal(0.7)}>output taken across R</text>
+    </g>}
+    {running && <Dots pts={loop} t={vc} speed={-26} r={8} />}
+    {running && Math.abs(iA) > 1e-4 && <text x={(XC + XR) / 2 + 40} y={T - 30} textAnchor="middle" fill={L.electron} fontFamily={MONO} fontSize={26} fontWeight={700}>
+      {iA > 0 ? "current →" : "← current"}</text>}
+  </g>;
+  // ---- right side
+  const GX = 1000, GW = 820, GA = 120;
+  const wave = (cy: number, fn: (t: number) => number, col: string, label: string, upto: number) => {
+    const N = 160; const pts: string[] = [];
+    for (let k = 0; k <= N; k++) { const t = th0 + (th1 - th0) * k / N; if (t > upto) break; pts.push(`${GX + GW * k / N},${cy - fn(t) / amp * GA}`); }
+    return <g>
+      <line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} />
+      <line x1={GX} y1={cy - GA} x2={GX + GW} y2={cy - GA} stroke={L.dim} strokeWidth={1.5} strokeDasharray="6 8" />
+      <line x1={GX} y1={cy + GA} x2={GX + GW} y2={cy + GA} stroke={L.dim} strokeWidth={1.5} strokeDasharray="6 8" />
+      <text x={GX - 16} y={cy + 10} textAnchor="end" {...T1} fontSize={30} fill={col}>{label}</text>
+      <text x={GX - 16} y={cy - GA + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={20}>+{amp} V</text>
+      <text x={GX - 16} y={cy + GA + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={20}>−{amp} V</text>
+      {pts.length > 1 && <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={6} strokeLinejoin="round" />}
+      {pts.length > 1 && <circle cx={+pts[pts.length - 1].split(",")[0]} cy={+pts[pts.length - 1].split(",")[1]} r={10} fill={col} />}
+    </g>;
+  };
+  let right: React.ReactNode = null;
+  if (running) {
+    const lab = half === "pos" ? "POSITIVE HALF-CYCLE" : half === "neg" ? "NEGATIVE HALF-CYCLE" : `${cycles} CYCLE${cycles > 1 ? "S" : ""}`;
+    right = <g>
+      <text x={GX + GW / 2} y={120} textAnchor="middle" fill={half === "neg" ? L.cyan : half === "pos" ? L.red : L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>{lab}</text>
+      <text x={GX + GW / 2} y={166} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={26}>f = {fmtF(r * FC)}   ·   cutoff fc = 1 kHz</text>
+      {wave(340, (t) => amp * Math.sin(t), L.cyan, "Vin", th)}
+      {wave(720, (t) => amp * g * Math.sin(t + ph), L.green, "Vout", th)}
+      <text x={GX + GW / 2} y={930} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={700}>Vout peak = {(amp * g).toFixed(2)} V  ({+(g * 100).toFixed(1)}% of Vin)</text>
+    </g>;
+  } else if (sweep) {
+    const X0 = GX, Y0 = 820, W = GW, H = 560, lx = (rr: number) => X0 + (Math.log10(rr) + 1.3) / 2.6 * W, ly = (gg: number) => Y0 - gg * H;
+    const pts: string[] = []; for (let k = 0; k <= 200; k++) { const rr = Math.pow(10, -1.3 + 2.6 * k / 200); if (rr > r) break; pts.push(`${lx(rr)},${ly(rr / Math.sqrt(1 + rr * rr))}`); }
+    right = <g>
+      <text x={X0 + W / 2} y={140} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>OUTPUT vs FREQUENCY</text>
+      <line x1={X0} y1={Y0} x2={X0 + W} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - H - 20} stroke={L.dim} strokeWidth={3} />
+      <line x1={X0} y1={ly(1)} x2={X0 + W} y2={ly(1)} stroke={L.dim} strokeDasharray="8 8" strokeWidth={2} />
+      <text x={X0 - 14} y={ly(1) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>100%</text>
+      <line x1={lx(1)} y1={Y0} x2={lx(1)} y2={ly(0.707)} stroke={L.amber} strokeDasharray="8 8" strokeWidth={3} />
+      <line x1={X0} y1={ly(0.707)} x2={lx(1)} y2={ly(0.707)} stroke={L.amber} strokeDasharray="8 8" strokeWidth={3} />
+      <text x={X0 - 14} y={ly(0.707) + 8} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={22}>70.7%</text>
+      <text x={lx(1)} y={Y0 + 40} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={24} fontWeight={700}>fc = 1 kHz</text>
+      <text x={X0} y={Y0 + 40} fill={L.dim} fontFamily={MONO} fontSize={22}>50 Hz</text>
+      <text x={X0 + W} y={Y0 + 40} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>20 kHz</text>
+      <text x={X0 + 120} y={Y0 - 30} fill={L.red} fontFamily={SANS} fontSize={26} fontWeight={700}>blocked</text>
+      <text x={X0 + W - 20} y={ly(1) - 20} textAnchor="end" fill={L.green} fontFamily={SANS} fontSize={26} fontWeight={700}>passed</text>
+      {pts.length > 1 && <polyline points={pts.join(" ")} fill="none" stroke={L.green} strokeWidth={7} />}
+      <circle cx={lx(r)} cy={ly(g)} r={12} fill={L.green} />
+      <text x={X0 + W / 2} y={960} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>f = {fmtF(r * FC)}   →   Vout = {Math.round(g * 100)}% of Vin</text>
+    </g>;
+  } else if (mode === "fc") {
+    const lines = ["R = 1 kΩ,   C = 0.159 µF", "fc = 1 ÷ (2π × R × C)", "fc = 1 ÷ (2 × 3.14 × 1000 × 0.000000159)", "fc ≈ 1000 Hz  =  1 kHz", "At fc:  Xc = R,  Vout = 0.707 × Vin  (−3 dB)"];
+    right = <g>{lines.map((l, k) => <text key={k} x={GX} y={300 + k * 110} fill={k === 3 ? L.green : k === 4 ? L.amber : L.text} fontFamily={MONO} fontSize={k === 1 ? 44 : 36} fontWeight={700}
+      opacity={interpolate(p, [k * 0.17, k * 0.17 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  } else if (mode === "compare") {
+    right = <g opacity={0.95}>
+      <text x={GX + GW / 2} y={170} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>LAST VIDEO: LOW-PASS</text>
+      <polyline points={`${GX + 80},560 ${GX + 80},330 ${GX + 220},330`} fill="none" stroke={L.wire} strokeWidth={5} />
+      <Res x={GX + 290} y={330} ohm={R} label="R" horizontal />
+      <polyline points={`${GX + 360},330 ${GX + 560},330 ${GX + 560},470`} fill="none" stroke={L.wire} strokeWidth={5} />
+      <line x1={GX + 510} y1={470} x2={GX + 610} y2={470} stroke={L.amber} strokeWidth={8} /><line x1={GX + 510} y1={500} x2={GX + 610} y2={500} stroke={L.amber} strokeWidth={8} />
+      <text x={GX + 630} y={495} {...T1} fontSize={28}>C</text>
+      <polyline points={`${GX + 560},500 ${GX + 560},640 ${GX + 80},640 ${GX + 80},560`} fill="none" stroke={L.wire} strokeWidth={5} />
+      <text x={GX + GW / 2} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30}>R in series · C to ground · output across C</text>
+      <text x={GX + GW / 2} y={850} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={32} fontWeight={800}>High-pass: SWAP them  →  C in series · R to ground</text>
+    </g>;
+  }
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{circuit}{right}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.hpf = HPFScene;
