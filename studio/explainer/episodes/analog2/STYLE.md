@@ -8,3 +8,6 @@
 - Structure: build the circuit piece by piece -> compare with what they know -> key idea ->
   each half-cycle / operating case -> special point (e.g. cutoff) -> worked formula -> common mistakes -> recap.
 - Check every rendered video frame by frame before upload.
+- Every topic gets its OWN circuit and its OWN animation built for it (no reusing one scene with
+  new labels). The circuit, waveforms and what moves all change with the topic.
+- Thumbnails: the owner uploads them himself - never auto-generate.
