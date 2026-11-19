@@ -96,6 +96,27 @@
    "kind": "rl"
   },
   {
+   "type": "app",
+   "app": "crossover",
+   "focus": "both",
+   "chapter": "Real world: the speaker crossover",
+   "narration": "So where are high-pass filters actually used? Open almost any hi-fi speaker box and you'll find one. Music coming from an amplifier is a mix of everything: deep bass and high treble together. But one speaker cone can't play everything well. So speakers use two: a big cone called a woofer for the bass, and a small cone called a tweeter for the high notes. The circuit that splits the music between them is called a crossover."
+  },
+  {
+   "type": "app",
+   "app": "crossover",
+   "focus": "high",
+   "chapter": "Real world: the speaker crossover",
+   "narration": "Here is where our high-pass filter comes in. The tweeter's cone is tiny and light. If you sent it deep bass, it would try to move far too much and could be damaged. So a high-pass filter sits in front of it, blocking the low frequencies and passing only the high notes. A simple crossover uses a capacitor in series with the tweeter. Better crossovers add an inductor to ground as well, exactly like the circuit we built today, to block the bass even more strongly."
+  },
+  {
+   "type": "app",
+   "app": "crossover",
+   "focus": "low",
+   "chapter": "Real world: the speaker crossover",
+   "narration": "And the woofer gets the opposite: a low-pass filter, which passes the bass and blocks the high notes. So in one speaker box, a high-pass filter and a low-pass filter work together, each sending the right frequencies to the right speaker. Every time you hear clear bass and crisp treble from a speaker, filters like these are doing the work."
+  },
+  {
    "type": "hpf",
    "mode": "run",
    "ratio": 3,
@@ -132,5 +153,5 @@
    "filters"
   ]
  },
- "checked": true
+ "checked": false
 }

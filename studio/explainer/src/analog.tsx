@@ -1137,3 +1137,57 @@ export const HPFScene: React.FC<any> = ({ dur, mode = "run", ratio = 10, half = 
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{circuit}{right}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.hpf = HPFScene;
+
+// ------------------------------------------------------------------ real-world application: speaker crossover (illustrated, no photos)
+/** {"type":"app","app":"crossover","focus":"high"|"low"|"both"} music in -> high-pass -> tweeter, low-pass -> woofer */
+const Speaker: React.FC<{ x: number; y: number; s: number; t: number; amp: number; col: string; label: string; sub: string }> = ({ x, y, s, t, amp, col, label, sub }) => {
+  const push = Math.sin(t) * amp * 10 * s;
+  return <g>
+    <rect x={x - 120 * s} y={y - 150 * s} width={240 * s} height={300 * s} rx={26 * s} fill="#25313d" stroke="#3a4a5a" strokeWidth={4} />
+    <circle cx={x} cy={y} r={100 * s} fill="#1a232c" stroke="#4a5d70" strokeWidth={5} />
+    <circle cx={x} cy={y} r={(78 + push / 4) * s} fill="#2e3b48" stroke={col} strokeWidth={4} />
+    <circle cx={x} cy={y} r={(30 + push / 6) * s} fill={col} opacity={0.9} />
+    {[1, 2, 3].map((k) => <path key={k} d={`M ${x + (115 + k * 26) * s} ${y - (40 + k * 14) * s} Q ${x + (135 + k * 26) * s} ${y} ${x + (115 + k * 26) * s} ${y + (40 + k * 14) * s}`}
+      fill="none" stroke={col} strokeWidth={4} opacity={amp * (0.25 + 0.25 * Math.sin(t * 2 - k))} />)}
+    <text x={x} y={y + 205 * s} textAnchor="middle" fill={col} fontFamily={SANS} fontSize={34} fontWeight={800}>{label}</text>
+    <text x={x} y={y + 245 * s} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>{sub}</text>
+  </g>;
+};
+export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both", kind = "rc" }) => {
+  const f = useCurrentFrame(); const t = f / 30;
+  const hiOn = focus !== "low", loOn = focus !== "high";
+  const mix = (x: number, a: number, b: number) => a * Math.sin(x / 70 - t * 3) + b * Math.sin(x / 9 - t * 18);
+  const wave = (x0: number, x1: number, y: number, a: number, b: number, col: string, op = 1) => {
+    const pts: string[] = []; for (let x = x0; x <= x1; x += 4) pts.push(`${x},${y - mix(x, a, b)}`);
+    return <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={4} opacity={op} />;
+  };
+  // amplifier
+  const amp = <g>
+    <rect x={90} y={400} width={260} height={280} rx={30} fill="#25313d" stroke="#3a4a5a" strokeWidth={4} />
+    {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={120 + k * 44} y={430} width={30} height={60} rx={6} fill={L.cyan} opacity={0.25 + 0.75 * Math.abs(Math.sin(t * 3 + k))} />)}
+    <circle cx={220} cy={590} r={50} fill="#1a232c" stroke={L.amber} strokeWidth={5} />
+    <line x1={220} y1={590} x2={220 + 36 * Math.cos(-2.2 + Math.sin(t) * 0.4)} y2={590 + 36 * Math.sin(-2.2 + Math.sin(t) * 0.4)} stroke={L.amber} strokeWidth={6} strokeLinecap="round" />
+    <text x={220} y={740} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>AMPLIFIER</text>
+    <text x={220} y={780} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>music: bass + treble mixed</text>
+  </g>;
+  const filt = (x: number, y: number, hp: boolean, on: boolean) => <g opacity={on ? 1 : 0.25}>
+    <rect x={x - 140} y={y - 60} width={280} height={120} rx={60} fill={hp ? "rgba(46,196,160,0.12)" : "rgba(240,160,60,0.12)"} stroke={hp ? L.green : L.amber} strokeWidth={4} />
+    {hp ? <g><line x1={x - 100} y1={y - 26} x2={x - 100} y2={y + 26} stroke={L.green} strokeWidth={7} /><line x1={x - 84} y1={y - 26} x2={x - 84} y2={y + 26} stroke={L.green} strokeWidth={7} />
+      <text x={x + 25} y={y + 11} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>HIGH-PASS</text></g>
+      : <text x={x} y={y + 12} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={30} fontWeight={800}>LOW-PASS</text>}
+  </g>;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>REAL WORLD: THE SPEAKER CROSSOVER</text>
+    <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>inside almost every hi-fi speaker box</text>
+    {amp}
+    {wave(350, 700, 540, 40, 14, L.cyan)}
+    <path d="M 700 540 C 760 540 760 330 820 330" fill="none" stroke={L.wire} strokeWidth={5} />
+    <path d="M 700 540 C 760 540 760 770 820 770" fill="none" stroke={L.wire} strokeWidth={5} />
+    {filt(930, 330, true, hiOn)}{filt(930, 770, false, loOn)}
+    {wave(1070, 1470, 330, 0, 18, L.green, hiOn ? 1 : 0.2)}
+    {wave(1070, 1430, 770, 45, 0, L.amber, loOn ? 1 : 0.2)}
+    <g opacity={hiOn ? 1 : 0.3}><Speaker x={1560} y={300} s={0.7} t={t * 18} amp={hiOn ? 1 : 0} col={L.green} label="TWEETER" sub="small cone · high notes" /></g>
+    <g opacity={loOn ? 1 : 0.3}><Speaker x={1560} y={720} s={1.05} t={t * 3} amp={loOn ? 1 : 0} col={L.amber} label="WOOFER" sub="big cone · bass" /></g>
+  </svg></AbsoluteFill>;
+};
+ANALOG_SCENES.app = AppScene;
