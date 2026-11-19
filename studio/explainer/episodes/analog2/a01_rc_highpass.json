@@ -142,6 +142,15 @@
   {
    "type": "hpf",
    "mode": "run",
+   "ratio": 1,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "",
+   "narration": "And right in the middle, at the cutoff frequency, the capacitor's opposition exactly equals the resistor. The output is seventy point seven percent of the input, and it arrives a little early, forty-five degrees ahead. Engineers set this point with one formula: f c equals one over two pi R C."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
    "ratio": 10,
    "half": "all",
    "cycles": 2,
