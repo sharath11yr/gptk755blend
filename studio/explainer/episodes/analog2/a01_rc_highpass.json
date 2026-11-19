@@ -122,5 +122,32 @@
   "playlist": "Analog Electronics",
   "short_title": "Why a capacitor blocks low frequencies #shorts"
  },
- "post_short": true
+ "post_short": true,
+ "short_scenes": [
+  {
+   "type": "hpf",
+   "mode": "sweep",
+   "chapter": "",
+   "narration": "One capacitor and one resistor. That's all it takes to block every low frequency and let only the high ones through. Watch the output climb as the frequency goes up."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 0.1,
+   "half": "all",
+   "cycles": 1,
+   "chapter": "",
+   "narration": "At low frequency, the capacitor has plenty of time to charge. It keeps up with the input, so almost nothing is left for the output. Blocked."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 10,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "",
+   "narration": "At high frequency, the input flips too fast. The capacitor can't keep up, so it acts like a plain wire, and the full signal reaches the output. Passed. That's a high-pass filter. Full step-by-step lesson on the channel."
+  }
+ ],
+ "checked": true
 }

@@ -1131,6 +1131,9 @@ export const HPFScene: React.FC<any> = ({ dur, mode = "run", ratio = 10, half = 
       <text x={GX + GW / 2} y={850} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={32} fontWeight={800}>{RL ? "High-pass: SWAP them  →  R in series · L to ground" : "High-pass: SWAP them  →  C in series · R to ground"}</text>
     </g>;
   }
+  const { width: VW, height: VH } = useVideoConfig();
+  if (VH > VW) return <AbsoluteFill><svg viewBox="0 0 1080 1920" width="100%" height="100%">
+    <g transform="translate(30,170)">{circuit}</g><g transform="translate(-880,930)">{right}</g></svg></AbsoluteFill>;
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{circuit}{right}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.hpf = HPFScene;
