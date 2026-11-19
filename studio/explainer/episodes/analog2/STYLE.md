@@ -11,3 +11,4 @@
 - Every topic gets its OWN circuit and its OWN animation built for it (no reusing one scene with
   new labels). The circuit, waveforms and what moves all change with the topic.
 - Thumbnails: the owner uploads them himself - never auto-generate.
+- Shorts may run up to 90 seconds: use the time to explain the main concept properly (hook -> idea shown -> payoff).
