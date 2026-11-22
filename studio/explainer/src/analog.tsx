@@ -1155,6 +1155,38 @@ const Speaker: React.FC<{ x: number; y: number; s: number; t: number; amp: numbe
 };
 export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both", kind = "rc" }) => {
   const f = useCurrentFrame(); const t = f / 30;
+  if (app === "radio") {
+    const st = [{ f: 88.5, c: L.cyan }, { f: 93.5, c: L.green }, { f: 98.3, c: L.amber }, { f: 104.0, c: "#c792ea" }];
+    const pick = 2; const dial = 88 + (98.3 - 88) * Math.min(1, t / 3);
+    const sel = Math.abs(dial - st[pick].f) < 0.4;
+    const sine = (x0: number, x1: number, y: number, k: number, a: number, col: string, op: number) => { const q: string[] = [];
+      for (let x = x0; x <= x1; x += 3) q.push(`${x},${y - a * Math.sin(x / (6 + k * 3) - t * 10)}`); return <polyline key={`${y}${k}`} points={q.join(" ")} fill="none" stroke={col} strokeWidth={4} opacity={op} />; };
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>REAL WORLD: TUNING A RADIO</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>a band-pass filter picks ONE station out of many</text>
+      {/* antenna + many stations arriving */}
+      <line x1={220} y1={330} x2={220} y2={700} stroke="#8aa1b4" strokeWidth={8} />
+      {[0, 1, 2].map((k) => <path key={k} d={`M ${190 - k * 30} ${330 - k * 20} Q 220 ${290 - k * 30} ${250 + k * 30} ${330 - k * 20}`} fill="none" stroke={L.electron} strokeWidth={3} opacity={0.3 + 0.3 * Math.sin(t * 3 - k)} />)}
+      <text x={220} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>ANTENNA</text>
+      <text x={220} y={798} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>receives every station</text>
+      {st.map((s, k) => sine(260, 620, 420 + k * 70, k, 18, s.c, 0.9))}
+      {st.map((s, k) => <text key={k} x={640} y={428 + k * 70} fill={s.c} fontFamily={MONO} fontSize={22}>{s.f} MHz</text>)}
+      {/* tuned LC band-pass with dial */}
+      <rect x={780} y={380} width={360} height={300} rx={36} fill="rgba(240,160,60,0.10)" stroke={L.amber} strokeWidth={4} />
+      <text x={960} y={430} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={28} fontWeight={800}>TUNED BAND-PASS</text>
+      <circle cx={960} cy={545} r={80} fill="#1f2a35" stroke="#4a5d70" strokeWidth={5} />
+      {[0, 1, 2, 3, 4, 5, 6].map((k) => <line key={k} x1={960 + 70 * Math.cos(Math.PI * (0.8 + k * 0.233))} y1={545 + 70 * Math.sin(Math.PI * (0.8 + k * 0.233))} x2={960 + 80 * Math.cos(Math.PI * (0.8 + k * 0.233))} y2={545 + 80 * Math.sin(Math.PI * (0.8 + k * 0.233))} stroke="#8aa1b4" strokeWidth={3} />)}
+      <line x1={960} y1={545} x2={960 + 62 * Math.cos(Math.PI * (0.8 + 1.4 * (dial - 88) / 16))} y2={545 + 62 * Math.sin(Math.PI * (0.8 + 1.4 * (dial - 88) / 16))} stroke={L.amber} strokeWidth={7} strokeLinecap="round" />
+      <text x={960} y={660} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={800}>{dial.toFixed(1)} MHz</text>
+      {/* only the selected station passes */}
+      {sel && sine(1150, 1500, 530, pick, 26, st[pick].c, 1)}
+      {!sel && <text x={1325} y={540} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>tuning…</text>}
+      <g><rect x={1530} y={400} width={240} height={260} rx={26} fill="#25313d" stroke="#3a4a5a" strokeWidth={4} />
+        <circle cx={1650} cy={530} r={88} fill="#1a232c" stroke="#4a5d70" strokeWidth={5} />
+        <circle cx={1650} cy={530} r={sel ? 70 + 6 * Math.sin(t * 20) : 70} fill="#2e3b48" stroke={st[pick].c} strokeWidth={4} />
+        <text x={1650} y={720} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>{sel ? "ONE CLEAR STATION" : "SPEAKER"}</text></g>
+    </svg></AbsoluteFill>;
+  }
   if (app === "adc") {
     const noisy = (x: number, a: number, b: number) => a * Math.sin(x / 40 - t * 4) + b * Math.sin(x / 4 - t * 30);
     const wv = (x0: number, x1: number, y: number, a: number, b: number, col: string) => { const q: string[] = [];
@@ -1333,3 +1365,123 @@ export const ButterScene: React.FC<any> = ({ dur, mode = "orders", n = 2 }) => {
   return svg(<>{ladder}{right}</>);
 };
 ANALOG_SCENES.bw = ButterScene;
+
+// ------------------------------------------------------------------ Band-pass filter: RC high-pass + RC low-pass, and series-resonant RLC
+/** {"type":"bp","mode":"build"|"combine"|"run"|"resonant"|"calc","f":1000,"q":"both"}
+ *  Cascade: C1 = 1.59 µF, R1 = 1 kΩ (fL = 100 Hz) then R2 = 10 kΩ, C2 = 1.59 nF (fH = 10 kHz). Exact complex response (with loading).
+ *  Resonant: L = 25.3 mH, C = 1 µF (f0 = 1 kHz), R = 100 Ω (Q ≈ 1.6) or 20 Ω (Q ≈ 8). */
+type Cx = [number, number];
+const cadd = (a: Cx, b: Cx): Cx => [a[0] + b[0], a[1] + b[1]], cmul = (a: Cx, b: Cx): Cx => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+const cdiv = (a: Cx, b: Cx): Cx => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; };
+const cabs = (a: Cx) => Math.hypot(a[0], a[1]), carg = (a: Cx) => Math.atan2(a[1], a[0]);
+const BP = { C1: 1.59e-6, R1: 1000, R2: 10000, C2: 1.59e-9, L: 0.0253, C: 1e-6 };
+const bpCascade = (fr: number): Cx => { const w = 2 * Math.PI * fr; const zc1: Cx = [0, -1 / (w * BP.C1)], zc2: Cx = [0, -1 / (w * BP.C2)];
+  const z2 = cadd([BP.R2, 0], zc2); const zsh = cdiv(cmul([BP.R1, 0], z2), cadd([BP.R1, 0], z2));
+  const v1 = cdiv(zsh, cadd(zsh, zc1)); return cmul(v1, cdiv(zc2, z2)); };
+const bpRes = (fr: number, r: number): Cx => { const w = 2 * Math.PI * fr; return cdiv([r, 0], [r, w * BP.L - 1 / (w * BP.C)]); };
+export const BandPassScene: React.FC<any> = ({ dur, mode = "build", f: fin = 1000, q = "both" }) => {
+  const fr = useCurrentFrame();
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const reveal = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const res = mode === "resonant";
+  const T = 300, B = 760, XS = 150, YS = 530;
+  const cap = (x: number, y: number, vert: boolean, lab: string, val: string) => vert
+    ? <g><line x1={x} y1={T} x2={x} y2={y - 14} stroke={L.wire} strokeWidth={6} /><line x1={x} y1={y + 14} x2={x} y2={B} stroke={L.wire} strokeWidth={6} />
+        <line x1={x - 44} y1={y - 14} x2={x + 44} y2={y - 14} stroke={L.amber} strokeWidth={9} /><line x1={x - 44} y1={y + 14} x2={x + 44} y2={y + 14} stroke={L.amber} strokeWidth={9} />
+        <text x={x + 56} y={y + 2} {...T1} fontSize={26}>{lab}</text><text x={x + 56} y={y + 32} fill={L.dim} fontFamily={MONO} fontSize={22}>{val}</text></g>
+    : <g><rect x={x - 30} y={T - 50} width={60} height={100} fill={L.bg0} />
+        <line x1={x - 14} y1={T - 48} x2={x - 14} y2={T + 48} stroke={L.amber} strokeWidth={9} /><line x1={x + 14} y1={T - 48} x2={x + 14} y2={T + 48} stroke={L.amber} strokeWidth={9} />
+        <text x={x} y={T - 66} textAnchor="middle" {...T1} fontSize={26}>{lab}</text><text x={x} y={T + 80} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{val}</text></g>;
+  const src = <g><circle cx={XS} cy={YS} r={56} fill={L.bg0} stroke={L.cyan} strokeWidth={6} />
+    <path d={`M ${XS - 32} ${YS} Q ${XS - 16} ${YS - 30} ${XS} ${YS} T ${XS + 32} ${YS}`} fill="none" stroke={L.cyan} strokeWidth={5} />
+    <text x={XS} y={YS + 100} textAnchor="middle" {...T1} fontSize={30} fill={L.cyan}>Vin</text>
+    <polyline points={`${XS},${YS - 56} ${XS},${T}`} fill="none" stroke={L.wire} strokeWidth={6} /><polyline points={`${XS},${YS + 56} ${XS},${B}`} fill="none" stroke={L.wire} strokeWidth={6} /></g>;
+  const left = res ? <g>{src}
+      <line x1={XS} y1={T} x2={XS + 520} y2={T} stroke={L.wire} strokeWidth={6} /><line x1={XS} y1={B} x2={XS + 640} y2={B} stroke={L.wire} strokeWidth={6} />
+      <rect x={300} y={T - 22} width={130} height={44} fill={L.bg0} /><path d={`M 305 ${T} ` + [0, 1, 2, 3].map(() => `a 15 16 0 1 1 30 0`).join(" ")} fill="none" stroke={L.amber} strokeWidth={6} />
+      <text x={365} y={T - 40} textAnchor="middle" {...T1} fontSize={26}>L</text><text x={365} y={T + 56} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>25.3 mH</text>
+      {cap(540, 0, false, "C", "1 µF")}
+      <line x1={670} y1={T} x2={790} y2={T} stroke={L.wire} strokeWidth={6} />
+      <polyline points={`790,${T} 790,${YS - 70}`} fill="none" stroke={L.wire} strokeWidth={6} /><polyline points={`790,${YS + 70} 790,${B}`} fill="none" stroke={L.wire} strokeWidth={6} />
+      <Res x={790} y={YS} ohm={q === "narrow" ? 20 : 100} label="R" />
+      <text x={790} y={B + 44} textAnchor="middle" {...T1} fontSize={28} fill={L.green}>Vout (across R)</text>
+      <text x={460} y={B + 100} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={30} fontWeight={800}>L and C in series · output across R</text></g>
+    : <g>{src}
+      <line x1={XS} y1={T} x2={XS + 120} y2={T} stroke={L.wire} strokeWidth={6} />
+      <g opacity={reveal(0.05)}>{cap(300, 0, false, "C1", "1.59 µF")}<line x1={330} y1={T} x2={560} y2={T} stroke={L.wire} strokeWidth={6} />
+        <polyline points={`430,${T} 430,${YS - 70}`} fill="none" stroke={L.wire} strokeWidth={6} /><polyline points={`430,${YS + 70} 430,${B}`} fill="none" stroke={L.wire} strokeWidth={6} />
+        <Res x={430} y={YS} ohm={BP.R1} label="R1" />
+        <text x={360} y={T - 160} textAnchor="middle" fill={L.cyan} fontFamily={SANS} fontSize={28} fontWeight={800}>HIGH-PASS STAGE</text>
+        <text x={360} y={T - 126} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>fL = 100 Hz</text></g>
+      <g opacity={reveal(0.4)}><Res x={630} y={T} ohm={BP.R2} label="R2" horizontal /><line x1={700} y1={T} x2={880} y2={T} stroke={L.wire} strokeWidth={6} />
+        {cap(780, YS, true, "C2", "1.59 nF")}
+        <text x={700} y={T - 160} textAnchor="middle" fill={L.green} fontFamily={SANS} fontSize={28} fontWeight={800}>LOW-PASS STAGE</text>
+        <text x={700} y={T - 126} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>fH = 10 kHz</text></g>
+      <line x1={XS} y1={B} x2={880} y2={B} stroke={L.wire} strokeWidth={6} />
+      <g opacity={reveal(0.7)}><circle cx={880} cy={T} r={11} fill={L.amber} /><circle cx={880} cy={B} r={11} fill={L.amber} />
+        <text x={880} y={B + 46} textAnchor="middle" {...T1} fontSize={30} fill={L.green}>Vout</text></g></g>;
+  // ---- right
+  const GX = 1010, GW = 820, Y0 = 800, H = 520;
+  const lmin = res ? 2 : 1, lspan = res ? 1.4 : 4;                      // log10 frequency window
+  const lx = (hz: number) => GX + (Math.log10(hz) - lmin) / lspan * GW, ly = (g: number) => Y0 - g * H;
+  const curve = (fn: (hz: number) => number, col: string, w = 6, op = 1, upto = 1) => { const pts: string[] = [];
+    for (let k = 0; k <= 240 * upto; k++) { const hz = Math.pow(10, lmin + lspan * k / 240); pts.push(`${lx(hz)},${ly(Math.min(1.02, fn(hz)))}`); }
+    return <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={w} opacity={op} strokeLinejoin="round" />; };
+  const axes = (ticks: number[]) => <g>
+    <line x1={GX} y1={Y0} x2={GX + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={Y0} x2={GX} y2={Y0 - H - 20} stroke={L.dim} strokeWidth={3} />
+    <line x1={GX} y1={ly(1)} x2={GX + GW} y2={ly(1)} stroke={L.dim} strokeDasharray="8 8" strokeWidth={2} /><text x={GX - 14} y={ly(1) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>100%</text>
+    <line x1={GX} y1={ly(0.707)} x2={GX + GW} y2={ly(0.707)} stroke={L.amber} strokeDasharray="6 10" strokeWidth={2} /><text x={GX - 14} y={ly(0.707) + 8} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={22}>70.7%</text>
+    {ticks.map((t) => <text key={t} x={lx(t)} y={Y0 + 40} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{t >= 1000 ? `${t / 1000} kHz` : `${t} Hz`}</text>)}</g>;
+  let right: React.ReactNode = null;
+  if (mode === "build" || mode === "combine") {
+    const hp = (hz: number) => { const r = hz / 100; return r / Math.sqrt(1 + r * r); }, lp = (hz: number) => 1 / Math.sqrt(1 + Math.pow(hz / 10000, 2));
+    const s1 = mode === "build" ? p > 0.1 : true, s2 = mode === "build" ? p > 0.45 : true, s3 = mode === "combine" ? p > 0.35 : p > 0.75;
+    right = <g>
+      <text x={GX + GW / 2} y={130} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>{s3 ? "TOGETHER: BAND-PASS" : "TWO FILTERS"}</text>
+      {axes([10, 100, 1000, 10000, 100000])}
+      {s1 && curve(hp, L.cyan, 4, s3 ? 0.45 : 1)}{s2 && curve(lp, L.green, 4, s3 ? 0.45 : 1)}
+      {s3 && <g><rect x={lx(100)} y={ly(1.02)} width={lx(10000) - lx(100)} height={ly(0) - ly(1.02)} fill={L.amber} opacity={0.08} />
+        {curve((hz) => cabs(bpCascade(hz)), L.amber, 8)}
+        <text x={(lx(100) + lx(10000)) / 2} y={ly(1) - 24} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={28} fontWeight={800}>PASS BAND: 100 Hz → 10 kHz</text></g>}
+      {s1 && !s3 && <text x={lx(100) - 10} y={ly(0.35)} textAnchor="end" fill={L.cyan} fontFamily={SANS} fontSize={24} fontWeight={700}>high-pass blocks lows</text>}
+      {s2 && !s3 && <text x={lx(10000) + 10} y={ly(0.35)} fill={L.green} fontFamily={SANS} fontSize={24} fontWeight={700}>low-pass blocks highs</text>}
+    </g>;
+  } else if (mode === "run") {
+    const Hc = bpCascade(fin); const g = cabs(Hc), ph = carg(Hc); const th = p * 4 * Math.PI;
+    const wave = (cy: number, A: number, P: number, col: string, lab: string) => { const pts: string[] = [];
+      for (let k = 0; k <= 160; k++) { const t = 4 * Math.PI * k / 160; if (t > th) break; pts.push(`${GX + GW * k / 160},${cy - A * 120 * Math.sin(t + P)}`); }
+      return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} />
+        <line x1={GX} y1={cy - 120} x2={GX + GW} y2={cy - 120} stroke={L.dim} strokeDasharray="6 8" strokeWidth={1.5} /><line x1={GX} y1={cy + 120} x2={GX + GW} y2={cy + 120} stroke={L.dim} strokeDasharray="6 8" strokeWidth={1.5} />
+        <text x={GX - 16} y={cy + 10} textAnchor="end" {...T1} fontSize={30} fill={col}>{lab}</text>
+        {pts.length > 1 && <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={6} />}</g>; };
+    const verdict = g > 0.6 ? "PASSED" : fin < 1000 ? "BLOCKED by the high-pass stage" : "BLOCKED by the low-pass stage";
+    right = <g>
+      <text x={GX + GW / 2} y={130} textAnchor="middle" fill={g > 0.6 ? L.green : L.red} fontFamily={SANS} fontSize={34} fontWeight={800}>{verdict}</text>
+      <text x={GX + GW / 2} y={176} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={26}>f = {fin >= 1000 ? `${fin / 1000} kHz` : `${fin} Hz`}</text>
+      {wave(340, 1, 0, L.cyan, "Vin")}{wave(720, g, ph, L.green, "Vout")}
+      <text x={GX + GW / 2} y={930} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={700}>Vout = {Math.round(g * 100)}% of Vin</text></g>;
+  } else if (mode === "resonant") {
+    const sweepHz = Math.pow(10, lmin + lspan * p);
+    right = <g>
+      <text x={GX + GW / 2} y={130} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>RESONANT BAND-PASS</text>
+      {axes([100, 300, 1000, 3000])}
+      <line x1={lx(1000)} y1={Y0} x2={lx(1000)} y2={ly(1)} stroke={L.amber} strokeDasharray="8 8" strokeWidth={3} />
+      <text x={lx(1000)} y={ly(1) - 24} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={26} fontWeight={800}>f0 = 1 kHz</text>
+      {q !== "narrow" && curve((hz) => cabs(bpRes(hz, 100)), L.cyan, 6, 1, p)}
+      {q !== "wide" && curve((hz) => cabs(bpRes(hz, 20)), L.green, 6, 1, p)}
+      {q === "both" && <g><text x={GX + 24} y={ly(1) + 50} fill={L.cyan} fontFamily={SANS} fontSize={24} fontWeight={700}>blue: R = 100 Ω → wide (Q ≈ 1.6)</text>
+        <text x={GX + 24} y={ly(1) + 86} fill={L.green} fontFamily={SANS} fontSize={24} fontWeight={700}>green: R = 20 Ω → narrow (Q ≈ 8)</text></g>}
+      <text x={GX + GW / 2} y={960} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>
+        f = {sweepHz >= 1000 ? `${(sweepHz / 1000).toFixed(2)} kHz` : `${sweepHz.toFixed(0)} Hz`}   XL = {(2 * Math.PI * sweepHz * BP.L).toFixed(0)} Ω   XC = {(1 / (2 * Math.PI * sweepHz * BP.C)).toFixed(0)} Ω</text></g>;
+  } else if (mode === "calc") {
+    const lines = ["fL = 1 ÷ (2π R1 C1) = 100 Hz", "fH = 1 ÷ (2π R2 C2) = 10 kHz", "Bandwidth  BW = fH − fL = 9.9 kHz", "Centre  f0 = √(fL × fH) = 1 kHz", "Resonant: f0 = 1 ÷ (2π√(LC)),  Q = f0 ÷ BW"];
+    right = <g>{lines.map((l, k) => <text key={k} x={GX - 40} y={300 + k * 110} fill={k === 3 ? L.green : k === 4 ? L.amber : L.text} fontFamily={MONO} fontSize={34} fontWeight={700}
+      opacity={interpolate(p, [k * 0.17, k * 0.17 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(30,170)">{left}</g><g transform="translate(-890,950)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.bp = BandPassScene;

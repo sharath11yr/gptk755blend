@@ -1,0 +1,110 @@
+{
+ "title": "Band-Pass Filter Explained | RC Stages, Resonance, Bandwidth & Q | Analog Electronics",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "short": [
+  1,
+  6
+ ],
+ "post_short": false,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Band-Pass Filter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "BAND-PASS FILTER",
+   "subtitle": "Keep only a band of frequencies, block everything below and above",
+   "narration": "Welcome back. A low-pass filter keeps the lows. A high-pass filter keeps the highs. But what if we want to keep only the middle: a band of frequencies, and block everything below it and everything above it? That's a band-pass filter. Today we'll build it two ways: first by joining a high-pass and a low-pass together, and then with a resonant circuit, the way radios do it. Step by step, from zero."
+  },
+  {
+   "type": "bp",
+   "mode": "build",
+   "chapter": "Building it from two filters",
+   "narration": "We start with the simplest idea. First, a high-pass stage: capacitor C one in series, resistor R one to ground. You know this one from our RC high-pass video. It blocks frequencies below its cutoff, which we've set at one hundred hertz. Its curve, in blue, rises from zero and reaches full output above one hundred hertz. Then we add a low-pass stage right after it: resistor R two in series, capacitor C two to ground. This blocks frequencies above its cutoff, ten kilohertz. Its curve, in green, starts at full output and falls above ten kilohertz. The output comes from the end of the second stage. Now look at what the two do together. The orange curve is the result. Below one hundred hertz, the high-pass stage blocks. Above ten kilohertz, the low-pass stage blocks. In between, both let the signal through. That middle region is the pass band."
+  },
+  {
+   "type": "bp",
+   "mode": "combine",
+   "chapter": "Why the stages don't fight",
+   "narration": "Notice we made R two ten times bigger than R one. That's on purpose. The second stage takes some current from the first one. If they were the same size, the second stage would drag down the first and shift the cutoffs. By making R two much bigger, the second stage barely loads the first, so each stage behaves almost exactly as it would on its own. The curve you see here is calculated exactly, including that small loading effect. At one hundred hertz and at ten kilohertz, the output is seventy point seven percent, just as designed."
+  },
+  {
+   "type": "bp",
+   "mode": "run",
+   "f": 30,
+   "chapter": "Too low: 30 Hz",
+   "narration": "Let's test it with real signals. First, thirty hertz, well below the band. Watch the output. The high-pass stage's capacitor has plenty of time to charge and blocks the signal, just like in our RC high-pass video. Only about twenty-nine percent gets through. Blocked by the high-pass stage."
+  },
+  {
+   "type": "bp",
+   "mode": "run",
+   "f": 1000,
+   "chapter": "Inside the band: 1 kHz",
+   "narration": "Now one kilohertz, right in the middle of the band. At this frequency, the first capacitor has a small reactance, so it passes the signal easily. And the second capacitor has a large reactance, so it hardly shorts anything to ground. Both stages let it through. The output is ninety-nine percent of the input. Passed."
+  },
+  {
+   "type": "bp",
+   "mode": "run",
+   "f": 30000,
+   "chapter": "Too high: 30 kHz",
+   "narration": "Finally thirty kilohertz, above the band. Now the second capacitor's reactance is small, so it gives the signal an easy path to ground and throws most of it away. Only about thirty-two percent reaches the output. Blocked by the low-pass stage. Low frequencies blocked, high frequencies blocked, only the band in the middle passes."
+  },
+  {
+   "type": "bp",
+   "mode": "resonant",
+   "q": "both",
+   "chapter": "The resonant band-pass",
+   "narration": "Now the second way to build a band-pass filter, and the one radios use. Put an inductor and a capacitor in series, and take the output across a resistor. Watch the numbers at the bottom as the frequency rises. At low frequencies, the capacitor's reactance X C is huge, so it blocks. At high frequencies, the inductor's reactance X L is huge, so it blocks. But at one special frequency, X L and X C are exactly equal, and because they act in opposite directions, they cancel each other completely. The circuit behaves like just the resistor, and the full signal reaches the output. This is called resonance, and this frequency is called f zero, the centre frequency. Here it's one kilohertz. And look at the two curves. With R equal to one hundred ohms, the band is wide. With R equal to twenty ohms, it becomes much narrower and sharper. We describe this sharpness with a number called Q, the quality factor. Small R, high Q, narrow band."
+  },
+  {
+   "type": "bp",
+   "mode": "calc",
+   "chapter": "The formulas",
+   "narration": "Let's put numbers on everything. For the two-stage filter, the lower cutoff f L is one over two pi R one C one, which gives one hundred hertz. The upper cutoff f H is one over two pi R two C two, which gives ten kilohertz. The bandwidth is the width of the pass band: f H minus f L, which is nine point nine kilohertz. The centre frequency is the geometric middle: the square root of f L times f H, which is one kilohertz. For the resonant version, the centre frequency is f zero equals one over two pi times the square root of L C. And the quality factor Q is f zero divided by the bandwidth. A high Q means a narrow, sharp band."
+  },
+  {
+   "type": "app",
+   "app": "radio",
+   "chapter": "Real world: tuning a radio",
+   "narration": "So where is this used? Every radio. Your antenna receives every station at once: eighty-eight point five, ninety-three point five, ninety-eight point three, all mixed together. A tuned band-pass filter, built from an inductor and a capacitor, lets through only one narrow band of frequencies. When you turn the dial, you are changing the capacitor, which moves the centre frequency f zero. When f zero lands on ninety-eight point three megahertz, only that station passes, and you hear it clearly. That's resonance, and a high Q, doing the job. The same idea picks your Wi-Fi channel and your mobile network band."
+  },
+  {
+   "type": "bp",
+   "mode": "combine",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using equal resistors in the two stages. The second stage then loads the first, and the cutoffs shift. Make the second stage's resistance about ten times larger. Two: calculating the centre frequency as the simple average. It's not f L plus f H divided by two. It's the square root of f L times f H. Here, that's one kilohertz, not about five kilohertz. Three: mixing up Q and bandwidth. Higher Q means a narrower band, not a wider one."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BAND-STOP FILTER",
+   "lines": [
+    "High-pass + low-pass = band-pass",
+    "f0 = √(fL × fH), BW = fH − fL",
+    "Resonant LC: XL = XC at f0, Q = f0 ÷ BW"
+   ],
+   "cta": "Band-stop filter is next",
+   "narration": "Recap. A band-pass filter keeps only a band of frequencies. We can build it by joining a high-pass stage and a low-pass stage, or with a series inductor and capacitor at resonance. The centre frequency is the square root of f L times f H, the bandwidth is f H minus f L, and Q tells us how sharp the band is. Next time, we do the exact opposite: block one band and pass everything else, the band-stop filter. See you there."
+  }
+ ],
+ "yt": {
+  "title": "Band-Pass Filter Explained | RC Stages, Resonance, Bandwidth & Q | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The band-pass filter step by step: building it from a high-pass and a low-pass stage (and why R2 is 10x R1), testing it at 30 Hz, 1 kHz and 30 kHz, the resonant LC band-pass, centre frequency, bandwidth and Q, and how a radio tuner uses it.",
+  "tags": [
+   "band pass filter",
+   "bandwidth",
+   "quality factor",
+   "resonance",
+   "rlc circuit",
+   "analog electronics",
+   "filters",
+   "radio tuning"
+  ]
+ }
+}
