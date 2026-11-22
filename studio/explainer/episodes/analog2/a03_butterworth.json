@@ -1,0 +1,130 @@
+{
+ "title": "Butterworth Filter Explained | Order, Maximally Flat Response & Part Values | Analog Electronics",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "short": [
+  1,
+  5
+ ],
+ "short_scenes": [
+  {
+   "type": "bw",
+   "mode": "orders",
+   "chapter": "",
+   "narration": "A simple filter cuts slowly. Watch what happens when we add more parts. Order one, two, three, four. The curve drops faster every time, like falling off a cliff, but every one still passes exactly seventy point seven percent at the cutoff."
+  },
+  {
+   "type": "bw",
+   "mode": "flat",
+   "chapter": "",
+   "narration": "And here's what makes Butterworth special. Other designs, like this red Chebyshev, ripple in the passband, so some frequencies come out louder than others. Butterworth is perfectly flat. Every frequency you want comes out at exactly the same level."
+  },
+  {
+   "type": "bw",
+   "mode": "signal",
+   "chapter": "",
+   "narration": "Feed it a voice-like tone with high-pitched noise on top. Order four keeps the tone and leaves only one percent of the noise. That's why there's a filter like this inside your phone's microphone. Full step-by-step lesson on the channel."
+  }
+ ],
+ "post_short": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Butterworth Filter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "BUTTERWORTH FILTER",
+   "subtitle": "How engineers make a filter that is perfectly flat, then falls off a cliff",
+   "narration": "Welcome back. So far we have built simple filters, with one capacitor or one inductor. They work, but they have a problem: they don't cut very sharply. Today we learn how engineers fix that, with the Butterworth filter. We'll see what makes it special, how to build it with more and more parts, and how to calculate every part's value. As always, step by step, from zero."
+  },
+  {
+   "type": "bw",
+   "mode": "orders",
+   "chapter": "The problem with simple filters",
+   "narration": "Look at the graph on the right. The blue-grey curve is a simple first-order low-pass filter, the kind with just one capacitor or one inductor. Above the cutoff frequency, one kilohertz, the output does fall, but slowly. At two kilohertz, twice the cutoff, it still lets through about forty-five percent. That's a lot of unwanted signal getting through. Now watch what happens as we use more parts. With order two, the curve falls faster. With order three, faster again. With order four, the curve drops like a cliff. Every curve still passes through seventy point seven percent at the cutoff, but the higher the order, the sharper the cut. Each extra order adds another twenty decibels per decade to the roll-off."
+  },
+  {
+   "type": "bw",
+   "mode": "build",
+   "n": 1,
+   "chapter": "What does order mean?",
+   "narration": "So what is the order? The order is simply the number of reactive parts in the filter: the inductors and capacitors. Here is order one. We have an AC source, a source resistance R s of one kilohm, one inductor in series, and a load resistor R L of one kilohm, where we take the output. One reactive part, so order one. The inductor opposes high frequencies, so high frequencies are reduced at the output, while low frequencies pass. That makes it a low-pass filter. One small note: because R s and R L share the voltage, the output in the passband is half the input. We always measure the filter's response relative to that passband level."
+  },
+  {
+   "type": "bw",
+   "mode": "build",
+   "n": 2,
+   "chapter": "Building order two",
+   "narration": "Now order two. We keep the inductor in series, and add a capacitor from the line down to ground. Think of the two parts as a team. The inductor blocks high frequencies from going forward along the line. The capacitor gives high frequencies an easy path straight down to ground, so whatever slips past the inductor gets thrown away. Two parts working together, so the high frequencies are cut much harder than with one part alone. Notice the values have changed too: in a Butterworth filter, every part has a carefully chosen value."
+  },
+  {
+   "type": "bw",
+   "mode": "build",
+   "n": 4,
+   "chapter": "Building order four",
+   "narration": "We can keep going. Order three adds another inductor in series. Order four adds another capacitor to ground. The pattern always alternates: inductor in series, capacitor to ground, inductor in series, capacitor to ground. This shape is called a ladder, because it looks like the rungs of a ladder lying on its side. Every extra rung makes the filter cut more sharply. Engineers choose the order based on how sharp the cut needs to be."
+  },
+  {
+   "type": "bw",
+   "mode": "flat",
+   "chapter": "Why is it called maximally flat?",
+   "narration": "But here's the important question: there are many ways to choose these part values. What makes a Butterworth filter special? Look at the red curve. This is another popular design, called a Chebyshev filter. It cuts sharply too, but look at the passband, the frequencies we want to keep. It's wavy. Some frequencies come out a little louder, some a little quieter. For music or measurements, that ripple changes the signal. Now the green curve: the Butterworth filter of the same order. In the passband it's perfectly flat. Every frequency we want comes out at exactly the same level, with no bumps. That's why the Butterworth filter is called maximally flat: its part values are chosen to make the passband as flat as mathematically possible, before it falls away after the cutoff."
+  },
+  {
+   "type": "bw",
+   "mode": "signal",
+   "chapter": "Watching it clean a signal",
+   "narration": "Let's see it working on a real signal. The input is a five hundred hertz tone we want to keep, mixed with three kilohertz noise we want to remove. That fast wiggle on top of the blue wave is the noise. Now the output. With order one, the noise is reduced but still clearly visible. With order two, it's much weaker. With order three, it's almost gone. With order four, only one percent of the noise is left, while the five hundred hertz tone comes through almost untouched. Look at the numbers at the bottom. The wanted signal stays, the unwanted one disappears, and because the passband is flat, the tone we keep is not distorted."
+  },
+  {
+   "type": "bw",
+   "mode": "calc",
+   "n": 2,
+   "chapter": "Calculating the part values",
+   "narration": "How do engineers find the values? They use a table of numbers called g values. For each order, the table gives one number for each part. For order two, both g values are one point four one four. Then two simple formulas turn g values into real parts. For an inductor, L equals g times R, divided by two pi f c. So L one equals one point four one four times one thousand, divided by six thousand two hundred and eighty-three. That's about two hundred and twenty-five millihenry. For a capacitor, C equals g, divided by two pi f c times R. So C two equals one point four one four, divided by six thousand two hundred and eighty-three times one thousand. That's about two hundred and twenty-five nanofarads. Change R or f c, and the same formulas give you new values."
+  },
+  {
+   "type": "app",
+   "app": "adc",
+   "chapter": "Real world: inside your phone",
+   "narration": "Where are Butterworth filters used? Right inside your phone. When you talk, the microphone produces a voltage that follows your voice. But it also picks up high-pitched noise. Before the phone can store your voice, a chip called an A D C, an analog to digital converter, measures the voltage thousands of times a second and turns it into numbers. If high-frequency noise reaches the A D C, it gets mixed into the numbers and becomes a strange whining sound you can't remove later. So a low-pass filter sits in front of the A D C, very often a Butterworth, because its flat passband keeps your voice exactly as it is, while cutting everything above. Every voice note and phone call you make passes through a filter like this."
+  },
+  {
+   "type": "bw",
+   "mode": "orders",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking a higher order changes the cutoff frequency. It doesn't. Every Butterworth curve passes seventy point seven percent at f c. Higher order only makes the fall after f c steeper. Two: thinking Butterworth means a particular circuit. Butterworth is a type of response, flat passband, and it can be built as a low-pass, high-pass, band-pass or band-stop filter. For a high-pass Butterworth, you simply swap: capacitors in series, inductors to ground. Three: forgetting that each order adds twenty decibels per decade. Order one falls twenty, order two forty, order four eighty decibels per decade."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BAND-PASS FILTER",
+   "lines": [
+    "Order = number of L and C parts",
+    "Butterworth = flat passband",
+    "Each order adds 20 dB/decade"
+   ],
+   "cta": "Band-pass filter is next",
+   "narration": "Recap. The order of a filter is the number of inductors and capacitors. More order means a steeper cut after the cutoff. A Butterworth filter chooses the part values so the passband is perfectly flat, the maximally flat response, and every order still passes seventy point seven percent at the cutoff. In the next video, we combine a low-pass and a high-pass idea to keep only a band of frequencies: the band-pass filter. See you there."
+  }
+ ],
+ "yt": {
+  "title": "Butterworth Filter Explained | Order, Maximally Flat Response & Part Values | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "short_title": "Why engineers love the Butterworth filter #shorts",
+  "description": "The Butterworth filter step by step: what filter order means, how an LC ladder is built from order 1 to 4, why Butterworth is called maximally flat (vs Chebyshev ripple), how it cleans a signal, how to calculate L and C from g-values, and where it's used (anti-aliasing before an ADC).",
+  "tags": [
+   "butterworth filter",
+   "filter order",
+   "maximally flat",
+   "lc ladder filter",
+   "analog electronics",
+   "low pass filter",
+   "chebyshev vs butterworth"
+  ]
+ }
+}

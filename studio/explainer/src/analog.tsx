@@ -1155,6 +1155,40 @@ const Speaker: React.FC<{ x: number; y: number; s: number; t: number; amp: numbe
 };
 export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both", kind = "rc" }) => {
   const f = useCurrentFrame(); const t = f / 30;
+  if (app === "adc") {
+    const noisy = (x: number, a: number, b: number) => a * Math.sin(x / 40 - t * 4) + b * Math.sin(x / 4 - t * 30);
+    const wv = (x0: number, x1: number, y: number, a: number, b: number, col: string) => { const q: string[] = [];
+      for (let x = x0; x <= x1; x += 3) q.push(`${x},${y - noisy(x, a, b)}`); return <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={4} />; };
+    const lit = (k: number) => 0.3 + 0.7 * Math.abs(Math.sin(t * 2 + k));
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>REAL WORLD: INSIDE YOUR PHONE'S MICROPHONE</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>a filter (very often a Butterworth) cleans the sound before it becomes numbers</text>
+      {/* microphone */}
+      <g><rect x={130} y={420} width={120} height={200} rx={60} fill="#25313d" stroke="#3a4a5a" strokeWidth={4} />
+        {[0, 1, 2, 3, 4].map((k) => <line key={k} x1={150} y1={460 + k * 28} x2={230} y2={460 + k * 28} stroke="#4a5d70" strokeWidth={4} />)}
+        <rect x={180} y={620} width={20} height={70} fill="#3a4a5a" /><rect x={140} y={690} width={100} height={16} rx={8} fill="#3a4a5a" />
+        <text x={190} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={32} fontWeight={800}>MICROPHONE</text>
+        <text x={190} y={798} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>voice + high-pitched noise</text></g>
+      {wv(270, 600, 520, 40, 16, L.cyan)}
+      {/* Butterworth filter */}
+      <g><rect x={610} y={430} width={300} height={180} rx={40} fill="rgba(46,196,160,0.12)" stroke={L.green} strokeWidth={4} />
+        <path d={`M 650 520 Q 700 470 760 470 L 790 470 Q 830 470 870 560`} fill="none" stroke={L.green} strokeWidth={6} />
+        <text x={760} y={590} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={26} fontWeight={800}>BUTTERWORTH</text>
+        <text x={760} y={652} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>flat for the voice · cuts the rest</text></g>
+      {wv(920, 1180, 520, 40, 0, L.green)}
+      {/* ADC chip */}
+      <g><rect x={1190} y={420} width={220} height={200} rx={18} fill="#1f2a35" stroke="#4a5d70" strokeWidth={4} />
+        {Array.from({ length: 6 }, (_, k) => <g key={k}><rect x={1205 + k * 34} y={404} width={14} height={16} fill="#8aa1b4" /><rect x={1205 + k * 34} y={620} width={14} height={16} fill="#8aa1b4" /></g>)}
+        <text x={1300} y={530} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={40} fontWeight={800}>ADC</text>
+        <text x={1300} y={690} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>analog → digital</text></g>
+      {/* numbers stream to the phone */}
+      {Array.from({ length: 7 }, (_, k) => <text key={k} x={1430 + ((k * 40 + f * 3) % 240)} y={530} fill={L.electron} fontFamily={MONO} fontSize={26} opacity={lit(k)}>{(k * 37 + Math.floor(t * 4)) % 2 ? "1" : "0"}</text>)}
+      <g><rect x={1690} y={350} width={170} height={330} rx={30} fill="#1a232c" stroke="#4a5d70" strokeWidth={5} />
+        <rect x={1705} y={380} width={140} height={260} rx={12} fill="#24384a" />
+        {[0, 1, 2, 3, 4, 5].map((k) => <rect key={k} x={1725 + k * 20} y={510 - 40 * lit(k)} width={12} height={80 * lit(k)} rx={4} fill={L.green} />)}
+        <text x={1775} y={740} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>CLEAN VOICE</text></g>
+    </svg></AbsoluteFill>;
+  }
   const hiOn = focus !== "low", loOn = focus !== "high";
   const mix = (x: number, a: number, b: number) => a * Math.sin(x / 70 - t * 3) + b * Math.sin(x / 9 - t * 18);
   const wave = (x0: number, x1: number, y: number, a: number, b: number, col: string, op = 1) => {
@@ -1191,3 +1225,111 @@ export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both"
   </svg></AbsoluteFill>;
 };
 ANALOG_SCENES.app = AppScene;
+
+// ------------------------------------------------------------------ Butterworth low-pass filter (LC ladder, orders 1-4)
+/** {"type":"bw","mode":"build"|"orders"|"flat"|"signal"|"calc","n":2}
+ *  Doubly terminated LC ladder, Rs = RL = 1 kΩ, fc = 1 kHz. Element g-values from the Butterworth table.
+ *  |H| (normalised to the pass-band) = 1/sqrt(1+(f/fc)^2n). */
+const BW_G: Record<number, number[]> = { 1: [2], 2: [1.414, 1.414], 3: [1, 2, 1], 4: [0.765, 1.848, 1.848, 0.765] };
+const bwMag = (r: number, n: number) => 1 / Math.sqrt(1 + Math.pow(r, 2 * n));
+const cheb4 = (r: number) => { // 4th-order Chebyshev, 1 dB ripple (for comparison only), normalised to its pass-band peak
+  const eps = 0.5088; const T = r <= 1 ? Math.cos(4 * Math.acos(r)) : Math.cosh(4 * Math.acosh(r)); return 1 / Math.sqrt(1 + eps * eps * T * T); };
+export const ButterScene: React.FC<any> = ({ dur, mode = "orders", n = 2 }) => {
+  const f = useCurrentFrame();
+  const p = interpolate(f, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const showN = mode === "orders" ? Math.min(4, 1 + Math.floor(p * 4)) : mode === "signal" ? Math.min(4, 1 + Math.floor(p * 4)) : n;
+  const fmtL = (h: number) => h >= 1 ? `${+h.toFixed(2)} H` : `${+(h * 1000).toFixed(0)} mH`;
+  const fmtC = (c: number) => `${+(c * 1e9).toFixed(0)} nF`;
+  const W = 2 * Math.PI * 1000, R = 1000;
+  // ---- left: the ladder for order showN
+  const T = 300, B = 760, XS = 150, YS = 530;
+  const g = BW_G[showN] || BW_G[2];
+  const xs = g.map((_, k) => 420 + k * (430 / Math.max(1, g.length)));          // element x positions
+  const XL = 860;
+  const reveal = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const coilH = (x: number) => `M ${x - 52} ${T} ` + [0, 1, 2, 3].map(() => `a 13 15 0 1 1 26 0`).join(" ");
+  const ladder = <g>
+    <circle cx={XS} cy={YS} r={56} fill={L.bg0} stroke={L.cyan} strokeWidth={6} />
+    <path d={`M ${XS - 32} ${YS} Q ${XS - 16} ${YS - 30} ${XS} ${YS} T ${XS + 32} ${YS}`} fill="none" stroke={L.cyan} strokeWidth={5} />
+    <text x={XS} y={YS + 100} textAnchor="middle" {...T1} fontSize={30} fill={L.cyan}>Vin</text>
+    <polyline points={`${XS},${YS - 56} ${XS},${T} ${215},${T}`} fill="none" stroke={L.wire} strokeWidth={6} />
+    <Res x={285} y={T} ohm={R} label="Rs" horizontal />
+    <line x1={355} y1={T} x2={XL} y2={T} stroke={L.wire} strokeWidth={6} />
+    <polyline points={`${XS},${YS + 56} ${XS},${B} ${XL},${B}`} fill="none" stroke={L.wire} strokeWidth={6} />
+    {g.map((gv, k) => { const x = xs[k], series = k % 2 === 0, o = reveal(0.15 + k * 0.17);
+      return series ? <g key={k} opacity={o}><rect x={x - 56} y={T - 20} width={112} height={40} fill={L.bg0} />
+          <path d={coilH(x)} fill="none" stroke={L.amber} strokeWidth={6} />
+          <text x={x} y={T - 44} textAnchor="middle" {...T1} fontSize={26}>L{k + 1}</text>
+          <text x={x} y={T + 56} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{fmtL(gv * R / W)}</text></g>
+        : <g key={k} opacity={o}><line x1={x} y1={T} x2={x} y2={YS - 14} stroke={L.wire} strokeWidth={6} /><line x1={x} y1={YS + 14} x2={x} y2={B} stroke={L.wire} strokeWidth={6} />
+          <line x1={x - 44} y1={YS - 14} x2={x + 44} y2={YS - 14} stroke={L.amber} strokeWidth={9} /><line x1={x - 44} y1={YS + 14} x2={x + 44} y2={YS + 14} stroke={L.amber} strokeWidth={9} />
+          <text x={x + 58} y={YS + 2} {...T1} fontSize={26}>C{k + 1}</text>
+          <text x={x + 58} y={YS + 32} fill={L.dim} fontFamily={MONO} fontSize={22}>{fmtC(gv / (R * W))}</text></g>; })}
+    {/* a lone shunt capacitor for n = 1 */}
+    <g opacity={reveal(0.02)}><line x1={XL} y1={T} x2={XL} y2={YS - 70} stroke={L.wire} strokeWidth={6} /><line x1={XL} y1={YS + 70} x2={XL} y2={B} stroke={L.wire} strokeWidth={6} />
+      <Res x={XL} y={YS} ohm={R} label="RL" />
+      <text x={XL} y={B + 40} textAnchor="middle" {...T1} fontSize={28} fill={L.green}>Vout (across RL)</text></g>
+    <text x={520} y={B + 70} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={32} fontWeight={800}>ORDER n = {showN}</text>
+    <text x={520} y={B + 110} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>{showN} reactive part{showN > 1 ? "s" : ""} (L and C)</text>
+  </g>;
+  // ---- right side
+  const GX = 1010, GW = 820;
+  let right: React.ReactNode = null;
+  const X0 = GX, Y0 = 800, H = 520, lx = (rr: number) => X0 + (Math.log10(rr) + 1) / 2 * GW, ly = (gg: number) => Y0 - gg * H;
+  const axes = <g>
+    <line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={Y0 - H - 20} stroke={L.dim} strokeWidth={3} />
+    <line x1={X0} y1={ly(1)} x2={X0 + GW} y2={ly(1)} stroke={L.dim} strokeDasharray="8 8" strokeWidth={2} />
+    <text x={X0 - 14} y={ly(1) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>100%</text>
+    <line x1={lx(1)} y1={Y0} x2={lx(1)} y2={ly(0.707)} stroke={L.amber} strokeDasharray="8 8" strokeWidth={3} />
+    <line x1={X0} y1={ly(0.707)} x2={lx(1)} y2={ly(0.707)} stroke={L.amber} strokeDasharray="8 8" strokeWidth={3} />
+    <text x={X0 - 14} y={ly(0.707) + 8} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={22}>70.7%</text>
+    <text x={lx(1)} y={Y0 + 40} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={24} fontWeight={700}>fc = 1 kHz</text>
+    <text x={X0} y={Y0 + 40} fill={L.dim} fontFamily={MONO} fontSize={22}>100 Hz</text><text x={X0 + GW} y={Y0 + 40} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>10 kHz</text>
+  </g>;
+  const curve = (fn: (r: number) => number, col: string, w = 6, op = 1) => { const pts: string[] = [];
+    for (let k = 0; k <= 240; k++) { const rr = Math.pow(10, -1 + 2 * k / 240); pts.push(`${lx(rr)},${ly(Math.min(1.02, fn(rr)))}`); }
+    return <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={w} opacity={op} strokeLinejoin="round" />; };
+  const COL = ["#8aa1b4", L.cyan, L.green, L.amber];
+  if (mode === "orders" || mode === "build" || mode === "calc") {
+    const upto = mode === "orders" ? showN : n;
+    right = mode === "calc" ? (() => {
+      const g2 = BW_G[n]; const lines = [`n = ${n}:  g-values = ${g2.join(", ")}`, `L = g × R ÷ (2π fc)`, `L1 = ${g2[0]} × 1000 ÷ 6283 = ${fmtL(g2[0] * R / W)}`, `C = g ÷ (2π fc × R)`, `C2 = ${g2[1]} ÷ (6283 × 1000) = ${fmtC(g2[1] / (R * W))}`];
+      return <g>{lines.map((l, k) => <text key={k} x={GX} y={300 + k * 105} fill={k % 2 ? L.text : k === 0 ? L.amber : L.green} fontFamily={MONO} fontSize={k % 2 ? 40 : 32} fontWeight={700}
+        opacity={interpolate(p, [k * 0.17, k * 0.17 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>; })()
+    : <g>
+      <text x={X0 + GW / 2} y={130} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>BUTTERWORTH RESPONSE</text>
+      {axes}
+      {Array.from({ length: upto }, (_, k) => k + 1).map((m) => <g key={m}>{curve((r) => bwMag(r, m), COL[m - 1], m === upto ? 7 : 4, m === upto ? 1 : 0.55)}
+        <text x={lx(2.2) + 12} y={ly(bwMag(2.2, m)) + 8} fill={COL[m - 1]} fontFamily={MONO} fontSize={24} fontWeight={700}>n={m}</text></g>)}
+      <text x={X0 + GW / 2} y={960} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>
+        n = {upto}:  at 2 kHz → {Math.round(bwMag(2, upto) * 100)}%   ·   falls {20 * upto} dB per decade</text>
+    </g>;
+  } else if (mode === "flat") {
+    right = <g>
+      <text x={X0 + GW / 2} y={130} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>WHY "MAXIMALLY FLAT"?</text>
+      {axes}
+      {curve(cheb4, L.red, 5, p > 0.05 ? 1 : 0)}
+      {p > 0.45 && curve((r) => bwMag(r, 4), L.green, 7)}
+      <text x={X0 + 30} y={ly(1) - 30} fill={L.red} fontFamily={SANS} fontSize={26} fontWeight={700} opacity={p > 0.05 ? 1 : 0}>other design: wavy (ripple)</text>
+      <text x={X0 + 30} y={ly(1) - 64} fill={L.green} fontFamily={SANS} fontSize={26} fontWeight={700} opacity={p > 0.45 ? 1 : 0}>Butterworth: perfectly flat</text>
+    </g>;
+  } else if (mode === "signal") {
+    const amp = 120, cy1 = 300, cy2 = 720, a = bwMag(0.5, showN), b = bwMag(3, showN);
+    const w = (cy: number, A: number, Bm: number, col: string) => { const pts: string[] = [];
+      for (let x = 0; x <= GW; x += 4) { const t = x / GW * 4 * Math.PI; pts.push(`${GX + x},${cy - (A * 0.6 * Math.sin(t) + Bm * 0.4 * Math.sin(6 * t + f / 6)) * amp}`); }
+      return <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={5} />; };
+    right = <g>
+      <text x={GX + GW / 2} y={140} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={32} fontWeight={800}>INPUT: 500 Hz tone + 3 kHz noise</text>
+      {w(cy1, 1, 1, L.cyan)}
+      <text x={GX + GW / 2} y={560} textAnchor="middle" fill={L.green} fontFamily={SANS} fontSize={32} fontWeight={800}>OUTPUT, ORDER n = {showN}</text>
+      {w(cy2, a, b, L.green)}
+      <text x={GX + GW / 2} y={930} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>500 Hz kept: {Math.round(a * 100)}%    3 kHz left: {+(b * 100).toFixed(1)}%</text>
+    </g>;
+  }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(30,150)">{ladder}</g><g transform="translate(-890,950)">{right}</g></>);
+  return svg(<>{ladder}{right}</>);
+};
+ANALOG_SCENES.bw = ButterScene;
