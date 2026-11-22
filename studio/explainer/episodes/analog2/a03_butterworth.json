@@ -126,5 +126,6 @@
    "low pass filter",
    "chebyshev vs butterworth"
   ]
- }
+ },
+ "checked": true
 }
