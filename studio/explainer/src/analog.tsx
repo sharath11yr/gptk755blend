@@ -1187,6 +1187,40 @@ export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both"
         <text x={1650} y={720} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>{sel ? "ONE CLEAR STATION" : "SPEAKER"}</text></g>
     </svg></AbsoluteFill>;
   }
+  if (app === "ecg") {
+    const beat = (u: number) => { const x = ((u % 160) + 160) % 160; return x > 60 && x < 66 ? -(x - 60) * 18 : x >= 66 && x < 72 ? -(72 - x) * 18 + 30 * ((x - 66) / 6) : x >= 72 && x < 76 ? 30 - (x - 72) * 7.5 : x > 100 && x < 130 ? -14 * Math.sin((x - 100) / 30 * Math.PI) : 0; };
+    const trace = (x0: number, x1: number, y: number, hum: number, col: string) => { const q: string[] = [];
+      for (let x = x0; x <= x1; x += 2) q.push(`${x},${y + beat(x - t * 120) + hum * Math.sin(x / 5 - t * 40)}`); return <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={4} strokeLinejoin="round" />; };
+    const fade = Math.min(1, Math.max(0, (t - 3) / 2));
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>REAL WORLD: THE ECG HEART MONITOR</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>a 50 Hz notch removes mains hum, and keeps the heartbeat</text>
+      {/* patient with electrodes */}
+      <g><circle cx={210} cy={360} r={60} fill="#e0b48a" /><rect x={140} y={430} width={140} height={260} rx={50} fill="#4f7fa8" />
+        {[[180, 500], [240, 500], [210, 600]].map(([x, y], k) => <g key={k}><circle cx={x} cy={y} r={14} fill="#eee" stroke={L.amber} strokeWidth={4} /><path d={`M ${x} ${y} Q ${x + 120} ${y + 40} 330 520`} fill="none" stroke={L.amber} strokeWidth={3} /></g>)}
+        <text x={210} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>PATIENT</text>
+        <text x={210} y={798} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>tiny heart signal (~1 mV)</text></g>
+      {/* mains socket humming */}
+      <g><rect x={420} y={760} width={110} height={130} rx={16} fill="#25313d" stroke="#4a5d70" strokeWidth={4} />
+        <rect x={452} y={800} width={12} height={36} rx={4} fill="#111" /><rect x={486} y={800} width={12} height={36} rx={4} fill="#111" />
+        {[0, 1, 2].map((k) => <path key={k} d={`M ${545 + k * 22} 790 q 12 35 0 70`} fill="none" stroke={L.red} strokeWidth={3} opacity={0.3 + 0.6 * Math.abs(Math.sin(t * 4 - k))} />)}
+        <text x={475} y={930} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={24} fontWeight={800}>MAINS 50 Hz HUM</text></g>
+      <text x={500} y={410} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>heartbeat buried in 50 Hz</text>
+      {trace(340, 660, 520, 34, L.cyan)}
+      {/* notch filter */}
+      <g><rect x={690} y={420} width={300} height={200} rx={40} fill="rgba(240,90,90,0.10)" stroke={L.red} strokeWidth={4} />
+        <path d="M 720 480 L 800 480 Q 830 480 840 580 Q 850 480 880 480 L 960 480" fill="none" stroke={L.red} strokeWidth={6} />
+        <text x={840} y={610} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={26} fontWeight={800}>50 Hz NOTCH</text></g>
+      {trace(1010, 1330, 520, 34 * (1 - fade), L.green)}
+      {/* monitor */}
+      <g><rect x={1370} y={330} width={480} height={380} rx={30} fill="#1a232c" stroke="#4a5d70" strokeWidth={6} />
+        <rect x={1395} y={355} width={430} height={290} rx={12} fill="#0b1a14" />
+        {Array.from({ length: 9 }, (_, k) => <line key={k} x1={1395 + k * 54} y1={355} x2={1395 + k * 54} y2={645} stroke="#163126" strokeWidth={2} />)}
+        {trace(1405, 1815, 500, 34 * (1 - fade), "#3dff9a")}
+        <text x={1810} y={395} textAnchor="end" fill="#3dff9a" fontFamily={MONO} fontSize={30} fontWeight={800}>♥ 72</text>
+        <text x={1610} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>{fade > 0.9 ? "CLEAN HEARTBEAT" : "HEART MONITOR"}</text></g>
+    </svg></AbsoluteFill>;
+  }
   if (app === "adc") {
     const noisy = (x: number, a: number, b: number) => a * Math.sin(x / 40 - t * 4) + b * Math.sin(x / 4 - t * 30);
     const wv = (x0: number, x1: number, y: number, a: number, b: number, col: string) => { const q: string[] = [];
@@ -1471,7 +1505,7 @@ export const BandPassScene: React.FC<any> = ({ dur, mode = "build", f: fin = 100
       <text x={lx(1000)} y={ly(1) - 24} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={26} fontWeight={800}>f0 = 1 kHz</text>
       {q !== "narrow" && curve((hz) => cabs(bpRes(hz, 100)), L.cyan, 6, 1, p)}
       {q !== "wide" && curve((hz) => cabs(bpRes(hz, 20)), L.green, 6, 1, p)}
-      {q === "both" && <g><text x={GX + 24} y={ly(1) + 50} fill={L.cyan} fontFamily={SANS} fontSize={24} fontWeight={700}>blue: R = 100 Ω → wide (Q ≈ 1.6)</text>
+      {q === "both" && <g><text x={GX + 24} y={Y0 + 90} fill={L.cyan} fontFamily={SANS} fontSize={24} fontWeight={700}>blue: R = 100 Ω → wide (Q ≈ 1.6)</text>
         <text x={GX + 24} y={ly(1) + 86} fill={L.green} fontFamily={SANS} fontSize={24} fontWeight={700}>green: R = 20 Ω → narrow (Q ≈ 8)</text></g>}
       <text x={GX + GW / 2} y={960} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>
         f = {sweepHz >= 1000 ? `${(sweepHz / 1000).toFixed(2)} kHz` : `${sweepHz.toFixed(0)} Hz`}   XL = {(2 * Math.PI * sweepHz * BP.L).toFixed(0)} Ω   XC = {(1 / (2 * Math.PI * sweepHz * BP.C)).toFixed(0)} Ω</text></g>;
@@ -1485,3 +1519,94 @@ export const BandPassScene: React.FC<any> = ({ dur, mode = "build", f: fin = 100
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.bp = BandPassScene;
+
+// ------------------------------------------------------------------ Band-stop (notch) filter: series LC to ground
+/** {"type":"bs","mode":"build"|"curve"|"run"|"q"|"calc","f":50,"r":100}
+ *  Rs in series, then L and C in SERIES from the line to ground, output across that branch's top (Vout node).
+ *  L = 2.03 H, C = 5 µF -> f0 = 50 Hz (mains hum). |H| = |ZLC| / |Rs + ZLC| (unloaded). Rs = 1 kΩ (wide) or 200 Ω (narrow). */
+const BS = { L: 2.03, C: 5e-6 };
+const bsH = (hz: number, rs: number): Cx => { const w = 2 * Math.PI * hz; const z: Cx = [0, w * BS.L - 1 / (w * BS.C)]; return cdiv(z, cadd([rs, 0], z)); };
+export const BandStopScene: React.FC<any> = ({ dur, mode = "build", f: fin = 50, r: rs = 1000 }) => {
+  const fr = useCurrentFrame();
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const reveal = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const T = 300, B = 780, XS = 150, YS = 540, XB = 620;
+  const hz = mode === "curve" ? Math.pow(10, 0.7 + 1.6 * p) : fin;
+  const w = 2 * Math.PI * hz, xl = w * BS.L, xc = 1 / (w * BS.C);
+  const atRes = Math.abs(xl - xc) < 0.08 * xl;
+  // ---- left: circuit
+  const left = <g>
+    <circle cx={XS} cy={YS} r={56} fill={L.bg0} stroke={L.cyan} strokeWidth={6} />
+    <path d={`M ${XS - 32} ${YS} Q ${XS - 16} ${YS - 30} ${XS} ${YS} T ${XS + 32} ${YS}`} fill="none" stroke={L.cyan} strokeWidth={5} />
+    <text x={XS} y={YS + 100} textAnchor="middle" {...T1} fontSize={30} fill={L.cyan}>Vin</text>
+    <polyline points={`${XS},${YS - 56} ${XS},${T} ${290},${T}`} fill="none" stroke={L.wire} strokeWidth={6} />
+    <polyline points={`${XS},${YS + 56} ${XS},${B} ${880},${B}`} fill="none" stroke={L.wire} strokeWidth={6} />
+    <g opacity={reveal(0.05)}><Res x={360} y={T} ohm={rs} label="Rs" horizontal /><line x1={430} y1={T} x2={880} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+    <g opacity={reveal(0.3)}>
+      <line x1={XB} y1={T} x2={XB} y2={380} stroke={L.wire} strokeWidth={6} />
+      <rect x={XB - 22} y={380} width={44} height={130} fill={L.bg0} />
+      <path d={`M ${XB} 382 ` + [0, 1, 2, 3].map(() => `a 16 16 0 1 1 0 32`).join(" ")} fill="none" stroke={L.amber} strokeWidth={6} />
+      <text x={XB + 40} y={440} {...T1} fontSize={26}>L</text><text x={XB + 40} y={470} fill={L.dim} fontFamily={MONO} fontSize={22}>2.03 H</text>
+      <line x1={XB} y1={510} x2={XB} y2={600} stroke={L.wire} strokeWidth={6} /></g>
+    <g opacity={reveal(0.5)}>
+      <line x1={XB - 44} y1={600} x2={XB + 44} y2={600} stroke={L.amber} strokeWidth={9} /><line x1={XB - 44} y1={628} x2={XB + 44} y2={628} stroke={L.amber} strokeWidth={9} />
+      <text x={XB + 58} y={612} {...T1} fontSize={26}>C</text><text x={XB + 58} y={642} fill={L.dim} fontFamily={MONO} fontSize={22}>5 µF</text>
+      <line x1={XB} y1={628} x2={XB} y2={B} stroke={L.wire} strokeWidth={6} /></g>
+    <g opacity={reveal(0.7)}><circle cx={880} cy={T} r={11} fill={L.amber} /><circle cx={880} cy={B} r={11} fill={L.amber} />
+      <text x={880} y={B + 46} textAnchor="middle" {...T1} fontSize={30} fill={L.green}>Vout</text>
+      <line x1={880} y1={T + 30} x2={880} y2={B - 30} stroke={L.green} strokeWidth={3} strokeDasharray="8 8" /></g>
+    {mode !== "build" && mode !== "calc" && <g>
+      <text x={XB - 70} y={440} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={24} fontWeight={700}>XL = {xl.toFixed(0)} Ω</text>
+      <text x={XB - 70} y={620} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={24} fontWeight={700}>XC = {xc.toFixed(0)} Ω</text>
+      {atRes && <text x={XB} y={B + 100} textAnchor="middle" fill={L.red} fontFamily={SANS} fontSize={28} fontWeight={800}>XL = XC → branch is a SHORT to ground</text>}</g>}
+    {mode === "build" && <text x={XB + 20} y={730} fill={L.amber} fontFamily={SANS} fontSize={26} fontWeight={700} opacity={reveal(0.55)}>L and C in series, to ground</text>}
+  </g>;
+  // ---- right
+  const GX = 1010, GW = 820, Y0 = 800, H = 520, lmin = 0.7, lspan = 1.6;
+  const lx = (h: number) => GX + (Math.log10(h) - lmin) / lspan * GW, ly = (g: number) => Y0 - g * H;
+  const curve = (rr: number, col: string, wd: number, upto = 1) => { const pts: string[] = [];
+    for (let k = 0; k <= 300 * upto; k++) { const h = Math.pow(10, lmin + lspan * k / 300); pts.push(`${lx(h)},${ly(Math.min(1.02, cabs(bsH(h, rr))))}`); }
+    return <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={wd} strokeLinejoin="round" />; };
+  const axes = <g><line x1={GX} y1={Y0} x2={GX + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={Y0} x2={GX} y2={Y0 - H - 20} stroke={L.dim} strokeWidth={3} />
+    <line x1={GX} y1={ly(1)} x2={GX + GW} y2={ly(1)} stroke={L.dim} strokeDasharray="8 8" strokeWidth={2} /><text x={GX - 14} y={ly(1) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>100%</text>
+    <line x1={GX} y1={ly(0.707)} x2={GX + GW} y2={ly(0.707)} stroke={L.amber} strokeDasharray="6 10" strokeWidth={2} /><text x={GX - 14} y={ly(0.707) + 8} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={22}>70.7%</text>
+    <line x1={lx(50)} y1={Y0} x2={lx(50)} y2={ly(1)} stroke={L.red} strokeDasharray="8 8" strokeWidth={3} />
+    <text x={lx(50)} y={ly(1) - 20} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={26} fontWeight={800}>f0 = 50 Hz</text>
+    {[5, 10, 20, 50, 100, 200].map((t) => <text key={t} x={lx(t)} y={Y0 + 40} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{t} Hz</text>)}</g>;
+  let right: React.ReactNode = null;
+  if (mode === "build" || mode === "curve" || mode === "q") {
+    right = <g>
+      <text x={GX + GW / 2} y={130} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={34} fontWeight={800}>{mode === "q" ? "NARROW vs WIDE NOTCH" : "OUTPUT vs FREQUENCY"}</text>
+      {axes}
+      {mode === "q" ? <>{curve(1000, L.cyan, 5)}{p > 0.4 && curve(200, L.green, 7)}
+          <text x={GX + 24} y={Y0 + 90} fill={L.cyan} fontFamily={SANS} fontSize={24} fontWeight={700}>blue: Rs = 1 kΩ → wide notch</text>
+          {p > 0.4 && <text x={GX + 24} y={Y0 + 126} fill={L.green} fontFamily={SANS} fontSize={24} fontWeight={700}>green: Rs = 200 Ω → narrow notch (higher Q)</text>}</>
+        : <>{curve(rs, L.green, 7, mode === "curve" ? p : 1)}
+          {mode === "curve" && <circle cx={lx(hz)} cy={ly(Math.min(1.02, cabs(bsH(hz, rs))))} r={12} fill={L.green} />}</>}
+      {mode === "curve" && <text x={GX + GW / 2} y={960} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={700}>f = {hz.toFixed(1)} Hz  →  Vout = {Math.round(cabs(bsH(hz, rs)) * 100)}% of Vin</text>}
+    </g>;
+  } else if (mode === "run") {
+    const Hv = bsH(fin, rs), g = cabs(Hv), ph = carg(Hv), th = p * 4 * Math.PI;
+    const wave = (cy: number, A: number, P: number, col: string, lab: string) => { const pts: string[] = [];
+      for (let k = 0; k <= 160; k++) { const t = 4 * Math.PI * k / 160; if (t > th) break; pts.push(`${GX + GW * k / 160},${cy - A * 120 * Math.sin(t + P)}`); }
+      return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} />
+        <line x1={GX} y1={cy - 120} x2={GX + GW} y2={cy - 120} stroke={L.dim} strokeDasharray="6 8" strokeWidth={1.5} /><line x1={GX} y1={cy + 120} x2={GX + GW} y2={cy + 120} stroke={L.dim} strokeDasharray="6 8" strokeWidth={1.5} />
+        <text x={GX - 16} y={cy + 10} textAnchor="end" {...T1} fontSize={30} fill={col}>{lab}</text>
+        {pts.length > 1 && <polyline points={pts.join(" ")} fill="none" stroke={col} strokeWidth={6} />}</g>; };
+    right = <g>
+      <text x={GX + GW / 2} y={130} textAnchor="middle" fill={g > 0.6 ? L.green : L.red} fontFamily={SANS} fontSize={34} fontWeight={800}>{g > 0.6 ? "PASSED" : "STOPPED"}</text>
+      <text x={GX + GW / 2} y={176} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={26}>f = {fin} Hz</text>
+      {wave(340, 1, 0, L.cyan, "Vin")}{wave(720, g, ph, L.green, "Vout")}
+      <text x={GX + GW / 2} y={930} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={700}>Vout = {+(g * 100).toFixed(g < 0.05 ? 1 : 0)}% of Vin</text></g>;
+  } else if (mode === "calc") {
+    const lines = ["f0 = 1 ÷ (2π √(L × C))", "f0 = 1 ÷ (2 × 3.14 × √(2.03 × 0.000005))", "f0 = 1 ÷ (6.28 × 0.00319)  ≈  50 Hz", "Q = (1 ÷ Rs) × √(L ÷ C)", "Rs = 1 kΩ → Q ≈ 0.64   ·   Rs = 200 Ω → Q ≈ 3.2"];
+    right = <g>{lines.map((l, k) => <text key={k} x={GX - 30} y={300 + k * 110} fill={k === 2 ? L.green : k === 4 ? L.amber : L.text} fontFamily={MONO} fontSize={k === 1 ? 30 : 34} fontWeight={700}
+      opacity={interpolate(p, [k * 0.17, k * 0.17 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(30,170)">{left}</g><g transform="translate(-890,950)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.bs = BandStopScene;

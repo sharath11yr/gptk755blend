@@ -1,0 +1,131 @@
+{
+ "title": "Band-Stop (Notch) Filter Explained | Series LC, 50 Hz Notch, Q | Analog Electronics",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "short": [
+  1,
+  5
+ ],
+ "post_short": true,
+ "tag": "GETYR ECE",
+ "yt": {
+  "title": "Band-Stop (Notch) Filter Explained | Series LC, 50 Hz Notch, Q | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The band-stop (notch) filter step by step: a resistor in series and an inductor plus capacitor in series to ground, why the branch becomes a short at resonance, testing it at 10 Hz, 50 Hz and 200 Hz, notch width and Q, the formulas with every value calculated, and how an ECG heart monitor removes 50 Hz mains hum.",
+  "tags": [
+   "band stop filter",
+   "notch filter",
+   "series lc",
+   "resonance",
+   "quality factor",
+   "50 hz hum",
+   "ecg",
+   "analog electronics",
+   "filters"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Band-Stop Filter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "BAND-STOP FILTER",
+   "subtitle": "Block one narrow band of frequencies, pass everything else",
+   "narration": "Welcome back. Last time, the band-pass filter kept one band and blocked everything else. Today we do the exact opposite. A band-stop filter, also called a notch filter, passes everything, except one band that it removes. We'll build one that kills fifty hertz, the hum from mains electricity, step by step, with every value calculated."
+  },
+  {
+   "type": "bs",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "Start with the input signal on the left. First, a resistor R s in series, one kilohm. Then, from the line down to ground, we add a branch: an inductor L, two point zero three henries, and below it a capacitor C, five microfarads. The inductor and capacitor are in series with each other, and together they connect the line to ground. Finally, we take the output across that branch. That's the whole notch filter. Three parts."
+  },
+  {
+   "type": "bs",
+   "mode": "curve",
+   "chapter": "Sweeping the frequency",
+   "narration": "Now let's sweep the input from five hertz up to two hundred hertz and watch the output. At low frequencies, the output is almost all of the input. As we approach fifty hertz, it falls. At fifty hertz exactly, it drops to almost zero. Then above fifty it climbs back up again. That deep dip is the notch. Everything passes, except a band around fifty hertz."
+  },
+  {
+   "type": "bs",
+   "mode": "run",
+   "f": 10,
+   "chapter": "Low frequency: 10 Hz",
+   "narration": "Let's test with real signals. Ten hertz first. At ten hertz, the capacitor's reactance X C is huge, about three thousand two hundred ohms, while the inductor's is only about one hundred and twenty eight. So the branch to ground is a big impedance, and very little signal leaks away. The output is ninety five percent of the input. Passed."
+  },
+  {
+   "type": "bs",
+   "mode": "run",
+   "f": 50,
+   "chapter": "The notch: 50 Hz",
+   "narration": "Now fifty hertz. Look at the two reactances. X L is about six hundred and thirty eight ohms, and X C is also about six hundred and thirty eight ohms. They're equal. In a series L C branch, the inductor's voltage and the capacitor's voltage are opposite, so they cancel completely. The branch acts like a plain wire to ground, a short. All the signal drops across R s, and the output is about zero point one percent. Stopped."
+  },
+  {
+   "type": "bs",
+   "mode": "run",
+   "f": 200,
+   "chapter": "High frequency: 200 Hz",
+   "narration": "Finally two hundred hertz. Now the inductor dominates: X L is about two thousand five hundred and fifty ohms, X C only about one hundred and sixty. The branch is again a large impedance, so the signal stays on the line. The output is ninety two percent. Passed. So low passes, high passes, and only the band around fifty hertz is removed."
+  },
+  {
+   "type": "bs",
+   "mode": "q",
+   "chapter": "Wide or narrow notch",
+   "narration": "How wide is the notch? That depends on R s. The blue curve uses one kilohm. Its notch is wide: at forty hertz, only twenty seven percent gets through, so we damage nearby frequencies too. Now the green curve uses two hundred ohms. The notch is much narrower: at forty hertz, eighty two percent passes, and at sixty hertz, seventy six percent. We call this sharpness Q. Smaller R s, higher Q, narrower notch."
+  },
+  {
+   "type": "bs",
+   "mode": "calc",
+   "chapter": "The formulas",
+   "narration": "Now the numbers. The notch frequency f zero is where X L equals X C, which gives one over two pi root L C. Root of two point zero three times zero point zero zero zero zero zero five is zero point zero zero three one nine. Two pi times that is zero point zero two. One over it is fifty hertz. The quality factor Q is one over R s, times root L over C. Root L over C is about six hundred and thirty seven ohms. With R s one kilohm, Q is zero point six four. With two hundred ohms, Q is three point two. Five times sharper."
+  },
+  {
+   "type": "app",
+   "app": "ecg",
+   "chapter": "Real world: the ECG heart monitor",
+   "narration": "Where is this used? In hospitals. An E C G machine measures your heartbeat through small pads on your chest. The heart signal is tiny, about one millivolt. But every power cable in the room radiates fifty hertz, and that hum gets picked up by the wires and buries the heartbeat. So the machine passes the signal through a fifty hertz notch filter. The hum is removed, the heartbeat stays, and the doctor sees a clean trace. In countries with sixty hertz mains, the notch is tuned to sixty."
+  },
+  {
+   "type": "bs",
+   "mode": "q",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: putting L and C in parallel to ground. A parallel L C is an open circuit at resonance, not a short, so it would pass fifty hertz instead of blocking it. For this circuit, they must be in series. Two: forgetting R s. Without a series resistor, the source drives the short directly, and there's nothing to drop the voltage across. Three: making the notch too wide. A low Q notch also eats nearby frequencies, and in an E C G that distorts the heartbeat. Use a smaller R s for a higher Q."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: LINEAR vs SWITCHING REGULATORS",
+   "lines": [
+    "Series LC to ground: short at f0",
+    "f0 = 1 ÷ (2π√LC) = 50 Hz",
+    "Q = (1 ÷ Rs)√(L ÷ C): smaller Rs, narrower notch"
+   ],
+   "cta": "Voltage regulators are next",
+   "narration": "Quick recap. A band-stop filter passes everything except one band. A series L C branch to ground becomes a short when X L equals X C, at f zero, one over two pi root L C. Q is one over R s, times root L over C, and a higher Q means a narrower notch. That completes our filters. Next, we start power supplies: linear versus switching voltage regulators. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "bs",
+   "mode": "curve",
+   "chapter": "",
+   "narration": "How does a heart monitor ignore the hum from the power line? With a notch filter. One resistor in series, then an inductor and capacitor in series down to ground. Sweep the frequency, and everything passes, except right at fifty hertz, where the output falls to almost nothing."
+  },
+  {
+   "type": "bs",
+   "mode": "run",
+   "f": 50,
+   "chapter": "",
+   "narration": "Here's why. At fifty hertz, the inductor's reactance and the capacitor's reactance are both about six hundred and thirty eight ohms. They cancel. The branch becomes a short to ground, and the hum disappears. Only zero point one percent gets through."
+  },
+  {
+   "type": "app",
+   "app": "ecg",
+   "chapter": "",
+   "narration": "So the heartbeat stays, and the fifty hertz hum is gone. That's the band-stop filter inside every E C G machine. The full step-by-step lesson is on the channel."
+  }
+ ]
+}
