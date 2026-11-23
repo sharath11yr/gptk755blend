@@ -1,0 +1,101 @@
+{
+ "title": "Linear vs Switching Voltage Regulator Explained | Efficiency, Heat, Ripple | Analog Electronics",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "short": [
+  1,
+  2
+ ],
+ "post_short": false,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "yt": {
+  "title": "Linear vs Switching Voltage Regulator Explained | Efficiency, Heat, Ripple | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Linear versus switching voltage regulators step by step, turning 12 V into 5 V at 1 A: the linear pass transistor that burns 7 W as heat (41.7% efficient), the switching regulator that chops at 41.7% duty and smooths with an inductor and capacitor (about 90% efficient), output ripple, every value calculated, and why phone chargers got so small.",
+  "tags": [
+   "voltage regulator",
+   "linear regulator",
+   "switching regulator",
+   "buck converter",
+   "efficiency",
+   "power supply",
+   "analog electronics",
+   "smps"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Linear vs Switching",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "LINEAR vs SWITCHING REGULATORS",
+   "subtitle": "Two ways to turn 12 volts into 5 volts, and why one gets hot",
+   "narration": "Welcome back. We've finished filters. Now we start power supplies. Almost every circuit needs a steady voltage. A phone chip might need five volts, but your battery or adapter gives twelve. A voltage regulator turns the higher voltage into a steady lower one. There are two ways to do it: linear and switching. Today we build both, with the same job, twelve volts in, five volts out, one amp to the load, and compare them with real numbers."
+  },
+  {
+   "type": "lvs",
+   "mode": "linear",
+   "chapter": "The linear regulator",
+   "narration": "First, the linear regulator. On the left, the twelve volt source. On the right, the load, which needs five volts and takes one amp. In between, a pass transistor. Think of it as a resistor that adjusts itself, all the time, so exactly five volts reach the load. Where do the other seven volts go? They drop across the transistor. And watch the current: the same one amp flows through the transistor and the load. So the transistor burns seven volts times one amp, seven watts, as pure heat. On the right: twelve watts go in, only five reach the load, and seven become heat."
+  },
+  {
+   "type": "lvs",
+   "mode": "switching",
+   "chapter": "The switching regulator",
+   "narration": "Now the switching way. Instead of a transistor that burns the extra voltage, we use a switch that turns fully on and fully off, thousands of times a second. When it's on, twelve volts push current through the inductor L into the load. When it's off, the inductor keeps the current flowing, round through the diode. Watch the switch voltage on the right: it jumps between zero and twelve volts. It's on forty two percent of the time. The inductor and capacitor smooth that into the average: zero point four one seven times twelve, which is five volts."
+  },
+  {
+   "type": "lvs",
+   "mode": "switching",
+   "chapter": "Why switching wastes so little",
+   "narration": "Here's the key idea. A switch that's fully on has almost no voltage across it. A switch that's fully off has no current through it. Power is voltage times current, so in both states the switch wastes almost nothing. And an ideal inductor and capacitor store energy, they don't burn it. That's why real switching regulators reach around ninety percent efficiency."
+  },
+  {
+   "type": "lvs",
+   "mode": "compare",
+   "chapter": "Side by side",
+   "narration": "Let's compare them. The linear regulator: twelve watts in, five out, seven watts of heat, efficiency forty two percent. The switching regulator at ninety percent: only five point five six watts in, five out, and just zero point five six watts of heat. Same job. More than twelve times less heat. That's why a linear regulator often needs a big metal heat sink, and a switching one usually doesn't."
+  },
+  {
+   "type": "lvs",
+   "mode": "ripple",
+   "chapter": "So why use linear at all?",
+   "narration": "So is linear always worse? No. Zoom into the output. The linear regulator gives a perfectly smooth, quiet five volts. The switching regulator's output has a small ripple at its switching speed, and the fast switching can create electrical noise. For sensitive circuits, like audio, radio receivers, or precise measurement, engineers often prefer linear. Linear is also simpler and cheaper, with fewer parts. And when the input is only a little above the output, say five point five volts to five, its efficiency is fine anyway."
+  },
+  {
+   "type": "lvs",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Now every number. Linear: the heat is the voltage drop times the current. Twelve minus five, times one amp, is seven watts. Efficiency is output power over input power: five watts over twelve watts, forty one point seven percent. Switching, the buck type: the duty cycle D is V out over V in, five over twelve, zero point four one seven. With ninety percent efficiency, input power is five watts divided by zero point nine, five point five six watts. Input current is five point five six over twelve, zero point four six amps. And the heat is just zero point five six watts."
+  },
+  {
+   "type": "app",
+   "app": "charger",
+   "chapter": "Real world: phone chargers",
+   "narration": "You've seen this change yourself. Old phone chargers were big and heavy, and got warm. Inside was a heavy transformer and a linear regulator, wasting about half the power as heat. Modern chargers are tiny and stay cool. They use switching regulators at around ninety percent efficiency. Less heat means smaller parts and no big heat sink, so the whole charger shrinks."
+  },
+  {
+   "type": "lvs",
+   "mode": "compare",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking a linear regulator's current is lower at the input. It isn't. The input current equals the load current, one amp, so all the extra voltage turns into heat. Two: forgetting the heat sink. Seven watts would burn a small regulator chip in seconds. Always calculate the voltage drop times the current. Three: thinking switching is always better. Its ripple and noise can ruin a sensitive circuit, so choose based on the job."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: SERIES VOLTAGE REGULATOR",
+   "lines": [
+    "Linear: burns (Vin − Vout) × I as heat",
+    "Switching: chops at D = Vout ÷ Vin, ~90% efficient",
+    "Linear = quiet, switching = efficient"
+   ],
+   "cta": "Series regulator is next",
+   "narration": "Quick recap. A linear regulator drops the extra voltage across a transistor, and burns V in minus V out, times the current, as heat. A switching regulator turns on and off, with duty cycle V out over V in, and reaches around ninety percent efficiency. Linear is quiet and simple, switching is efficient. Next, we open up the linear regulator and build the series voltage regulator with a Zener diode and a transistor. See you there."
+  }
+ ]
+}

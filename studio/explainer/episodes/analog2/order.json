@@ -3,5 +3,6 @@
  "analog2/a02_rl_highpass.json",
  "analog2/a03_butterworth.json",
  "analog2/a04_bandpass.json",
- "analog2/a05_bandstop.json"
+ "analog2/a05_bandstop.json",
+ "analog2/a06_lin_vs_sw.json"
 ]

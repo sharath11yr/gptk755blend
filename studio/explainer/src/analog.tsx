@@ -1221,6 +1221,28 @@ export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both"
         <text x={1610} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={30} fontWeight={800}>{fade > 0.9 ? "CLEAN HEARTBEAT" : "HEART MONITOR"}</text></g>
     </svg></AbsoluteFill>;
   }
+  if (app === "charger") {
+    const pulse = 0.5 + 0.5 * Math.sin(t * 5);
+    const brick = (x: number, w: number, h: number, hot: boolean, title: string, sub: string, eff: string, col: string) => <g>
+      {hot && <ellipse cx={x + w / 2} cy={560} rx={w * 0.8} ry={h * 0.8} fill={L.red} opacity={0.12 + 0.12 * pulse} />}
+      {hot && [0, 1, 2].map((k) => <path key={k} d={`M ${x + w * (0.3 + k * 0.2)} ${560 - h / 2 - 20} q 15 -30 0 -60 q -15 -30 0 -60`} fill="none" stroke={L.red} strokeWidth={4} opacity={0.3 + 0.5 * Math.abs(Math.sin(t * 3 + k))} />)}
+      <rect x={x} y={560 - h / 2} width={w} height={h} rx={18} fill="#25313d" stroke={col} strokeWidth={5} />
+      <text x={x + w / 2} y={566} textAnchor="middle" fill={col} fontFamily={MONO} fontSize={28} fontWeight={800}>{eff}</text>
+      <text x={x + w / 2} y={790} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={32} fontWeight={800}>{title}</text>
+      <text x={x + w / 2} y={830} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>{sub}</text></g>;
+    const phone = (x: number) => <g><rect x={x} y={470} width={90} height={170} rx={16} fill="#1a232c" stroke="#4a5d70" strokeWidth={4} />
+      <rect x={x + 10} y={485} width={70} height={130} rx={8} fill="#24384a" /><rect x={x + 22} y={530} width={46} height={50} rx={4} fill="none" stroke={L.green} strokeWidth={3} />
+      <rect x={x + 26} y={576 - 40 * ((t / 4) % 1)} width={38} height={40 * ((t / 4) % 1)} fill={L.green} /></g>;
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>REAL WORLD: WHY CHARGERS GOT SMALL</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>old chargers wasted power as heat; modern ones switch</text>
+      <line x1={960} y1={220} x2={960} y2={900} stroke={L.dim} strokeDasharray="10 10" strokeWidth={2} />
+      {brick(200, 360, 260, true, "OLD LINEAR CHARGER", "big, heavy, warm to touch", "≈ 40-50%", L.amber)}
+      <path d="M 560 560 C 640 560 640 560 700 560" fill="none" stroke="#3a4a5a" strokeWidth={8} />{phone(700)}
+      {brick(1150, 170, 150, false, "MODERN SWITCHING CHARGER", "small, light, cool", "≈ 90%", L.green)}
+      <path d="M 1320 560 C 1400 560 1400 560 1460 560" fill="none" stroke="#3a4a5a" strokeWidth={8} />{phone(1460)}
+    </svg></AbsoluteFill>;
+  }
   if (app === "adc") {
     const noisy = (x: number, a: number, b: number) => a * Math.sin(x / 40 - t * 4) + b * Math.sin(x / 4 - t * 30);
     const wv = (x0: number, x1: number, y: number, a: number, b: number, col: string) => { const q: string[] = [];
@@ -1610,3 +1632,98 @@ export const BandStopScene: React.FC<any> = ({ dur, mode = "build", f: fin = 50,
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.bs = BandStopScene;
+
+// ------------------------------------------------------------------ Linear vs switching regulator (12 V -> 5 V, 1 A load)
+/** {"type":"lvs","mode":"linear"|"switching"|"compare"|"ripple"|"calc"}
+ *  Linear: pass transistor drops 7 V at 1 A -> 7 W heat, efficiency 5/12 = 41.7 %.
+ *  Switching (buck): duty D = 5/12 = 41.7 %, assumed 90 % efficient -> Pin 5.56 W, input current 0.46 A, loss 0.56 W. */
+export const LinVsSwScene: React.FC<any> = ({ dur, mode = "linear" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const VIN = 12, VO = 5, IO = 1, D = VO / VIN, ETA = 0.9;
+  const T = 300, B = 760;
+  const src = (x: number) => <g><Battery x={x} y={(T + B) / 2} v={VIN} /><line x1={x} y1={T} x2={x} y2={(T + B) / 2 - 40} stroke={L.wire} strokeWidth={6} /><line x1={x} y1={(T + B) / 2 + 40} x2={x} y2={B} stroke={L.wire} strokeWidth={6} /></g>;
+  const load = (x: number, glow = 0) => <g><Res x={x} y={(T + B) / 2} ohm={5} label="LOAD" heat={glow} />
+    <line x1={x} y1={T} x2={x} y2={(T + B) / 2 - 70} stroke={L.wire} strokeWidth={6} /><line x1={x} y1={(T + B) / 2 + 70} x2={x} y2={B} stroke={L.wire} strokeWidth={6} />
+    <Meter x={x} y={B + 80} kind="V" value={VO} /></g>;
+  // ---- linear circuit: source -> pass transistor (hot) -> load
+  const linear = (heatOn: boolean) => <g>
+    <polyline points={`200,${T} 360,${T}`} fill="none" stroke={L.wire} strokeWidth={6} />
+    <polyline points={`520,${T} 860,${T}`} fill="none" stroke={L.wire} strokeWidth={6} />
+    <line x1={200} y1={B} x2={860} y2={B} stroke={L.wire} strokeWidth={6} />
+    {src(200)}
+    {heatOn && <circle cx={440} cy={T} r={95 + 8 * Math.sin(t * 6)} fill={L.red} opacity={0.22} />}
+    <circle cx={440} cy={T} r={62} fill={L.bg0} stroke={L.amber} strokeWidth={6} />
+    <line x1={415} y1={T - 35} x2={415} y2={T + 35} stroke={L.amber} strokeWidth={8} />
+    <line x1={360} y1={T} x2={415} y2={T} stroke={L.amber} strokeWidth={6} />
+    <line x1={415} y1={T - 14} x2={470} y2={T - 50} stroke={L.amber} strokeWidth={6} /><line x1={415} y1={T + 14} x2={470} y2={T + 50} stroke={L.amber} strokeWidth={6} />
+    <text x={440} y={T - 90} textAnchor="middle" {...T1} fontSize={26}>PASS TRANSISTOR</text>
+    <text x={440} y={T + 110} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={26} fontWeight={800}>drops {VIN - VO} V</text>
+    {heatOn && <text x={440} y={T + 148} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={26} fontWeight={800}>{VIN - VO} V × {IO} A = {(VIN - VO) * IO} W heat</text>}
+    {load(860)}
+    <Dots pts={[[200, (T + B) / 2], [200, T], [860, T], [860, B], [200, B], [200, (T + B) / 2]]} t={t} speed={120} />
+  </g>;
+  // ---- switching (buck) circuit: source -> switch -> L -> C || load, diode to ground
+  const on = (t * 2) % 1 < D;
+  const switching = <g>
+    {src(200)}
+    <polyline points={`200,${T} 330,${T}`} fill="none" stroke={L.wire} strokeWidth={6} />
+    <circle cx={330} cy={T} r={9} fill={L.text} /><circle cx={430} cy={T} r={9} fill={L.text} />
+    <line x1={330} y1={T} x2={on ? 430 : 410} y2={on ? T : T - 55} stroke={on ? L.green : L.red} strokeWidth={7} />
+    <text x={380} y={T - 80} textAnchor="middle" fill={on ? L.green : L.red} fontFamily={MONO} fontSize={26} fontWeight={800}>SWITCH {on ? "ON" : "OFF"}</text>
+    <line x1={430} y1={T} x2={520} y2={T} stroke={L.wire} strokeWidth={6} />
+    <line x1={490} y1={T} x2={490} y2={460} stroke={L.wire} strokeWidth={6} />
+    <polygon points={`465,500 515,500 490,460`} fill={L.bg0} stroke={L.amber} strokeWidth={5} /><line x1={465} y1={460} x2={515} y2={460} stroke={L.amber} strokeWidth={5} />
+    <line x1={490} y1={500} x2={490} y2={B} stroke={L.wire} strokeWidth={6} />
+    <text x={530} y={500} {...T1} fontSize={22}>diode</text>
+    <path d={`M 520 ${T} ` + [0, 1, 2, 3].map(() => `a 16 16 0 1 0 32 0`).join(" ")} fill="none" stroke={L.amber} strokeWidth={6} />
+    <text x={584} y={T - 34} textAnchor="middle" {...T1} fontSize={24}>L</text>
+    <line x1={648} y1={T} x2={860} y2={T} stroke={L.wire} strokeWidth={6} />
+    <line x1={720} y1={T} x2={720} y2={500} stroke={L.wire} strokeWidth={6} />
+    <line x1={680} y1={500} x2={760} y2={500} stroke={L.amber} strokeWidth={8} /><line x1={680} y1={526} x2={760} y2={526} stroke={L.amber} strokeWidth={8} />
+    <line x1={720} y1={526} x2={720} y2={B} stroke={L.wire} strokeWidth={6} /><text x={772} y={520} {...T1} fontSize={24}>C</text>
+    <line x1={200} y1={B} x2={860} y2={B} stroke={L.wire} strokeWidth={6} />
+    {load(860)}
+    {on ? <Dots pts={[[200, (T + B) / 2], [200, T], [860, T], [860, B], [200, B], [200, (T + B) / 2]]} t={t} speed={120} />
+        : <Dots pts={[[490, B], [490, T], [860, T], [860, B], [490, B]]} t={t} speed={120} color={L.amber} />}
+    <text x={530} y={B + 60} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>{on ? "ON: source feeds L and the load" : "OFF: L pushes current via the diode"}</text>
+  </g>;
+  // ---- right side helpers
+  const GX = 1010, GW = 820;
+  const bars = (x: number, title: string, pin: number, pout: number, col: string) => { const s = 34; const loss = pin - pout;
+    return <g><text x={x + 150} y={280} textAnchor="middle" fill={col} fontFamily={SANS} fontSize={30} fontWeight={800}>{title}</text>
+      {[["IN", pin, L.cyan], ["LOAD", pout, L.green], ["HEAT", loss, L.red]].map(([lab, v, c]: any, k) =>
+        <g key={k}><rect x={x + k * 100 + 20} y={760 - v * s * p} width={70} height={v * s * p} fill={c} rx={6} />
+          <text x={x + k * 100 + 55} y={800} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{lab}</text>
+          <text x={x + k * 100 + 55} y={750 - v * s * p} textAnchor="middle" fill={c} fontFamily={MONO} fontSize={22} fontWeight={700}>{v.toFixed(v < 1 ? 2 : 1)} W</text></g>)}
+      <text x={x + 150} y={860} textAnchor="middle" {...T1} fontSize={30}>efficiency {Math.round(pout / pin * 100)}%</text></g>; };
+  const wave = (cy: number, fn: (u: number) => number, col: string, lab: string, scale: number) => { const q: string[] = [];
+    for (let k = 0; k <= 400; k++) { const u = k / 400; if (u > p) break; q.push(`${GX + GW * u},${cy - fn(u) * scale}`); }
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} />
+      <text x={GX - 16} y={cy + 8} textAnchor="end" {...T1} fontSize={26} fill={col}>{lab}</text>
+      {q.length > 1 && <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} />}</g>; };
+  let left: React.ReactNode = mode === "switching" || mode === "ripple" ? switching : linear(true), right: React.ReactNode = null;
+  if (mode === "linear") right = bars(1150, "LINEAR REGULATOR", VIN * IO, VO * IO, L.amber);
+  else if (mode === "switching") right = <g>
+    <text x={GX + GW / 2} y={140} textAnchor="middle" {...T1} fontSize={32}>SWITCH ON {Math.round(D * 100)}% OF THE TIME</text>
+    {wave(430, (u) => ((u * 8) % 1 < D ? VIN : 0), L.cyan, "switch", 18)}
+    <text x={GX + GW} y={180 + 30} textAnchor="end" fill={L.cyan} fontFamily={MONO} fontSize={24}>0 V or 12 V</text>
+    {wave(760, () => VO, L.green, "Vout", 12)}
+    <text x={GX + GW / 2} y={920} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={700}>average = {D.toFixed(3)} × 12 V = 5 V</text></g>;
+  else if (mode === "compare") { left = <g>{bars(80, "LINEAR", VIN * IO, VO * IO, L.amber)}</g>; right = bars(1150, "SWITCHING", VO * IO / ETA, VO * IO, L.green); }
+  else if (mode === "ripple") right = <g>
+    <text x={GX + GW / 2} y={140} textAnchor="middle" {...T1} fontSize={32}>OUTPUT, ZOOMED IN</text>
+    {wave(420, () => 0.0, L.amber, "", 1)}
+    <text x={GX + GW / 2} y={360} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={26} fontWeight={700}>linear: smooth, quiet 5 V</text>
+    {wave(760, (u) => Math.abs(((u * 8) % 1) - 0.5) * 2 - 0.5, L.green, "", 30)}
+    <text x={GX + GW / 2} y={680} textAnchor="middle" fill={L.green} fontFamily={SANS} fontSize={26} fontWeight={700}>switching: small ripple at the switching speed</text></g>;
+  else if (mode === "calc") { left = linear(false); const lines = ["Linear:  P_heat = (12 − 5) × 1 = 7 W", "η = 5 W ÷ 12 W = 41.7%", "Buck:  D = Vout ÷ Vin = 5 ÷ 12 = 0.417", "Pin = 5 W ÷ 0.9 = 5.56 W", "Iin = 5.56 ÷ 12 = 0.46 A,  heat = 0.56 W"];
+    right = <g>{lines.map((l, k) => <text key={k} x={GX - 30} y={260 + k * 110} fill={k === 1 ? L.amber : k === 4 ? L.green : L.text} fontFamily={MONO} fontSize={32} fontWeight={700}
+      opacity={interpolate(p, [k * 0.17, k * 0.17 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>; }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(20,150)">{left}</g><g transform="translate(-900,900)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.lvs = LinVsSwScene;
