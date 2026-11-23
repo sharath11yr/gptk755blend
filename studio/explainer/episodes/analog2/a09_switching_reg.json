@@ -1,0 +1,152 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Switching Regulator Explained | PWM, Duty Cycle, Inductor & Feedback | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Switching Regulator Explained | PWM, Duty Cycle, Inductor & Feedback | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "How a switching voltage regulator really works, step by step: a switch turning on and off thousands of times a second, PWM and duty cycle, why the inductor and capacitor are needed, live inductor current, the three basic converters (buck, boost, buck-boost), and the feedback loop that holds the output steady.",
+  "tags": [
+   "switching regulator",
+   "pwm",
+   "duty cycle",
+   "dc dc converter",
+   "buck converter",
+   "boost converter",
+   "smps",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Switching Regulator",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "SWITCHING REGULATOR",
+   "subtitle": "Chop the voltage, store energy in an inductor, smooth it out",
+   "narration": "Welcome back. We met the switching regulator briefly when we compared it with the linear one. Today we go inside it. How can a switch that's only ever fully on or fully off produce any voltage we want? We'll see the switch, the inductor current, and the output, live, with every value calculated."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "build",
+   "chapter": "The basic idea",
+   "narration": "Here's the simplest switching regulator. Twelve volts on the left. A switch S. In a real circuit, that's a MOSFET transistor, turning on and off fifty thousand times a second. Then an inductor L, one hundred microhenries. A diode from ground up to the switch side. A capacitor C across the output, and a ten ohm load. Every part has a job, and we'll see each one working."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "on",
+   "chapter": "Switch ON",
+   "narration": "Switch on. Twelve volts push current through the inductor and into the load. Look at the inductor current on the right: it ramps upward. An inductor resists changes in current, so the current can't jump. It climbs steadily, and the inductor stores energy in its magnetic field."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "off",
+   "chapter": "Switch OFF",
+   "narration": "Switch off. The supply is disconnected. But the inductor doesn't let its current stop. It uses its stored energy to keep pushing current through the load, round through the diode. The inductor current now ramps downward. So the load gets current all the time, even while the switch is off."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "PWM and duty cycle",
+   "narration": "Now let it run. The switch repeats this: on, off, on, off. This is called P W M, pulse width modulation. The fraction of time it's on is the duty cycle, D. Here D is fifty percent. The inductor current is a sawtooth around zero point six amps, and the capacitor smooths the output to a steady six volts. Fifty percent of twelve volts."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "duty",
+   "chapter": "Changing the duty cycle",
+   "narration": "Now we change the duty cycle, from twenty five percent up to seventy five. Watch the switch pulses get wider, the inductor current rise, and the output follow: three volts, six volts, nine volts. So by just changing how long the switch stays on, we can set any output voltage. No resistor burning the difference."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "run",
+   "chapter": "Rearranging the parts: boost",
+   "narration": "Here's the amazing part. Rearrange the same parts, and you can even go up. This is the boost converter. With fifty percent duty cycle, twelve volts in gives twenty four volts out. We'll explain exactly how in the boost video."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "run",
+   "chapter": "And the buck-boost",
+   "narration": "And a third arrangement, the buck-boost, can go either down or up, and its output is negative. At fifty percent duty, twelve volts in gives minus twelve out. Buck, boost and buck-boost: three ways to arrange a switch, an inductor, a diode and a capacitor."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Feedback: holding it steady",
+   "narration": "One more thing. How does a real regulator keep exactly the right voltage when the input or the load changes? Feedback. A small control chip measures the output all the time and compares it with a reference voltage. If the output drops a little, it makes the on-pulses slightly wider. If it rises, narrower. This happens on every cycle, thousands of times a second, so the output stays steady."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers for our buck example. V out equals D times V in: zero point five times twelve, six volts. The output current is six over ten ohms, zero point six amps, and that's also the average inductor current. The ripple in the inductor current is V in minus V out, times D, over f times L. That's six times zero point five, over fifty thousand times one hundred micro, zero point six amps. So the current swings from zero point three to zero point nine amps. And for a five volt output, D would be five over twelve, zero point four one seven."
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: your laptop's processor",
+   "narration": "Every laptop does this. The adapter gives nineteen volts, but the processor needs only about one volt, at up to sixty amps or more. A linear regulator would burn over a thousand watts. Impossible. So right beside the processor sit several buck converters, switching hundreds of thousands of times a second, with feedback adjusting the duty cycle every cycle as the processor's load jumps up and down."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the switch is partly on. It's never partly on, only fully on or fully off. That's why it wastes so little. Two: forgetting the diode. Without it, when the switch opens, the inductor's current has nowhere to go, and it creates a huge voltage spike that can destroy the switch. Three: confusing the duty cycle with the frequency. Frequency is how often it switches. Duty cycle is the fraction of each cycle it's on. The output depends on the duty cycle."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BUCK CONVERTER",
+   "lines": [
+    "Switch fully ON or OFF: PWM",
+    "Inductor keeps current flowing, C smooths",
+    "Vout set by duty cycle D, feedback adjusts D"
+   ],
+   "cta": "Buck converter is next",
+   "narration": "Quick recap. A switching regulator turns a switch fully on and off, with pulse width modulation. The inductor stores energy and keeps the current flowing, the diode gives it a path, and the capacitor smooths the output. The duty cycle sets the output voltage, and feedback adjusts it every cycle. Next, the buck converter in depth. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "on",
+   "chapter": "",
+   "narration": "Turn twelve volts into six with almost no waste? Use a switch. Switch on: current flows through the inductor into the load, and the inductor current ramps up, storing energy."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "off",
+   "chapter": "",
+   "narration": "Switch off: the inductor keeps pushing the current, round through the diode. The current ramps down, but never stops."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "duty",
+   "chapter": "",
+   "narration": "Now change how long the switch stays on. Twenty five percent gives three volts. Fifty percent, six. Seventy five, nine. That's the duty cycle, and it's how every phone and laptop makes its voltages. Full lesson on the channel."
+  }
+ ]
+}

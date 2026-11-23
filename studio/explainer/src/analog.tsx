@@ -1275,6 +1275,49 @@ export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both"
         <text x={1520} y={640} textAnchor="middle" fill="#e8f5ec" fontFamily={SANS} fontSize={26} fontWeight={800}>works reliably</text></g>
     </svg></AbsoluteFill>;
   }
+  if (app === "cpu" || app === "powerbank" || app === "led") {
+    const k = app; const flow = (x1: number, x2: number, y: number, col: string, lab: string) => <g>
+      <line x1={x1} y1={y} x2={x2} y2={y} stroke={col} strokeWidth={8} strokeLinecap="round" />
+      {Array.from({ length: 5 }, (_, i) => <circle key={i} cx={x1 + ((i / 5 + t * 0.5) % 1) * (x2 - x1)} cy={y} r={8} fill={col} />)}
+      <text x={(x1 + x2) / 2} y={y - 24} textAnchor="middle" fill={col} fontFamily={MONO} fontSize={30} fontWeight={800}>{lab}</text></g>;
+    const conv = (x: number, name: string) => <g><rect x={x} y={460} width={220} height={170} rx={22} fill="#1f2a35" stroke={L.amber} strokeWidth={5} />
+      <path d={`M ${x + 40} 545 ` + [0, 1, 2, 3].map(() => "a 14 14 0 1 0 28 0").join(" ")} fill="none" stroke={L.amber} strokeWidth={5} />
+      <text x={x + 110} y={600} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={24} fontWeight={800}>{name}</text></g>;
+    const title = k === "cpu" ? "REAL WORLD: FEEDING A LAPTOP PROCESSOR" : k === "powerbank" ? "REAL WORLD: INSIDE A POWER BANK" : "REAL WORLD: A TORCH THAT STAYS BRIGHT";
+    const sub = k === "cpu" ? "a buck converter turns 12-19 V into about 1 V at huge current, right next to the chip"
+      : k === "powerbank" ? "a boost converter lifts the 3.7 V battery up to the 5 V your phone expects" : "a buck-boost keeps the LED current steady whether the battery is above or below the LED voltage";
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>{title}</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>{sub}</text>
+      {k === "cpu" && <g>
+        <rect x={140} y={430} width={260} height={230} rx={20} fill="#25313d" stroke="#4a5d70" strokeWidth={5} /><text x={270} y={560} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={34} fontWeight={800}>19 V</text>
+        <text x={270} y={710} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>LAPTOP ADAPTER</text>
+        {flow(400, 700, 545, L.cyan, "19 V")}{conv(700, "BUCK")}{flow(920, 1300, 545, L.green, "1.1 V · 60 A")}
+        <rect x={1300} y={390} width={330} height={310} rx={14} fill="#1b1b1b" stroke="#4a5d70" strokeWidth={5} /><rect x={1360} y={450} width={210} height={190} rx={8} fill="#8a96a3" />
+        <text x={1465} y={555} textAnchor="middle" fill="#1b1b1b" fontFamily={MONO} fontSize={34} fontWeight={800}>CPU</text>
+        <text x={1465} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>needs ~1 V, very steady</text></g>}
+      {k === "powerbank" && <g>
+        <rect x={140} y={400} width={180} height={300} rx={30} fill="#2e5a87" stroke="#4a5d70" strokeWidth={5} /><rect x={190} y={380} width={80} height={24} rx={6} fill="#4a5d70" />
+        <text x={230} y={560} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={36} fontWeight={800}>3.7V</text>
+        <text x={230} y={750} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>LITHIUM CELL</text>
+        <text x={230} y={786} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={22}>4.2 V full → 3.0 V empty</text>
+        {flow(320, 700, 545, L.cyan, "3.7 V")}{conv(700, "BOOST")}{flow(920, 1360, 545, L.green, "5.0 V")}
+        <rect x={1360} y={420} width={60} height={250} rx={10} fill="#3a4a5a" />
+        <rect x={1440} y={360} width={190} height={370} rx={30} fill="#1a232c" stroke="#4a5d70" strokeWidth={5} /><rect x={1458} y={385} width={154} height={300} rx={14} fill="#24384a" />
+        <rect x={1505} y={470} width={60} height={110} rx={8} fill="none" stroke={L.green} strokeWidth={4} /><rect x={1511} y={574 - 98 * ((t / 4) % 1)} width={48} height={98 * ((t / 4) % 1)} fill={L.green} />
+        <text x={1535} y={780} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>PHONE CHARGING</text></g>}
+      {k === "led" && <g>
+        {(() => { const bv = 4.2 - 1.2 * ((t / 8) % 1); return <g>
+          <rect x={140} y={400} width={180} height={300} rx={30} fill="#2e5a87" stroke="#4a5d70" strokeWidth={5} /><rect x={190} y={380} width={80} height={24} rx={6} fill="#4a5d70" />
+          <text x={230} y={560} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={36} fontWeight={800}>{bv.toFixed(1)}V</text>
+          <text x={230} y={750} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>BATTERY</text>
+          <text x={230} y={786} textAnchor="middle" fill={bv > 3.4 ? L.amber : L.cyan} fontFamily={SANS} fontSize={24} fontWeight={700}>{bv > 3.4 ? "above LED voltage: step DOWN" : "below LED voltage: step UP"}</text></g>; })()}
+        {flow(320, 700, 545, L.cyan, "3.0-4.2 V")}{conv(700, "BUCK-BOOST")}{flow(920, 1300, 545, L.green, "3.4 V steady")}
+        <path d="M 1330 470 L 1530 410 L 1530 680 L 1330 620 Z" fill="#3a4a5a" stroke="#4a5d70" strokeWidth={5} />
+        <circle cx={1360} cy={545} r={50} fill="#fff8d0" /><path d="M 1530 410 L 1850 300 L 1850 790 L 1530 680 Z" fill="#fff3a0" opacity={0.35} />
+        <text x={1450} y={760} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>SAME BRIGHTNESS</text></g>}
+    </svg></AbsoluteFill>;
+  }
   if (app === "adc") {
     const noisy = (x: number, a: number, b: number) => a * Math.sin(x / 40 - t * 4) + b * Math.sin(x / 4 - t * 30);
     const wv = (x0: number, x1: number, y: number, a: number, b: number, col: string) => { const q: string[] = [];
@@ -1880,3 +1923,100 @@ export const ZRegScene: React.FC<any> = ({ dur, kind = "series", mode = "build",
   return svg(<><g transform="translate(70,0)">{left}</g>{right}</>);
 };
 ANALOG_SCENES.zreg = ZRegScene;
+
+// ------------------------------------------------------------------ DC-DC converters: buck, boost, buck-boost (ideal, continuous conduction)
+/** {"type":"conv","kind":"buck"|"boost"|"bb","mode":"build"|"on"|"off"|"run"|"duty"|"calc","d":0.5}
+ *  Vin = 12 V, L = 100 µH, f = 50 kHz (T = 20 µs), C = 100 µF, R = 10 Ω.
+ *  buck Vo = D·Vin; boost Vo = Vin/(1−D); buck-boost |Vo| = Vin·D/(1−D) (inverted). */
+const CV = { VIN: 12, L: 100e-6, F: 50e3, C: 100e-6, R: 10 };
+const convVo = (k: string, d: number) => k === "buck" ? d * CV.VIN : k === "boost" ? CV.VIN / (1 - d) : CV.VIN * d / (1 - d);
+const convIL = (k: string, d: number) => { const vo = convVo(k, d), io = vo / CV.R; return k === "buck" ? io : io / (1 - d); };   // average inductor current
+const convDI = (k: string, d: number) => { const vl = k === "buck" ? CV.VIN - convVo(k, d) : CV.VIN; return vl * d / (CV.F * CV.L); }; // ripple, ON phase
+export const ConvScene: React.FC<any> = ({ dur, kind = "buck", mode = "run", d: d0 = 0.5 }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const reveal = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const [d1, d2] = kind === "boost" ? [0.2, 0.6] : [0.25, 0.75]; const D = mode === "duty" ? d1 + (d2 - d1) * p : d0;
+  const ph = (t * 0.6) % 1, on = mode === "on" ? true : mode === "off" ? false : ph < D;
+  const vo = convVo(kind, D), il = convIL(kind, D), di = convDI(kind, D);
+  const T = 300, B = 760, XS = 150;
+  const sw = (x1: number, y1: number, x2: number, y2: number, lab = "S") => { const cl = on;
+    return <g><circle cx={x1} cy={y1} r={9} fill={L.text} /><circle cx={x2} cy={y2} r={9} fill={L.text} />
+      <line x1={x1} y1={y1} x2={cl ? x2 : x1 + (x2 - x1) * 0.8 + (y1 === y2 ? 0 : 50)} y2={cl ? y2 : y1 + (y2 - y1) * 0.8 - (y1 === y2 ? 50 : 0)} stroke={cl ? L.green : L.red} strokeWidth={7} />
+      <text x={(x1 + x2) / 2 + (y1 === y2 ? 0 : 30)} y={(y1 + y2) / 2 - (y1 === y2 ? 60 : 0)} textAnchor={y1 === y2 ? "middle" : "start"} fill={cl ? L.green : L.red} fontFamily={MONO} fontSize={24} fontWeight={800}>{lab} {cl ? "ON" : "OFF"}</text></g>; };
+  const ind = (x: number, y: number, vert = false) => vert
+    ? <g><line x1={x} y1={y - 80} x2={x} y2={y - 64} stroke={L.wire} strokeWidth={6} /><path d={`M ${x} ${y - 64} ` + [0, 1, 2, 3].map(() => `a 16 16 0 1 1 0 32`).join(" ")} fill="none" stroke={L.amber} strokeWidth={6} /><line x1={x} y1={y + 64} x2={x} y2={y + 80} stroke={L.wire} strokeWidth={6} /><text x={x + 34} y={y + 8} {...T1} fontSize={24}>L</text></g>
+    : <g><path d={`M ${x - 64} ${y} ` + [0, 1, 2, 3].map(() => `a 16 16 0 1 0 32 0`).join(" ")} fill="none" stroke={L.amber} strokeWidth={6} /><text x={x} y={y - 34} textAnchor="middle" {...T1} fontSize={24}>L</text></g>;
+  const diode = (x1: number, y1: number, x2: number, y2: number) => { const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+    return <g><line x1={x1} y1={y1} x2={x2} y2={y2} stroke={L.wire} strokeWidth={6} />
+      <g transform={`translate(${mx},${my}) rotate(${a})`}><rect x={-30} y={-30} width={60} height={60} fill={L.bg0} /><polygon points="-22,-24 -22,24 20,0" fill={L.bg0} stroke={L.amber} strokeWidth={5} /><line x1={20} y1={-24} x2={20} y2={24} stroke={L.amber} strokeWidth={5} /></g></g>; };
+  const cap = (x: number) => <g><line x1={x} y1={T} x2={x} y2={500} stroke={L.wire} strokeWidth={6} /><line x1={x - 40} y1={500} x2={x + 40} y2={500} stroke={L.amber} strokeWidth={8} /><line x1={x - 40} y1={526} x2={x + 40} y2={526} stroke={L.amber} strokeWidth={8} /><line x1={x} y1={526} x2={x} y2={B} stroke={L.wire} strokeWidth={6} /><text x={x + 50} y={520} {...T1} fontSize={24}>C</text></g>;
+  const load = (x: number) => <g><Res x={x} y={(T + B) / 2} ohm={CV.R} label="LOAD" /><line x1={x} y1={T} x2={x} y2={(T + B) / 2 - 70} stroke={L.wire} strokeWidth={6} /><line x1={x} y1={(T + B) / 2 + 70} x2={x} y2={B} stroke={L.wire} strokeWidth={6} />
+    <text x={x} y={T - 30} textAnchor="middle" {...T1} fontSize={28} fill={L.green}>Vout {kind === "bb" ? "−" : ""}{vo.toFixed(1)} V</text></g>;
+  const src = <g><Battery x={XS} y={(T + B) / 2} v={CV.VIN} /><line x1={XS} y1={T} x2={XS} y2={(T + B) / 2 - 40} stroke={L.wire} strokeWidth={6} /><line x1={XS} y1={(T + B) / 2 + 40} x2={XS} y2={B} stroke={L.wire} strokeWidth={6} /></g>;
+  const sp = 60 + il * 25; const showDots = mode !== "build" && mode !== "calc";
+  let left: React.ReactNode, onPath: number[][] = [], offPath: number[][] = [], note = ["", ""];
+  if (kind === "buck") {
+    left = <g>{src}<line x1={XS} y1={B} x2={860} y2={B} stroke={L.wire} strokeWidth={6} /><line x1={XS} y1={T} x2={300} y2={T} stroke={L.wire} strokeWidth={6} />
+      <g opacity={reveal(0.05)}>{sw(300, T, 400, T)}<line x1={400} y1={T} x2={496} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.25)}>{ind(560, T)}<line x1={624} y1={T} x2={860} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.45)}>{diode(450, B, 450, T)}</g>
+      <g opacity={reveal(0.6)}>{cap(720)}</g><g opacity={reveal(0.75)}>{load(860)}</g></g>;
+    onPath = [[XS, (T + B) / 2], [XS, T], [860, T], [860, B], [XS, B], [XS, (T + B) / 2]]; offPath = [[450, B], [450, T], [860, T], [860, B], [450, B]];
+    note = ["ON: Vin drives current through L to the load; L stores energy", "OFF: L keeps the current going, through the diode"];
+  } else if (kind === "boost") {
+    left = <g>{src}<line x1={XS} y1={B} x2={860} y2={B} stroke={L.wire} strokeWidth={6} /><line x1={XS} y1={T} x2={276} y2={T} stroke={L.wire} strokeWidth={6} />
+      <g opacity={reveal(0.05)}>{ind(340, T)}<line x1={404} y1={T} x2={470} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.25)}><line x1={470} y1={T} x2={470} y2={460} stroke={L.wire} strokeWidth={6} />{sw(470, 460, 470, 600)}<line x1={470} y1={600} x2={470} y2={B} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.45)}>{diode(470, T, 640, T)}<line x1={640} y1={T} x2={860} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.6)}>{cap(720)}</g><g opacity={reveal(0.75)}>{load(860)}</g></g>;
+    onPath = [[XS, (T + B) / 2], [XS, T], [470, T], [470, B], [XS, B], [XS, (T + B) / 2]]; offPath = [[XS, (T + B) / 2], [XS, T], [860, T], [860, B], [XS, B], [XS, (T + B) / 2]];
+    note = ["ON: switch shorts L to ground, L charges up from Vin", "OFF: Vin + L's voltage push together through the diode"];
+  } else {
+    left = <g>{src}<line x1={XS} y1={B} x2={860} y2={B} stroke={L.wire} strokeWidth={6} /><line x1={XS} y1={T} x2={260} y2={T} stroke={L.wire} strokeWidth={6} />
+      <g opacity={reveal(0.05)}>{sw(260, T, 360, T)}<line x1={360} y1={T} x2={470} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.25)}><line x1={430} y1={T} x2={430} y2={450} stroke={L.wire} strokeWidth={6} />{ind(430, 530, true)}<line x1={430} y1={610} x2={430} y2={B} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.45)}>{diode(620, T, 470, T)}<line x1={620} y1={T} x2={860} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.6)}>{cap(720)}</g><g opacity={reveal(0.75)}>{load(860)}</g></g>;
+    onPath = [[XS, (T + B) / 2], [XS, T], [430, T], [430, B], [XS, B], [XS, (T + B) / 2]]; offPath = [[430, T], [430, B], [860, B], [860, T], [430, T]];
+    note = ["ON: Vin charges L; the diode blocks, C feeds the load", "OFF: L drives current UP through the load: output is NEGATIVE"];
+  }
+  const leftAll = <g>{left}
+    {showDots && (on ? <Dots pts={onPath} t={t} speed={sp} /> : <Dots pts={offPath} t={t} speed={sp} color={L.amber} />)}
+    {mode !== "build" && <text x={500} y={B + 70} textAnchor="middle" fill={on ? L.green : L.amber} fontFamily={SANS} fontSize={26} fontWeight={700}>{on ? note[0] : note[1]}</text>}</g>;
+  // ---- right: switch, inductor current, output
+  const GX = 1040, GW = 780, cyc = 3;
+  let right: React.ReactNode = null;
+  const trace = (cy: number, h: number, fn: (u: number) => number, col: string, lab: string, lo: number, hi: number, unit: string) => { const q: string[] = [];
+    const upto = mode === "run" || mode === "duty" ? 1 : p;
+    for (let k = 0; k <= 360; k++) { const u = k / 360; if (u > upto) break; q.push(`${GX + GW * u},${cy - (fn(u) - lo) / (hi - lo) * h}`); }
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><line x1={GX} y1={cy} x2={GX} y2={cy - h - 10} stroke={L.dim} strokeWidth={2} />
+      <text x={GX - 14} y={cy - h + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={20}>{hi.toFixed(hi < 10 ? 1 : 0)}{unit}</text>
+      <text x={GX - 14} y={cy + 6} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={20}>{lo.toFixed(lo && lo < 10 ? 1 : 0)}{unit}</text>
+      <text x={GX + 10} y={cy - h - 18} fill={col} fontFamily={SANS} fontSize={26} fontWeight={800}>{lab}</text>
+      {q.length > 1 && <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} strokeLinejoin="round" />}</g>; };
+  const phase = (u: number) => (u * cyc) % 1;
+  const ilw = (u: number) => { const x = phase(u); return x < D ? il - di / 2 + di * x / D : il + di / 2 - di * (x - D) / (1 - D); };
+  if (mode !== "calc") {
+    const hiI = Math.max(1, Math.ceil((il + di / 2) * 1.2));
+    right = <g>
+      <text x={GX + GW / 2} y={110} textAnchor="middle" {...T1} fontSize={30}>D = {Math.round(D * 100)}%  →  Vout = {kind === "bb" ? "−" : ""}{vo.toFixed(1)} V</text>
+      {trace(330, 130, (u) => (phase(u) < D ? 1 : 0), L.cyan, "switch (ON / OFF)", 0, 1, "")}
+      {trace(620, 190, ilw, L.amber, "inductor current", 0, hiI, " A")}
+      {trace(900, 160, () => vo, L.green, "output voltage", 0, kind === "buck" ? 15 : 40, " V")}
+      {(mode === "run" || mode === "duty") && <line x1={GX + GW * ((t * 0.6) % 1) / cyc} y1={180} x2={GX + GW * ((t * 0.6) % 1) / cyc} y2={900} stroke={L.text} strokeWidth={2} strokeDasharray="6 6" opacity={0.5} />}
+    </g>;
+  } else {
+    const lines = kind === "buck" ? ["Vout = D × Vin = 0.5 × 12 = 6 V", "Iout = 6 ÷ 10 = 0.6 A  (= average IL)", "ΔIL = (Vin − Vout) × D ÷ (f × L)", "    = (12 − 6) × 0.5 ÷ (50k × 100µ) = 0.6 A", "IL swings 0.3 A → 0.9 A", "D for 5 V = 5 ÷ 12 = 0.417"]
+      : kind === "boost" ? ["Vout = Vin ÷ (1 − D) = 12 ÷ 0.5 = 24 V", "Iout = 24 ÷ 10 = 2.4 A", "IL(avg) = Iout ÷ (1 − D) = 4.8 A", "ΔIL = Vin × D ÷ (f × L) = 12 × 0.5 ÷ 5 = 1.2 A", "Pin = 12 × 4.8 = 57.6 W = Pout = 24 × 2.4", "D for 18 V = 1 − 12 ÷ 18 = 0.333"]
+      : ["|Vout| = Vin × D ÷ (1 − D)", "D = 0.5 → |Vout| = 12 V (inverted)", "D = 0.25 → 12 × 0.25 ÷ 0.75 = 4 V", "D = 0.75 → 12 × 0.75 ÷ 0.25 = 36 V", "D < 0.5: step DOWN, D > 0.5: step UP", "output is NEGATIVE: −12 V at D = 0.5"];
+    right = <g>{lines.map((l, k) => <text key={k} x={GX + 30} y={230 + k * 110} fill={k === 4 ? L.green : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
+      opacity={interpolate(p, [k * 0.14, k * 0.14 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(40,120)">{leftAll}</g><g transform="translate(-960,880)">{right}</g></>);
+  return svg(<><g transform="translate(40,0)">{leftAll}</g>{right}</>);
+};
+ANALOG_SCENES.conv = ConvScene;

@@ -1,0 +1,131 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Boost Converter Explained | How 12 V Becomes 24 V, Step by Step | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Boost Converter Explained | How 12 V Becomes 24 V, Step by Step | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The boost (step-up) converter in depth: building it, the switch shorting the inductor to ground, the inductor adding its voltage on top of the supply, Vout = Vin / (1 - D), input and inductor current, ripple, power balance, every value calculated, and how a power bank turns 3.7 V into 5 V.",
+  "tags": [
+   "boost converter",
+   "step up converter",
+   "dc dc converter",
+   "duty cycle",
+   "inductor",
+   "switching regulator",
+   "power bank",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Boost Converter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "BOOST CONVERTER",
+   "subtitle": "Get a HIGHER voltage out than you put in",
+   "narration": "Welcome back. Can a circuit give out a higher voltage than its supply, with no transformer? Yes. The boost converter. With twelve volts in, we'll get twenty four volts out. We'll build it, watch the inductor do the work, and calculate every value, including where the extra voltage really comes from."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Twelve volt supply. This time the inductor comes first, in series with the supply. After it, the switch S goes from that point down to ground. Then a diode, pointing toward the output. Then the capacitor and the ten ohm load. Same parts as the buck, just rearranged."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "on",
+   "chapter": "ON: charging the inductor",
+   "narration": "Switch on. It connects the end of the inductor straight to ground. So the whole twelve volts appear across the inductor, and its current ramps up, storing energy. Meanwhile the diode blocks, so the output is cut off, and the capacitor alone feeds the load."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "off",
+   "chapter": "OFF: the inductor pushes",
+   "narration": "Switch off. The inductor's current can't stop. It forces its way through the diode to the output. Now the inductor acts like a second battery in series with the supply. Twelve volts from the supply, plus the inductor's voltage on top. That's how the output gets higher than the input. The current ramps down as the inductor hands its energy to the output and recharges the capacitor."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "run",
+   "chapter": "Why Vout = Vin ÷ (1 − D)",
+   "narration": "Run it. Again, the inductor current must balance each cycle. During on, the inductor has V in across it for time D. During off, it has V out minus V in across it, the other way, for one minus D. Balance them: V in times D equals V out minus V in, times one minus D. Solve, and V out equals V in over one minus D. At fifty percent: twelve over zero point five, twenty four volts."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "duty",
+   "chapter": "Changing the duty cycle",
+   "narration": "Increase the duty cycle from twenty to sixty percent. At twenty percent, twelve over zero point eight, fifteen volts. At fifty, twenty four. At sixty, twelve over zero point four, thirty volts. The longer the switch stays on, the more energy the inductor stores, and the higher the output. But look at the inductor current: it climbs fast too."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "At fifty percent duty. V out equals twelve over one minus zero point five, twenty four volts. Output current, twenty four over ten, two point four amps. Output power, twenty four times two point four, fifty seven point six watts. Energy can't appear from nowhere, so the input must supply the same power. Input current, fifty seven point six over twelve, four point eight amps. And in a boost, the input current flows through the inductor, so the average inductor current is four point eight amps. Ripple, V in times D over f L, twelve times zero point five over five, one point two amps. Higher voltage out always means more current in."
+  },
+  {
+   "type": "app",
+   "app": "powerbank",
+   "chapter": "Real world: the power bank",
+   "narration": "Your power bank holds lithium cells at about three point seven volts. Fully charged, four point two. Nearly empty, three. But a phone's USB port expects five volts. So inside every power bank is a boost converter. As the battery voltage falls, the feedback raises the duty cycle, and the output stays at five volts until the battery is empty."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "duty",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the boost makes free energy. It raises the voltage, but the input current is higher than the output current. Power in equals power out, at best. Two: pushing the duty cycle too close to one hundred percent. The formula says the voltage goes to infinity, but in reality losses take over, and the inductor current becomes huge. Three: no load at all. With nothing taking the energy, the output voltage keeps rising, and can destroy the capacitor."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BUCK-BOOST CONVERTER",
+   "lines": [
+    "ON: switch shorts L, L charges from Vin",
+    "OFF: Vin + VL push through the diode",
+    "Vout = Vin ÷ (1 − D), Iin = Iout ÷ (1 − D)"
+   ],
+   "cta": "Buck-boost converter is next",
+   "narration": "Quick recap. In a boost converter, the switch charges the inductor straight from the supply. When the switch opens, the inductor's voltage adds on top of the supply and pushes current through the diode. V out equals V in over one minus D, and the input current is bigger than the output current. Next, the buck-boost, which can go down or up. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "on",
+   "chapter": "",
+   "narration": "How does a power bank turn three point seven volts into five? A boost converter. Switch on: the inductor is connected straight across the supply, and it charges up with energy."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "off",
+   "chapter": "",
+   "narration": "Switch off: the inductor's current can't stop. Its voltage adds on top of the supply, and together they push through the diode to the output. Twelve volts in, twenty four volts out."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "duty",
+   "chapter": "",
+   "narration": "The longer the switch stays on, the higher the output: fifteen, twenty four, thirty volts. But energy isn't free: the input current is always bigger than the output current. Full lesson on the channel."
+  }
+ ]
+}

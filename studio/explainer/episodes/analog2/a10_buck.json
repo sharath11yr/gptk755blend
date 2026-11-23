@@ -1,0 +1,107 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Buck Converter Explained | Step-Down DC-DC, Ripple & Every Value Calculated | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Buck Converter Explained | Step-Down DC-DC, Ripple & Every Value Calculated | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The buck (step-down) converter in depth: building it part by part, the ON and OFF paths with moving current, inductor current ripple, the volt-second balance that gives Vout = D x Vin, choosing the inductor, every value calculated, and how laptops power their processors.",
+  "tags": [
+   "buck converter",
+   "step down converter",
+   "dc dc converter",
+   "inductor ripple",
+   "duty cycle",
+   "switching regulator",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Buck Converter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "BUCK CONVERTER",
+   "subtitle": "The step-down switching converter, part by part",
+   "narration": "Welcome back. Today, the most common switching converter in the world: the buck converter. Buck means step down. It turns a higher voltage into a lower one with very little waste. We'll build it part by part, follow the current in each phase, and calculate the output, the currents and the ripple."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Our supply is twelve volts. First, the switch S, in series with the supply. Next, the inductor L, one hundred microhenries, after the switch. Then the diode, from ground up to the point between the switch and the inductor. It points upward, so it only conducts when that point tries to go below ground. Then the capacitor C, one hundred microfarads, across the output. And the load, ten ohms."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "on",
+   "chapter": "ON phase: the current path",
+   "narration": "Switch on. The current path is: supply, switch, inductor, load, and back to the supply. The voltage across the inductor is V in minus V out, twelve minus six, six volts. A constant voltage across an inductor makes its current rise in a straight line. That's the upward ramp on the right."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "off",
+   "chapter": "OFF phase: the current path",
+   "narration": "Switch off. Now the path is: inductor, load, ground, up through the diode, and back to the inductor. The supply is out of the loop. The voltage across the inductor is now minus V out, minus six volts. So its current falls in a straight line, the downward ramp. The diode is the inductor's escape route."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Why Vout = D × Vin",
+   "narration": "Now watch it run. Here's the key idea. In steady state, the inductor current must end each cycle where it started. So the rise during on must equal the fall during off. The rise is six volts for half the time, the fall is six volts for the other half. They balance. In general, V in minus V out, times D, equals V out times one minus D. Solve that, and you get V out equals D times V in."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "duty",
+   "chapter": "Setting the output",
+   "narration": "So the duty cycle sets the output directly. Twenty five percent: three volts. Fifty percent: six volts. Seventy five percent: nine volts. Notice the output can never be higher than the input, because D can't be more than one. A buck converter only steps down."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's calculate it all at fifty percent duty. V out equals D times V in, six volts. Output current, six over ten, zero point six amps. In a buck, the average inductor current equals the output current, zero point six amps. The ripple: V in minus V out, times D, over f L. Six times zero point five over five, zero point six amps peak to peak. So the inductor current swings from zero point three to zero point nine amps. A bigger inductor would make this ripple smaller."
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: powering a processor",
+   "narration": "The biggest buck converters you own sit right next to your laptop's processor. Nineteen volts from the adapter, about one volt for the processor, at up to sixty amps. One buck converter can't handle that alone, so laptops use several in parallel, called phases, each taking turns. That's what those little square inductors around the processor on a motherboard are."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the average inductor current is the input current. In a buck, the average inductor current equals the output current. The input current is smaller, D times that, because power in equals power out. Two: putting the diode the wrong way. It must point from ground toward the switch side, or it will short the supply when the switch turns on. Three: using too small an inductor. The ripple grows, and if the current falls to zero during each cycle, the simple formula no longer holds."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BOOST CONVERTER",
+   "lines": [
+    "ON: L charges, OFF: L discharges via diode",
+    "Vout = D × Vin (step down only)",
+    "ΔIL = (Vin − Vout) × D ÷ (f × L)"
+   ],
+   "cta": "Boost converter is next",
+   "narration": "Quick recap. In a buck converter, the inductor charges while the switch is on and discharges through the diode when it's off. Balancing the two gives V out equals D times V in, so it only steps down. And the ripple is V in minus V out, times D, over f L. Next, the boost converter, which does the impossible: makes a higher voltage than its supply. See you there."
+  }
+ ]
+}

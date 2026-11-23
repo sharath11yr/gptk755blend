@@ -1,0 +1,107 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Buck-Boost Converter Explained | Step Up or Down, Negative Output | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Buck-Boost Converter Explained | Step Up or Down, Negative Output | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The inverting buck-boost converter in depth: building it, the inductor charging from the supply then discharging into the load in reverse, why the output is negative, |Vout| = Vin x D / (1 - D) stepping down below 50% duty and up above it, every value calculated, and how a torch keeps its LED bright as the battery runs down.",
+  "tags": [
+   "buck boost converter",
+   "inverting converter",
+   "dc dc converter",
+   "negative voltage",
+   "duty cycle",
+   "switching regulator",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Buck-Boost Converter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "BUCK-BOOST CONVERTER",
+   "subtitle": "One circuit that steps down OR up, and flips the sign",
+   "narration": "Welcome back. The buck only steps down. The boost only steps up. But what if your battery starts above the voltage you need and ends below it? You need a converter that can do both: the buck-boost. We'll build it, see why its output comes out negative, and calculate the output at every duty cycle."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Twelve volt supply. First, the switch S, in series. Then the inductor, from the switch side straight down to ground. Then the diode, pointing back from the output toward the inductor. Then the capacitor and the ten ohm load. Notice: the inductor goes to ground, not to the output."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "on",
+   "chapter": "ON: storing energy",
+   "narration": "Switch on. The supply sits directly across the inductor. Its current ramps up from top to bottom, storing energy. The diode blocks, so the supply isn't connected to the output at all. The capacitor feeds the load alone."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "off",
+   "chapter": "OFF: releasing it, upside down",
+   "narration": "Switch off. The inductor keeps its current flowing downward. It pulls current up from ground, through the load from bottom to top, and through the diode back to the inductor. Current flows up through the load, so the top of the load ends up below ground. That's why the output is negative."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "run",
+   "chapter": "Why |Vout| = Vin × D ÷ (1 − D)",
+   "narration": "Run it. Balance the inductor again. During on, V in across it for time D. During off, V out across it the other way for one minus D. So V in times D equals the size of V out times one minus D. The size of V out is V in times D over one minus D. At fifty percent, twelve times zero point five over zero point five: twelve volts, but negative. Minus twelve volts."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "duty",
+   "chapter": "Down or up",
+   "narration": "Now sweep the duty cycle from twenty five to seventy five percent. At twenty five percent: twelve times zero point two five over zero point seven five, four volts. Stepping down. At fifty, twelve. At seventy five: twelve times zero point seven five over zero point two five, thirty six volts. Stepping up. Below fifty percent it bucks, above fifty percent it boosts."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Every value. The size of V out equals V in times D over one minus D. At fifty percent, twelve volts, inverted, so minus twelve. At twenty five percent, four volts. At seventy five percent, thirty six volts. At fifty percent with our ten ohm load, the output current is one point two amps, and the average inductor current is the output current over one minus D, two point four amps. The inductor must carry the energy for both the input and output, so it works hard."
+  },
+  {
+   "type": "app",
+   "app": "led",
+   "chapter": "Real world: a torch that stays bright",
+   "narration": "Imagine an L E D torch on a lithium battery. Full, the battery is four point two volts, above the L E D's three point four volts. Nearly empty, it's three volts, below it. A buck alone or a boost alone can't cover both. A buck-boost can. It steps down at first, then steps up as the battery drains, so the light stays at the same brightness until the battery is empty. Many such designs use a non-inverting buck-boost, built from the same idea."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the output is negative. Connect a normal electrolytic capacitor the usual way round, and it will fail. Its positive end goes to ground here. Two: thinking fifty percent duty means half the voltage. In a buck-boost, fifty percent gives the same size as the input. Three: underestimating the inductor current. It carries the output current divided by one minus D, two point four amps here, much more than the one point two amp load."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: SMPS",
+   "lines": [
+    "ON: L charges from Vin, OFF: L feeds the load",
+    "|Vout| = Vin × D ÷ (1 − D), output inverted",
+    "D < 50%: down, D > 50%: up"
+   ],
+   "cta": "SMPS is next",
+   "narration": "Quick recap. In a buck-boost, the inductor charges from the supply when the switch is on, and feeds the load in reverse when it's off, so the output is negative. Its size is V in times D over one minus D: below fifty percent it steps down, above fifty it steps up. Next, we put it all together: the switch mode power supply, the S M P S inside every charger. See you there."
+  }
+ ]
+}
