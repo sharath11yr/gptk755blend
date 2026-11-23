@@ -1872,8 +1872,8 @@ export const ZRegScene: React.FC<any> = ({ dur, kind = "series", mode = "build",
     {kind === "shunt" && s.vo < 5 && <text x={GX + GW / 2} y={880} textAnchor="middle" fill={L.red} fontFamily={SANS} fontSize={30} fontWeight={800}>Zener OFF: load too heavy, Vout falls!</text>}</g>;
   else if (mode === "calc") { const lines = kind === "series"
       ? ["Vout = VZ − VBE = 5.6 − 0.7 = 4.9 V", "IL = 4.9 ÷ 100 = 49 mA", "IB = IL ÷ (β + 1) = 49 ÷ 101 = 0.49 mA", "IR = (12 − 5.6) ÷ 470 = 13.6 mA", "IZ = 13.6 − 0.49 = 13.1 mA", "P(transistor) = (12 − 4.9) × 0.049 = 0.35 W"]
-      : ["I = (Vin − VZ) ÷ Rs = (12 − 5.1) ÷ 100 = 69 mA", "IL = 5.1 ÷ 100 = 51 mA", "IZ = I − IL = 69 − 51 = 18 mA", "no load: IZ = 69 mA", "PZ = 5.1 × 0.069 = 0.35 W", "PRs = 0.069² × 100 = 0.48 W"];
-    right = <g>{lines.map((l, k) => <text key={k} x={GX + 10} y={240 + k * 105} fill={k === lines.length - 1 ? L.red : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
+      : ["I = (12 − 5.1) ÷ 100 = 69 mA", "IL = 5.1 ÷ 100 = 51 mA", "IZ = I − IL = 69 − 51 = 18 mA", "no load: IZ = 69 mA", "PZ = 5.1 × 0.069 = 0.35 W", "PRs = 0.069² × 100 = 0.48 W"];
+    right = <g>{lines.map((l, k) => <text key={k} x={GX + 40} y={240 + k * 105} fill={k === lines.length - 1 ? L.red : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
       opacity={interpolate(p, [k * 0.14, k * 0.14 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>; }
   const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
   if (VH > VW) return svg(<><g transform="translate(40,150)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
