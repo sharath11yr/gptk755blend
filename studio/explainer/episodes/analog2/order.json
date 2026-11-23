@@ -4,5 +4,7 @@
  "analog2/a03_butterworth.json",
  "analog2/a04_bandpass.json",
  "analog2/a05_bandstop.json",
- "analog2/a06_lin_vs_sw.json"
+ "analog2/a06_lin_vs_sw.json",
+ "analog2/a07_series_reg.json",
+ "analog2/a08_shunt_reg.json"
 ]

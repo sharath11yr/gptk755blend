@@ -1,0 +1,93 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Shunt Voltage Regulator Explained | Zener in Parallel, Limits & Power | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Shunt Voltage Regulator Explained | Zener in Parallel, Limits & Power | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The Zener shunt voltage regulator step by step: a series resistor and a 5.1 V Zener in parallel with the load, input changing from 10 to 15 V, load changing until the Zener switches off, every current and power calculated, series vs shunt compared, and where a Zener shunt is used.",
+  "tags": [
+   "shunt voltage regulator",
+   "zener diode regulator",
+   "zener",
+   "voltage regulation",
+   "analog electronics",
+   "power supply"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Shunt Voltage Regulator",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "SHUNT VOLTAGE REGULATOR",
+   "subtitle": "A resistor and a Zener in parallel with the load",
+   "narration": "Welcome back. In the series regulator, the transistor sat in series with the load. Today, the other way: the shunt regulator. Shunt means parallel. The part that does the regulating sits in parallel with the load, and takes whatever current the load doesn't need. We'll build it with just a resistor and a Zener diode, push it to its limits, and calculate every value."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "Start with the twelve volt supply. First, a series resistor R s, one hundred ohms. Then a Zener diode, five point one volts, from the output to ground. And the load, right beside the Zener, in parallel with it. Because they're in parallel, the load always sees the Zener's voltage: five point one volts. The resistor drops the rest, twelve minus five point one, six point nine volts."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "vin",
+   "rl": 200,
+   "chapter": "Changing the input",
+   "narration": "With a two hundred ohm load, let's sweep the input from ten to fifteen volts. The output stays at five point one volts. The extra voltage drops across R s, so the current through R s rises: forty nine milliamps at ten volts, ninety nine at fifteen. The load always takes the same twenty five point five milliamps. So where does the extra current go? Into the Zener. Twenty three and a half milliamps at ten volts, seventy three and a half at fifteen. The Zener soaks it all up."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "load",
+   "chapter": "Changing the load, and the limit",
+   "narration": "Now keep the input at twelve volts and change the load. The current through R s is fixed at sixty nine milliamps. With no load, all sixty nine milliamps go through the Zener. With two hundred ohms, the load takes twenty five point five, and the Zener gets forty three and a half. With one hundred ohms, the load takes fifty one, and the Zener gets eighteen. Now fifty ohms. The load would want one hundred and two milliamps, but only sixty nine can come through R s. The Zener switches off, and the output falls to four volts. That's the limit of a shunt regulator: the load can never take more than the current R s supplies."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "calc",
+   "chapter": "Every value calculated",
+   "narration": "The numbers, at twelve volts with a one hundred ohm load. Current through R s: twelve minus five point one, over one hundred, sixty nine milliamps. Load current: five point one over one hundred, fifty one milliamps. Zener current: sixty nine minus fifty one, eighteen milliamps. The worst case for the Zener is no load: all sixty nine milliamps, times five point one volts, zero point three five watts. So choose a Zener rated at half a watt or more. And R s itself burns sixty nine milliamps squared times one hundred, about zero point four eight watts, all the time."
+  },
+  {
+   "type": "app",
+   "app": "zref",
+   "chapter": "Real world: a Zener guarding a sensor",
+   "narration": "Where is it used? Wherever the current is small and a fixed, safe voltage matters. For example, a sensor chip or a measuring circuit fed from a noisy twelve volt supply. A resistor and a Zener hold its supply at a safe five point one volts, and clip any spikes. It's simple, cheap and tiny. For big loads, engineers switch to a series regulator, because the shunt regulator wastes current all the time, even with no load."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "load",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: choosing the Zener's power for the normal load. Size it for no load, when it carries the whole current through R s. Two: making R s too big. Then it can't supply enough current, and the Zener switches off at heavy load, just like we saw at fifty ohms. Three: using a shunt regulator for a big load. It wastes the full current through R s all the time, so for big loads, use a series regulator."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: SWITCHING REGULATOR",
+   "lines": [
+    "Zener in parallel (shunt) with the load",
+    "IZ = I(Rs) − IL, worst case at no load",
+    "Load can't take more than I(Rs)"
+   ],
+   "cta": "Switching regulator is next",
+   "narration": "Quick recap. In a shunt regulator, the Zener sits in parallel with the load. The current through R s is fixed, and the Zener takes whatever the load doesn't, so its worst case is no load. And the load can never take more than the current through R s. That completes linear regulators. Next, the switching regulator, in depth. See you there."
+  }
+ ]
+}

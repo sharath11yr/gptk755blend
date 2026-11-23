@@ -1243,6 +1243,38 @@ export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both"
       <path d="M 1320 560 C 1400 560 1400 560 1460 560" fill="none" stroke="#3a4a5a" strokeWidth={8} />{phone(1460)}
     </svg></AbsoluteFill>;
   }
+  if (app === "board" || app === "zref") {
+    const brd = app === "board";
+    const blink = Math.sin(t * 6) > 0;
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>{brd ? "REAL WORLD: THE 5 V REGULATOR ON A MICROCONTROLLER BOARD" : "REAL WORLD: A ZENER GUARDING A SENSOR INPUT"}</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>{brd ? "a 9 V battery in, a steady 5 V for the chip, whatever the battery does" : "a resistor and a Zener hold the voltage at a safe, fixed level for a tiny current"}</text>
+      {/* battery */}
+      <g><rect x={150} y={430} width={170} height={260} rx={18} fill="#25313d" stroke="#4a5d70" strokeWidth={5} /><rect x={195} y={405} width={80} height={28} rx={6} fill="#4a5d70" />
+        <text x={235} y={575} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={44} fontWeight={800}>{brd ? "9V" : "12V"}</text>
+        <text x={235} y={740} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>{brd ? "drops to 7 V as it runs down" : "noisy supply"}</text></g>
+      <path d="M 320 520 C 420 520 420 540 520 540" fill="none" stroke={L.red} strokeWidth={6} />
+      {/* green board */}
+      <rect x={520} y={330} width={1250} height={460} rx={26} fill="#0f5132" stroke="#1d7a4c" strokeWidth={6} />
+      {Array.from({ length: 14 }, (_, k) => <rect key={k} x={700 + k * 70} y={350} width={26} height={22} fill="#d4af37" />)}
+      {/* regulator chip with tab */}
+      <g><rect x={600} y={470} width={160} height={150} rx={8} fill="#1b1b1b" /><rect x={590} y={430} width={180} height={50} rx={6} fill="#9aa5b1" />
+        <circle cx={680} cy={455} r={12} fill="#555" />
+        {[0, 1, 2].map((k) => <rect key={k} x={622 + k * 50} y={620} width={16} height={50} fill="#c0c0c0" />)}
+        <text x={680} y={555} textAnchor="middle" fill="#ddd" fontFamily={MONO} fontSize={30} fontWeight={800}>{brd ? "7805" : "R + Z"}</text>
+        <text x={680} y={720} textAnchor="middle" fill="#e8f5ec" fontFamily={SANS} fontSize={26} fontWeight={800}>{brd ? "SERIES REGULATOR" : "SHUNT REGULATOR"}</text></g>
+      <path d="M 760 545 L 1000 545" fill="none" stroke={L.green} strokeWidth={6} />
+      <text x={880} y={525} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={30} fontWeight={800}>{brd ? "5.0 V" : "5.1 V"}</text>
+      {/* main chip */}
+      <g><rect x={1000} y={440} width={300} height={210} rx={10} fill="#1b1b1b" />
+        {Array.from({ length: 8 }, (_, k) => <g key={k}><rect x={1015 + k * 36} y={420} width={14} height={20} fill="#c0c0c0" /><rect x={1015 + k * 36} y={650} width={14} height={20} fill="#c0c0c0" /></g>)}
+        <text x={1150} y={555} textAnchor="middle" fill="#ddd" fontFamily={MONO} fontSize={28} fontWeight={800}>{brd ? "MICRO" : "SENSOR ADC"}</text>
+        <text x={1150} y={720} textAnchor="middle" fill="#e8f5ec" fontFamily={SANS} fontSize={26} fontWeight={800}>needs a steady voltage</text></g>
+      {/* LED */}
+      <g><circle cx={1520} cy={545} r={40} fill={blink ? L.green : "#1d3b2a"} opacity={blink ? 1 : 0.6} />{blink && <circle cx={1520} cy={545} r={70} fill={L.green} opacity={0.2} />}
+        <text x={1520} y={640} textAnchor="middle" fill="#e8f5ec" fontFamily={SANS} fontSize={26} fontWeight={800}>works reliably</text></g>
+    </svg></AbsoluteFill>;
+  }
   if (app === "adc") {
     const noisy = (x: number, a: number, b: number) => a * Math.sin(x / 40 - t * 4) + b * Math.sin(x / 4 - t * 30);
     const wv = (x0: number, x1: number, y: number, a: number, b: number, col: string) => { const q: string[] = [];
@@ -1727,3 +1759,124 @@ export const LinVsSwScene: React.FC<any> = ({ dur, mode = "linear" }) => {
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.lvs = LinVsSwScene;
+
+// ------------------------------------------------------------------ Series (Zener + emitter follower) and shunt (Zener) regulators
+/** {"type":"zreg","kind":"series"|"shunt","mode":"build"|"vin"|"load"|"calc","vin":12,"rl":100}
+ *  series: R = 470 Ω feeds a 5.6 V Zener at the base; NPN (β = 100, VBE = 0.7) -> Vout = 4.9 V.
+ *  shunt:  R = 100 Ω in series, 5.1 V Zener across the load -> Vout = 5.1 V. */
+const ZR = { series: { R: 470, VZ: 5.6, VBE: 0.7, B: 100 }, shunt: { R: 100, VZ: 5.1 } };
+const zsolve = (kind: string, vin: number, rl: number) => {
+  if (kind === "series") { const s = ZR.series; const vo = Math.min(s.VZ, vin) - s.VBE; const il = rl > 0 ? vo / rl : 0; const ib = il / (s.B + 1);
+    const ir = (vin - s.VZ) / s.R; const iz = Math.max(0, ir - ib); return { vo, il, ir, iz, ib, pt: (vin - vo) * il, pz: s.VZ * iz }; }
+  const s = ZR.shunt; let ir = (vin - s.VZ) / s.R; let il = rl > 0 ? s.VZ / rl : 0; let vo = s.VZ;
+  if (il > ir) { vo = vin * rl / (s.R + rl); il = vo / rl; ir = il; }   // load too heavy: Zener switches off, plain divider
+  const iz = Math.max(0, ir - il);
+  return { vo, il, ir, iz, ib: 0, pt: 0, pz: s.VZ * iz, pr: ir * ir * s.R };
+};
+const mA = (a: number) => `${+(a * 1000).toFixed(a < 0.01 ? 2 : 1)} mA`;
+export const ZRegScene: React.FC<any> = ({ dur, kind = "series", mode = "build", vin = 12, rl = 100 }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const reveal = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const V = mode === "vin" ? (p < 0.5 ? 10 + 10 * p : 15 - 10 * (p - 0.5)) : vin;
+  const RLs = [1e9, 200, 100, 50];
+  const RLv = mode === "load" ? RLs[Math.min(3, Math.floor(p * 4))] : rl;
+  const s = zsolve(kind, V, RLv > 1e8 ? 0 : RLv);
+  const T = 260, B = 800, XS = 140;
+  const zener = (x: number, y1: number, y2: number, lab: string) => { const m = (y1 + y2) / 2; return <g>
+    <line x1={x} y1={y1} x2={x} y2={m - 25} stroke={L.wire} strokeWidth={6} /><line x1={x} y1={m + 25} x2={x} y2={y2} stroke={L.wire} strokeWidth={6} />
+    <polygon points={`${x - 28},${m + 25} ${x + 28},${m + 25} ${x},${m - 25}`} fill={L.bg0} stroke={L.amber} strokeWidth={5} />
+    <polyline points={`${x - 38},${m - 35} ${x - 28},${m - 25} ${x + 28},${m - 25} ${x + 38},${m - 15}`} fill="none" stroke={L.amber} strokeWidth={5} />
+    <text x={x + 46} y={m + 4} {...T1} fontSize={24}>{lab}</text></g>; };
+  const loadOn = RLv < 1e8;
+  let left: React.ReactNode;
+  if (kind === "series") {
+    const XQ = 560, XZ = 400, XL = 860;
+    left = <g>
+      <Battery x={XS} y={(T + B) / 2} v={V} />
+      <line x1={XS} y1={T} x2={XS} y2={(T + B) / 2 - 40} stroke={L.wire} strokeWidth={6} /><line x1={XS} y1={(T + B) / 2 + 40} x2={XS} y2={B} stroke={L.wire} strokeWidth={6} />
+      <line x1={XS} y1={B} x2={XL} y2={B} stroke={L.wire} strokeWidth={6} />
+      <g opacity={reveal(0.05)}><line x1={XS} y1={T} x2={XQ - 40} y2={T} stroke={L.wire} strokeWidth={6} />
+        <polyline points={`${XQ - 40},${T} ${XQ - 40},${T + 30}`} fill="none" stroke={L.wire} strokeWidth={6} />
+        <text x={XQ} y={T - 70} textAnchor="middle" {...T1} fontSize={24}>NPN (pass)</text></g>
+      <g opacity={reveal(0.05)}>
+        <circle cx={XQ} cy={T + 70} r={56} fill={L.bg0} stroke={L.amber} strokeWidth={6} />
+        <line x1={XQ - 18} y1={T + 40} x2={XQ - 18} y2={T + 100} stroke={L.amber} strokeWidth={8} />
+        <line x1={XQ - 18} y1={T + 55} x2={XQ - 40} y2={T + 30} stroke={L.amber} strokeWidth={6} />
+        <line x1={XQ - 18} y1={T + 85} x2={XQ + 30} y2={T + 115} stroke={L.amber} strokeWidth={6} />
+        <polyline points={`${XQ + 30},${T + 115} ${XQ + 30},${T + 140} ${XL},${T + 140}`} fill="none" stroke={L.wire} strokeWidth={6} />
+        <line x1={XQ - 60} y1={T + 70} x2={XQ - 18} y2={T + 70} stroke={L.amber} strokeWidth={6} /></g>
+      <g opacity={reveal(0.3)}><Res x={XZ - 150} y={T + 80} ohm={ZR.series.R} label="R" />
+        <line x1={XZ - 150} y1={T} x2={XZ - 150} y2={T + 10} stroke={L.wire} strokeWidth={6} />
+        <polyline points={`${XZ - 150},${T + 150} ${XZ - 150},${T + 190} ${XZ},${T + 190} ${XZ},${T + 70} ${XQ - 60},${T + 70}`} fill="none" stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.5)}>{zener(XZ, T + 190, B, `Zener ${ZR.series.VZ} V`)}</g>
+      <g opacity={reveal(0.7)}>
+        {loadOn ? <Res x={XL} y={(T + 140 + B) / 2} ohm={RLv} label="LOAD" /> : <text x={XL} y={(T + B) / 2 + 80} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>no load</text>}
+        <line x1={XL} y1={T + 140} x2={XL} y2={(T + 140 + B) / 2 - 70} stroke={L.wire} strokeWidth={6} /><line x1={XL} y1={(T + 140 + B) / 2 + 70} x2={XL} y2={B} stroke={L.wire} strokeWidth={6} />
+        <circle cx={XL} cy={T + 140} r={10} fill={L.green} />
+        <text x={XL} y={T + 100} textAnchor="middle" {...T1} fontSize={28} fill={L.green}>Vout {s.vo.toFixed(1)} V</text></g>
+      {mode !== "build" && loadOn && <Dots pts={[[XS, (T + B) / 2], [XS, T], [XQ - 40, T], [XQ - 40, T + 30], [XQ + 30, T + 115], [XQ + 30, T + 140], [XL, T + 140], [XL, B], [XS, B], [XS, (T + B) / 2]]} t={t} speed={40 + s.il * 1500} />}
+      {mode !== "build" && <Dots pts={[[XZ - 150, T], [XZ - 150, T + 190], [XZ, T + 190], [XZ, B]]} t={t} speed={40 + s.iz * 3000} color={L.amber} gap={50} r={5} />}
+      {mode !== "build" && <text x={XZ - 30} y={B + 50} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={24} fontWeight={700}>Iz = {mA(s.iz)}</text>}
+    </g>;
+  } else {
+    const XR = 360, XZ = 600, XL = 860;
+    left = <g>
+      <Battery x={XS} y={(T + B) / 2} v={V} />
+      <line x1={XS} y1={T} x2={XS} y2={(T + B) / 2 - 40} stroke={L.wire} strokeWidth={6} /><line x1={XS} y1={(T + B) / 2 + 40} x2={XS} y2={B} stroke={L.wire} strokeWidth={6} />
+      <line x1={XS} y1={B} x2={XL} y2={B} stroke={L.wire} strokeWidth={6} />
+      <g opacity={reveal(0.05)}><line x1={XS} y1={T} x2={XR - 70} y2={T} stroke={L.wire} strokeWidth={6} /><Res x={XR} y={T} ohm={ZR.shunt.R} label="Rs" horizontal heat={mode !== "build" ? s.pr! / 0.6 : 0} />
+        <line x1={XR + 70} y1={T} x2={XL} y2={T} stroke={L.wire} strokeWidth={6} /></g>
+      <g opacity={reveal(0.35)}>{zener(XZ, T, B, `Zener ${ZR.shunt.VZ} V`)}</g>
+      <g opacity={reveal(0.6)}>
+        {loadOn ? <Res x={XL} y={(T + B) / 2} ohm={RLv} label="LOAD" /> : <text x={XL} y={(T + B) / 2} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>no load</text>}
+        <line x1={XL} y1={T} x2={XL} y2={(T + B) / 2 - 70} stroke={L.wire} strokeWidth={6} /><line x1={XL} y1={(T + B) / 2 + 70} x2={XL} y2={B} stroke={L.wire} strokeWidth={6} />
+        <circle cx={XL} cy={T} r={10} fill={L.green} /><text x={XL} y={T - 40} textAnchor="middle" {...T1} fontSize={28} fill={L.green}>Vout {s.vo.toFixed(1)} V</text></g>
+      {mode !== "build" && <Dots pts={[[XS, (T + B) / 2], [XS, T], [XZ, T], [XZ, B], [XS, B], [XS, (T + B) / 2]]} t={t} speed={40 + s.ir * 1500} />}
+      {mode !== "build" && loadOn && <Dots pts={[[XZ, T], [XL, T], [XL, B], [XZ, B]]} t={t} speed={40 + s.il * 1500} color={L.green} />}
+      {mode !== "build" && <text x={XZ - 40} y={B + 50} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={24} fontWeight={700}>Iz = {mA(s.iz)}</text>}
+      {mode !== "build" && <text x={XR} y={T + 110} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={24} fontWeight={700}>I = {mA(s.ir)}</text>}
+    </g>;
+  }
+  // ---- right
+  const GX = 1040, GW = 780;
+  let right: React.ReactNode = null;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={GX} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text>
+    <text x={GX + GW} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  if (mode === "build") right = <g>
+    <text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={34}>{kind === "series" ? "SERIES REGULATOR" : "SHUNT REGULATOR"}</text>
+    {(kind === "series" ? ["Zener holds the BASE at 5.6 V", "transistor in SERIES with the load", "emitter = base − 0.7 V = 4.9 V", "transistor carries the load current"]
+      : ["Rs in series with the supply", "Zener in PARALLEL (shunt) with the load", "Zener holds Vout at 5.1 V", "extra current goes through the Zener"]).map((l, k) =>
+      <text key={k} x={GX} y={330 + k * 100} fill={L.text} fontFamily={SANS} fontSize={32} fontWeight={600} opacity={interpolate(p, [0.15 + k * 0.2, 0.25 + k * 0.2], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>• {l}</text>)}</g>;
+  else if (mode === "vin") { const pts: string[] = []; const n = 100;
+    const vx = (v: number) => GX + (v - 8) / 10 * GW, vy = (v: number) => 760 - v * 50;
+    for (let k = 0; k <= n; k++) { const vv = 8 + 10 * k / n; if (vv > Math.max(V, 10) + 0.01 && vv > 10) break; pts.push(`${vx(vv)},${vy(zsolve(kind, vv, RLv).vo)}`); }
+    right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={32}>INPUT CHANGES, OUTPUT DOESN'T</text>
+      <line x1={GX} y1={760} x2={GX + GW} y2={760} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={760} x2={GX} y2={260} stroke={L.dim} strokeWidth={3} />
+      {[10, 12, 14, 16, 18].map((v) => <text key={v} x={vx(v)} y={800} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{v} V</text>)}
+      <text x={GX + GW / 2} y={850} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>input voltage</text>
+      {[0, 5, 10].map((v) => <text key={v} x={GX - 12} y={vy(v) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{v} V</text>)}
+      <polyline points={pts.join(" ")} fill="none" stroke={L.green} strokeWidth={7} />
+      <circle cx={vx(V)} cy={vy(s.vo)} r={12} fill={L.green} />
+      <text x={GX + GW / 2} y={930} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={30} fontWeight={700}>Vin = {V.toFixed(1)} V → Vout = {s.vo.toFixed(1)} V   Iz = {mA(s.iz)}</text></g>; }
+  else if (mode === "load") right = <g>
+    <text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>CHANGING THE LOAD</text>
+    {row(320, "load", loadOn ? `${RLv} Ω` : "none", L.text)}
+    {row(410, "load current", mA(s.il), L.green)}
+    {row(500, "Zener current", mA(s.iz), L.amber)}
+    {kind === "series" ? row(590, "base current", mA(s.ib), L.cyan) : row(590, "current through Rs", mA(s.ir), L.cyan)}
+    {row(680, "Vout", `${s.vo.toFixed(1)} V`, L.green)}
+    {row(770, kind === "series" ? "transistor heat" : "Zener heat", `${(kind === "series" ? s.pt : s.pz).toFixed(2)} W`, L.red)}
+    {kind === "shunt" && s.vo < 5 && <text x={GX + GW / 2} y={880} textAnchor="middle" fill={L.red} fontFamily={SANS} fontSize={30} fontWeight={800}>Zener OFF: load too heavy, Vout falls!</text>}</g>;
+  else if (mode === "calc") { const lines = kind === "series"
+      ? ["Vout = VZ − VBE = 5.6 − 0.7 = 4.9 V", "IL = 4.9 ÷ 100 = 49 mA", "IB = IL ÷ (β + 1) = 49 ÷ 101 = 0.49 mA", "IR = (12 − 5.6) ÷ 470 = 13.6 mA", "IZ = 13.6 − 0.49 = 13.1 mA", "P(transistor) = (12 − 4.9) × 0.049 = 0.35 W"]
+      : ["I = (Vin − VZ) ÷ Rs = (12 − 5.1) ÷ 100 = 69 mA", "IL = 5.1 ÷ 100 = 51 mA", "IZ = I − IL = 69 − 51 = 18 mA", "no load: IZ = 69 mA", "PZ = 5.1 × 0.069 = 0.35 W", "PRs = 0.069² × 100 = 0.48 W"];
+    right = <g>{lines.map((l, k) => <text key={k} x={GX + 10} y={240 + k * 105} fill={k === lines.length - 1 ? L.red : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
+      opacity={interpolate(p, [k * 0.14, k * 0.14 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>; }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(40,150)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<><g transform="translate(70,0)">{left}</g>{right}</>);
+};
+ANALOG_SCENES.zreg = ZRegScene;

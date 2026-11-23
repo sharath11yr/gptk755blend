@@ -1,0 +1,119 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Series Voltage Regulator Explained | Zener + Transistor, Every Value Calculated | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Series Voltage Regulator Explained | Zener + Transistor, Every Value Calculated | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The transistor series voltage regulator step by step: a 5.6 V Zener holds the base, the NPN emitter follows at 4.9 V, input changing from 10 to 15 V, load changing from none to 50 ohms, base, Zener and load currents and transistor heat all calculated, and the 7805 regulator on a microcontroller board.",
+  "tags": [
+   "series voltage regulator",
+   "zener diode",
+   "transistor regulator",
+   "emitter follower",
+   "7805",
+   "linear regulator",
+   "analog electronics",
+   "power supply"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Series Voltage Regulator",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "SERIES VOLTAGE REGULATOR",
+   "subtitle": "A Zener diode and one transistor hold the output steady",
+   "narration": "Welcome back. Last time we saw that a linear regulator uses a pass transistor to drop the extra voltage. Today we build one ourselves, the series voltage regulator. It uses just a resistor, a Zener diode and one N P N transistor. We'll change the input, change the load, and calculate every current, so you see exactly why the output stays steady."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "On the left, a twelve volt supply. First, the N P N transistor, placed in series between the supply and the output. Its collector goes to the supply. Next, a resistor R, four hundred and seventy ohms, from the supply down to the transistor's base. Then a Zener diode, five point six volts, from the base to ground. The Zener holds the base at exactly five point six volts. Finally the load, connected to the emitter. The emitter is always about zero point seven volts below the base, so the output is five point six minus zero point seven, four point nine volts. That's why it's called series: the transistor sits in series with the load, and all the load current passes through it."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "vin",
+   "rl": 100,
+   "chapter": "Changing the input",
+   "narration": "Now let's change the input. We sweep it from ten volts up to fifteen and back. Watch the graph. The output stays at four point nine volts the whole time. Why? The Zener keeps the base at five point six volts no matter what the input does. The extra input voltage simply drops across the transistor and the resistor. Look at the Zener current: at ten volts it's about nine milliamps, and at fifteen volts about nineteen and a half. The Zener soaks up the change, so the output doesn't have to."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "load",
+   "chapter": "Changing the load",
+   "narration": "Now change the load. With no load, there's no output current, and all thirteen point six milliamps through R go into the Zener. Connect two hundred ohms: the load takes twenty four point five milliamps. One hundred ohms: forty nine milliamps. Fifty ohms: ninety eight milliamps. And the output is still four point nine volts. Here's the clever part: the transistor multiplies current by its gain, beta, a hundred. So for ninety eight milliamps of load, the base needs less than one milliamp. The Zener current barely changes, from thirteen point six down to twelve point six milliamps. But the transistor's heat grows to zero point seven watts."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "calc",
+   "chapter": "Every value calculated",
+   "narration": "Let's calculate everything at twelve volts in, with a one hundred ohm load. Output: V Z minus V B E, five point six minus zero point seven, four point nine volts. Load current: four point nine over one hundred, forty nine milliamps. Base current: load current over beta plus one, forty nine over one hundred and one, zero point four nine milliamps. Current through R: twelve minus five point six, over four hundred and seventy, thirteen point six milliamps. Zener current: thirteen point six minus zero point four nine, thirteen point one milliamps. And the transistor heat: twelve minus four point nine, times zero point zero four nine, zero point three five watts."
+  },
+  {
+   "type": "app",
+   "app": "board",
+   "chapter": "Real world: microcontroller boards",
+   "narration": "You'll find this idea on almost every microcontroller board. A nine volt battery starts at nine volts and drops to about seven as it runs down. The micro chip needs a steady five volts. So the board uses a regulator chip like the seventy eight oh five. Inside it is a refined series regulator: a reference voltage, like our Zener, and a pass transistor in series with the load. Whatever the battery does, the chip gets five volts and works reliably."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "load",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the zero point seven volt drop. The output is not the Zener voltage, it's the Zener voltage minus V B E. Two: thinking the Zener carries the load current. It doesn't. The transistor does. The Zener only feeds the tiny base current, which is why a small Zener can control a big load. Three: ignoring the transistor's heat. It's the input minus the output, times the load current. At fifty ohms, that's zero point seven watts, so it may need a heat sink."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: SHUNT VOLTAGE REGULATOR",
+   "lines": [
+    "Zener holds the base: Vout = VZ − 0.7 V",
+    "Transistor in series carries the load current",
+    "Heat = (Vin − Vout) × IL"
+   ],
+   "cta": "Shunt regulator is next",
+   "narration": "Quick recap. In a series regulator, a Zener holds the transistor's base steady, so the output is V Z minus zero point seven volts. The transistor, in series with the load, carries the load current, and the Zener only feeds its tiny base current. The heat is V in minus V out, times the load current. Next, the shunt regulator, where the regulating part sits in parallel with the load instead. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "vin",
+   "rl": 100,
+   "chapter": "",
+   "narration": "How do you get a rock-steady voltage from a supply that keeps changing? Watch. The input swings from ten to fifteen volts, and the output stays at four point nine volts the whole time."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "build",
+   "chapter": "",
+   "narration": "The trick is just three parts. A Zener diode holds the transistor's base at five point six volts. The emitter always sits zero point seven volts lower. So the output is five point six minus zero point seven, four point nine volts, no matter what the input does."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "load",
+   "chapter": "",
+   "narration": "And the load can change too. From no load to ninety eight milliamps, the output stays at four point nine volts, because the transistor carries the load current, and the Zener only needs to feed its tiny base current. That's the series regulator. Full lesson on the channel."
+  }
+ ]
+}
