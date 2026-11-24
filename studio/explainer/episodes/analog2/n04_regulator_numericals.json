@@ -1,0 +1,124 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Voltage Regulator Numericals | Series, Shunt, Buck & Boost - Solved | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Voltage Regulator Numericals | Series, Shunt, Buck & Boost - Solved | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Regulator problems solved step by step with the circuit on screen: a series regulator at 15 V input (Zener current and transistor power), a shunt regulator's Zener power and minimum load, a buck converter's duty cycle and ripple for 5 V, and a boost converter from 12 V to 20 V with its input current.",
+  "tags": [
+   "voltage regulator numericals",
+   "zener regulator problems",
+   "series regulator",
+   "shunt regulator",
+   "buck converter numerical",
+   "boost converter numerical",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Regulator Numericals",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "REGULATOR NUMERICALS",
+   "subtitle": "The final set: series, shunt, buck and boost",
+   "narration": "Welcome back to the final video of the Analog Electronics playlist. Regulator numericals: two linear regulators and two switching converters, each solved step by step with the circuit beside the working. Let's finish strong."
+  },
+  {
+   "type": "zreg",
+   "mode": "calc",
+   "chapter": "Problem 1: series regulator at 15 V",
+   "narration": "Problem one. Our series regulator, Zener five point six volts, R four seventy ohms, beta one hundred, load one hundred ohms. But the input rises to fifteen volts. The output is still V Z minus V B E, four point nine volts, and the load current forty nine milliamps. Base current, zero point four nine milliamps. Current through R: fifteen minus five point six, over four seventy, twenty milliamps. Zener current: twenty minus zero point four nine, nineteen point five milliamps. Transistor power: fifteen minus four point nine, times forty nine milliamps, zero point four nine five watts.",
+   "kind": "series",
+   "lines": [
+    "Vout = 5.6 − 0.7 = 4.9 V, IL = 49 mA",
+    "IB = 49 ÷ 101 = 0.49 mA",
+    "IR = (15 − 5.6) ÷ 470 = 20 mA",
+    "IZ = 20 − 0.49 = 19.5 mA",
+    "P(Q) = (15 − 4.9) × 0.049 = 0.495 W"
+   ],
+   "vin": 15
+  },
+  {
+   "type": "zreg",
+   "mode": "calc",
+   "chapter": "Problem 2: shunt regulator power",
+   "narration": "Problem two. The shunt regulator: R s one hundred ohms, Zener five point one volts, input fifteen volts, load one hundred ohms. Current through R s: fifteen minus five point one, over one hundred, ninety nine milliamps. Load current fifty one, so the Zener takes forty eight milliamps, zero point two four five watts. But with the load removed, the Zener takes all ninety nine milliamps: five point one times zero point zero nine nine, zero point five zero five watts. So a half watt Zener is not enough. Use one watt.",
+   "kind": "shunt",
+   "lines": [
+    "I = (15 − 5.1) ÷ 100 = 99 mA",
+    "IL = 51 mA → IZ = 48 mA, PZ = 0.245 W",
+    "no load: IZ = 99 mA",
+    "PZ = 5.1 × 0.099 = 0.505 W → use 1 W"
+   ],
+   "vin": 15
+  },
+  {
+   "type": "zreg",
+   "mode": "calc",
+   "chapter": "Problem 3: minimum load",
+   "narration": "Problem three. Same shunt regulator at twelve volts. What's the smallest load resistance it can regulate? The current through R s is sixty nine milliamps. The load can take all of it, leaving zero for the Zener, but no more. So the minimum load is five point one over sixty nine milliamps, seventy three point nine ohms. Any smaller, like our fifty ohms, and the Zener switches off.",
+   "kind": "shunt",
+   "mode_note": "",
+   "lines": [
+    "I(Rs) = (12 − 5.1) ÷ 100 = 69 mA",
+    "IL(max) = 69 mA (IZ → 0)",
+    "RL(min) = 5.1 ÷ 0.069 = 73.9 Ω",
+    "50 Ω < 73.9 Ω → regulation lost"
+   ]
+  },
+  {
+   "type": "conv",
+   "mode": "calc",
+   "chapter": "Problem 4: buck for 5 V",
+   "narration": "Problem four. A buck converter from twelve volts must give five volts to a ten ohm load, with L one hundred microhenries at fifty kilohertz. Duty cycle: five over twelve, zero point four one seven. Output current, zero point five amps. Ripple: twelve minus five, times zero point four one seven, over fifty k times one hundred micro: zero point five eight three amps. The inductor current swings from zero point two one to zero point seven nine amps. Input current: power out over twelve volts, two point five over twelve, zero point two one amps.",
+   "kind": "buck",
+   "d": 0.417,
+   "lines": [
+    "D = 5 ÷ 12 = 0.417",
+    "Iout = 5 ÷ 10 = 0.5 A",
+    "ΔIL = (12 − 5) × 0.417 ÷ (50k × 100µ) = 0.583 A",
+    "IL: 0.21 A → 0.79 A",
+    "Iin = 2.5 W ÷ 12 V = 0.21 A"
+   ]
+  },
+  {
+   "type": "conv",
+   "mode": "calc",
+   "chapter": "Problem 5: boost 12 V to 20 V",
+   "narration": "Problem five. A boost converter from twelve to twenty volts, ten ohm load. Duty cycle: one minus V in over V out, one minus twelve over twenty, zero point four. Output current, two amps. Output power, forty watts. Input current, and average inductor current: forty over twelve, three point three three amps. Ripple: twelve times zero point four over fifty k times one hundred micro, zero point nine six amps.",
+   "kind": "boost",
+   "d": 0.4,
+   "lines": [
+    "D = 1 − 12 ÷ 20 = 0.4",
+    "Iout = 20 ÷ 10 = 2 A, Pout = 40 W",
+    "Iin = IL(avg) = 40 ÷ 12 = 3.33 A",
+    "ΔIL = 12 × 0.4 ÷ (50k × 100µ) = 0.96 A"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "PLAYLIST COMPLETE",
+   "lines": [
+    "Filters · Regulators · Diodes",
+    "BJT · FET · Power amps · 555",
+    "Numericals for every section"
+   ],
+   "cta": "Op-amps playlist coming next",
+   "narration": "And that completes the Analog Electronics playlist. Filters, regulators, diodes, B J Ts, F E Ts, power amplifiers, the five five five timer, and numericals for every section, each with its own circuit and every value calculated. If this series helped you, share it with a friend who's studying electronics. Next, we start a brand new playlist on op amps and differential amplifiers. See you there."
+  }
+ ]
+}

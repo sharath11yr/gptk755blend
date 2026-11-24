@@ -1,0 +1,171 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Clipper & Clamper Numericals | Biased Clippers, Clamping Levels - Solved | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Clipper & Clamper Numericals | Biased Clippers, Clamping Levels - Solved | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Clipper and clamper problems solved step by step with the circuit and the input and output waveforms: a biased shunt clipper limiting at VB + 0.7 = 3.7 V, the maximum diode current, an unbiased clipper at 0.7 V, a positive clamper shifting a 10 V peak signal to -0.7 V to 19.3 V, and a biased clamper with a 2 V battery.",
+  "tags": [
+   "clipper circuit",
+   "clamper circuit",
+   "clipper numericals",
+   "clamper numericals",
+   "diode waveform",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Clipper & Clamper Numericals",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "CLIPPER & CLAMPER NUMERICALS",
+   "subtitle": "Predict the output waveform, every time",
+   "narration": "Welcome back. Clippers cut off part of a waveform. Clampers shift the whole waveform up or down. In these problems you must predict the output waveform and its exact levels. We'll solve four of them, with the waveforms drawn live."
+  },
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "Problem 1: biased clipper",
+   "narration": "Problem one. A ten volt peak sine wave feeds a one kilohm resistor. Across the output: a diode in series with a three volt battery, pointing down to ground. When is the diode on? When the output tries to rise above the battery plus zero point seven, three point seven volts. Above that, the diode conducts and holds the output at three point seven. Below it, the diode is off and the output follows the input. So the top is flattened at three point seven volts, and the bottom goes all the way to minus ten.",
+   "kind": "clip",
+   "vp": 10,
+   "vb": 3,
+   "r": 1000
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 1: the numbers",
+   "narration": "The numbers. Clipping level: V B plus zero point seven, three plus zero point seven, three point seven volts. Output range: minus ten volts to plus three point seven. The largest diode current flows at the input peak: ten minus three point seven, over one k, six point three milliamps. That's what the diode and battery must handle.",
+   "kind": "clip",
+   "vp": 10,
+   "vb": 3,
+   "r": 1000,
+   "label": "PROBLEM 1",
+   "lines": [
+    "clip level = VB + 0.7 = 3 + 0.7 = 3.7 V",
+    "output: −10 V to +3.7 V",
+    "I(max) = (10 − 3.7) ÷ 1k = 6.3 mA"
+   ]
+  },
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "Problem 2: unbiased clipper",
+   "narration": "Problem two. Remove the battery. Now the diode turns on as soon as the output passes zero point seven volts. The top of the wave is clipped at zero point seven, the bottom still reaches minus ten. This is a simple way to protect an input from positive voltages.",
+   "kind": "clip",
+   "vp": 10,
+   "vb": 0,
+   "r": 1000
+  },
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "Problem 3: positive clamper",
+   "narration": "Problem three. A clamper: a capacitor in series, and a diode from the output to ground, pointing up. On the first negative peak, the diode conducts and charges the capacitor to ten minus zero point seven, nine point three volts. After that, the capacitor acts like a nine point three volt battery in series with the input, shifting the whole wave up. The output swings from minus zero point seven to plus nineteen point three volts. Same shape, same twenty volts peak to peak, just lifted.",
+   "kind": "clamp",
+   "vp": 10,
+   "vb": 0
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 3: the numbers",
+   "narration": "The numbers. Capacitor voltage: V p minus zero point seven, nine point three volts. Output equals input plus nine point three. At the input's negative peak, minus ten plus nine point three, minus zero point seven. At the positive peak, ten plus nine point three, nineteen point three volts. The peak to peak stays twenty volts. For this to hold, R C must be much longer than the signal period, so the capacitor barely discharges.",
+   "kind": "clamp",
+   "vp": 10,
+   "vb": 0,
+   "label": "PROBLEM 3",
+   "lines": [
+    "VC = Vp − 0.7 = 9.3 V",
+    "vout = vin + 9.3 V",
+    "min = −10 + 9.3 = −0.7 V",
+    "max = +10 + 9.3 = +19.3 V",
+    "p-p unchanged: 20 V"
+   ]
+  },
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "Problem 4: biased clamper",
+   "narration": "Problem four. Add a two volt battery in series with the diode. Now the diode conducts when the output tries to fall below the battery voltage minus zero point seven, one point three volts. So the bottom of the wave is clamped at one point three volts instead of minus zero point seven, and the whole wave moves up with it, to a maximum of twenty one point three. The battery sets the clamping level.",
+   "kind": "clamp",
+   "vp": 10,
+   "vb": 2
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 4: the numbers",
+   "narration": "The numbers. The output minimum is V B minus zero point seven, two minus zero point seven, one point three volts. The capacitor charges to V p plus that, eleven point three volts. The maximum is ten plus eleven point three, twenty one point three volts. Peak to peak, still twenty.",
+   "kind": "clamp",
+   "vp": 10,
+   "vb": 2,
+   "label": "PROBLEM 4",
+   "lines": [
+    "min level = VB − 0.7 = 1.3 V",
+    "VC = 10 + 1.3 = 11.3 V",
+    "max = 10 + 11.3 = 21.3 V",
+    "p-p unchanged: 20 V"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: REGULATOR NUMERICALS",
+   "lines": [
+    "Clipper: flat at VB + 0.7",
+    "Clamper: shifts by Vp − 0.7 (± VB)",
+    "Clamper keeps peak-to-peak the same"
+   ],
+   "cta": "Regulator numericals are next",
+   "narration": "Quick recap. A clipper flattens the waveform where the diode turns on, at V B plus zero point seven. A clamper charges its capacitor on one peak and shifts the whole wave by about V p minus zero point seven, plus any bias battery, keeping the peak to peak the same. Next, the last video: regulator numericals. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "",
+   "narration": "A diode and a three volt battery. What does the output look like? Above three point seven volts, the diode turns on and flattens the wave. Below, the output just follows.",
+   "kind": "clip",
+   "vp": 10,
+   "vb": 3
+  },
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "",
+   "narration": "Now a capacitor and a diode: a clamper. The capacitor charges to nine point three volts and lifts the whole wave. Minus zero point seven to plus nineteen point three.",
+   "kind": "clamp",
+   "vp": 10,
+   "vb": 0
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "Same shape, same twenty volts peak to peak, just shifted. Clippers cut, clampers shift. Full problems on the channel.",
+   "kind": "clamp",
+   "vp": 10,
+   "vb": 0,
+   "lines": [
+    "clipper: flat at VB + 0.7",
+    "clamper: vout = vin + (Vp − 0.7)"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,185 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Diode Numericals | Series Circuit, Half-Wave & Bridge Rectifier, Ripple - Solved | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Diode Numericals | Series Circuit, Half-Wave & Bridge Rectifier, Ripple - Solved | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Five diode problems solved step by step with the circuit on screen: current in a series diode circuit, the half-wave rectifier's peak, DC output and PIV, the bridge rectifier's DC output and RMS, the ripple voltage with a filter capacitor, and choosing the capacitor for a given ripple.",
+  "tags": [
+   "diode numericals",
+   "rectifier problems",
+   "half wave rectifier",
+   "bridge rectifier",
+   "ripple voltage",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Diode Numericals",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "DIODE NUMERICALS",
+   "subtitle": "Five problems, solved step by step",
+   "narration": "Welcome back. We close the playlist with numericals, starting with diodes. Five problems, each solved one step at a time, with the circuit beside the working. Use the practical model: a silicon diode drops zero point seven volts when it conducts. Pause before each answer and try it yourself."
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 1: series circuit",
+   "narration": "Problem one. A twelve volt battery, a one kilohm resistor and a silicon diode in series, forward biased. Find the current. The diode takes zero point seven volts. So the resistor has twelve minus zero point seven, eleven point three volts. Current: eleven point three over one k, eleven point three milliamps. Power in the diode: zero point seven times eleven point three milliamps, seven point nine milliwatts.",
+   "kind": "series",
+   "v": 12,
+   "r": 1000,
+   "label": "PROBLEM 1",
+   "lines": [
+    "VD = 0.7 V (silicon, forward)",
+    "VR = 12 − 0.7 = 11.3 V",
+    "I = 11.3 V ÷ 1 kΩ = 11.3 mA",
+    "PD = 0.7 × 11.3 mA = 7.9 mW"
+   ]
+  },
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "Problem 2: half-wave rectifier",
+   "narration": "Problem two. A half wave rectifier, ten volts peak A C, into a one kilohm load. On the positive half, the diode conducts and the load sees the input minus zero point seven. On the negative half, the diode blocks, and the output is zero. Watch the output: only the top halves, peaking at nine point three volts.",
+   "kind": "hwr",
+   "vp": 10,
+   "r": 1000
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 2: the numbers",
+   "narration": "The numbers. Peak output: ten minus zero point seven, nine point three volts. The D C, or average, value of a half wave output is the peak over pi: nine point three over three point one four, two point nine six volts. D C current: two point nine six milliamps. And the peak inverse voltage across the diode, on the negative peak: the full ten volts. Choose a diode rated above that.",
+   "kind": "hwr",
+   "vp": 10,
+   "r": 1000,
+   "label": "PROBLEM 2",
+   "lines": [
+    "Vp(out) = 10 − 0.7 = 9.3 V",
+    "Vdc = Vp ÷ π = 9.3 ÷ 3.14 = 2.96 V",
+    "Idc = 2.96 V ÷ 1 kΩ = 2.96 mA",
+    "PIV = Vp(in) = 10 V"
+   ]
+  },
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "Problem 3: bridge rectifier",
+   "narration": "Problem three. A bridge rectifier, ten volts peak. Now both halves are used. On each half cycle, two diodes conduct, so we lose two times zero point seven, one point four volts. The output peaks at eight point six volts, and every half is flipped positive.",
+   "kind": "bridge",
+   "vp": 10,
+   "r": 1000
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 3: the numbers",
+   "narration": "The numbers. Peak output: ten minus one point four, eight point six volts. D C value for full wave: two times the peak over pi, two times eight point six over pi, five point four seven volts. Nearly double the half wave's. The R M S value: eight point six over root two, six point zero eight volts. And the ripple frequency is twice the mains: one hundred hertz on fifty hertz mains.",
+   "kind": "bridge",
+   "vp": 10,
+   "r": 1000,
+   "label": "PROBLEM 3",
+   "lines": [
+    "Vp(out) = 10 − 2 × 0.7 = 8.6 V",
+    "Vdc = 2Vp ÷ π = 17.2 ÷ π = 5.47 V",
+    "Vrms = 8.6 ÷ √2 = 6.08 V",
+    "ripple frequency = 2 × 50 = 100 Hz"
+   ]
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 4: ripple with a capacitor",
+   "narration": "Problem four. Add a four hundred and seventy microfarad capacitor across the load. The capacitor charges to the peak and discharges slowly between peaks. The ripple voltage is about the D C current over f times C, with f the ripple frequency. The current is about five point four seven milliamps, so the ripple is five point four seven milliamps over one hundred times four seventy micro: zero point one one six volts. Small.",
+   "kind": "bridge",
+   "vp": 10,
+   "r": 1000,
+   "label": "PROBLEM 4",
+   "lines": [
+    "C = 470 µF, f(ripple) = 100 Hz",
+    "Idc ≈ 5.47 mA",
+    "Vr ≈ Idc ÷ (f C)",
+    "   = 5.47m ÷ (100 × 470µ) = 0.116 V",
+    "small ripple → smooth DC"
+   ]
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "Problem 5: choose the capacitor",
+   "narration": "Problem five, a design. A bridge rectifier supplies one hundred milliamps, and we want at most one volt of ripple. Find C. Rearrange: C equals I over f times V r, zero point one over one hundred times one, one thousand microfarads. Choose one thousand microfarads or more, rated above the peak voltage.",
+   "kind": "bridge",
+   "vp": 10,
+   "r": 1000,
+   "label": "PROBLEM 5",
+   "lines": [
+    "want Vr ≤ 1 V at I = 100 mA",
+    "C = I ÷ (f × Vr)",
+    "  = 0.1 ÷ (100 × 1) = 1000 µF",
+    "use ≥ 1000 µF, rated > Vp"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: FILTER NUMERICALS",
+   "lines": [
+    "Silicon: subtract 0.7 V per conducting diode",
+    "Half-wave Vdc = Vp ÷ π, bridge Vdc = 2Vp ÷ π",
+    "Ripple Vr ≈ I ÷ (f C)"
+   ],
+   "cta": "Filter numericals are next",
+   "narration": "Quick recap. Subtract zero point seven volts for each conducting diode. Half wave gives V p over pi, full wave two V p over pi, with ripple at twice the mains frequency for full wave. With a smoothing capacitor, the ripple is about I over f C. Next, filter numericals. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "dckt",
+   "mode": "wave",
+   "chapter": "",
+   "narration": "Ten volts peak into a bridge rectifier. How much D C comes out? Two diodes conduct each half cycle, so the peak is ten minus one point four, eight point six volts.",
+   "kind": "bridge",
+   "vp": 10
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "D C value: two times the peak over pi, five point four seven volts. Add a four seventy microfarad capacitor, and the ripple is only about zero point one two volts.",
+   "kind": "bridge",
+   "vp": 10,
+   "lines": [
+    "Vp = 10 − 1.4 = 8.6 V",
+    "Vdc = 2 × 8.6 ÷ π = 5.47 V",
+    "Vr ≈ 5.47m ÷ (100 × 470µ) = 0.12 V"
+   ]
+  },
+  {
+   "type": "dckt",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "Five problems like this, solved step by step, in the full video on the channel.",
+   "kind": "bridge",
+   "vp": 10,
+   "lines": [
+    "Vdc = 2Vp ÷ π",
+    "Vr ≈ I ÷ (f C)"
+   ]
+  }
+ ]
+}

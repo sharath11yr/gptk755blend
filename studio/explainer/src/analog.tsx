@@ -1902,7 +1902,7 @@ const zsolve = (kind: string, vin: number, rl: number) => {
   return { vo, il, ir, iz, ib: 0, pt: 0, pz: s.VZ * iz, pr: ir * ir * s.R };
 };
 const mA = (a: number) => `${+(a * 1000).toFixed(a < 0.01 ? 2 : 1)} mA`;
-export const ZRegScene: React.FC<any> = ({ dur, kind = "series", mode = "build", vin = 12, rl = 100 }) => {
+export const ZRegScene: React.FC<any> = ({ dur, kind = "series", mode = "build", vin = 12, rl = 100, lines: ovr }) => {
   const fr = useCurrentFrame(); const t = fr / 30;
   const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const { width: VW, height: VH } = useVideoConfig();
@@ -2001,7 +2001,8 @@ export const ZRegScene: React.FC<any> = ({ dur, kind = "series", mode = "build",
   else if (mode === "calc") { const lines = kind === "series"
       ? ["Vout = VZ − VBE = 5.6 − 0.7 = 4.9 V", "IL = 4.9 ÷ 100 = 49 mA", "IB = IL ÷ (β + 1) = 49 ÷ 101 = 0.49 mA", "IR = (12 − 5.6) ÷ 470 = 13.6 mA", "IZ = 13.6 − 0.49 = 13.1 mA", "P(transistor) = (12 − 4.9) × 0.049 = 0.35 W"]
       : ["I = (12 − 5.1) ÷ 100 = 69 mA", "IL = 5.1 ÷ 100 = 51 mA", "IZ = I − IL = 69 − 51 = 18 mA", "no load: IZ = 69 mA", "PZ = 5.1 × 0.069 = 0.35 W", "PRs = 0.069² × 100 = 0.48 W"];
-    right = <g>{lines.map((l, k) => <text key={k} x={GX + 40} y={240 + k * 105} fill={k === lines.length - 1 ? L.red : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
+    const lines2: string[] = ovr && ovr.length ? ovr : lines
+    right = <g>{lines2.map((l, k) => <text key={k} x={GX + 40} y={240 + k * 105} fill={k === lines2.length - 1 ? L.red : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
       opacity={interpolate(p, [k * 0.14, k * 0.14 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>; }
   const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
   if (VH > VW) return svg(<><g transform="translate(40,150)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
@@ -2017,7 +2018,7 @@ const CV = { VIN: 12, L: 100e-6, F: 50e3, C: 100e-6, R: 10 };
 const convVo = (k: string, d: number) => k === "buck" ? d * CV.VIN : k === "boost" ? CV.VIN / (1 - d) : CV.VIN * d / (1 - d);
 const convIL = (k: string, d: number) => { const vo = convVo(k, d), io = vo / CV.R; return k === "buck" ? io : io / (1 - d); };   // average inductor current
 const convDI = (k: string, d: number) => { const vl = k === "buck" ? CV.VIN - convVo(k, d) : CV.VIN; return vl * d / (CV.F * CV.L); }; // ripple, ON phase
-export const ConvScene: React.FC<any> = ({ dur, kind = "buck", mode = "run", d: d0 = 0.5 }) => {
+export const ConvScene: React.FC<any> = ({ dur, kind = "buck", mode = "run", d: d0 = 0.5, lines: ovr }) => {
   const fr = useCurrentFrame(); const t = fr / 30;
   const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const { width: VW, height: VH } = useVideoConfig();
@@ -2097,7 +2098,8 @@ export const ConvScene: React.FC<any> = ({ dur, kind = "buck", mode = "run", d: 
     const lines = kind === "buck" ? ["Vout = D × Vin = 0.5 × 12 = 6 V", "Iout = 6 ÷ 10 = 0.6 A  (= average IL)", "ΔIL = (Vin − Vout) × D ÷ (f × L)", "    = (12 − 6) × 0.5 ÷ (50k × 100µ) = 0.6 A", "IL swings 0.3 A → 0.9 A", "D for 5 V = 5 ÷ 12 = 0.417"]
       : kind === "boost" ? ["Vout = Vin ÷ (1 − D) = 12 ÷ 0.5 = 24 V", "Iout = 24 ÷ 10 = 2.4 A", "IL(avg) = Iout ÷ (1 − D) = 4.8 A", "ΔIL = Vin × D ÷ (f × L) = 12 × 0.5 ÷ 5 = 1.2 A", "Pin = 12 × 4.8 = 57.6 W = Pout = 24 × 2.4", "D for 18 V = 1 − 12 ÷ 18 = 0.333"]
       : ["|Vout| = Vin × D ÷ (1 − D)", "D = 0.5 → |Vout| = 12 V (inverted)", "D = 0.25 → 12 × 0.25 ÷ 0.75 = 4 V", "D = 0.75 → 12 × 0.75 ÷ 0.25 = 36 V", "D < 0.5: step DOWN, D > 0.5: step UP", "output is NEGATIVE: −12 V at D = 0.5"];
-    right = <g>{lines.map((l, k) => <text key={k} x={GX + 30} y={230 + k * 110} fill={k === 4 ? L.green : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
+    const lines2 = ovr && ovr.length ? ovr : lines
+    right = <g>{lines2.map((l, k) => <text key={k} x={GX + 30} y={230 + k * 110} fill={k === 4 ? L.green : L.text} fontFamily={MONO} fontSize={29} fontWeight={700}
       opacity={interpolate(p, [k * 0.14, k * 0.14 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
   }
   const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
@@ -2946,3 +2948,87 @@ export const T555Scene: React.FC<any> = ({ dur, mode = "astable", lines = [], ba
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.t555 = T555Scene;
+
+// ------------------------------------------------------------------ Numericals: diode circuits, clippers, clampers, RC filters
+/** {"type":"dckt","kind":"series"|"hwr"|"bridge"|"clip"|"clamp","mode":"calc"|"wave","v":12,"r":1000,"vp":10,"vb":3,"lines":[...]} */
+export const DcktScene: React.FC<any> = ({ dur, kind = "series", mode = "calc", v = 12, r = 1000, vp = 10, vb = 0, lines = [], label = "" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const D = (x: number, y: number, rot: number, on = false) => <g transform={`translate(${x},${y}) rotate(${rot})`}><rect x={-28} y={-28} width={56} height={56} fill={L.bg0} />
+    <polygon points="-20,-22 -20,22 18,0" fill={on ? "rgba(46,196,160,0.35)" : L.bg0} stroke={on ? L.green : L.amber} strokeWidth={5} /><line x1={18} y1={-22} x2={18} y2={22} stroke={on ? L.green : L.amber} strokeWidth={5} /></g>;
+  const ac = (x: number, y: number) => <g><circle cx={x} cy={y} r={46} fill={L.bg0} stroke={L.cyan} strokeWidth={5} /><path d={`M ${x - 26} ${y} q 13 -24 26 0 t 26 0`} fill="none" stroke={L.cyan} strokeWidth={4} />
+    <text x={x} y={y + 80} textAnchor="middle" {...T1} fontSize={24} fill={L.cyan}>{vp} V peak</text></g>;
+  const bat = (x: number, y: number, val: number) => <g><rect x={x - 40} y={y - 26} width={80} height={52} fill={L.bg0} /><line x1={x - 34} y1={y - 10} x2={x + 34} y2={y - 10} stroke={L.text} strokeWidth={6} /><line x1={x - 18} y1={y + 10} x2={x + 18} y2={y + 10} stroke={L.text} strokeWidth={11} />
+    <text x={x + 50} y={y + 8} {...T1} fontSize={24}>{val} V</text></g>;
+  const s = Math.sin(t * 3);
+  const T = 300, B = 780;
+  let left: React.ReactNode;
+  if (kind === "series") left = <g>{bat(200, 540, v)}{W(`200,514 200,${T} 360,${T}`)}{W(`200,566 200,${B} 760,${B}`)}<Res x={430} y={T} ohm={r} label="R" horizontal />{W(`500,${T} 760,${T} 760,500`)}{D(760, 540, 90, true)}{W(`760,580 760,${B}`)}
+    <Dots pts={[[200, 540], [200, T], [760, T], [760, B], [200, B], [200, 540]]} t={t} speed={100} /><text x={800} y={550} {...T1} fontSize={24}>0.7 V</text></g>;
+  else if (kind === "hwr") left = <g>{ac(200, 540)}{W(`200,494 200,${T} 400,${T}`)}{D(460, T, 0, s > 0)}{W(`490,${T} 760,${T}`)}<Res x={760} y={540} ohm={r} label="RL" />{W(`760,${T} 760,470`)}{W(`760,610 760,${B} 200,${B} 200,586`)}
+    {s > 0 && <Dots pts={[[200, 540], [200, T], [760, T], [760, B], [200, B], [200, 540]]} t={t} speed={120} />}</g>;
+  else if (kind === "bridge") { const cx = 470, cy = 540; left = <g>{ac(180, 540)}{W(`180,494 180,${T} ${cx},${T} ${cx},${cy - 150}`)}{W(`180,586 180,${B} ${cx},${B} ${cx},${cy + 150}`)}
+      <polygon points={`${cx},${cy - 150} ${cx + 150},${cy} ${cx},${cy + 150} ${cx - 150},${cy}`} fill="none" stroke={L.wire} strokeWidth={5} />
+      {D(cx + 75, cy - 75, 45, s > 0)}{D(cx - 75, cy - 75, -45, s < 0)}{D(cx + 75, cy + 75, -45, s < 0)}{D(cx - 75, cy + 75, 45, s > 0)}
+      {W(`${cx - 150},${cy} ${cx - 72},${cy}`)}{W(`${cx + 72},${cy} ${cx + 150},${cy}`)}<Res x={cx} y={cy} ohm={r} label="RL" horizontal />
+      <text x={cx + 150} y={cy - 20} {...T1} fontSize={26} fill={L.green}>+</text><text x={cx - 170} y={cy - 20} {...T1} fontSize={26} fill={L.cyan}>−</text></g>; }
+  else if (kind === "clip") left = <g>{ac(200, 540)}{W(`200,494 200,${T} 360,${T}`)}<Res x={430} y={T} ohm={r} label="R" horizontal />{W(`500,${T} 860,${T}`)}{W(`680,${T} 680,400`)}{D(680, 440, 90, s * vp > vb + 0.7)}{W(`680,470 680,560`)}{bat(680, 600, vb)}{W(`680,626 680,${B}`)}
+    {W(`200,586 200,${B} 860,${B}`)}<circle cx={860} cy={T} r={10} fill={L.green} /><circle cx={860} cy={B} r={10} fill={L.green} /><text x={860} y={T - 26} textAnchor="middle" {...T1} fontSize={26} fill={L.green}>vout</text></g>;
+  else left = <g>{ac(200, 540)}{W(`200,494 200,${T} 380,${T}`)}<line x1={400} y1={T - 40} x2={400} y2={T + 40} stroke={L.amber} strokeWidth={8} /><line x1={424} y1={T - 40} x2={424} y2={T + 40} stroke={L.amber} strokeWidth={8} />
+    <text x={412} y={T - 56} textAnchor="middle" {...T1} fontSize={24}>C</text>{W(`444,${T} 860,${T}`)}{W(`680,${T} 680,${vb ? 470 : 500}`)}{D(680, vb ? 430 : 540, -90, s < 0)}{vb ? <>{W(`680,460 680,560`)}{bat(680, 600, vb)}{W(`680,626 680,${B}`)}</> : W(`680,570 680,${B}`)}
+    {W(`200,586 200,${B} 860,${B}`)}<circle cx={860} cy={T} r={10} fill={L.green} /><circle cx={860} cy={B} r={10} fill={L.green} /><text x={860} y={T - 26} textAnchor="middle" {...T1} fontSize={26} fill={L.green}>vout</text></g>;
+  const GX = 1040, GW = 780;
+  let right: React.ReactNode;
+  if (mode === "calc") right = <g>{label && <text x={GX} y={160} fill={L.amber} fontFamily={MONO} fontSize={28} fontWeight={800}>{label}</text>}
+    {(lines as string[]).map((l, k) => <text key={k} x={GX} y={240 + k * 88} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={27} fontWeight={700}
+      opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  else { const fin = (x: number) => vp * Math.sin(x);
+    const fo = (x: number) => { const a = fin(x); if (kind === "hwr") return Math.max(0, a - 0.7); if (kind === "bridge") return Math.max(0, Math.abs(a) - 1.4);
+      if (kind === "clip") return Math.min(a, vb + 0.7); if (kind === "clamp") return a + vp - 0.7 + vb; return a; };
+    const sc = 110 / (2 * vp);
+    const tr = (cy: number, fn: (x: number) => number, col: string, name: string) => { const q: string[] = []; for (let k = 0; k <= 300; k++) { const u = k / 300; q.push(`${GX + GW * u},${cy - fn(2 * Math.PI * 2 * u) * sc}`); }
+      return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><text x={GX - 10} y={cy + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={20}>0</text>
+        <text x={GX + 8} y={cy - 2 * vp * sc - 12} fill={col} fontFamily={SANS} fontSize={24} fontWeight={800}>{name}</text><polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} /></g>; };
+    const mx = Math.max(...Array.from({ length: 100 }, (_, k) => fo(2 * Math.PI * k / 100))), mn = Math.min(...Array.from({ length: 100 }, (_, k) => fo(2 * Math.PI * k / 100)));
+    right = <g>{tr(400, fin, L.cyan, `input: ±${vp} V`)}{tr(840, fo, L.green, `output: ${mn.toFixed(1)} V to ${mx.toFixed(1)} V`)}</g>; }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(40,60)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.dckt = DcktScene;
+
+/** {"type":"fnum","kind":"lp"|"hp","r":1000,"c":1e-6,"lines":[...],"label":"…"}: RC filter with its curve (fc marked) and worked lines */
+export const FnumScene: React.FC<any> = ({ dur, kind = "lp", r = 1000, c = 1e-6, lines = [], label = "" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const fc = 1 / (2 * Math.PI * r * c); const lp = kind === "lp";
+  const capH = (x: number, y: number) => <g><rect x={x - 18} y={y - 36} width={36} height={72} fill={L.bg0} /><line x1={x - 10} y1={y - 34} x2={x - 10} y2={y + 34} stroke={L.amber} strokeWidth={7} /><line x1={x + 10} y1={y - 34} x2={x + 10} y2={y + 34} stroke={L.amber} strokeWidth={7} /></g>;
+  const capV = (x: number, y: number) => <g><rect x={x - 36} y={y - 18} width={72} height={36} fill={L.bg0} /><line x1={x - 34} y1={y - 10} x2={x + 34} y2={y - 10} stroke={L.amber} strokeWidth={7} /><line x1={x - 34} y1={y + 10} x2={x + 34} y2={y + 10} stroke={L.amber} strokeWidth={7} /></g>;
+  const cs = c >= 1e-6 ? `${+(c * 1e6).toFixed(2)} µF` : `${+(c * 1e9).toFixed(1)} nF`;
+  const T = 300, B = 760;
+  const left = <g><circle cx={180} cy={530} r={46} fill={L.bg0} stroke={L.cyan} strokeWidth={5} /><path d="M 154 530 q 13 -24 26 0 t 26 0" fill="none" stroke={L.cyan} strokeWidth={4} />
+    {W(`180,484 180,${T} 300,${T}`)}{W(`180,576 180,${B} 860,${B}`)}
+    {lp ? <><Res x={370} y={T} ohm={r} label="R" horizontal />{W(`440,${T} 860,${T}`)}{W(`640,${T} 640,500`)}{capV(640, 520)}<text x={690} y={528} {...T1} fontSize={24}>C {cs}</text>{W(`640,540 640,${B}`)}</>
+      : <>{capH(330, T)}<text x={330} y={T - 52} textAnchor="middle" {...T1} fontSize={24}>C {cs}</text>{W(`348,${T} 860,${T}`)}<Res x={640} y={530} ohm={r} label="R" />{W(`640,${T} 640,460`)}{W(`640,600 640,${B}`)}</>}
+    <circle cx={860} cy={T} r={10} fill={L.green} /><circle cx={860} cy={B} r={10} fill={L.green} /><text x={860} y={T - 26} textAnchor="middle" {...T1} fontSize={26} fill={L.green}>vout</text>
+    <text x={520} y={900} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>{lp ? "RC LOW-PASS" : "RC HIGH-PASS"} · fc = {fc >= 1000 ? (fc / 1000).toFixed(2) + " kHz" : fc.toFixed(1) + " Hz"}</text></g>;
+  const GX = 1040, GW = 780;
+  const lf0 = Math.log10(fc) - 2, span = 4; const fx = (f: number) => GX + (Math.log10(f) - lf0) / span * GW, gy = (g: number) => 1000 - g * 220;
+  const q: string[] = []; for (let k = 0; k <= 200; k++) { const f = Math.pow(10, lf0 + span * k / 200); const x = f / fc; const g = lp ? 1 / Math.sqrt(1 + x * x) : x / Math.sqrt(1 + x * x); q.push(`${fx(f)},${gy(g)}`); }
+  const right = <g>{label && <text x={GX} y={150} fill={L.amber} fontFamily={MONO} fontSize={28} fontWeight={800}>{label}</text>}
+    {(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 74} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={26} fontWeight={700}
+      opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.8, k / Math.max(1, lines.length) * 0.8 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}
+    <line x1={GX} y1={1000} x2={GX + GW} y2={1000} stroke={L.dim} strokeWidth={2} /><polyline points={q.join(" ")} fill="none" stroke={L.green} strokeWidth={4} />
+    <line x1={fx(fc)} y1={1000} x2={fx(fc)} y2={770} stroke={L.red} strokeDasharray="6 6" strokeWidth={2} /><circle cx={fx(fc)} cy={gy(0.707)} r={8} fill={L.red} />
+    <text x={fx(fc) + 12} y={gy(0.707) - 10} fill={L.red} fontFamily={MONO} fontSize={20}>70.7% at fc</text></g>;
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(40,60)">{left}</g><g transform="translate(-960,780)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.fnum = FnumScene;

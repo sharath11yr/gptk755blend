@@ -1,0 +1,128 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Filter Numericals | RC Low-Pass & High-Pass Cutoff, Gain, Design - Solved | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Filter Numericals | RC Low-Pass & High-Pass Cutoff, Gain, Design - Solved | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Five filter problems solved step by step with the circuit and its frequency response: cutoff of an RC low-pass, gain and dB at three times the cutoff, a high-pass at one tenth of the cutoff, designing C for a 1 kHz cutoff, and a band-pass built from two RC stages.",
+  "tags": [
+   "filter numericals",
+   "rc filter problems",
+   "cutoff frequency",
+   "low pass filter",
+   "high pass filter",
+   "decibels",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Filter Numericals",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "FILTER NUMERICALS",
+   "subtitle": "Five problems, solved step by step",
+   "narration": "Welcome back. Filter numericals. Five problems on R C filters: finding the cutoff, the gain at other frequencies, the dB value, and designing a filter for a chosen cutoff. The key formula: f c equals one over two pi R C. Let's go."
+  },
+  {
+   "type": "fnum",
+   "kind": "lp",
+   "chapter": "Problem 1: low-pass cutoff",
+   "narration": "Problem one. An R C low pass filter with R equals one kilohm and C equals one microfarad. Find the cutoff frequency. f c equals one over two pi R C: one over two pi times one thousand times zero point zero zero zero zero zero one. That's one over zero point zero zero six two eight, one hundred and fifty nine hertz. At that frequency, the output is seventy point seven percent of the input.",
+   "r": 1000,
+   "c": 1e-06,
+   "label": "PROBLEM 1",
+   "lines": [
+    "R = 1 kΩ, C = 1 µF",
+    "fc = 1 ÷ (2π R C)",
+    "   = 1 ÷ (2π × 1000 × 10⁻⁶)",
+    "   = 1 ÷ 0.00628 = 159 Hz",
+    "at fc: |H| = 0.707 (−3 dB)"
+   ]
+  },
+  {
+   "type": "fnum",
+   "kind": "lp",
+   "chapter": "Problem 2: gain above cutoff",
+   "narration": "Problem two. Same filter. What is the gain at three times the cutoff, four hundred and seventy seven hertz? For a low pass, the gain is one over root of one plus f over f c squared. f over f c is three, so one over root ten, zero point three one six. In decibels: twenty log zero point three one six, minus ten d B.",
+   "r": 1000,
+   "c": 1e-06,
+   "label": "PROBLEM 2",
+   "lines": [
+    "f = 3 fc = 477 Hz",
+    "|H| = 1 ÷ √(1 + (f ÷ fc)²)",
+    "    = 1 ÷ √(1 + 9) = 0.316",
+    "dB = 20 log(0.316) = −10 dB"
+   ]
+  },
+  {
+   "type": "fnum",
+   "kind": "hp",
+   "chapter": "Problem 3: high-pass below cutoff",
+   "narration": "Problem three. A high pass filter with ten kilohms and fifteen point nine nanofarads. Its cutoff: one over two pi times ten k times fifteen point nine n, about one kilohertz. What's the gain at one hundred hertz, a tenth of the cutoff? For a high pass, the gain is f over f c, over root one plus f over f c squared. Zero point one over root one point zero one, zero point zero nine nine five. About minus twenty d B.",
+   "r": 10000,
+   "c": 1.59e-08,
+   "label": "PROBLEM 3",
+   "lines": [
+    "fc = 1 ÷ (2π × 10k × 15.9n) ≈ 1 kHz",
+    "f = 100 Hz → f ÷ fc = 0.1",
+    "|H| = 0.1 ÷ √(1 + 0.01) = 0.0995",
+    "dB ≈ −20 dB"
+   ]
+  },
+  {
+   "type": "fnum",
+   "kind": "lp",
+   "chapter": "Problem 4: design for 1 kHz",
+   "narration": "Problem four, a design. We need a low pass filter with a one kilohertz cutoff, using a ten kilohm resistor. Find C. Rearrange: C equals one over two pi R f c. One over two pi times ten thousand times one thousand: fifteen point nine nanofarads. The nearest standard value is fifteen nanofarads, giving a cutoff of one point zero six kilohertz.",
+   "r": 10000,
+   "c": 1.59e-08,
+   "label": "PROBLEM 4",
+   "lines": [
+    "want fc = 1 kHz, R = 10 kΩ",
+    "C = 1 ÷ (2π R fc)",
+    "  = 1 ÷ (2π × 10⁴ × 10³) = 15.9 nF",
+    "standard 15 nF → fc = 1.06 kHz"
+   ]
+  },
+  {
+   "type": "fnum",
+   "kind": "hp",
+   "chapter": "Problem 5: band-pass from two stages",
+   "narration": "Problem five. Build a band pass from a high pass stage with R one equals one k and C one equals one point five nine microfarads, followed by a low pass stage with R two equals ten k and C two equals one point five nine nanofarads. Lower cutoff: one over two pi times one k times one point five nine micro, one hundred hertz. Upper cutoff: one over two pi times ten k times one point five nine n, ten kilohertz. Bandwidth: nine point nine kilohertz. Centre frequency: root of one hundred times ten thousand, one kilohertz.",
+   "r": 1000,
+   "c": 1.59e-06,
+   "label": "PROBLEM 5",
+   "lines": [
+    "fL = 1 ÷ (2π × 1k × 1.59µ) = 100 Hz",
+    "fH = 1 ÷ (2π × 10k × 1.59n) = 10 kHz",
+    "BW = fH − fL = 9.9 kHz",
+    "f0 = √(fL × fH) = √(10⁶) = 1 kHz"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: CLIPPERS & CLAMPERS",
+   "lines": [
+    "fc = 1 ÷ (2π R C)",
+    "LP: |H| = 1 ÷ √(1 + (f/fc)²)",
+    "Design: C = 1 ÷ (2π R fc)"
+   ],
+   "cta": "Clipper & clamper numericals are next",
+   "narration": "Quick recap. The cutoff is one over two pi R C. A low pass gain is one over root one plus f over f c squared, a high pass gain is f over f c over the same root, and to design, rearrange for C. Next, clipper and clamper numericals. See you there."
+  }
+ ]
+}

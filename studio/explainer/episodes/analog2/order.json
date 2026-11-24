@@ -37,5 +37,9 @@
  "analog2/p01_class_a.json",
  "analog2/p02_class_b_ab.json",
  "analog2/p03_class_c.json",
- "analog2/t01_555_timer.json"
+ "analog2/t01_555_timer.json",
+ "analog2/n01_diode_numericals.json",
+ "analog2/n02_filter_numericals.json",
+ "analog2/n03_clipper_clamper_numericals.json",
+ "analog2/n04_regulator_numericals.json"
 ]
