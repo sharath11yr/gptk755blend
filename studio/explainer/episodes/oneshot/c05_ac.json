@@ -1,0 +1,135 @@
+{
+ "title": "Analog One Shot Ch5",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 5: AC fundamentals",
+   "narration": "Chapter five: alternating current. Almost every signal in analog electronics is A C: the mains, audio, radio. In this chapter: the sine wave and its values, how current flows in each half cycle, phase, what resistors, capacitors and inductors do to A C, impedance, and resonance.",
+   "kicker": "CHAPTER 5",
+   "title": "AC FUNDAMENTALS",
+   "subtitle": "Sine waves, RMS, phase, impedance, resonance"
+  },
+  {
+   "type": "phasor",
+   "chapter": "Where a sine wave comes from",
+   "narration": "A sine wave comes from rotation. Imagine an arrow spinning in a circle, like the coil inside a generator. Its height at every moment traces out a sine wave on the right. At zero degrees, height zero. At ninety degrees, maximum, the peak. At one eighty, back to zero. At two seventy, the negative peak. Then it repeats. This is the mains in India: the voltage rises to plus three hundred and twenty five volts, falls through zero to minus three hundred and twenty five, fifty times a second. v equals V m times sine theta.",
+   "mode": "gen",
+   "vm": 325,
+   "cycles": 2
+  },
+  {
+   "type": "dual",
+   "chapter": "Current direction in each half cycle",
+   "narration": "What does the current do? During the positive half cycle, the top terminal is positive, so conventional current flows out of the top, clockwise around the circuit, and electrons go the other way. During the negative half cycle, everything reverses: current flows anticlockwise. Every half cycle, the direction flips. Keep this picture in mind. When we study rectifiers, clippers and clampers, we'll trace the current path separately for the positive half and the negative half, exactly like this.",
+   "mode": "dcac",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "numerical",
+   "chapter": "Peak, peak-to-peak, period, frequency",
+   "narration": "The values of a sine wave. Peak, V m: the maximum, three hundred and twenty five volts. Peak to peak: from the top to the bottom, twice the peak, six hundred and fifty volts. Period, T: the time for one complete cycle. Frequency, f: the number of cycles per second, in hertz. They're related: f equals one over T. Fifty hertz means each cycle takes one over fifty, twenty milliseconds. Each half cycle, ten milliseconds.",
+   "title": "SINE WAVE VALUES",
+   "given": [
+    "Vm = 325 V",
+    "f = 50 Hz"
+   ],
+   "lines": [
+    "Vpp = 2 × Vm = 650 V",
+    "T = 1 ÷ f = 1 ÷ 50 = 20 ms",
+    "half cycle = 10 ms",
+    "ω = 2πf = 314 rad/s"
+   ]
+  },
+  {
+   "type": "phasor",
+   "chapter": "RMS: the useful value",
+   "narration": "Why do we call the mains two thirty volts, when it peaks at three twenty five? Because of R M S, root mean square. An A C voltage heats a resistor the same as a D C voltage of its R M S value. Square the wave, so negative parts become positive, take the average, then the square root. For a sine wave, R M S is the peak divided by root two, zero point seven zero seven times the peak. Three twenty five times zero point seven zero seven, two hundred and thirty volts. Meters read R M S. And the average of a full sine wave is zero, but the average of one half cycle is zero point six three seven times the peak, which we'll use for rectifiers.",
+   "mode": "rms",
+   "vm": 325,
+   "cycles": 2
+  },
+  {
+   "type": "phasor",
+   "chapter": "Phase",
+   "narration": "Phase is how far one wave is shifted from another. Here the current lags the voltage by sixty degrees: it reaches its peak a little later. Two waves with zero phase difference are in phase. A wave shifted by one hundred and eighty degrees is upside down, inverted. We'll see that a common emitter amplifier produces exactly that.",
+   "mode": "phase",
+   "vm": 325,
+   "phi": 60,
+   "cycles": 2
+  },
+  {
+   "type": "phasor",
+   "chapter": "R, L and C with AC",
+   "narration": "With a resistor, current and voltage are in phase. With an inductor, the current lags the voltage by ninety degrees: the coil resists the current changing, so it peaks later. With a capacitor, the current leads by ninety degrees: the capacitor must be filled with current before its voltage can rise. A memory trick: CIVIL. In a C, I leads V. V leads I in an L.",
+   "mode": "phase",
+   "vm": 10,
+   "phi": 90,
+   "cycles": 2,
+   "label1": "voltage",
+   "label2": "current (inductor)"
+  },
+  {
+   "type": "resonance",
+   "chapter": "Reactance against frequency",
+   "narration": "Put both reactances on one graph. A ten millihenry inductor's reactance rises in a straight line with frequency. A ten microfarad capacitor's reactance falls. They cross at one special frequency, where X L equals X C: about five hundred and three hertz. That's the resonant frequency: one over two pi root L C.",
+   "mode": "react"
+  },
+  {
+   "type": "resonance",
+   "chapter": "Series resonance",
+   "narration": "In a series R L C circuit, the total opposition, called impedance Z, is the square root of R squared plus X L minus X C, squared. At resonance, X L and X C cancel exactly, leaving only R. So the current peaks: with ten volts and ten ohms, one amp. With thirty ohms, a lower, wider peak. The sharpness is the quality factor Q: one over R times root L over C. Ten ohms gives Q of three point one six. Resonance is how radios select one station, as we'll see in filters.",
+   "mode": "curve",
+   "r": [
+    10,
+    30
+   ]
+  },
+  {
+   "type": "phasor",
+   "chapter": "Power in AC",
+   "narration": "In A C, power is voltage times current at each instant. When they're in phase, the product is always positive: real power delivered. When current lags or leads, some of the energy just flows back and forth without being used. The power factor, cos phi, tells you how much is actually used. A pure resistor has power factor one. A pure inductor or capacitor, zero.",
+   "mode": "power",
+   "vm": 10,
+   "phi": 60,
+   "cycles": 2
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: AC",
+   "narration": "Question one: a sine wave has a peak of fourteen point one volts at a thousand hertz. Find R M S, peak to peak and the period. R M S: fourteen point one over root two, ten volts. Peak to peak, twenty eight point two. Period, one millisecond. Question two: a series R L C has R ten ohms, L ten millihenries, C ten microfarads. Find the resonant frequency and Q. f zero: one over two pi root of ten to the minus seven, five hundred and three hertz. Q: root of L over C is thirty one point six, divided by ten, three point one six.",
+   "title": "NUMERICALS · AC",
+   "given": [
+    "Vm = 14.1 V",
+    "f = 1 kHz"
+   ],
+   "lines": [
+    "Vrms = 14.1 ÷ √2 = 10 V",
+    "Vpp = 28.2 V, T = 1 ms",
+    "f0 = 1 ÷ (2π√(10m × 10µ)) = 503 Hz",
+    "Q = (1/R)√(L/C) = 31.6 ÷ 10 = 3.16"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 5 recap",
+   "narration": "Recap. A sine wave: v equals V m sine theta, with period T and frequency f equals one over T. R M S equals peak over root two. Current reverses every half cycle. In a resistor, V and I are in phase. In an inductor, current lags. In a capacitor, current leads. Impedance combines R and reactance, and at resonance X L equals X C, at one over two pi root L C. Next: the transformer.",
+   "title": "CHAPTER 5 COMPLETE",
+   "lines": [
+    "Vrms = Vm ÷ √2, f = 1 ÷ T",
+    "Current flips every half cycle",
+    "L: I lags · C: I leads (CIVIL)",
+    "Resonance: XL = XC, f0 = 1 ÷ (2π√LC)"
+   ],
+   "cta": "Next: transformers"
+  }
+ ]
+}
