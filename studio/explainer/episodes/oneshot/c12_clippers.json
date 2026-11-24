@@ -1,0 +1,152 @@
+{
+ "title": "Analog One Shot Ch12",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 12: Clippers",
+   "narration": "Chapter twelve: clippers. A clipper cuts off part of a waveform above or below a chosen level, without touching the rest. They protect inputs from overvoltage and shape signals. We'll build every type: series and shunt, positive and negative, biased, double ended, and Zener. For each one, we'll trace the current in the positive and negative half cycles, and see exactly why the output looks the way it does, and what happens if you flip the diode or the battery.",
+   "kicker": "CHAPTER 12",
+   "title": "CLIPPERS",
+   "subtitle": "Cutting a waveform at any level you choose"
+  },
+  {
+   "type": "clip",
+   "chapter": "Series clipper: removing the negative half",
+   "narration": "Start with a series clipper: the diode in series with the load. The input swings plus and minus ten volts. Positive half: the diode's anode is higher, so it conducts, and the load gets the input minus zero point seven volts. Negative half: the diode is reverse biased and blocks, so the output is zero. The negative half is clipped off. This is a negative series clipper, because it removes the negative half. Look familiar? It's exactly the half wave rectifier.",
+   "cfg": "series",
+   "dir": "neg"
+  },
+  {
+   "type": "clip",
+   "chapter": "Series clipper, positive half in detail",
+   "narration": "Let's slow down on one positive half. As the input rises past zero point seven volts, the diode turns on. Current flows from the source, through the diode, down through R L, back to the source. The output follows the input, zero point seven volts lower, peaking at nine point three volts.",
+   "cfg": "series",
+   "dir": "neg",
+   "half": "pos"
+  },
+  {
+   "type": "clip",
+   "chapter": "What if: flip the diode?",
+   "narration": "Now flip the diode. The anode now faces the output. On the positive half, it's reverse biased: output zero. On the negative half, it conducts, and the output follows the input, zero point seven volts closer to zero, down to minus nine point three. Now the positive half is removed. Flip the diode, and you clip the opposite half. This is the positive series clipper.",
+   "cfg": "series",
+   "dir": "pos"
+  },
+  {
+   "type": "clip",
+   "chapter": "Shunt clipper: positive",
+   "narration": "Now the shunt clipper: a resistor in series, and the diode across the output, in parallel with it. The diode points down to ground. Positive half: once the output tries to exceed zero point seven volts, the diode turns on and acts like a zero point seven volt battery across the output, holding it there. The extra voltage drops across R. Negative half: the diode is reversed, off, so the output simply follows the input down to minus ten. So the positive peak is clipped at plus zero point seven. A positive shunt clipper.",
+   "cfg": "shunt",
+   "dir": "pos",
+   "vb": 0
+  },
+  {
+   "type": "clip",
+   "chapter": "The current path in the shunt clipper",
+   "narration": "Watch where the current goes when the diode is on. From the source, through R, then down through the diode to ground, back to the source. R limits that current. With ten volts in: ten minus zero point seven, over one k, nine point three milliamps. That's why R is essential: without it, the diode would short the source.",
+   "cfg": "shunt",
+   "dir": "pos",
+   "vb": 0,
+   "half": "pos"
+  },
+  {
+   "type": "clip",
+   "chapter": "Shunt clipper: negative",
+   "narration": "Flip the diode so it points up from ground. Now it conducts on the negative half, when the output tries to go below minus zero point seven. The bottom is clipped at minus zero point seven, and the positive half passes untouched. A negative shunt clipper. Remember the rule: the diode's arrow points away from the half that gets clipped.",
+   "cfg": "shunt",
+   "dir": "neg",
+   "vb": 0
+  },
+  {
+   "type": "clip",
+   "chapter": "Biased clipper: clip at any level",
+   "narration": "What if we want to clip at three point seven volts, not zero point seven? Add a battery in series with the diode. Now the diode only turns on when the output exceeds the battery plus zero point seven: three plus zero point seven, three point seven volts. The positive peaks are flattened at three point seven, the negative half passes fully. A positive biased shunt clipper. The battery moves the clipping level.",
+   "cfg": "shunt",
+   "dir": "pos",
+   "vb": 3
+  },
+  {
+   "type": "clip",
+   "chapter": "What if: reverse the battery?",
+   "narration": "Now reverse the battery, so it's minus three volts. The diode now turns on when the output exceeds minus three plus zero point seven, minus two point three volts. So the output can never rise above minus two point three: most of the wave is clipped! Reversing the battery moves the level below zero.",
+   "cfg": "shunt",
+   "dir": "pos",
+   "vb": -3
+  },
+  {
+   "type": "clip",
+   "chapter": "Negative biased clipper",
+   "narration": "A negative clipper with a bias: diode pointing up, battery minus three volts. The diode turns on when the output falls below minus three minus zero point seven, minus three point seven. The bottom is clipped at minus three point seven, the top passes fully.",
+   "cfg": "shunt",
+   "dir": "neg",
+   "vb": -3
+  },
+  {
+   "type": "clip",
+   "chapter": "Biased series clipper",
+   "narration": "Biased series clippers work too: a battery in series with the diode and the load. Here the diode only conducts when the input exceeds the battery plus zero point seven: two plus zero point seven, two point seven volts. Above that, the output is the input minus two point seven. So only the tips above two point seven get through, shifted down.",
+   "cfg": "series",
+   "dir": "neg",
+   "vb": 2
+  },
+  {
+   "type": "clip",
+   "chapter": "Double-ended clipper",
+   "narration": "Combine two biased branches, one for each direction: a positive clipper at three point seven volts and a negative clipper at minus five point seven. Now both peaks are cut. The output is limited to between minus five point seven and plus three point seven. This is a double ended, or combination, clipper. It's used to limit a signal to a safe range.",
+   "cfg": "double",
+   "vb": 3,
+   "vb2": 5
+  },
+  {
+   "type": "clip",
+   "chapter": "Zener clipper",
+   "narration": "An easy way to clip both sides symmetrically: two Zener diodes back to back. Positive half: the top Zener breaks down at five point one volts, and the bottom one is forward biased at zero point seven, so the output is held at five point eight. Negative half: the roles swap, and the output is held at minus five point eight. A symmetrical clipper with no batteries.",
+   "cfg": "zener"
+  },
+  {
+   "type": "dckt",
+   "chapter": "Why clippers are built this way",
+   "narration": "A student question: why always a resistor in series with a shunt clipper? Because when the diode conducts, it's almost a short across the output. The resistor limits the current and takes the extra voltage. Without it, the diode and source would carry a huge current. And why does the clipping level depend on the battery? Because the diode needs zero point seven volts across itself, so it switches on when the output reaches the battery voltage plus zero point seven.",
+   "kind": "clip",
+   "mode": "wave",
+   "vp": 10,
+   "vb": 3
+  },
+  {
+   "type": "dckt",
+   "chapter": "Numericals: clippers",
+   "narration": "Question one: a positive shunt clipper with a two volt bias battery, silicon diode, fifteen volt peak input, one kilohm series resistor. Find the clipping level and the maximum diode current. Level: two plus zero point seven, two point seven volts. Maximum current, at the input peak: fifteen minus two point seven over one k, twelve point three milliamps. Question two: in a double ended clipper with batteries of four and six volts, what is the output range for a twenty volt peak input? Plus four point seven to minus six point seven volts.",
+   "kind": "clip",
+   "mode": "calc",
+   "vp": 15,
+   "vb": 2,
+   "label": "NUMERICALS",
+   "lines": [
+    "level = VB + 0.7 = 2.7 V",
+    "I(max) = (15 − 2.7) ÷ 1k = 12.3 mA",
+    "double: +4.7 V to −6.7 V"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 12 recap",
+   "narration": "Recap. A series clipper removes a whole half: flip the diode to remove the other half. A shunt clipper limits the output at plus or minus zero point seven, with a series resistor to limit current. Add a battery to clip at V B plus zero point seven. Reverse the battery to move the level below zero. Combine two branches for a double ended clipper, or use back to back Zeners. The diode's arrow points away from the side that gets clipped. Next: clampers.",
+   "title": "CHAPTER 12 COMPLETE",
+   "lines": [
+    "Series: removes a half (flip diode → other half)",
+    "Shunt: limits at ±0.7 V, R limits current",
+    "Biased: level = VB ± 0.7",
+    "Double-ended · Zener back-to-back"
+   ],
+   "cta": "Next: clampers"
+  }
+ ]
+}

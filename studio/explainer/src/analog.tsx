@@ -3534,3 +3534,61 @@ export const RectScene: React.FC<any> = ({ dur, kind = "hw", half = "all", cap =
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{leftAll}{right}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.rect = RectScene;
+
+/** {"type":"clip","cfg":"series"|"shunt"|"double"|"zener","dir":"pos"|"neg","vb":0,"vb2":0,"half":"all"|"pos"|"neg"}
+ *  Vm = 10 V, R = 1 kΩ. dir = which half gets clipped (removed/limited). vb = bias battery (V, sign = level direction). */
+export const clipOut = (cfg: string, dir: string, vb: number, vb2: number, vin: number) => {
+  if (cfg === "series") return dir === "neg" ? Math.max(vb >= 0 ? 0 : vb, vin - 0.7 - vb) * (vin - 0.7 - vb > 0 || vb < 0 ? 1 : 0) || (vin - 0.7 - vb > 0 ? vin - 0.7 - vb : 0)
+    : (vin + 0.7 + vb < 0 ? vin + 0.7 + vb : 0);
+  if (cfg === "shunt") return dir === "pos" ? Math.min(vin, vb + 0.7) : Math.max(vin, vb - 0.7);
+  if (cfg === "double") return Math.max(-(vb2 + 0.7), Math.min(vin, vb + 0.7));
+  return Math.max(-5.8, Math.min(vin, 5.8)); };
+export const ClipScene: React.FC<any> = ({ dur, cfg = "shunt", dir = "pos", vb = 0, vb2 = 0, half = "all" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.04, dur * 0.96], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const VM = 10; const cyc = half === "all" ? 2 : 0.5; const th = half === "neg" ? Math.PI + Math.PI * p : 2 * Math.PI * cyc * p; const vin = VM * Math.sin(th);
+  const fo = (v: number) => cfg === "series" ? (dir === "neg" ? (v - 0.7 - vb > 0 ? v - 0.7 - vb : 0) : (v + 0.7 + vb < 0 ? v + 0.7 + vb : 0)) : clipOut(cfg, dir, vb, vb2, v);
+  const vo = fo(vin);
+  const D = (x: number, y: number, rot: number, on: boolean, z = false) => <g transform={`translate(${x},${y}) rotate(${rot})`}><rect x={-30} y={-30} width={60} height={60} fill={L.bg0} />
+    <polygon points="-22,-24 -22,24 18,0" fill={on ? "rgba(46,196,160,0.4)" : L.bg0} stroke={on ? L.green : L.amber} strokeWidth={5} />
+    {z ? <polyline points="10,-30 18,-24 18,24 26,30" fill="none" stroke={on ? L.green : L.amber} strokeWidth={5} /> : <line x1={18} y1={-24} x2={18} y2={24} stroke={on ? L.green : L.amber} strokeWidth={5} />}</g>;
+  const bat = (x: number, y: number, val: number, vert = true) => !vert ? <g><rect x={x - 28} y={y - 40} width={56} height={80} fill={L.bg0} />
+    <line x1={x + (val >= 0 ? 10 : -10)} y1={y - 34} x2={x + (val >= 0 ? 10 : -10)} y2={y + 34} stroke={L.text} strokeWidth={6} /><line x1={x + (val >= 0 ? -10 : 10)} y1={y - 18} x2={x + (val >= 0 ? -10 : 10)} y2={y + 18} stroke={L.text} strokeWidth={11} />
+    <text x={x} y={y - 50} textAnchor="middle" {...T1} fontSize={24}>{Math.abs(val)} V</text></g> : <g><rect x={x - 40} y={y - 28} width={80} height={56} fill={L.bg0} />
+    <line x1={x - 34} y1={y + (val >= 0 ? -10 : 10)} x2={x + 34} y2={y + (val >= 0 ? -10 : 10)} stroke={L.text} strokeWidth={6} /><line x1={x - 18} y1={y + (val >= 0 ? 10 : -10)} x2={x + 18} y2={y + (val >= 0 ? 10 : -10)} stroke={L.text} strokeWidth={11} />
+    <text x={x + 50} y={y + 8} {...T1} fontSize={24}>{Math.abs(val)} V</text></g>;
+  const T = 300, B = 800, XS = 180, XN = 700, XO = 900;
+  const srcPos = vin >= 0;
+  const src = <g><circle cx={XS} cy={550} r={50} fill={L.bg0} stroke={L.cyan} strokeWidth={6} /><path d={`M ${XS - 28} 550 q 14 -26 28 0 t 28 0`} fill="none" stroke={L.cyan} strokeWidth={5} />
+    <text x={XS} y={640} textAnchor="middle" {...T1} fontSize={24} fill={L.cyan}>±10 V</text><text x={XS + 66} y={500} {...T1} fontSize={28} fill={srcPos ? L.red : L.cyan}>{srcPos ? "+" : "−"}</text></g>;
+  let left: React.ReactNode, path: number[][] = [], on = false;
+  if (cfg === "series") { on = dir === "neg" ? vin - 0.7 - vb > 0 : vin + 0.7 + vb < 0;
+    left = <g>{src}{W(`${XS},500 ${XS},${T} 400,${T}`)}{D(460, T, dir === "neg" ? 0 : 180, on)}{vb ? <>{W(`490,${T} 560,${T}`)}{bat(620, T, dir === "neg" ? vb : -vb, false)}{W(`660,${T} ${XO},${T}`)}</> : W(`490,${T} ${XO},${T}`)}
+      {W(`${XN},${T} ${XN},480`)}<Res x={XN} y={550} ohm={1000} label="RL" />{W(`${XN},620 ${XN},${B} ${XS},${B} ${XS},600`)}{W(`${XN},${B} ${XO},${B}`)}</g>;
+    path = [[XS, 500], [XS, T], [XN, T], [XN, B], [XS, B], [XS, 600]]; if (vin < 0) path = [...path].reverse(); }
+  else { const branch = (x: number, up: boolean, v: number, zen = false, lit = false) => <g>{W(`${x},${T} ${x},${v ? 400 : 480}`)}{D(x, v ? 440 : 520, up ? -90 : 90, lit, zen)}{v ? <>{W(`${x},470 ${x},560`)}{bat(x, 600, v)}{W(`${x},628 ${x},${B}`)}</> : W(`${x},550 ${x},${B}`)}</g>;
+    const posOn = cfg === "zener" ? vin > 5.8 : cfg === "double" ? vin > vb + 0.7 : dir === "pos" && vin > vb + 0.7;
+    const negOn = cfg === "zener" ? false : cfg === "double" ? vin < -(vb2 + 0.7) : dir === "neg" && vin < vb - 0.7; on = posOn || negOn;
+    left = <g>{src}{W(`${XS},500 ${XS},${T} 320,${T}`)}<Res x={390} y={T} ohm={1000} label="R" horizontal />{W(`460,${T} ${XO},${T}`)}{W(`${XS},600 ${XS},${B} ${XO},${B}`)}
+      {cfg === "zener" ? <g>{W(`${XN},${T} ${XN},410`)}{D(XN, 440, 90, vin > 5.8, true)}{W(`${XN},470 ${XN},560`)}{D(XN, 590, -90, vin < -5.8, true)}{W(`${XN},620 ${XN},${B}`)}</g>
+        : cfg === "double" ? <g><g opacity={1}>{branch(620, false, vb, false, posOn)}</g>{W(`${XN + 80},${T} ${XN + 80},${T}`)}<g transform={`translate(160,0)`}>{branch(620, true, -vb2, false, negOn)}</g></g>
+        : branch(XN, dir === "neg", vb, false, posOn || negOn)}
+      {on && <text x={XN - 50} y={B + 60} textAnchor="end" {...T1} fontSize={24} fill={L.green}>branch ON</text>}</g>;
+    const bx = cfg === "double" ? (posOn ? 620 : 780) : XN;
+    path = on ? [[XS, 500], [XS, T], [bx, T], [bx, B], [XS, B], [XS, 600]] : []; if (vin < 0) path = [...path].reverse(); }
+  const leftAll = <g>{left}<circle cx={XO} cy={T} r={10} fill={L.green} /><circle cx={XO} cy={B} r={10} fill={L.green} /><text x={XO} y={T - 26} textAnchor="middle" {...T1} fontSize={26} fill={L.green}>vout</text>
+    {path.length > 0 && <><Dots pts={path} t={t} speed={40 + 14 * Math.abs(vin)} gap={50} r={9} color={L.amber} /><Dots pts={[...path].reverse()} t={t} speed={40 + 14 * Math.abs(vin)} gap={50} r={7} color={L.electron} /></>}
+    <text x={540} y={990} textAnchor="middle" {...T1} fontSize={28} fill={vin >= 0 ? L.red : L.cyan}>{vin >= 0 ? "positive" : "negative"} half · vin {vin.toFixed(1)} V → vout {vo.toFixed(1)} V</text>
+    <text x={540} y={1040} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={22}>orange: conventional current · blue: electrons</text></g>;
+  const GX = 1080, GW = 760, sc = 12;
+  const tr = (cy: number, fn: (x: number) => number, col: string, name: string) => { const q: string[] = []; const N = 300;
+    for (let k = 0; k <= N; k++) { const u = k / N; const x = (half === "neg" ? Math.PI : 0) + 2 * Math.PI * cyc * u; if (x > th + 0.001) break; q.push(`${GX + GW * u},${cy - fn(VM * Math.sin(x)) * sc}`); }
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><line x1={GX} y1={cy - VM * sc} x2={GX + GW} y2={cy - VM * sc} stroke={L.dim} strokeDasharray="4 8" strokeWidth={1.5} /><line x1={GX} y1={cy + VM * sc} x2={GX + GW} y2={cy + VM * sc} stroke={L.dim} strokeDasharray="4 8" strokeWidth={1.5} />
+      <text x={GX} y={cy - VM * sc - 16} fill={col} fontFamily={SANS} fontSize={26} fontWeight={800}>{name}</text><text x={GX - 10} y={cy + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={20}>0</text><polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} /></g>; };
+  const xs = Array.from({ length: 200 }, (_, k) => fo(VM * Math.sin(2 * Math.PI * k / 200)));
+  const right = <g>{tr(330, (v) => v, L.cyan, "input ±10 V")}{tr(780, fo, L.green, `output: ${Math.min(...xs).toFixed(1)} V to ${Math.max(...xs).toFixed(1)} V`)}</g>;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{leftAll}{right}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.clip = ClipScene;
