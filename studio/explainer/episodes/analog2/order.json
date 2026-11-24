@@ -11,5 +11,7 @@
  "analog2/a10_buck.json",
  "analog2/a11_boost.json",
  "analog2/a12_buck_boost.json",
- "analog2/a13_smps.json"
+ "analog2/a13_smps.json",
+ "analog2/a14_voltage_multipliers.json",
+ "analog2/a15_schottky.json"
 ]

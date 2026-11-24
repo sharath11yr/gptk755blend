@@ -1,0 +1,114 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Schottky Diode Explained | Metal-Semiconductor Junction, 0.3 V Drop, Fast Switching | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Schottky Diode Explained | Metal-Semiconductor Junction, 0.3 V Drop, Fast Switching | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The Schottky diode step by step: a metal-to-N-type junction instead of P-N, why it turns on at about 0.3 V instead of 0.7 V, the IV curves compared, heat at 2 A calculated (1.4 W vs 0.6 W), why it switches off almost instantly with no reverse recovery, its trade-offs (leakage, lower voltage rating), and solar panel blocking diodes.",
+  "tags": [
+   "schottky diode",
+   "metal semiconductor junction",
+   "forward voltage",
+   "reverse recovery",
+   "diode",
+   "power electronics",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Schottky Diode",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "SCHOTTKY DIODE",
+   "subtitle": "The diode with half the voltage drop, and no delay",
+   "narration": "Welcome back. In every switching converter we built, a diode carried the current when the switch was off. And every diode wastes some power. Today, the diode that wastes less, and switches faster: the Schottky diode. We'll see how it's built, compare it with a normal diode, and calculate the difference."
+  },
+  {
+   "type": "schottky",
+   "mode": "junction",
+   "chapter": "How it's built",
+   "narration": "A normal diode joins two kinds of semiconductor: P type and N type. That's a P N junction, and it needs about zero point seven volts before current flows. A Schottky diode is different. It joins a metal straight onto N type silicon. No P layer at all. This metal semiconductor junction has a lower barrier, so it starts conducting at only about zero point three volts. And it only uses electrons to carry the current, which matters for speed, as we'll see."
+  },
+  {
+   "type": "schottky",
+   "mode": "iv",
+   "chapter": "The IV curves",
+   "narration": "Here are the two curves of current against voltage. The Schottky, in green, starts conducting much earlier, at around zero point three volts. The normal P N diode, in orange, needs around zero point seven. At two amps, the Schottky drops well under half a volt, while the P N diode needs nearly zero point eight."
+  },
+  {
+   "type": "schottky",
+   "mode": "loss",
+   "chapter": "Less heat",
+   "narration": "Why does that matter? A diode carrying current wastes its forward voltage times the current, as heat. At two amps, a P N diode at zero point seven volts wastes one point four watts. A Schottky at zero point three volts wastes only zero point six. That's more than half the heat gone."
+  },
+  {
+   "type": "schottky",
+   "mode": "speed",
+   "chapter": "Switching speed",
+   "narration": "The second advantage is speed. When a P N diode switches off, it has stored charge inside, both holes and electrons. For a moment, current actually flows backwards while that charge clears out. This is called reverse recovery, and in a switching converter running fifty thousand times a second, that wasted moment adds up. A Schottky uses only electrons, with no stored charge, so it stops almost instantly."
+  },
+  {
+   "type": "schottky",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. P N loss: zero point seven volts times two amps, one point four watts. Schottky loss: zero point three times two, zero point six watts. That saves zero point eight watts, fifty seven percent less heat. In a five volt, two amp buck converter delivering ten watts, the diode alone was wasting one point four watts. Switching to a Schottky cuts that to zero point six. But there's a trade off: Schottky diodes leak more current in reverse, and they usually can't block very high voltages."
+  },
+  {
+   "type": "app",
+   "app": "solar",
+   "chapter": "Real world: solar panel charging",
+   "narration": "Solar chargers use a Schottky diode between the panel and the battery. During the day, it conducts, losing only about zero point three volts, so more of the panel's energy reaches the battery. At night, the panel's voltage drops to zero. Without the diode, the battery would discharge back through the panel. The diode blocks it."
+  },
+  {
+   "type": "schottky",
+   "mode": "iv",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using a Schottky for high voltage. Most are rated under about one hundred volts, so in a mains rectifier you need a normal diode. Two: ignoring the reverse leakage. It's much larger than a P N diode's and grows quickly when hot, which matters in battery circuits. Three: thinking zero point three volts is exact. The drop rises with current, toward half a volt at high current. Check the datasheet."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BJT BASICS",
+   "lines": [
+    "Metal + N-type: no P layer",
+    "≈ 0.3 V drop, no reverse recovery",
+    "Trade-off: more leakage, lower voltage rating"
+   ],
+   "cta": "Bipolar transistors are next",
+   "narration": "Quick recap. A Schottky diode joins a metal to N type silicon. It drops only about zero point three volts and switches off almost instantly, which is why switching power supplies love it. But it leaks more in reverse and handles lower voltages. That completes diodes. Next, we start the biggest topic of all: the bipolar junction transistor. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "schottky",
+   "mode": "junction",
+   "chapter": "",
+   "narration": "Why do power supplies use this special diode? A normal diode joins P type and N type silicon, and needs zero point seven volts to turn on. A Schottky joins a metal straight onto N type. It turns on at about zero point three."
+  },
+  {
+   "type": "schottky",
+   "mode": "loss",
+   "chapter": "",
+   "narration": "At two amps, that's the difference between one point four watts of heat and zero point six. More than half the waste, gone."
+  },
+  {
+   "type": "schottky",
+   "mode": "speed",
+   "chapter": "",
+   "narration": "And it switches off instantly, with no backwards current, because there's no stored charge inside. Lower loss and faster switching. That's the Schottky diode. Full lesson on the channel."
+  }
+ ]
+}
