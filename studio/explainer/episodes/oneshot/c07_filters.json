@@ -1,0 +1,353 @@
+{
+ "title": "Analog One Shot Ch7",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 7: Filters",
+   "narration": "Chapter seven: filters. Now that we know a capacitor's reactance falls with frequency and an inductor's rises, we can build circuits that choose which frequencies pass. Low-pass, high-pass, band-pass, band-stop, and the Butterworth filter. Every one, half cycle by half cycle.",
+   "kicker": "CHAPTER 7",
+   "title": "FILTERS",
+   "subtitle": "Choosing which frequencies pass"
+  },
+  {
+   "type": "fnum",
+   "chapter": "The RC low-pass filter",
+   "narration": "The simplest filter: the R C low-pass. A resistor in series, then a capacitor from the output to ground. Think of the capacitor as a frequency dependent path to ground. At low frequencies, its reactance is huge, so it's like an open circuit: almost no current is stolen, and the output equals the input. At high frequencies, its reactance is tiny, so it's like a short to ground: the signal is drained away, and the output is small. Low frequencies pass, high frequencies are blocked.",
+   "kind": "lp",
+   "r": 1000,
+   "c": 1.59e-07,
+   "label": "RC LOW-PASS",
+   "lines": [
+    "low f: XC huge → C ≈ open → Vout ≈ Vin",
+    "high f: XC tiny → C ≈ short → Vout ≈ 0",
+    "fc where XC = R",
+    "fc = 1 ÷ (2π R C) = 1 kHz"
+   ]
+  },
+  {
+   "type": "fnum",
+   "chapter": "The cutoff frequency",
+   "narration": "Where does passing turn into blocking? At the cutoff frequency, where the capacitor's reactance equals the resistance. Set one over two pi f C equal to R, and solve: f c equals one over two pi R C. With one kilohm and a hundred and fifty nine nanofarads, one kilohertz. At the cutoff, the output is seventy point seven percent of the input, which is minus three decibels. Above it, every ten times higher frequency cuts the output by ten more times: minus twenty decibels per decade.",
+   "kind": "lp",
+   "r": 1000,
+   "c": 1.59e-07,
+   "label": "CUTOFF",
+   "lines": [
+    "XC = R → 1 ÷ (2π f C) = R",
+    "fc = 1 ÷ (2π R C)",
+    "= 1 ÷ (2π × 1k × 159n) = 1 kHz",
+    "at fc: Vout = 0.707 Vin (−3 dB)",
+    "above fc: −20 dB per decade"
+   ]
+  },
+  {
+   "type": "hpf",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "First, our input. This circle is an AC source. AC means the voltage keeps changing direction: it goes positive, then negative, then positive again, like a wave. We call it V in. Next, we connect a capacitor in series. Series means it sits directly in the path of the current, so every bit of current must go through it. Then a resistor, from that point down to ground. Ground is simply our zero volt reference, the bottom wire. And finally, the output. We take the output voltage across the resistor. We call it V out. That is the whole circuit: a capacitor in series, and a resistor to ground."
+  },
+  {
+   "type": "hpf",
+   "mode": "compare",
+   "chapter": "Low-pass vs high-pass",
+   "narration": "Look at the low-pass filter we just built, on the right. There, the resistor was in series and the capacitor went to ground, and we took the output across the capacitor. For the high-pass filter, we simply swap them. The capacitor goes in series, and the resistor goes to ground. Same two parts, swapped places, and the behaviour becomes the exact opposite. Remember this picture. It is the easiest way to never mix them up in an exam."
+  },
+  {
+   "type": "hpf",
+   "mode": "sweep",
+   "chapter": "The key idea: Xc",
+   "narration": "Now the key idea. A capacitor does not oppose all signals equally. Its opposition is called capacitive reactance, written X c, and it is measured in ohms, just like resistance. The formula is X c equals one divided by two pi f C. f is the frequency. Look at what that means. When the frequency is low, X c is huge, so the capacitor almost blocks the signal, and very little reaches the output. Watch the dot on the graph: at fifty hertz the output is tiny. As the frequency rises, X c gets smaller and smaller, so the capacitor lets more and more through. At high frequencies, X c is almost zero, the capacitor behaves almost like a plain wire, and nearly all of the input appears at the output. Low frequencies blocked, high frequencies passed. That is why it is called a high-pass filter."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 10,
+   "half": "pos",
+   "chapter": "High frequency: positive half-cycle",
+   "narration": "Now let's go inside the circuit, half-cycle by half-cycle. We feed a high frequency, ten kilohertz, ten times the cutoff. Here, X c is only one hundred ohms, much smaller than the one kilohertz resistor. Positive half-cycle. The input rises, pushing current clockwise: up from the source, through the capacitor, down through the resistor, and back to the source. The moving dots show the charge flowing. Because current flows down through the resistor, the top of the resistor is positive, so V out is positive. And because the capacitor's opposition is so small, almost all the input voltage appears across the resistor. Look at the two graphs: the output is nearly as big as the input."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 10,
+   "half": "neg",
+   "chapter": "High frequency: negative half-cycle",
+   "narration": "Negative half-cycle. Now the input reverses. The current reverses too, flowing anticlockwise: up through the resistor, back through the capacitor, into the source. Current now flows upward through the resistor, so V out becomes negative. Notice the capacitor plates: the plus and minus signs swap as it charges the other way. But the capacitor never has time to charge much, because the signal changes direction so quickly. So it barely gets in the way, and the output follows the input almost perfectly. High frequency in, high frequency out."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 0.1,
+   "half": "pos",
+   "chapter": "Low frequency: positive half-cycle",
+   "narration": "Now the same circuit with a low frequency, one hundred hertz, ten times below the cutoff. X c is now ten kilohms, ten times bigger than the resistor. Positive half-cycle. While the input is rising, current flows clockwise and the capacitor charges. Watch the plus and minus signs build up on its plates. But the input rises so slowly that the capacitor easily keeps up: its voltage almost matches the input at every moment. That leaves almost nothing across the resistor. And here is something interesting: once the input passes its peak and starts falling, the capacitor is now slightly fuller than the input, so it pushes a little charge back. The current reverses, and V out dips slightly below zero. Either way, the current is always small, so V out stays tiny. Look at the output graph: it barely moves."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 0.1,
+   "half": "neg",
+   "chapter": "Low frequency: negative half-cycle",
+   "narration": "Negative half-cycle, same story. The input slowly goes negative, the capacitor slowly charges the other way, and again it keeps up with the input. Almost all the voltage sits across the capacitor, not the resistor. So the output stays small. This is the capacitor blocking the low frequency. And for pure DC, frequency zero, the capacitor charges fully and then current stops completely. V out becomes exactly zero. A high-pass filter always blocks DC."
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 1,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "Exactly at the cutoff",
+   "narration": "Now exactly at the cutoff frequency, one kilohertz. Here, X c equals R, both one kilohm. The input is shared between them, but not as a simple half and half, because a capacitor's voltage is out of step with the resistor's. The output comes out at seventy point seven percent of the input, which is called minus three decibels. Look closely at the two graphs: the output peak comes a little earlier than the input peak. The output leads the input by forty-five degrees. That early output is a signature of a high-pass filter."
+  },
+  {
+   "type": "hpf",
+   "mode": "fc",
+   "chapter": "Finding the cutoff frequency",
+   "narration": "So how do we find the cutoff frequency? The cutoff is the frequency where X c equals R. Setting one over two pi f C equal to R and solving gives: f c equals one divided by two pi R C. Let's use our values. R is one kilohm, C is zero point one five nine microfarads. f c equals one divided by two, times three point one four, times one thousand, times zero point zero zero zero zero zero zero one five nine. That comes to about one thousand hertz, one kilohertz. At this frequency, X c equals R, and the output is seventy point seven percent of the input."
+  },
+  {
+   "type": "hpf",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "We start with the same AC source, V in. Remember, AC means the voltage keeps swinging positive, then negative. Now, instead of a capacitor, we put a resistor in series, directly in the path of the current. Then an inductor, from that point down to ground. An inductor is simply a coil of wire. This bumpy symbol shows the turns of the coil. Finally, the output. This time we take V out across the inductor. So the RL high-pass filter is: a resistor in series, and an inductor to ground, with the output across the inductor.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "compare",
+   "chapter": "RL low-pass vs RL high-pass",
+   "narration": "Compare it with the RL low-pass filter, on the right. In the low-pass version, the inductor is in series and the resistor goes to ground, with the output across the resistor. For the high-pass version, we swap them: the resistor goes in series and the inductor goes to ground, with the output across the inductor. Notice the pattern. In an RC high-pass filter the capacitor is in series. In an RL high-pass filter the inductor is to ground. The capacitor and the inductor always sit in opposite places, because they behave in opposite ways with frequency.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "sweep",
+   "chapter": "The key idea: XL",
+   "narration": "Here is the key idea. An inductor opposes changes in current. When current tries to change, the coil builds a magnetic field that pushes back. This opposition is called inductive reactance, written X L, measured in ohms. The formula is X L equals two pi f L. Notice: f is on the top this time. So it is the exact opposite of a capacitor. At low frequencies, the current changes slowly, so the inductor hardly pushes back. X L is tiny, the inductor behaves like a plain piece of wire, and it shorts the output to ground. Very little output. At high frequencies, the current tries to change very fast, the inductor fights back hard, X L becomes large, and most of the voltage appears across the inductor, which is exactly where we take our output. So again: low frequencies blocked, high frequencies passed.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "run",
+   "ratio": 1,
+   "half": "all",
+   "cycles": 2,
+   "chapter": "Exactly at the cutoff",
+   "narration": "Now exactly at the cutoff frequency, one kilohertz. Here X L equals R: both are one kilohm. The output comes out at seventy point seven percent of the input, minus three decibels, exactly as in the RC filter. And look at the timing. The output peak arrives before the input peak. The output leads the input by forty-five degrees. Same result as the RC high-pass filter, done by a different component.",
+   "kind": "rl"
+  },
+  {
+   "type": "hpf",
+   "mode": "fc",
+   "chapter": "Finding the cutoff frequency",
+   "narration": "So how do we find the cutoff frequency? It is the frequency where X L equals R. So two pi f L equals R, and rearranging gives f c equals R divided by two pi L. Notice the formula looks different from the RC one: R is on the top. Let's use our values: R is one kilohm, L is one hundred and fifty-nine millihenry. f c equals one thousand divided by two times three point one four times zero point one five nine. That comes to about one thousand hertz, one kilohertz. At this frequency, X L equals R and the output is seventy point seven percent of the input.",
+   "kind": "rl"
+  },
+  {
+   "type": "app",
+   "app": "crossover",
+   "focus": "both",
+   "chapter": "Real world: the speaker crossover",
+   "narration": "So where are high-pass filters actually used? Open almost any hi-fi speaker box and you'll find one. Music coming from an amplifier is a mix of everything: deep bass and high treble together. But one speaker cone can't play everything well. So speakers use two: a big cone called a woofer for the bass, and a small cone called a tweeter for the high notes. The circuit that splits the music between them is called a crossover."
+  },
+  {
+   "type": "app",
+   "app": "crossover",
+   "focus": "high",
+   "chapter": "Real world: the speaker crossover",
+   "narration": "Here is where our high-pass filter comes in. The tweeter's cone is tiny and light. If you sent it deep bass, it would try to move far too much and could be damaged. So a high-pass filter sits in front of it, blocking the low frequencies and passing only the high notes. A simple crossover uses a capacitor in series with the tweeter. Better crossovers add an inductor to ground as well, exactly like the circuit we built today, to block the bass even more strongly."
+  },
+  {
+   "type": "app",
+   "app": "crossover",
+   "focus": "low",
+   "chapter": "Real world: the speaker crossover",
+   "narration": "And the woofer gets the opposite: a low-pass filter, which passes the bass and blocks the high notes. So in one speaker box, a high-pass filter and a low-pass filter work together, each sending the right frequencies to the right speaker. Every time you hear clear bass and crisp treble from a speaker, filters like these are doing the work."
+  },
+  {
+   "type": "bw",
+   "mode": "orders",
+   "chapter": "The problem with simple filters",
+   "narration": "Look at the graph on the right. The blue-grey curve is a simple first-order low-pass filter, the kind with just one capacitor or one inductor. Above the cutoff frequency, one kilohertz, the output does fall, but slowly. At two kilohertz, twice the cutoff, it still lets through about forty-five percent. That's a lot of unwanted signal getting through. Now watch what happens as we use more parts. With order two, the curve falls faster. With order three, faster again. With order four, the curve drops like a cliff. Every curve still passes through seventy point seven percent at the cutoff, but the higher the order, the sharper the cut. Each extra order adds another twenty decibels per decade to the roll-off."
+  },
+  {
+   "type": "bw",
+   "mode": "build",
+   "n": 1,
+   "chapter": "What does order mean?",
+   "narration": "So what is the order? The order is simply the number of reactive parts in the filter: the inductors and capacitors. Here is order one. We have an AC source, a source resistance R s of one kilohm, one inductor in series, and a load resistor R L of one kilohm, where we take the output. One reactive part, so order one. The inductor opposes high frequencies, so high frequencies are reduced at the output, while low frequencies pass. That makes it a low-pass filter. One small note: because R s and R L share the voltage, the output in the passband is half the input. We always measure the filter's response relative to that passband level."
+  },
+  {
+   "type": "bw",
+   "mode": "build",
+   "n": 2,
+   "chapter": "Building order two",
+   "narration": "Now order two. We keep the inductor in series, and add a capacitor from the line down to ground. Think of the two parts as a team. The inductor blocks high frequencies from going forward along the line. The capacitor gives high frequencies an easy path straight down to ground, so whatever slips past the inductor gets thrown away. Two parts working together, so the high frequencies are cut much harder than with one part alone. Notice the values have changed too: in a Butterworth filter, every part has a carefully chosen value."
+  },
+  {
+   "type": "bw",
+   "mode": "build",
+   "n": 4,
+   "chapter": "Building order four",
+   "narration": "We can keep going. Order three adds another inductor in series. Order four adds another capacitor to ground. The pattern always alternates: inductor in series, capacitor to ground, inductor in series, capacitor to ground. This shape is called a ladder, because it looks like the rungs of a ladder lying on its side. Every extra rung makes the filter cut more sharply. Engineers choose the order based on how sharp the cut needs to be."
+  },
+  {
+   "type": "bw",
+   "mode": "flat",
+   "chapter": "Why is it called maximally flat?",
+   "narration": "But here's the important question: there are many ways to choose these part values. What makes a Butterworth filter special? Look at the red curve. This is another popular design, called a Chebyshev filter. It cuts sharply too, but look at the passband, the frequencies we want to keep. It's wavy. Some frequencies come out a little louder, some a little quieter. For music or measurements, that ripple changes the signal. Now the green curve: the Butterworth filter of the same order. In the passband it's perfectly flat. Every frequency we want comes out at exactly the same level, with no bumps. That's why the Butterworth filter is called maximally flat: its part values are chosen to make the passband as flat as mathematically possible, before it falls away after the cutoff."
+  },
+  {
+   "type": "bw",
+   "mode": "signal",
+   "chapter": "Watching it clean a signal",
+   "narration": "Let's see it working on a real signal. The input is a five hundred hertz tone we want to keep, mixed with three kilohertz noise we want to remove. That fast wiggle on top of the blue wave is the noise. Now the output. With order one, the noise is reduced but still clearly visible. With order two, it's much weaker. With order three, it's almost gone. With order four, only one percent of the noise is left, while the five hundred hertz tone comes through almost untouched. Look at the numbers at the bottom. The wanted signal stays, the unwanted one disappears, and because the passband is flat, the tone we keep is not distorted."
+  },
+  {
+   "type": "bw",
+   "mode": "calc",
+   "n": 2,
+   "chapter": "Calculating the part values",
+   "narration": "How do engineers find the values? They use a table of numbers called g values. For each order, the table gives one number for each part. For order two, both g values are one point four one four. Then two simple formulas turn g values into real parts. For an inductor, L equals g times R, divided by two pi f c. So L one equals one point four one four times one thousand, divided by six thousand two hundred and eighty-three. That's about two hundred and twenty-five millihenry. For a capacitor, C equals g, divided by two pi f c times R. So C two equals one point four one four, divided by six thousand two hundred and eighty-three times one thousand. That's about two hundred and twenty-five nanofarads. Change R or f c, and the same formulas give you new values."
+  },
+  {
+   "type": "bp",
+   "mode": "build",
+   "chapter": "Building it from two filters",
+   "narration": "We start with the simplest idea. First, a high-pass stage: capacitor C one in series, resistor R one to ground. You know this one from our RC high-pass video. It blocks frequencies below its cutoff, which we've set at one hundred hertz. Its curve, in blue, rises from zero and reaches full output above one hundred hertz. Then we add a low-pass stage right after it: resistor R two in series, capacitor C two to ground. This blocks frequencies above its cutoff, ten kilohertz. Its curve, in green, starts at full output and falls above ten kilohertz. The output comes from the end of the second stage. Now look at what the two do together. The orange curve is the result. Below one hundred hertz, the high-pass stage blocks. Above ten kilohertz, the low-pass stage blocks. In between, both let the signal through. That middle region is the pass band."
+  },
+  {
+   "type": "bp",
+   "mode": "combine",
+   "chapter": "Why the stages don't fight",
+   "narration": "Notice we made R two ten times bigger than R one. That's on purpose. The second stage takes some current from the first one. If they were the same size, the second stage would drag down the first and shift the cutoffs. By making R two much bigger, the second stage barely loads the first, so each stage behaves almost exactly as it would on its own. The curve you see here is calculated exactly, including that small loading effect. At one hundred hertz and at ten kilohertz, the output is seventy point seven percent, just as designed."
+  },
+  {
+   "type": "bp",
+   "mode": "run",
+   "f": 30,
+   "chapter": "Too low: 30 Hz",
+   "narration": "Let's test it with real signals. First, thirty hertz, well below the band. Watch the output. The high-pass stage's capacitor has plenty of time to charge and blocks the signal, just like in our RC high-pass video. Only about twenty-nine percent gets through. Blocked by the high-pass stage."
+  },
+  {
+   "type": "bp",
+   "mode": "run",
+   "f": 1000,
+   "chapter": "Inside the band: 1 kHz",
+   "narration": "Now one kilohertz, right in the middle of the band. At this frequency, the first capacitor has a small reactance, so it passes the signal easily. And the second capacitor has a large reactance, so it hardly shorts anything to ground. Both stages let it through. The output is ninety-nine percent of the input. Passed."
+  },
+  {
+   "type": "bp",
+   "mode": "run",
+   "f": 30000,
+   "chapter": "Too high: 30 kHz",
+   "narration": "Finally thirty kilohertz, above the band. Now the second capacitor's reactance is small, so it gives the signal an easy path to ground and throws most of it away. Only about thirty-two percent reaches the output. Blocked by the low-pass stage. Low frequencies blocked, high frequencies blocked, only the band in the middle passes."
+  },
+  {
+   "type": "bp",
+   "mode": "resonant",
+   "q": "both",
+   "chapter": "The resonant band-pass",
+   "narration": "Now the second way to build a band-pass filter, and the one radios use. Put an inductor and a capacitor in series, and take the output across a resistor. Watch the numbers at the bottom as the frequency rises. At low frequencies, the capacitor's reactance X C is huge, so it blocks. At high frequencies, the inductor's reactance X L is huge, so it blocks. But at one special frequency, X L and X C are exactly equal, and because they act in opposite directions, they cancel each other completely. The circuit behaves like just the resistor, and the full signal reaches the output. This is called resonance, and this frequency is called f zero, the centre frequency. Here it's one kilohertz. And look at the two curves. With R equal to one hundred ohms, the band is wide. With R equal to twenty ohms, it becomes much narrower and sharper. We describe this sharpness with a number called Q, the quality factor. Small R, high Q, narrow band."
+  },
+  {
+   "type": "bp",
+   "mode": "calc",
+   "chapter": "The formulas",
+   "narration": "Let's put numbers on everything. For the two-stage filter, the lower cutoff f L is one over two pi R one C one, which gives one hundred hertz. The upper cutoff f H is one over two pi R two C two, which gives ten kilohertz. The bandwidth is the width of the pass band: f H minus f L, which is nine point nine kilohertz. The centre frequency is the geometric middle: the square root of f L times f H, which is one kilohertz. For the resonant version, the centre frequency is f zero equals one over two pi times the square root of L C. And the quality factor Q is f zero divided by the bandwidth. A high Q means a narrow, sharp band."
+  },
+  {
+   "type": "app",
+   "app": "radio",
+   "chapter": "Real world: tuning a radio",
+   "narration": "So where is this used? Every radio. Your antenna receives every station at once: eighty-eight point five, ninety-three point five, ninety-eight point three, all mixed together. A tuned band-pass filter, built from an inductor and a capacitor, lets through only one narrow band of frequencies. When you turn the dial, you are changing the capacitor, which moves the centre frequency f zero. When f zero lands on ninety-eight point three megahertz, only that station passes, and you hear it clearly. That's resonance, and a high Q, doing the job. The same idea picks your Wi-Fi channel and your mobile network band."
+  },
+  {
+   "type": "bs",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "Start with the input signal on the left. First, a resistor R s in series, one kilohm. Then, from the line down to ground, we add a branch: an inductor L, two point zero three henries, and below it a capacitor C, five microfarads. The inductor and capacitor are in series with each other, and together they connect the line to ground. Finally, we take the output across that branch. That's the whole notch filter. Three parts."
+  },
+  {
+   "type": "bs",
+   "mode": "curve",
+   "chapter": "Sweeping the frequency",
+   "narration": "Now let's sweep the input from five hertz up to two hundred hertz and watch the output. At low frequencies, the output is almost all of the input. As we approach fifty hertz, it falls. At fifty hertz exactly, it drops to almost zero. Then above fifty it climbs back up again. That deep dip is the notch. Everything passes, except a band around fifty hertz."
+  },
+  {
+   "type": "bs",
+   "mode": "run",
+   "f": 10,
+   "chapter": "Low frequency: 10 Hz",
+   "narration": "Let's test with real signals. Ten hertz first. At ten hertz, the capacitor's reactance X C is huge, about three thousand two hundred ohms, while the inductor's is only about one hundred and twenty eight. So the branch to ground is a big impedance, and very little signal leaks away. The output is ninety five percent of the input. Passed."
+  },
+  {
+   "type": "bs",
+   "mode": "run",
+   "f": 50,
+   "chapter": "The notch: 50 Hz",
+   "narration": "Now fifty hertz. Look at the two reactances. X L is about six hundred and thirty eight ohms, and X C is also about six hundred and thirty eight ohms. They're equal. In a series L C branch, the inductor's voltage and the capacitor's voltage are opposite, so they cancel completely. The branch acts like a plain wire to ground, a short. All the signal drops across R s, and the output is about zero point one percent. Stopped."
+  },
+  {
+   "type": "bs",
+   "mode": "run",
+   "f": 200,
+   "chapter": "High frequency: 200 Hz",
+   "narration": "Finally two hundred hertz. Now the inductor dominates: X L is about two thousand five hundred and fifty ohms, X C only about one hundred and sixty. The branch is again a large impedance, so the signal stays on the line. The output is ninety two percent. Passed. So low passes, high passes, and only the band around fifty hertz is removed."
+  },
+  {
+   "type": "bs",
+   "mode": "q",
+   "chapter": "Wide or narrow notch",
+   "narration": "How wide is the notch? That depends on R s. The blue curve uses one kilohm. Its notch is wide: at forty hertz, only twenty seven percent gets through, so we damage nearby frequencies too. Now the green curve uses two hundred ohms. The notch is much narrower: at forty hertz, eighty two percent passes, and at sixty hertz, seventy six percent. We call this sharpness Q. Smaller R s, higher Q, narrower notch."
+  },
+  {
+   "type": "bs",
+   "mode": "calc",
+   "chapter": "The formulas",
+   "narration": "Now the numbers. The notch frequency f zero is where X L equals X C, which gives one over two pi root L C. Root of two point zero three times zero point zero zero zero zero zero five is zero point zero zero three one nine. Two pi times that is zero point zero two. One over it is fifty hertz. The quality factor Q is one over R s, times root L over C. Root L over C is about six hundred and thirty seven ohms. With R s one kilohm, Q is zero point six four. With two hundred ohms, Q is three point two. Five times sharper."
+  },
+  {
+   "type": "app",
+   "app": "ecg",
+   "chapter": "Real world: the ECG heart monitor",
+   "narration": "Where is this used? In hospitals. An E C G machine measures your heartbeat through small pads on your chest. The heart signal is tiny, about one millivolt. But every power cable in the room radiates fifty hertz, and that hum gets picked up by the wires and buries the heartbeat. So the machine passes the signal through a fifty hertz notch filter. The hum is removed, the heartbeat stays, and the doctor sees a clean trace. In countries with sixty hertz mains, the notch is tuned to sixty."
+  },
+  {
+   "type": "fnum",
+   "chapter": "Numericals: filters",
+   "narration": "Two questions. One: an R C low pass has ten kilohms and ten nanofarads. Find the cutoff, and the output at five times the cutoff for a one volt input. f c equals one over two pi times ten k times ten n: one point five nine kilohertz. At five times f c, the gain is one over root one plus twenty five, zero point one nine six. So one hundred and ninety six millivolts. Two: design an R C high pass with a fifty hertz cutoff using a ten microfarad capacitor. R equals one over two pi f c C: one over two pi times fifty times ten micro, three hundred and eighteen ohms. Nearest standard, three thirty ohms.",
+   "kind": "lp",
+   "r": 10000,
+   "c": 1e-08,
+   "label": "NUMERICALS",
+   "lines": [
+    "fc = 1 ÷ (2π × 10k × 10n) = 1.59 kHz",
+    "f = 5 fc: |H| = 1 ÷ √(1 + 25) = 0.196",
+    "Vout = 196 mV",
+    "HP: R = 1 ÷ (2π × 50 × 10µ) = 318 Ω → 330 Ω"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 7 recap",
+   "narration": "Recap. Low pass: R in series, C to ground, passes lows. High pass: C in series, R to ground, passes highs. R L versions swap the roles because an inductor's reactance rises with frequency. The cutoff is where reactance equals resistance: one over two pi R C, or R over two pi L, with seventy point seven percent output. Higher order filters cut more sharply, and Butterworth keeps the passband flat. Band-pass keeps a band, band-stop removes one. Next: semiconductors, where electronics really begins.",
+   "title": "CHAPTER 7 COMPLETE",
+   "lines": [
+    "LP: R series, C to ground · HP: C series, R to ground",
+    "fc = 1 ÷ (2πRC) = R ÷ (2πL), 70.7% at fc",
+    "Order ↑ → sharper; Butterworth = flat",
+    "Band-pass keeps a band, band-stop removes one"
+   ],
+   "cta": "Next: semiconductors"
+  }
+ ]
+}
