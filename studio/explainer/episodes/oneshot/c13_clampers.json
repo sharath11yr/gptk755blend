@@ -1,0 +1,112 @@
+{
+ "title": "Analog One Shot Ch13",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 13: Clampers",
+   "narration": "Chapter thirteen: clampers. A clipper cuts the waveform. A clamper keeps the whole waveform, the same shape and size, and shifts it up or down. It's used to restore D C levels in televisions and to build voltage multipliers. We'll watch a clamper start up cycle by cycle, then build every type: positive, negative, and biased.",
+   "kicker": "CHAPTER 13",
+   "title": "CLAMPERS",
+   "subtitle": "Shifting the whole waveform up or down"
+  },
+  {
+   "type": "clamp",
+   "chapter": "Building the positive clamper",
+   "narration": "The circuit: a capacitor in series, then a diode from the output to ground, and a large load resistor. The diode points up, from ground toward the output: its cathode is on the output side. Watch the first cycle carefully. The input rises first: the diode is reverse biased, nothing happens, the output follows the input. Then the input goes negative. When the output tries to go below minus zero point seven, the diode conducts and current charges the capacitor, until at the negative peak the capacitor holds ten minus zero point seven, nine point three volts.",
+   "dir": "pos",
+   "cycles": 1.25
+  },
+  {
+   "type": "clamp",
+   "chapter": "Why the waveform shifts",
+   "narration": "Now the capacitor stays charged at nine point three volts, because the diode is off and the load resistor is huge, so it barely discharges. The capacitor now acts like a nine point three volt battery in series with the input. Every voltage of the input gets nine point three volts added. The output swings from minus zero point seven up to nineteen point three volts. Same shape, same twenty volts peak to peak, just lifted. A positive clamper: it clamps the bottom of the wave just below zero, pushing it all up.",
+   "dir": "pos",
+   "cycles": 3
+  },
+  {
+   "type": "clamp",
+   "chapter": "Negative clamper",
+   "narration": "Flip the diode, so it points down to ground. Now the capacitor charges on the positive peak instead, to nine point three volts the other way. The whole wave is pushed down: the top is clamped at plus zero point seven, and the bottom reaches minus nineteen point three. A negative clamper. Again: flip the diode, flip the direction of the shift.",
+   "dir": "neg",
+   "cycles": 3
+  },
+  {
+   "type": "clamp",
+   "chapter": "Positive clamper, positive bias",
+   "narration": "Now add a battery in series with the diode. With the positive clamper and a plus three volt battery, the diode turns on when the output tries to go below three minus zero point seven, two point three volts. So the bottom of the wave sits at plus two point three, and the top at twenty two point three. The battery lifts the clamping level.",
+   "dir": "pos",
+   "vb": 3,
+   "cycles": 3
+  },
+  {
+   "type": "clamp",
+   "chapter": "Positive clamper, negative bias",
+   "narration": "Reverse the battery to minus three volts. Now the bottom is clamped at minus three minus zero point seven, minus three point seven volts, and the top reaches sixteen point three. So with a positive clamper, the bottom of the output always sits at the battery voltage minus zero point seven.",
+   "dir": "pos",
+   "vb": -3,
+   "cycles": 3
+  },
+  {
+   "type": "clamp",
+   "chapter": "Negative clamper, positive bias",
+   "narration": "Negative clamper with a plus three volt battery: the top is clamped at three plus zero point seven, three point seven volts, and the bottom at minus sixteen point three.",
+   "dir": "neg",
+   "vb": 3,
+   "cycles": 3
+  },
+  {
+   "type": "clamp",
+   "chapter": "Negative clamper, negative bias",
+   "narration": "And negative clamper with a minus three volt battery: the top sits at minus three plus zero point seven, minus two point three, and the bottom at minus twenty two point three. Four biased combinations, one rule: positive clampers fix the bottom at V B minus zero point seven, negative clampers fix the top at V B plus zero point seven.",
+   "dir": "neg",
+   "vb": -3,
+   "cycles": 3
+  },
+  {
+   "type": "clamp",
+   "chapter": "What if: the RC time constant is too small?",
+   "narration": "A crucial question. The clamper only works if the capacitor holds its charge between peaks. That needs R L times C to be much longer than the signal's period, at least ten times. What if R L is small? Then the capacitor discharges a lot during each cycle, and the output droops and gets distorted, no longer a clean shifted copy. Here R C is only half a period. See how the output sags and never settles to a clean shifted wave.",
+   "dir": "pos",
+   "tau": 0.5,
+   "cycles": 3
+  },
+  {
+   "type": "dckt",
+   "chapter": "Numericals: clampers",
+   "narration": "Question one: a positive clamper with a fifteen volt peak input and a silicon diode. Find the output range. Bottom: minus zero point seven. Top: fifteen plus fourteen point three, twenty nine point three volts. Question two: a negative clamper with a five volt bias battery and a ten volt peak input. Top: five plus zero point seven, five point seven volts. Bottom: five point seven minus twenty, minus fourteen point three volts. Question three: for a one kilohertz signal and a one hundred kilohm load, what capacitor is needed? R C must be at least ten periods, ten milliseconds. C equals ten milliseconds over a hundred k, zero point one microfarads or more.",
+   "kind": "clamp",
+   "mode": "calc",
+   "vp": 15,
+   "vb": 0,
+   "label": "NUMERICALS",
+   "lines": [
+    "Q1: −0.7 V to 15 + 14.3 = 29.3 V",
+    "Q2: top = 5 + 0.7 = 5.7 V",
+    "bottom = 5.7 − 20 = −14.3 V",
+    "Q3: RC ≥ 10T = 10 ms → C ≥ 0.1 µF"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 13 recap",
+   "narration": "Recap. A clamper shifts the whole waveform without changing its shape. The capacitor charges to about V p minus zero point seven on one peak, then acts like a battery in series. Positive clamper: diode pointing up, the bottom sits at minus zero point seven. Negative clamper: diode pointing down, the top sits at plus zero point seven. A bias battery moves those levels. And R L C must be much longer than the period. Next: voltage multipliers, built by stacking clampers.",
+   "title": "CHAPTER 13 COMPLETE",
+   "lines": [
+    "C charges to Vp − 0.7, then acts as a battery",
+    "Positive: bottom at VB − 0.7",
+    "Negative: top at VB + 0.7",
+    "RL·C ≫ T (≥ 10 periods)"
+   ],
+   "cta": "Next: voltage multipliers"
+  }
+ ]
+}

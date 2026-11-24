@@ -1,0 +1,528 @@
+{
+ "title": "Analog One Shot Ch15",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 15: Voltage Regulators",
+   "narration": "Chapter fifteen: voltage regulators. A rectifier and capacitor give D C, but it ripples, and it sags when the load draws more or the mains drops. A regulator holds the output steady. We'll cover the two families, linear and switching, every major circuit in each, with all the numbers.",
+   "kicker": "CHAPTER 15",
+   "title": "VOLTAGE REGULATORS",
+   "subtitle": "Linear, Zener, series, shunt, buck, boost, buck-boost, SMPS"
+  },
+  {
+   "type": "lvs",
+   "mode": "linear",
+   "chapter": "The linear regulator",
+   "narration": "First, the linear regulator. On the left, the twelve volt source. On the right, the load, which needs five volts and takes one amp. In between, a pass transistor. Think of it as a resistor that adjusts itself, all the time, so exactly five volts reach the load. Where do the other seven volts go? They drop across the transistor. And watch the current: the same one amp flows through the transistor and the load. So the transistor burns seven volts times one amp, seven watts, as pure heat. On the right: twelve watts go in, only five reach the load, and seven become heat."
+  },
+  {
+   "type": "lvs",
+   "mode": "switching",
+   "chapter": "The switching regulator",
+   "narration": "Now the switching way. Instead of a transistor that burns the extra voltage, we use a switch that turns fully on and fully off, thousands of times a second. When it's on, twelve volts push current through the inductor L into the load. When it's off, the inductor keeps the current flowing, round through the diode. Watch the switch voltage on the right: it jumps between zero and twelve volts. It's on forty two percent of the time. The inductor and capacitor smooth that into the average: zero point four one seven times twelve, which is five volts."
+  },
+  {
+   "type": "lvs",
+   "mode": "switching",
+   "chapter": "Why switching wastes so little",
+   "narration": "Here's the key idea. A switch that's fully on has almost no voltage across it. A switch that's fully off has no current through it. Power is voltage times current, so in both states the switch wastes almost nothing. And an ideal inductor and capacitor store energy, they don't burn it. That's why real switching regulators reach around ninety percent efficiency."
+  },
+  {
+   "type": "lvs",
+   "mode": "compare",
+   "chapter": "Side by side",
+   "narration": "Let's compare them. The linear regulator: twelve watts in, five out, seven watts of heat, efficiency forty two percent. The switching regulator at ninety percent: only five point five six watts in, five out, and just zero point five six watts of heat. Same job. More than twelve times less heat. That's why a linear regulator often needs a big metal heat sink, and a switching one usually doesn't."
+  },
+  {
+   "type": "lvs",
+   "mode": "ripple",
+   "chapter": "So why use linear at all?",
+   "narration": "So is linear always worse? No. Zoom into the output. The linear regulator gives a perfectly smooth, quiet five volts. The switching regulator's output has a small ripple at its switching speed, and the fast switching can create electrical noise. For sensitive circuits, like audio, radio receivers, or precise measurement, engineers often prefer linear. Linear is also simpler and cheaper, with fewer parts. And when the input is only a little above the output, say five point five volts to five, its efficiency is fine anyway."
+  },
+  {
+   "type": "lvs",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Now every number. Linear: the heat is the voltage drop times the current. Twelve minus five, times one amp, is seven watts. Efficiency is output power over input power: five watts over twelve watts, forty one point seven percent. Switching, the buck type: the duty cycle D is V out over V in, five over twelve, zero point four one seven. With ninety percent efficiency, input power is five watts divided by zero point nine, five point five six watts. Input current is five point five six over twelve, zero point four six amps. And the heat is just zero point five six watts."
+  },
+  {
+   "type": "app",
+   "app": "charger",
+   "chapter": "Real world: phone chargers",
+   "narration": "You've seen this change yourself. Old phone chargers were big and heavy, and got warm. Inside was a heavy transformer and a linear regulator, wasting about half the power as heat. Modern chargers are tiny and stay cool. They use switching regulators at around ninety percent efficiency. Less heat means smaller parts and no big heat sink, so the whole charger shrinks."
+  },
+  {
+   "type": "lvs",
+   "mode": "compare",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking a linear regulator's current is lower at the input. It isn't. The input current equals the load current, one amp, so all the extra voltage turns into heat. Two: forgetting the heat sink. Seven watts would burn a small regulator chip in seconds. Always calculate the voltage drop times the current. Three: thinking switching is always better. Its ripple and noise can ruin a sensitive circuit, so choose based on the job."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "On the left, a twelve volt supply. First, the N P N transistor, placed in series between the supply and the output. Its collector goes to the supply. Next, a resistor R, four hundred and seventy ohms, from the supply down to the transistor's base. Then a Zener diode, five point six volts, from the base to ground. The Zener holds the base at exactly five point six volts. Finally the load, connected to the emitter. The emitter is always about zero point seven volts below the base, so the output is five point six minus zero point seven, four point nine volts. That's why it's called series: the transistor sits in series with the load, and all the load current passes through it."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "vin",
+   "rl": 100,
+   "chapter": "Changing the input",
+   "narration": "Now let's change the input. We sweep it from ten volts up to fifteen and back. Watch the graph. The output stays at four point nine volts the whole time. Why? The Zener keeps the base at five point six volts no matter what the input does. The extra input voltage simply drops across the transistor and the resistor. Look at the Zener current: at ten volts it's about nine milliamps, and at fifteen volts about nineteen and a half. The Zener soaks up the change, so the output doesn't have to."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "load",
+   "chapter": "Changing the load",
+   "narration": "Now change the load. With no load, there's no output current, and all thirteen point six milliamps through R go into the Zener. Connect two hundred ohms: the load takes twenty four point five milliamps. One hundred ohms: forty nine milliamps. Fifty ohms: ninety eight milliamps. And the output is still four point nine volts. Here's the clever part: the transistor multiplies current by its gain, beta, a hundred. So for ninety eight milliamps of load, the base needs less than one milliamp. The Zener current barely changes, from thirteen point six down to twelve point six milliamps. But the transistor's heat grows to zero point seven watts."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "calc",
+   "chapter": "Every value calculated",
+   "narration": "Let's calculate everything at twelve volts in, with a one hundred ohm load. Output: V Z minus V B E, five point six minus zero point seven, four point nine volts. Load current: four point nine over one hundred, forty nine milliamps. Base current: load current over beta plus one, forty nine over one hundred and one, zero point four nine milliamps. Current through R: twelve minus five point six, over four hundred and seventy, thirteen point six milliamps. Zener current: thirteen point six minus zero point four nine, thirteen point one milliamps. And the transistor heat: twelve minus four point nine, times zero point zero four nine, zero point three five watts."
+  },
+  {
+   "type": "app",
+   "app": "board",
+   "chapter": "Real world: microcontroller boards",
+   "narration": "You'll find this idea on almost every microcontroller board. A nine volt battery starts at nine volts and drops to about seven as it runs down. The micro chip needs a steady five volts. So the board uses a regulator chip like the seventy eight oh five. Inside it is a refined series regulator: a reference voltage, like our Zener, and a pass transistor in series with the load. Whatever the battery does, the chip gets five volts and works reliably."
+  },
+  {
+   "type": "zreg",
+   "kind": "series",
+   "mode": "load",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the zero point seven volt drop. The output is not the Zener voltage, it's the Zener voltage minus V B E. Two: thinking the Zener carries the load current. It doesn't. The transistor does. The Zener only feeds the tiny base current, which is why a small Zener can control a big load. Three: ignoring the transistor's heat. It's the input minus the output, times the load current. At fifty ohms, that's zero point seven watts, so it may need a heat sink."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "build",
+   "chapter": "Building the circuit",
+   "narration": "Start with the twelve volt supply. First, a series resistor R s, one hundred ohms. Then a Zener diode, five point one volts, from the output to ground. And the load, right beside the Zener, in parallel with it. Because they're in parallel, the load always sees the Zener's voltage: five point one volts. The resistor drops the rest, twelve minus five point one, six point nine volts."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "vin",
+   "rl": 200,
+   "chapter": "Changing the input",
+   "narration": "With a two hundred ohm load, let's sweep the input from ten to fifteen volts. The output stays at five point one volts. The extra voltage drops across R s, so the current through R s rises: forty nine milliamps at ten volts, ninety nine at fifteen. The load always takes the same twenty five point five milliamps. So where does the extra current go? Into the Zener. Twenty three and a half milliamps at ten volts, seventy three and a half at fifteen. The Zener soaks it all up."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "load",
+   "chapter": "Changing the load, and the limit",
+   "narration": "Now keep the input at twelve volts and change the load. The current through R s is fixed at sixty nine milliamps. With no load, all sixty nine milliamps go through the Zener. With two hundred ohms, the load takes twenty five point five, and the Zener gets forty three and a half. With one hundred ohms, the load takes fifty one, and the Zener gets eighteen. Now fifty ohms. The load would want one hundred and two milliamps, but only sixty nine can come through R s. The Zener switches off, and the output falls to four volts. That's the limit of a shunt regulator: the load can never take more than the current R s supplies."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "calc",
+   "chapter": "Every value calculated",
+   "narration": "The numbers, at twelve volts with a one hundred ohm load. Current through R s: twelve minus five point one, over one hundred, sixty nine milliamps. Load current: five point one over one hundred, fifty one milliamps. Zener current: sixty nine minus fifty one, eighteen milliamps. The worst case for the Zener is no load: all sixty nine milliamps, times five point one volts, zero point three five watts. So choose a Zener rated at half a watt or more. And R s itself burns sixty nine milliamps squared times one hundred, about zero point four eight watts, all the time."
+  },
+  {
+   "type": "app",
+   "app": "zref",
+   "chapter": "Real world: a Zener guarding a sensor",
+   "narration": "Where is it used? Wherever the current is small and a fixed, safe voltage matters. For example, a sensor chip or a measuring circuit fed from a noisy twelve volt supply. A resistor and a Zener hold its supply at a safe five point one volts, and clip any spikes. It's simple, cheap and tiny. For big loads, engineers switch to a series regulator, because the shunt regulator wastes current all the time, even with no load."
+  },
+  {
+   "type": "zreg",
+   "kind": "shunt",
+   "mode": "load",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: choosing the Zener's power for the normal load. Size it for no load, when it carries the whole current through R s. Two: making R s too big. Then it can't supply enough current, and the Zener switches off at heavy load, just like we saw at fifty ohms. Three: using a shunt regulator for a big load. It wastes the full current through R s all the time, so for big loads, use a series regulator."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "build",
+   "chapter": "The basic idea",
+   "narration": "Here's the simplest switching regulator. Twelve volts on the left. A switch S. In a real circuit, that's a MOSFET transistor, turning on and off fifty thousand times a second. Then an inductor L, one hundred microhenries. A diode from ground up to the switch side. A capacitor C across the output, and a ten ohm load. Every part has a job, and we'll see each one working."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "on",
+   "chapter": "Switch ON",
+   "narration": "Switch on. Twelve volts push current through the inductor and into the load. Look at the inductor current on the right: it ramps upward. An inductor resists changes in current, so the current can't jump. It climbs steadily, and the inductor stores energy in its magnetic field."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "off",
+   "chapter": "Switch OFF",
+   "narration": "Switch off. The supply is disconnected. But the inductor doesn't let its current stop. It uses its stored energy to keep pushing current through the load, round through the diode. The inductor current now ramps downward. So the load gets current all the time, even while the switch is off."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "PWM and duty cycle",
+   "narration": "Now let it run. The switch repeats this: on, off, on, off. This is called P W M, pulse width modulation. The fraction of time it's on is the duty cycle, D. Here D is fifty percent. The inductor current is a sawtooth around zero point six amps, and the capacitor smooths the output to a steady six volts. Fifty percent of twelve volts."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "duty",
+   "chapter": "Changing the duty cycle",
+   "narration": "Now we change the duty cycle, from twenty five percent up to seventy five. Watch the switch pulses get wider, the inductor current rise, and the output follow: three volts, six volts, nine volts. So by just changing how long the switch stays on, we can set any output voltage. No resistor burning the difference."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "run",
+   "chapter": "Rearranging the parts: boost",
+   "narration": "Here's the amazing part. Rearrange the same parts, and you can even go up. This is the boost converter. With fifty percent duty cycle, twelve volts in gives twenty four volts out. We'll see exactly how in a moment."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "run",
+   "chapter": "And the buck-boost",
+   "narration": "And a third arrangement, the buck-boost, can go either down or up, and its output is negative. At fifty percent duty, twelve volts in gives minus twelve out. Buck, boost and buck-boost: three ways to arrange a switch, an inductor, a diode and a capacitor."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Feedback: holding it steady",
+   "narration": "One more thing. How does a real regulator keep exactly the right voltage when the input or the load changes? Feedback. A small control chip measures the output all the time and compares it with a reference voltage. If the output drops a little, it makes the on-pulses slightly wider. If it rises, narrower. This happens on every cycle, thousands of times a second, so the output stays steady."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers for our buck example. V out equals D times V in: zero point five times twelve, six volts. The output current is six over ten ohms, zero point six amps, and that's also the average inductor current. The ripple in the inductor current is V in minus V out, times D, over f times L. That's six times zero point five, over fifty thousand times one hundred micro, zero point six amps. So the current swings from zero point three to zero point nine amps. And for a five volt output, D would be five over twelve, zero point four one seven."
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: your laptop's processor",
+   "narration": "Every laptop does this. The adapter gives nineteen volts, but the processor needs only about one volt, at up to sixty amps or more. A linear regulator would burn over a thousand watts. Impossible. So right beside the processor sit several buck converters, switching hundreds of thousands of times a second, with feedback adjusting the duty cycle every cycle as the processor's load jumps up and down."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the switch is partly on. It's never partly on, only fully on or fully off. That's why it wastes so little. Two: forgetting the diode. Without it, when the switch opens, the inductor's current has nowhere to go, and it creates a huge voltage spike that can destroy the switch. Three: confusing the duty cycle with the frequency. Frequency is how often it switches. Duty cycle is the fraction of each cycle it's on. The output depends on the duty cycle."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Our supply is twelve volts. First, the switch S, in series with the supply. Next, the inductor L, one hundred microhenries, after the switch. Then the diode, from ground up to the point between the switch and the inductor. It points upward, so it only conducts when that point tries to go below ground. Then the capacitor C, one hundred microfarads, across the output. And the load, ten ohms."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "on",
+   "chapter": "ON phase: the current path",
+   "narration": "Switch on. The current path is: supply, switch, inductor, load, and back to the supply. The voltage across the inductor is V in minus V out, twelve minus six, six volts. A constant voltage across an inductor makes its current rise in a straight line. That's the upward ramp on the right."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "off",
+   "chapter": "OFF phase: the current path",
+   "narration": "Switch off. Now the path is: inductor, load, ground, up through the diode, and back to the inductor. The supply is out of the loop. The voltage across the inductor is now minus V out, minus six volts. So its current falls in a straight line, the downward ramp. The diode is the inductor's escape route."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Why Vout = D × Vin",
+   "narration": "Now watch it run. Here's the key idea. In steady state, the inductor current must end each cycle where it started. So the rise during on must equal the fall during off. The rise is six volts for half the time, the fall is six volts for the other half. They balance. In general, V in minus V out, times D, equals V out times one minus D. Solve that, and you get V out equals D times V in."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "duty",
+   "chapter": "Setting the output",
+   "narration": "So the duty cycle sets the output directly. Twenty five percent: three volts. Fifty percent: six volts. Seventy five percent: nine volts. Notice the output can never be higher than the input, because D can't be more than one. A buck converter only steps down."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's calculate it all at fifty percent duty. V out equals D times V in, six volts. Output current, six over ten, zero point six amps. In a buck, the average inductor current equals the output current, zero point six amps. The ripple: V in minus V out, times D, over f L. Six times zero point five over five, zero point six amps peak to peak. So the inductor current swings from zero point three to zero point nine amps. A bigger inductor would make this ripple smaller."
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: powering a processor",
+   "narration": "The biggest buck converters you own sit right next to your laptop's processor. Nineteen volts from the adapter, about one volt for the processor, at up to sixty amps. One buck converter can't handle that alone, so laptops use several in parallel, called phases, each taking turns. That's what those little square inductors around the processor on a motherboard are."
+  },
+  {
+   "type": "conv",
+   "kind": "buck",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the average inductor current is the input current. In a buck, the average inductor current equals the output current. The input current is smaller, D times that, because power in equals power out. Two: putting the diode the wrong way. It must point from ground toward the switch side, or it will short the supply when the switch turns on. Three: using too small an inductor. The ripple grows, and if the current falls to zero during each cycle, the simple formula no longer holds."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Twelve volt supply. This time the inductor comes first, in series with the supply. After it, the switch S goes from that point down to ground. Then a diode, pointing toward the output. Then the capacitor and the ten ohm load. Same parts as the buck, just rearranged."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "on",
+   "chapter": "ON: charging the inductor",
+   "narration": "Switch on. It connects the end of the inductor straight to ground. So the whole twelve volts appear across the inductor, and its current ramps up, storing energy. Meanwhile the diode blocks, so the output is cut off, and the capacitor alone feeds the load."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "off",
+   "chapter": "OFF: the inductor pushes",
+   "narration": "Switch off. The inductor's current can't stop. It forces its way through the diode to the output. Now the inductor acts like a second battery in series with the supply. Twelve volts from the supply, plus the inductor's voltage on top. That's how the output gets higher than the input. The current ramps down as the inductor hands its energy to the output and recharges the capacitor."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "run",
+   "chapter": "Why Vout = Vin ÷ (1 − D)",
+   "narration": "Run it. Again, the inductor current must balance each cycle. During on, the inductor has V in across it for time D. During off, it has V out minus V in across it, the other way, for one minus D. Balance them: V in times D equals V out minus V in, times one minus D. Solve, and V out equals V in over one minus D. At fifty percent: twelve over zero point five, twenty four volts."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "duty",
+   "chapter": "Changing the duty cycle",
+   "narration": "Increase the duty cycle from twenty to sixty percent. At twenty percent, twelve over zero point eight, fifteen volts. At fifty, twenty four. At sixty, twelve over zero point four, thirty volts. The longer the switch stays on, the more energy the inductor stores, and the higher the output. But look at the inductor current: it climbs fast too."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "At fifty percent duty. V out equals twelve over one minus zero point five, twenty four volts. Output current, twenty four over ten, two point four amps. Output power, twenty four times two point four, fifty seven point six watts. Energy can't appear from nowhere, so the input must supply the same power. Input current, fifty seven point six over twelve, four point eight amps. And in a boost, the input current flows through the inductor, so the average inductor current is four point eight amps. Ripple, V in times D over f L, twelve times zero point five over five, one point two amps. Higher voltage out always means more current in."
+  },
+  {
+   "type": "app",
+   "app": "powerbank",
+   "chapter": "Real world: the power bank",
+   "narration": "Your power bank holds lithium cells at about three point seven volts. Fully charged, four point two. Nearly empty, three. But a phone's USB port expects five volts. So inside every power bank is a boost converter. As the battery voltage falls, the feedback raises the duty cycle, and the output stays at five volts until the battery is empty."
+  },
+  {
+   "type": "conv",
+   "kind": "boost",
+   "mode": "duty",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the boost makes free energy. It raises the voltage, but the input current is higher than the output current. Power in equals power out, at best. Two: pushing the duty cycle too close to one hundred percent. The formula says the voltage goes to infinity, but in reality losses take over, and the inductor current becomes huge. Three: no load at all. With nothing taking the energy, the output voltage keeps rising, and can destroy the capacitor."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Twelve volt supply. First, the switch S, in series. Then the inductor, from the switch side straight down to ground. Then the diode, pointing back from the output toward the inductor. Then the capacitor and the ten ohm load. Notice: the inductor goes to ground, not to the output."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "on",
+   "chapter": "ON: storing energy",
+   "narration": "Switch on. The supply sits directly across the inductor. Its current ramps up from top to bottom, storing energy. The diode blocks, so the supply isn't connected to the output at all. The capacitor feeds the load alone."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "off",
+   "chapter": "OFF: releasing it, upside down",
+   "narration": "Switch off. The inductor keeps its current flowing downward. It pulls current up from ground, through the load from bottom to top, and through the diode back to the inductor. Current flows up through the load, so the top of the load ends up below ground. That's why the output is negative."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "run",
+   "chapter": "Why |Vout| = Vin × D ÷ (1 − D)",
+   "narration": "Run it. Balance the inductor again. During on, V in across it for time D. During off, V out across it the other way for one minus D. So V in times D equals the size of V out times one minus D. The size of V out is V in times D over one minus D. At fifty percent, twelve times zero point five over zero point five: twelve volts, but negative. Minus twelve volts."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "duty",
+   "chapter": "Down or up",
+   "narration": "Now sweep the duty cycle from twenty five to seventy five percent. At twenty five percent: twelve times zero point two five over zero point seven five, four volts. Stepping down. At fifty, twelve. At seventy five: twelve times zero point seven five over zero point two five, thirty six volts. Stepping up. Below fifty percent it bucks, above fifty percent it boosts."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Every value. The size of V out equals V in times D over one minus D. At fifty percent, twelve volts, inverted, so minus twelve. At twenty five percent, four volts. At seventy five percent, thirty six volts. At fifty percent with our ten ohm load, the output current is one point two amps, and the average inductor current is the output current over one minus D, two point four amps. The inductor must carry the energy for both the input and output, so it works hard."
+  },
+  {
+   "type": "app",
+   "app": "led",
+   "chapter": "Real world: a torch that stays bright",
+   "narration": "Imagine an L E D torch on a lithium battery. Full, the battery is four point two volts, above the L E D's three point four volts. Nearly empty, it's three volts, below it. A buck alone or a boost alone can't cover both. A buck-boost can. It steps down at first, then steps up as the battery drains, so the light stays at the same brightness until the battery is empty. Many such designs use a non-inverting buck-boost, built from the same idea."
+  },
+  {
+   "type": "conv",
+   "kind": "bb",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the output is negative. Connect a normal electrolytic capacitor the usual way round, and it will fail. Its positive end goes to ground here. Two: thinking fifty percent duty means half the voltage. In a buck-boost, fifty percent gives the same size as the input. Three: underestimating the inductor current. It carries the output current divided by one minus D, two point four amps here, much more than the one point two amp load."
+  },
+  {
+   "type": "smps",
+   "mode": "build",
+   "chapter": "Building it, stage by stage",
+   "narration": "First the mains, two hundred and thirty volts A C. Then a bridge rectifier, four diodes, that flips the negative half cycles up. Then a big bulk capacitor that smooths it into high voltage D C. Next, the primary winding of a transformer, with a MOSFET switch Q at the bottom. On the other side, the secondary winding, a diode and an output capacitor, giving five volts. And finally, a feedback path through an optocoupler, back to the controller that drives the switch."
+  },
+  {
+   "type": "smps",
+   "mode": "rect",
+   "chapter": "Stage 1: AC to high-voltage DC",
+   "narration": "Stage one. The mains is two hundred and thirty volts r m s, which means it peaks at two hundred and thirty times root two, about three hundred and twenty five volts. The bridge flips every negative half cycle up, so we get bumps that are all positive. The bulk capacitor charges to the peak and fills in the gaps. Now we have about three hundred and twenty five volts D C. Careful: this part of a charger is dangerous."
+  },
+  {
+   "type": "smps",
+   "mode": "switch",
+   "chapter": "Stage 2: the switch and the transformer",
+   "narration": "Stage two. The MOSFET switches sixty five thousand times a second. When it's on, current flows through the primary winding, and the transformer's core stores energy, just like our inductor did. The secondary diode is pointing the wrong way, so nothing flows there yet. When the switch turns off, the stored energy comes out of the secondary winding, through the diode, into the output capacitor and the load. This is called a flyback converter. It's a buck-boost with a transformer instead of an inductor."
+  },
+  {
+   "type": "smps",
+   "mode": "switch",
+   "chapter": "Why the transformer?",
+   "narration": "Why use a transformer at all? Two reasons. First, the turns ratio steps the voltage down. Our transformer has twenty eight turns on the primary for every one on the secondary. Second, and more important, safety. The primary and secondary aren't connected by any wire, only by magnetism. So the dangerous three hundred and twenty five volts can never reach your phone, or your hand."
+  },
+  {
+   "type": "smps",
+   "mode": "fb",
+   "chapter": "Stage 3: feedback through light",
+   "narration": "Stage three, feedback. The output must stay at five volts whatever the phone draws. But the output side isn't allowed to have a wire back to the dangerous side. So we use an optocoupler: a tiny L E D and a light sensor in one package. If the output rises above five volts, the L E D glows brighter, and the controller makes the on pulses shorter. Information crosses the safety gap as light."
+  },
+  {
+   "type": "smps",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Every value. The D C voltage: two hundred and thirty times root two, three hundred and twenty five volts. A flyback works like a buck-boost, then divides by the turns ratio n. So V out equals V D C times D over one minus D, over n. With a thirty percent duty cycle, three hundred and twenty five times zero point three over zero point seven is one hundred and thirty nine volts, and divided by twenty eight, about five volts. And here's why chargers got tiny: the switch runs at sixty five thousand hertz instead of the mains fifty hertz, thirteen hundred times faster. The faster the switching, the less energy the core stores each cycle, so the transformer can be many times smaller."
+  },
+  {
+   "type": "app",
+   "app": "charger",
+   "chapter": "Real world: why chargers got small",
+   "narration": "This is exactly the difference you've seen. An old charger had a heavy fifty hertz transformer and a linear regulator: big, heavy, warm, and about half the power wasted. A modern S M P S charger switches at tens of kilohertz, so its transformer is the size of a fingertip, and it's about ninety percent efficient. Laptop adapters, T V power supplies, and computer power supplies all use the same idea."
+  },
+  {
+   "type": "smps",
+   "mode": "switch",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the transformer works on D C. A transformer needs changing current. The switch is what creates it, sixty five thousand times a second. Two: forgetting the isolation. The feedback must cross through the optocoupler, never a direct wire, or the output becomes dangerous. Three: touching the primary side. Even after unplugging, the bulk capacitor can hold three hundred and twenty five volts. Never open a charger."
+  },
+  {
+   "type": "zreg",
+   "mode": "calc",
+   "chapter": "Problem 1: series regulator at 15 V",
+   "narration": "Problem one. Our series regulator, Zener five point six volts, R four seventy ohms, beta one hundred, load one hundred ohms. But the input rises to fifteen volts. The output is still V Z minus V B E, four point nine volts, and the load current forty nine milliamps. Base current, zero point four nine milliamps. Current through R: fifteen minus five point six, over four seventy, twenty milliamps. Zener current: twenty minus zero point four nine, nineteen point five milliamps. Transistor power: fifteen minus four point nine, times forty nine milliamps, zero point four nine five watts.",
+   "kind": "series",
+   "lines": [
+    "Vout = 5.6 − 0.7 = 4.9 V, IL = 49 mA",
+    "IB = 49 ÷ 101 = 0.49 mA",
+    "IR = (15 − 5.6) ÷ 470 = 20 mA",
+    "IZ = 20 − 0.49 = 19.5 mA",
+    "P(Q) = (15 − 4.9) × 0.049 = 0.495 W"
+   ],
+   "vin": 15
+  },
+  {
+   "type": "zreg",
+   "mode": "calc",
+   "chapter": "Problem 2: shunt regulator power",
+   "narration": "Problem two. The shunt regulator: R s one hundred ohms, Zener five point one volts, input fifteen volts, load one hundred ohms. Current through R s: fifteen minus five point one, over one hundred, ninety nine milliamps. Load current fifty one, so the Zener takes forty eight milliamps, zero point two four five watts. But with the load removed, the Zener takes all ninety nine milliamps: five point one times zero point zero nine nine, zero point five zero five watts. So a half watt Zener is not enough. Use one watt.",
+   "kind": "shunt",
+   "lines": [
+    "I = (15 − 5.1) ÷ 100 = 99 mA",
+    "IL = 51 mA → IZ = 48 mA, PZ = 0.245 W",
+    "no load: IZ = 99 mA",
+    "PZ = 5.1 × 0.099 = 0.505 W → use 1 W"
+   ],
+   "vin": 15
+  },
+  {
+   "type": "zreg",
+   "mode": "calc",
+   "chapter": "Problem 3: minimum load",
+   "narration": "Problem three. Same shunt regulator at twelve volts. What's the smallest load resistance it can regulate? The current through R s is sixty nine milliamps. The load can take all of it, leaving zero for the Zener, but no more. So the minimum load is five point one over sixty nine milliamps, seventy three point nine ohms. Any smaller, like our fifty ohms, and the Zener switches off.",
+   "kind": "shunt",
+   "mode_note": "",
+   "lines": [
+    "I(Rs) = (12 − 5.1) ÷ 100 = 69 mA",
+    "IL(max) = 69 mA (IZ → 0)",
+    "RL(min) = 5.1 ÷ 0.069 = 73.9 Ω",
+    "50 Ω < 73.9 Ω → regulation lost"
+   ]
+  },
+  {
+   "type": "conv",
+   "mode": "calc",
+   "chapter": "Problem 4: buck for 5 V",
+   "narration": "Problem four. A buck converter from twelve volts must give five volts to a ten ohm load, with L one hundred microhenries at fifty kilohertz. Duty cycle: five over twelve, zero point four one seven. Output current, zero point five amps. Ripple: twelve minus five, times zero point four one seven, over fifty k times one hundred micro: zero point five eight three amps. The inductor current swings from zero point two one to zero point seven nine amps. Input current: power out over twelve volts, two point five over twelve, zero point two one amps.",
+   "kind": "buck",
+   "d": 0.417,
+   "lines": [
+    "D = 5 ÷ 12 = 0.417",
+    "Iout = 5 ÷ 10 = 0.5 A",
+    "ΔIL = (12 − 5) × 0.417 ÷ (50k × 100µ) = 0.583 A",
+    "IL: 0.21 A → 0.79 A",
+    "Iin = 2.5 W ÷ 12 V = 0.21 A"
+   ]
+  },
+  {
+   "type": "conv",
+   "mode": "calc",
+   "chapter": "Problem 5: boost 12 V to 20 V",
+   "narration": "Problem five. A boost converter from twelve to twenty volts, ten ohm load. Duty cycle: one minus V in over V out, one minus twelve over twenty, zero point four. Output current, two amps. Output power, forty watts. Input current, and average inductor current: forty over twelve, three point three three amps. Ripple: twelve times zero point four over fifty k times one hundred micro, zero point nine six amps.",
+   "kind": "boost",
+   "d": 0.4,
+   "lines": [
+    "D = 1 − 12 ÷ 20 = 0.4",
+    "Iout = 20 ÷ 10 = 2 A, Pout = 40 W",
+    "Iin = IL(avg) = 40 ÷ 12 = 3.33 A",
+    "ΔIL = 12 × 0.4 ÷ (50k × 100µ) = 0.96 A"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 15 recap",
+   "narration": "Recap. Linear regulators drop the extra voltage as heat: series regulators carry the load current through a transistor with V out equal to V Z minus zero point seven, shunt regulators pass the spare current through a Zener. Switching regulators chop the input: buck, V out equals D V in. Boost, V in over one minus D. Buck-boost, V in D over one minus D, inverted. The S M P S adds a transformer and opto feedback. Next: the transistor.",
+   "title": "CHAPTER 15 COMPLETE",
+   "lines": [
+    "Linear: heat = (Vin − Vout) × I",
+    "Series: Vout = VZ − 0.7 · Shunt: IZ = I − IL",
+    "Buck D·Vin · Boost Vin/(1−D) · BB Vin·D/(1−D)",
+    "SMPS: rectify → switch → transformer → feedback"
+   ],
+   "cta": "Next: BJT"
+  }
+ ]
+}

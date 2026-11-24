@@ -3592,3 +3592,37 @@ export const ClipScene: React.FC<any> = ({ dur, cfg = "shunt", dir = "pos", vb =
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{leftAll}{right}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.clip = ClipScene;
+
+/** {"type":"clamp","dir":"pos"|"neg","vb":0,"tau":50,"cycles":3} clamper simulated cycle by cycle. tau in signal periods (RL·C ÷ T). Vm = 10 V. */
+export const ClampScene: React.FC<any> = ({ dur, dir = "pos", vb = 0, tau = 50, cycles = 3 }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.04, dur * 0.96], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const VM = 10, N = 600; const pos = dir === "pos";
+  const sim: { vin: number; vc: number; vo: number; on: boolean }[] = []; let vc = 0;
+  for (let k = 0; k <= N; k++) { const x = 2 * Math.PI * cycles * k / N; const vin = VM * Math.sin(x); vc *= Math.exp(-(cycles / N) / tau); let on = false;
+    if (pos) { const lim = vb - 0.7; if (vin + vc < lim) { vc = lim - vin; on = true; } } else { const lim = vb + 0.7; if (vin + vc > lim) { vc = lim - vin; on = true; } }
+    sim.push({ vin, vc, vo: vin + vc, on }); }
+  const k = Math.min(N, Math.floor(p * N)); const cur = sim[k];
+  const D = (x: number, y: number, rot: number, on: boolean) => <g transform={`translate(${x},${y}) rotate(${rot})`}><rect x={-30} y={-30} width={60} height={60} fill={L.bg0} />
+    <polygon points="-22,-24 -22,24 18,0" fill={on ? "rgba(46,196,160,0.4)" : L.bg0} stroke={on ? L.green : L.amber} strokeWidth={5} /><line x1={18} y1={-24} x2={18} y2={24} stroke={on ? L.green : L.amber} strokeWidth={5} /></g>;
+  const T = 300, B = 800;
+  const left = <g><circle cx={180} cy={550} r={50} fill={L.bg0} stroke={L.cyan} strokeWidth={6} /><path d="M 152 550 q 14 -26 28 0 t 28 0" fill="none" stroke={L.cyan} strokeWidth={5} /><text x={180} y={640} textAnchor="middle" {...T1} fontSize={24} fill={L.cyan}>±10 V</text>
+    {W(`180,500 180,${T} 390,${T}`)}<rect x={380} y={T - 50} width={70} height={100} fill={L.bg0} /><line x1={400} y1={T - 44} x2={400} y2={T + 44} stroke={L.amber} strokeWidth={8} /><line x1={428} y1={T - 44} x2={428} y2={T + 44} stroke={L.amber} strokeWidth={8} />
+    <text x={414} y={T - 60} textAnchor="middle" {...T1} fontSize={24}>C</text><text x={414} y={T + 90} textAnchor="middle" {...T1} fontSize={24} fill={L.amber}>VC = {Math.abs(cur.vc).toFixed(1)} V</text>
+    {W(`440,${T} 900,${T}`)}{W(`620,${T} 620,${vb ? 400 : 480}`)}{D(620, vb ? 440 : 540, pos ? -90 : 90, cur.on)}
+    {vb ? <>{W("620,470 620,560")}<rect x={580} y={572} width={80} height={56} fill={L.bg0} /><line x1={586} y1={vb > 0 ? 590 : 610} x2={654} y2={vb > 0 ? 590 : 610} stroke={L.text} strokeWidth={6} /><line x1={602} y1={vb > 0 ? 610 : 590} x2={638} y2={vb > 0 ? 610 : 590} stroke={L.text} strokeWidth={11} /><text x={670} y={608} {...T1} fontSize={24}>{Math.abs(vb)} V</text>{W(`620,628 620,${B}`)}</> : W(`620,570 620,${B}`)}
+    {W(`780,${T} 780,480`)}<Res x={780} y={550} ohm={100000} label="RL" />{W(`780,620 780,${B}`)}{W(`180,600 180,${B} 900,${B}`)}
+    <circle cx={900} cy={T} r={10} fill={L.green} /><circle cx={900} cy={B} r={10} fill={L.green} /><text x={900} y={T - 26} textAnchor="middle" {...T1} fontSize={26} fill={L.green}>vout</text>
+    {cur.on && <><Dots pts={pos ? [[180, B], [620, B], [620, T], [440, T], [180, T], [180, 500]] : [[180, 500], [180, T], [620, T], [620, B], [180, B]]} t={t} speed={160} gap={46} r={9} color={L.amber} /></>}
+    <text x={540} y={990} textAnchor="middle" {...T1} fontSize={28} fill={cur.on ? L.green : L.dim}>{cur.on ? "diode ON: C charges (only near the peak)" : "diode OFF: C holds its charge, output = vin + shift"}</text></g>;
+  const GX = 1080, GW = 760, sc = 10;
+  const tr = (cy: number, key: "vin" | "vo", col: string, name: string) => { const q: string[] = []; for (let j = 0; j <= k; j += 2) q.push(`${GX + GW * j / N},${cy - sim[j][key] * sc}`);
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><text x={GX - 10} y={cy + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={20}>0</text>
+      <text x={GX} y={cy - 220} fill={col} fontFamily={SANS} fontSize={26} fontWeight={800}>{name}</text><polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} /></g>; };
+  const last = sim.slice(N / 2); const mx = Math.max(...last.map((s) => s.vo)), mn = Math.min(...last.map((s) => s.vo));
+  const right = <g>{tr(340, "vin", L.cyan, "input ±10 V")}{tr(pos ? 860 : 680, "vo", L.green, `output (steady): ${mn.toFixed(1)} V to ${mx.toFixed(1)} V`)}</g>;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{left}{right}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.clamp = ClampScene;

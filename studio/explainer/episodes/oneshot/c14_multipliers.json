@@ -1,0 +1,82 @@
+{
+ "title": "Analog One Shot Ch14",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 14: Voltage Multipliers",
+   "narration": "Chapter fourteen: voltage multipliers. A clamper lifts the wave by its peak. Add a peak detector after it, and you get twice the peak voltage. Stack more stages and you get three, four, many times the peak, using only diodes and capacitors.",
+   "kicker": "CHAPTER 14",
+   "title": "VOLTAGE MULTIPLIERS",
+   "subtitle": "Stacking clampers to double, triple, quadruple"
+  },
+  {
+   "type": "vmul",
+   "mode": "build",
+   "chapter": "Building the doubler",
+   "narration": "Our source is an A C signal with a ten volt peak. First, a capacitor C one, in series. Then a diode D one from that point down to ground, pointing upward. Then a second diode D two, pointing toward the output. And finally capacitor C two, from the output to ground. That's the whole voltage doubler: two diodes, two capacitors."
+  },
+  {
+   "type": "vmul",
+   "mode": "neg",
+   "chapter": "Negative half cycle: C1 charges",
+   "narration": "On the negative half cycle, the bottom of the source is the higher side. Current flows up through D one and charges C one. When the input reaches its negative peak, C one holds ten volts. And because there's no way to discharge it, it keeps those ten volts."
+  },
+  {
+   "type": "vmul",
+   "mode": "pos",
+   "chapter": "Positive half cycle: stacking",
+   "narration": "Now the positive half cycle. The source rises to plus ten volts. But C one is in series with it, still holding its ten volts, the same way round. So they add up, like two batteries in series: ten plus ten, twenty volts. D two conducts, and C two charges to twenty volts. That's the doubling."
+  },
+  {
+   "type": "vmul",
+   "mode": "run",
+   "chapter": "Watching it build up",
+   "narration": "Watch it over several cycles. The input swings between plus ten and minus ten. The output across C two doesn't jump to twenty at once. Each cycle tops it up a bit more, until it settles at twenty volts, twice the peak. With no load connected, it stays there."
+  },
+  {
+   "type": "vmul",
+   "mode": "quad",
+   "chapter": "Stacking more stages",
+   "narration": "Want more? Keep stacking. Each extra diode and capacitor adds another ten volts. One stage, ten volts. Two, twenty. Three, thirty. Four, forty. This ladder is called a Cockcroft Walton multiplier, and it was used to split the atom in nineteen thirty two."
+  },
+  {
+   "type": "vmul",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. In the doubler, C one charges to the peak, ten volts. On the positive peak, D two sees the source plus C one, two times V p, twenty volts. With n stages, the output is n times V p, so four stages give forty volts. But real diodes drop about zero point seven volts each. So a real doubler gives two times ten minus zero point seven, about eighteen point six volts. And the more current you draw, the more the output sags, because the capacitors discharge between cycles."
+  },
+  {
+   "type": "app",
+   "app": "zapper",
+   "chapter": "Real world: the bug zapper",
+   "narration": "An insect zapper needs about two thousand volts on its grid. Building a transformer for that would be big and costly. Instead, a small A C input goes into a diode capacitor multiplier, a ladder of many stages, which steps it up to thousands of volts. The current is tiny, which is perfect, because multipliers can only supply small currents. The same idea is used in laser printers, photocopiers, and old television tubes."
+  },
+  {
+   "type": "vmul",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: expecting the full voltage under load. A multiplier only gives n times V p with little or no current drawn. Load it heavily, and the output drops a lot. Two: using capacitors with too low a voltage rating. C two has to survive twenty volts, not ten. Later stages see even more. Three: forgetting the diode drops. Each stage loses about zero point seven volts, which adds up in long ladders."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 14 recap",
+   "narration": "Recap. A voltage doubler is a clamper followed by a peak detector: C one charges to V p, then stacks on the input to charge C two to two V p. Stack n stages for n times V p, at small currents, minus a diode drop per stage. Next: voltage regulators.",
+   "title": "CHAPTER 14 COMPLETE",
+   "lines": [
+    "Doubler = clamper + peak detector",
+    "n stages → n × Vp (ideal)",
+    "Small currents only, −0.7 V per diode"
+   ],
+   "cta": "Next: voltage regulators"
+  }
+ ]
+}
