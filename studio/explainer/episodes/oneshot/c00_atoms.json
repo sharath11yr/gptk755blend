@@ -1,0 +1,169 @@
+{
+ "title": "Analog Electronics One Shot | Complete Course From Zero to Placement Level",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Welcome",
+   "narration": "Welcome to the complete Analog Electronics course, in one video. This video assumes you know nothing. Not what a resistor is, not what current is, nothing. By the end, you'll understand every important circuit in analog electronics, why it's built the way it is, what happens if you change it, and how to solve any question on it, in exams and in placement interviews. We'll go one small step at a time. Every concept will be shown, not just told. Let's begin with the most basic question of all: what is electricity?",
+   "kicker": "ANALOG ELECTRONICS · ONE SHOT",
+   "title": "ANALOG ELECTRONICS",
+   "subtitle": "From zero to placement level, in one video"
+  },
+  {
+   "type": "atom",
+   "chapter": "Everything is made of atoms",
+   "narration": "Everything around you, your table, your phone, the wire in your charger, is made of tiny particles called atoms. Here's the simplest one, hydrogen. In the centre is the nucleus, which contains a proton. A proton has a positive charge. Around it moves an electron, which has a negative charge. Positive and negative attract each other, like a magnet's north and south. That attraction is what holds the electron near the nucleus.",
+   "element": "hydrogen"
+  },
+  {
+   "type": "atom",
+   "chapter": "Copper: the electron that can escape",
+   "narration": "Now copper, the metal used in almost every wire. A copper atom has twenty nine protons in its nucleus, and twenty nine electrons arranged in layers, called shells. Look at the outermost shell. It has just one electron, very far from the nucleus. Far away, the pull of the nucleus is weak, and the inner electrons shield it. So that one outer electron is only loosely held.",
+   "element": "copper"
+  },
+  {
+   "type": "atom",
+   "chapter": "The free electron",
+   "narration": "And here's the key. At room temperature, that loose outer electron easily breaks free and wanders away from its atom. It becomes a free electron. A piece of copper the size of a sugar cube has about ten to the power twenty three of these free electrons, moving around randomly between the atoms. Remember this picture: a sea of free electrons inside a metal. Everything in electronics starts here.",
+   "element": "copper",
+   "free": true
+  },
+  {
+   "type": "inside",
+   "chapter": "Conductors",
+   "narration": "Let's look inside a copper wire. The grey circles with plus signs are the copper atoms that lost their outer electron. They are now positive ions, and they stay fixed in place. The blue dots are the free electrons. When we connect a battery, all those free electrons start drifting in one direction. That drift is electric current. Materials with lots of free electrons, like copper, silver, aluminium and gold, are called conductors.",
+   "mode": "wire"
+  },
+  {
+   "type": "inside",
+   "chapter": "Insulators",
+   "narration": "Now an insulator, like rubber, plastic or glass. Here every electron is tightly held by its own atom. They can vibrate in place, but they can't leave. No free electrons, so no current, even with a battery connected. That's why the copper wire in your charger cable is covered with plastic: the plastic stops the current from escaping into your hand.",
+   "mode": "insulator"
+  },
+  {
+   "type": "inside",
+   "chapter": "No voltage, no flow",
+   "narration": "Back to copper, but with nothing connected. The free electrons still move, very fast in fact, but randomly, in every direction. For every electron moving left, another moves right. So on average, nothing flows. To get a current, we need something that pushes all of them the same way. That push is called voltage, and we'll meet it in a moment.",
+   "mode": "no-voltage"
+  },
+  {
+   "type": "dual",
+   "chapter": "Current: a flow of charge",
+   "narration": "So, what exactly is current? Current is the amount of electric charge passing a point every second. Charge is measured in coulombs. One coulomb is the charge of about six point two five billion billion electrons. Imagine standing at this red line and counting the charge that passes. Here, a nine volt battery drives a bulb of ninety ohms. In ten seconds, one coulomb passes the line. So the current is one coulomb divided by ten seconds, zero point one coulombs per second. One coulomb per second has a special name: one ampere, or one amp. So this current is zero point one amps, or one hundred milliamps. I equals Q divided by t.",
+   "mode": "charge",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "dual",
+   "chapter": "Electrons: from minus to plus",
+   "narration": "Now the most confusing thing for every beginner, so let's settle it once and for all. Watch the blue dots. These are electrons. Electrons are negative, so they are pushed away from the battery's negative terminal and pulled toward the positive terminal. They leave the negative side, go around the circuit, through the bulb, and come back into the positive side. Electrons flow from minus to plus.",
+   "mode": "elec",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "dual",
+   "chapter": "Conventional current: from plus to minus",
+   "narration": "But in every circuit diagram, every textbook and every formula, current is drawn flowing the other way, from plus to minus. Watch the orange arrows. Why? Because scientists described current two hundred years ago, before electrons were discovered, and they guessed that positive charge was moving. They picked plus to minus. Later we learned that it's actually negative electrons moving the opposite way. But moving negative charge one way has exactly the same effect as moving positive charge the other way. So the old convention was kept. It's called conventional current.",
+   "mode": "conv",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "dual",
+   "chapter": "Both, together",
+   "narration": "Here are both together. Orange arrows: conventional current, out of plus, around the circuit, into minus. Blue dots: electrons, out of minus, into plus. Same circuit, same current, two descriptions. In this whole course, when we say current, we mean conventional current, because that's what every formula and every symbol uses. The arrow on a diode, the arrow on a transistor, all point in the direction of conventional current. But we'll keep showing you the electrons too, so you always know what's physically happening.",
+   "mode": "both",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "water",
+   "chapter": "Voltage: the push",
+   "narration": "Now voltage. Think of water in two tanks joined by a pipe. If the left tank is higher, water flows from it to the right. The difference in height is what pushes the water. In a circuit, the battery creates a similar difference, an electrical pressure difference between its two terminals. We call it voltage, or potential difference. It's measured in volts. A nine volt battery means nine joules of energy for every coulomb of charge that flows through the circuit. More voltage, more push, more current.",
+   "high": 0.85,
+   "low": 0.2
+  },
+  {
+   "type": "water",
+   "chapter": "Equal levels: no flow",
+   "narration": "If both tanks are at the same level, the water doesn't flow, however much water there is. Same with electricity. Current only flows when there's a voltage difference between two points. That's why a bird can sit on a high voltage wire: both its feet are at the same voltage, so no current flows through the bird. Voltage is always between two points. When we say a point is at five volts, we mean five volts compared to a reference point we call ground, or zero volts.",
+   "high": 0.6,
+   "low": 0.6
+  },
+  {
+   "type": "water",
+   "chapter": "Resistance: the narrow pipe",
+   "narration": "Now make the pipe narrow. With the same height difference, less water flows, because the narrow pipe resists the flow. In a circuit, this is resistance. It's measured in ohms, with the Greek letter omega. More resistance means less current for the same voltage.",
+   "high": 0.85,
+   "low": 0.2,
+   "narrow": true
+  },
+  {
+   "type": "inside",
+   "chapter": "Where resistance comes from",
+   "narration": "Inside a material, resistance comes from collisions. As the free electrons drift along, they keep bumping into the vibrating atoms. Each collision slows them down and gives some energy to the atom, which vibrates more. That extra vibration is heat. This is why a resistor gets warm, and why a bulb's thin filament glows: lots of collisions, lots of heat, so much that it shines.",
+   "mode": "resistor"
+  },
+  {
+   "type": "dual",
+   "chapter": "DC and AC",
+   "narration": "Two kinds of current. In D C, direct current, the electrons always move in the same direction, like from a battery. In A C, alternating current, they move one way, then the other, back and forth, many times a second. The mains supply in your home is A C, changing direction fifty times a second in India and Europe, sixty in America. Notice the bulb still lights in both directions: the collisions heat the filament whichever way the electrons go. We'll study A C deeply later. For now, remember: D C, one direction. A C, back and forth.",
+   "mode": "dcac",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: charge and current",
+   "narration": "Let's practise. Question one: three coulombs pass a point in a wire in six seconds. What is the current? Current is charge over time. Three coulombs over six seconds, zero point five amps, which is five hundred milliamps. Question two: a current of two amps flows for one minute. How much charge passed? Rearrange: Q equals I times t. Be careful with units: one minute is sixty seconds. Two times sixty, one hundred and twenty coulombs.",
+   "title": "NUMERICALS · CHARGE & CURRENT",
+   "given": [
+    "Q = 3 C",
+    "t = 6 s"
+   ],
+   "lines": [
+    "I = Q ÷ t = 3 ÷ 6 = 0.5 A = 500 mA",
+    "Q2: I = 2 A, t = 1 min = 60 s",
+    "Q = I × t = 2 × 60 = 120 C"
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: energy and voltage",
+   "narration": "Question three: a battery gives eighteen joules of energy to three coulombs of charge. What is its voltage? Voltage is energy per charge: V equals W over Q. Eighteen over three, six volts. Question four: how many electrons make one coulomb? One electron carries one point six times ten to the minus nineteen coulombs. So one coulomb is one over that, six point two five times ten to the eighteen electrons. That's six point two five billion billion.",
+   "title": "NUMERICALS · VOLTAGE",
+   "given": [
+    "W = 18 J",
+    "Q = 3 C"
+   ],
+   "lines": [
+    "V = W ÷ Q = 18 ÷ 3 = 6 V",
+    "1 electron = 1.6 × 10⁻¹⁹ C",
+    "n = 1 ÷ (1.6 × 10⁻¹⁹) = 6.25 × 10¹⁸ electrons"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 0 recap",
+   "narration": "Let's recap chapter zero. Everything is made of atoms. In metals like copper, the outer electron breaks free, giving a sea of free electrons. Current is the flow of charge, I equals Q over t, measured in amps. Electrons flow from minus to plus, but conventional current, used in all diagrams and formulas, flows from plus to minus. Voltage is the push, the energy per coulomb, and it's always between two points. Resistance opposes the flow, and turns energy into heat. D C flows one way, A C alternates. Next, we connect these three ideas, voltage, current and resistance, in our first real circuits.",
+   "title": "CHAPTER 0 COMPLETE",
+   "lines": [
+    "Current I = Q ÷ t (amps)",
+    "Electrons − → +, conventional + → −",
+    "Voltage = energy per charge (volts)",
+    "Resistance opposes flow → heat"
+   ],
+   "cta": "Next: circuit basics"
+  }
+ ]
+}

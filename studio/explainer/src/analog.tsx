@@ -3032,3 +3032,67 @@ export const FnumScene: React.FC<any> = ({ dur, kind = "lp", r = 1000, c = 1e-6,
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.fnum = FnumScene;
+
+// ------------------------------------------------------------------ One-shot helpers: dual current flow, charge counter, DC vs AC, and a split "what-if" comparison
+/** {"type":"dual","mode":"both"|"conv"|"elec"|"charge"|"dcac"|"open","v":9,"r":100} */
+export const DualFlow: React.FC<any> = ({ dur, mode = "both", v = 9, r = 100 }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const I = v / r; const open = mode === "open";
+  const X0 = 260, X1 = 1660, Y0 = 260, Y1 = 820;
+  const loop = [[X0, 540], [X0, Y0], [X1, Y0], [X1, Y1], [X0, Y1], [X0, 540]];
+  const showC = mode === "both" || mode === "conv", showE = mode === "both" || mode === "elec" || mode === "charge";
+  const arrows = (rev: boolean, col: string, off: number) => { const pts = rev ? [...loop].reverse() : loop; const seg = pts.slice(1).map((q, i) => Math.hypot(q[0] - pts[i][0], q[1] - pts[i][1])); const len = seg.reduce((a, b) => a + b, 0);
+    const at = (d: number) => { let k = 0; while (k < seg.length - 1 && d > seg[k]) { d -= seg[k]; k++; } const q = d / seg[k]; return [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * q, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * q, Math.atan2(pts[k + 1][1] - pts[k][1], pts[k + 1][0] - pts[k][0])]; };
+    return <g>{Array.from({ length: 10 }, (_, i) => { const [x, y, a] = at(((i / 10) * len + t * 90 + off) % len); return <g key={i} transform={`translate(${x},${y + (rev ? 0 : 0)}) rotate(${a * 180 / Math.PI})`}><polygon points="-16,-12 16,0 -16,12" fill={col} /></g>; })}</g>; };
+  const dcac = mode === "dcac";
+  const acDir = Math.sin(t * 1.6);
+  const left = <g>
+    {/* wires */}
+    <polyline points={loop.map((q) => q.join(",")).join(" ")} fill="none" stroke={L.wire} strokeWidth={8} />
+    {/* battery or AC source */}
+    {dcac ? <g><circle cx={X0} cy={540} r={70} fill={L.bg0} stroke={L.cyan} strokeWidth={6} /><path d={`M ${X0 - 40} 540 q 20 -36 40 0 t 40 0`} fill="none" stroke={L.cyan} strokeWidth={5} /></g>
+      : <g><rect x={X0 - 80} y={480} width={160} height={120} fill={L.bg0} /><line x1={X0 - 70} y1={515} x2={X0 + 70} y2={515} stroke={L.red} strokeWidth={9} /><line x1={X0 - 40} y1={565} x2={X0 + 40} y2={565} stroke={L.cyan} strokeWidth={16} />
+        <text x={X0 + 95} y={512} {...T1} fontSize={40} fill={L.red}>+</text><text x={X0 + 95} y={590} {...T1} fontSize={40} fill={L.cyan}>−</text>
+        <text x={X0 - 100} y={550} textAnchor="end" {...T1} fontSize={36}>{v} V</text></g>}
+    {/* bulb */}
+    <g transform={`translate(${(X0 + X1) / 2},${Y0})`}><rect x={-90} y={-60} width={180} height={120} fill={L.bg0} />
+      <circle r={56} fill={open ? "#2a2f36" : "#fff3a0"} opacity={open ? 1 : 0.25 + 0.7 * (dcac ? Math.abs(acDir) : 1)} stroke={L.amber} strokeWidth={5} />
+      <path d="M -20 10 q 10 -30 20 0 q 10 -30 20 0" fill="none" stroke={L.amber} strokeWidth={4} /><text y={-80} textAnchor="middle" {...T1} fontSize={28}>bulb ({r} Ω)</text></g>
+    {open && <g><rect x={X1 - 30} y={500} width={60} height={80} fill={L.bg0} /><circle cx={X1} cy={500} r={9} fill={L.text} /><circle cx={X1} cy={580} r={9} fill={L.text} /><line x1={X1} y1={500} x2={X1 + 50} y2={570} stroke={L.red} strokeWidth={7} />
+      <text x={X1 - 40} y={545} textAnchor="end" {...T1} fontSize={28} fill={L.red}>switch OPEN</text></g>}
+    {!open && !dcac && showC && arrows(false, L.amber, 0)}
+    {!open && !dcac && showE && <Dots pts={[...loop].reverse()} t={t} speed={110} gap={46} r={10} color={L.electron} />}
+    {dcac && <Dots pts={acDir > 0 ? loop : [...loop].reverse()} t={t} speed={60 + 80 * Math.abs(acDir)} gap={46} r={10} color={L.electron} />}
+    {!open && !dcac && <g>
+      {showC && <g><polygon points={`${X0 + 120},94 ${X0 + 150},110 ${X0 + 120},126`} fill={L.amber} /><text x={X0 + 170} y={120} {...T1} fontSize={30} fill={L.amber}>conventional current: + → −  (out of +, around, into −)</text></g>}
+      {showE && <g><circle cx={X0 + 135} cy={926} r={11} fill={L.electron} /><text x={X0 + 170} y={936} {...T1} fontSize={30} fill={L.electron}>electrons: − → +  (out of −, around, into +)</text></g>}</g>}
+    {mode === "charge" && <g><line x1={1300} y1={Y1 - 90} x2={1300} y2={Y1 + 90} stroke={L.red} strokeWidth={4} strokeDasharray="10 8" />
+      <text x={1300} y={Y1 - 110} textAnchor="middle" {...T1} fontSize={26} fill={L.red}>count the charge passing here</text>
+      <rect x={760} y={440} width={400} height={180} rx={16} fill={L.panel} stroke={L.red} strokeWidth={4} />
+      <text x={960} y={500} textAnchor="middle" {...T1} fontSize={28}>after {(p * 10).toFixed(1)} s</text>
+      <text x={960} y={560} textAnchor="middle" {...T1} fontSize={36} fill={L.green}>Q = {(I * p * 10).toFixed(2)} C</text>
+      <text x={960} y={600} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={24}>I = Q ÷ t = {I.toFixed(2)} A</text></g>}
+    {dcac && <g><text x={(X0 + X1) / 2} y={560} textAnchor="middle" {...T1} fontSize={34} fill={L.cyan}>AC: electrons rock back and forth</text>
+      <text x={(X0 + X1) / 2} y={610} textAnchor="middle" {...T1} fontSize={30} fill={L.dim}>{acDir > 0 ? "→ this half cycle" : "← this half cycle"}</text></g>}
+    {open && <text x={(X0 + X1) / 2} y={560} textAnchor="middle" {...T1} fontSize={34} fill={L.red}>broken loop → NO current, bulb OFF</text>}
+  </g>;
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<g transform="translate(0,500) scale(0.56)">{left}</g>);
+  return svg(left);
+};
+ANALOG_SCENES.dual = DualFlow;
+
+/** {"type":"split","a":{scene},"b":{scene},"la":"ORIGINAL","lb":"WHAT IF: diode flipped?"}: two scenes side by side for comparisons */
+export const SplitScene: React.FC<any> = ({ dur, a = {}, b = {}, la = "", lb = "" }) => {
+  const A = ANALOG_SCENES[a.type], Bc = ANALOG_SCENES[b.type];
+  const half = (C: any, props: any, x: number, lab: string, col: string) => <div style={{ position: "absolute", left: `${x}%`, top: "8%", width: "50%", height: "84%" }}>
+    <div style={{ position: "absolute", top: 0, left: 0, right: 0, textAlign: "center", fontFamily: SANS, fontWeight: 800, fontSize: 30, color: col, zIndex: 2 }}>{lab}</div>
+    <div style={{ position: "absolute", top: "6%", left: 0, width: "100%", height: "94%" }}>{C ? <C dur={dur} {...props} /> : null}</div></div>;
+  return <AbsoluteFill>
+    {half(A, a, 0, la, L.green)}{half(Bc, b, 50, lb, L.red)}
+    <div style={{ position: "absolute", left: "50%", top: "10%", bottom: "6%", width: 3, background: L.off }} /></AbsoluteFill>;
+};
+ANALOG_SCENES.split = SplitScene;
