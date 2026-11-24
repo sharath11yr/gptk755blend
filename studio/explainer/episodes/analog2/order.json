@@ -33,5 +33,9 @@
  "analog2/f02_mosfet_vs_bjt.json",
  "analog2/f03_mosfet.json",
  "analog2/f04_mosfet_numericals.json",
- "analog2/f05_cmos_inverter.json"
+ "analog2/f05_cmos_inverter.json",
+ "analog2/p01_class_a.json",
+ "analog2/p02_class_b_ab.json",
+ "analog2/p03_class_c.json",
+ "analog2/t01_555_timer.json"
 ]

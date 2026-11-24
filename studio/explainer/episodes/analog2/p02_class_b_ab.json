@@ -1,0 +1,116 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Class B & Class AB Push-Pull Amplifier | Crossover Distortion, 78.5% Efficiency | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Class B & Class AB Push-Pull Amplifier | Crossover Distortion, 78.5% Efficiency | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Class B and Class AB push-pull amplifiers step by step: an NPN pushing the positive half and a PNP pulling the negative half, each conducting 180 degrees, crossover distortion from the 0.7 V dead zone, two diodes pre-biasing the bases to make Class AB, and every value calculated: 6.25 W into 8 ohms, 9.55 W from the supply, 65% efficiency, 78.5% maximum.",
+  "tags": [
+   "class b amplifier",
+   "class ab amplifier",
+   "push pull amplifier",
+   "crossover distortion",
+   "complementary symmetry",
+   "audio power amplifier",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Class B & AB",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "CLASS B & CLASS AB",
+   "subtitle": "Two transistors, taking turns",
+   "narration": "Welcome back. Class A wasted three quarters of its power because the transistor was always on. The fix: use two transistors, and let each one work only half the time. That's Class B, and its refined version, Class A B, is in almost every audio amplifier you own."
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Push-pull",
+   "narration": "Here's a Class B push pull stage. A plus twelve and a minus twelve volt supply. An N P N on top, a P N P below, their emitters joined at the output, which drives an eight ohm speaker. Both bases get the signal. On the positive half cycle, the N P N turns on and pushes current into the speaker. On the negative half, the P N P turns on and pulls current out. Each transistor conducts for exactly half the cycle, one hundred and eighty degrees. With no signal, neither conducts. No idle waste.",
+   "cls": "b"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Crossover distortion",
+   "narration": "But look closely at the output where the signal crosses zero. Each transistor needs zero point seven volts on its base before it turns on. So for small voltages around zero, between minus zero point seven and plus zero point seven, neither transistor conducts. The output goes flat. That kink is called crossover distortion, and it's very audible at low volume.",
+   "cls": "b"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Class AB: the fix",
+   "narration": "The fix: two diodes between the bases, with a small current through them. Each diode drops zero point seven volts, so the two bases are held one point four volts apart, each transistor already just at the edge of turning on. Now a tiny signal immediately turns one of them on. The dead zone disappears, and the output is smooth. Each transistor conducts for slightly more than half the cycle. That's Class A B.",
+   "cls": "ab"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "Efficiency",
+   "narration": "And the efficiency? In Class B, current is only drawn when there's signal. The theoretical maximum is pi over four, seventy eight point five percent. Class A B has a small idle current, so it's slightly lower, but still around seventy percent. Compare that with Class A's twenty five.",
+   "cls": "b"
+  },
+  {
+   "type": "pamp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers, at ten volts peak into eight ohms with plus and minus twelve volt supplies. Peak current: ten over eight, one point two five amps. Output power: V peak squared over two R L, a hundred over sixteen, six point two five watts. Supply power: two times V C C times I peak over pi, two times twelve times one point two five over pi, nine point five five watts. Efficiency: six point two five over nine point five five, sixty five percent. The two transistors share the remaining three point three watts as heat. At full swing, the maximum is seventy eight point five percent.",
+   "cls": "ab",
+   "lines": [
+    "Ip = Vp ÷ RL = 10 ÷ 8 = 1.25 A",
+    "Pout = Vp² ÷ (2 RL) = 100 ÷ 16 = 6.25 W",
+    "Pdc = 2 VCC Ip ÷ π = 2 × 12 × 1.25 ÷ π = 9.55 W",
+    "η = 6.25 ÷ 9.55 = 65 %",
+    "heat = 9.55 − 6.25 = 3.3 W (both)",
+    "η(max, Vp = VCC) = π ÷ 4 = 78.5 %"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: every audio amplifier",
+   "narration": "Your home stereo, your car audio, the amplifier in a powered speaker: most analog audio power amplifiers use a Class A B push pull output stage. It combines low distortion with good efficiency. Many modern compact speakers now use Class D, which switches like a buck converter, but Class A B is still the reference for clean sound.",
+   "title": "REAL WORLD: THE STEREO AMPLIFIER",
+   "sub": "a Class AB push-pull output stage drives the speaker with low distortion and good efficiency",
+   "src": "mic",
+   "stage": "PREAMP",
+   "stage2": "CLASS AB",
+   "sink": "speaker",
+   "note1": "line level",
+   "note2": "NPN pushes, PNP pulls",
+   "note3": "watts into 8 Ω"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: calling Class B distortion free. Its crossover distortion is a real problem, which is why pure Class B is rare in audio. Two: forgetting the second supply. A push pull stage needs plus and minus supplies, or a single supply with a large output capacitor. Three: biasing Class A B too hot. Too much idle current makes it behave like Class A, and the transistors can overheat and run away thermally.",
+   "cls": "b"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: CLASS C",
+   "lines": [
+    "Push-pull: each transistor 180°",
+    "Class B: crossover distortion (±0.7 V)",
+    "AB: diodes pre-bias, η ≈ 70 %, B max 78.5 %"
+   ],
+   "cta": "Class C is next",
+   "narration": "Quick recap. A push pull stage uses an N P N for the positive half and a P N P for the negative half. Class B is efficient, up to seventy eight point five percent, but suffers crossover distortion. Class A B adds a small pre bias with two diodes, removing the distortion with almost the same efficiency. Next, Class C, the most efficient of all. See you there."
+  }
+ ]
+}

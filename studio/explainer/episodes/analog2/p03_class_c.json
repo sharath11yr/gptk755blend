@@ -1,0 +1,131 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Class C Amplifier Explained | Less Than 180°, Tuned Tank, 90% Efficient | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Class C Amplifier Explained | Less Than 180°, Tuned Tank, 90% Efficient | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The Class C amplifier step by step: a transistor biased below cutoff that conducts only in short pulses at the signal peaks (less than 180 degrees), an LC tank circuit that turns those pulses back into a clean sine wave at its resonant frequency, why it reaches about 90% efficiency, why it can't be used for audio, and its job in radio transmitters, with the classes compared.",
+  "tags": [
+   "class c amplifier",
+   "tuned amplifier",
+   "rf power amplifier",
+   "tank circuit",
+   "conduction angle",
+   "radio transmitter",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Class C",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "CLASS C AMPLIFIER",
+   "subtitle": "Short kicks, a ringing tank, and 90% efficiency",
+   "narration": "Welcome back. Class A conducts all the time. Class B, half the time. What if the transistor conducted for even less, just a short burst at the very peak of each cycle? That's Class C. It's the most efficient linear class, and it powers radio transmitters."
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "How it works",
+   "narration": "Here's a Class C stage. The transistor's base is biased below cutoff, so it's off for most of the cycle. Only when the input reaches its peak does the transistor briefly turn on, giving a short, sharp pulse of current. Look at the collector current on the right: narrow pulses, much less than one hundred and eighty degrees each.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "The tank circuit",
+   "narration": "But pulses aren't a sine wave. How does the output come out clean? The collector load is a tuned tank: an inductor and a capacitor in parallel, resonating at the signal frequency. It's like a child on a swing. One short push at the right moment in every cycle keeps the swing going smoothly. Each current pulse tops up the tank's energy, and the tank rings out a clean sine wave.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "Why so efficient",
+   "narration": "Since the transistor is off almost all the time, and only conducts when its voltage is lowest, it wastes very little power. Class C amplifiers reach around ninety percent efficiency. Compare: Class A at twenty five percent, Class B at seventy eight point five.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "calc",
+   "chapter": "The trade-off",
+   "narration": "So why not use it everywhere? Because the output depends on the tank, not on the exact shape of the input. It can only amplify a single frequency, the one the tank is tuned to. It can't reproduce music or speech with many frequencies at once. It's useless for audio, but perfect for radio, where each transmitter sends one carrier frequency.",
+   "cls": "c",
+   "lines": [
+    "conduction angle: A 360°, B 180°, AB ~200°",
+    "C: < 180° (often ~120°)",
+    "tank: f0 = 1 ÷ (2π √(L C))",
+    "output: clean sine at f0 only",
+    "η ≈ 90 % (A 25 %, B 78.5 %)"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: radio transmitters",
+   "narration": "Every radio transmitter must turn its carrier into lots of power at one exact frequency: an F M station, a walkie talkie, a car key fob. Class C stages do it, with a tank tuned to the carrier. High efficiency means less heat and longer battery life, which matters a lot in a handheld radio.",
+   "title": "REAL WORLD: THE RADIO TRANSMITTER",
+   "sub": "a Class C stage drives the antenna with a single carrier frequency, efficiently",
+   "src": "sensor",
+   "stage": "OSCILLATOR",
+   "stage2": "CLASS C + TANK",
+   "sink": "speaker",
+   "note1": "message",
+   "note2": "pulses ring the tank at f0",
+   "note3": "to the antenna"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using Class C for audio. It distorts the input completely, and only the tank's frequency comes out. Two: forgetting to tune the tank. If it's off frequency, the pulses don't arrive at the right moment and the output collapses. Three: thinking the collector current is a sine wave. It's a series of short pulses. The sine wave comes from the tank.",
+   "cls": "c"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: 555 TIMER",
+   "lines": [
+    "Biased below cutoff: conducts < 180°",
+    "LC tank rings a clean sine at f0",
+    "η ≈ 90 %, single frequency: RF only"
+   ],
+   "cta": "555 timer is next",
+   "narration": "Quick recap. A Class C amplifier is biased below cutoff, so it conducts only in short pulses at the signal peaks. A tuned L C tank turns those pulses into a clean sine wave at one frequency, giving about ninety percent efficiency, which is ideal for radio transmitters but useless for audio. Next, a completely different and famous chip: the five five five timer. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "",
+   "narration": "How do radio transmitters reach ninety percent efficiency? The transistor is biased off, and only kicks on for a short burst at each peak.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "",
+   "narration": "Those pulses ring a tuned L C tank, like pushing a swing once per cycle. Out comes a clean sine wave.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "",
+   "narration": "Class A, twenty five percent. Class B, seventy eight. Class C, about ninety, but only for one frequency. That's why it's for radio, not music. Full lesson on the channel.",
+   "cls": "c"
+  }
+ ]
+}

@@ -2786,3 +2786,163 @@ export const FetScene: React.FC<any> = ({ dur, kind = "nmos", mode = "structure"
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.fet = FetScene;
+
+// ------------------------------------------------------------------ Power amplifiers: Class A, B, AB, C
+/** {"type":"pamp","cls":"a"|"b"|"ab"|"c","mode":"circuit"|"eff"|"calc","lines":[...]}
+ *  A: VCC 20 V, RC = load 20 Ω, ICQ 0.5 A, VCEQ 10 V -> Pdc 10 W, max Pout 2.5 W (25 %).
+ *  B/AB: ±12 V, RL 8 Ω, Vp 10 V -> Pout 6.25 W, Pdc = 2·12·1.25/π = 9.55 W (65 %), max 78.5 %.  C: conduction < 180°, LC tank. */
+export const PampScene: React.FC<any> = ({ dur, cls = "a", mode = "circuit", lines = [] }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string, c = L.wire) => <polyline points={pts} fill="none" stroke={c} strokeWidth={6} strokeLinejoin="round" />;
+  const ph = 2 * Math.PI * t * 0.5; const s = Math.sin(ph);
+  const Q = (x: number, y: number, pnp: boolean, on: number, lab: string) => <g>
+    {on > 0.05 && <circle cx={x} cy={y} r={78} fill={L.green} opacity={0.08 + 0.2 * on} />}
+    <circle cx={x} cy={y} r={58} fill={L.bg0} stroke={L.amber} strokeWidth={5} /><line x1={x - 20} y1={y - 34} x2={x - 20} y2={y + 34} stroke={L.amber} strokeWidth={8} />
+    <line x1={x - 58} y1={y} x2={x - 20} y2={y} stroke={L.amber} strokeWidth={6} />
+    <line x1={x - 20} y1={y - 14} x2={x + 18} y2={y - 48} stroke={L.amber} strokeWidth={6} /><line x1={x + 18} y1={y - 48} x2={x + 18} y2={y - 58} stroke={L.amber} strokeWidth={6} />
+    <line x1={x - 20} y1={y + 14} x2={x + 18} y2={y + 48} stroke={L.amber} strokeWidth={6} /><line x1={x + 18} y1={y + 48} x2={x + 18} y2={y + 58} stroke={L.amber} strokeWidth={6} />
+    {pnp ? <polygon points={`${x - 18},${y - 16} ${x + 3},${y - 25} ${x - 8},${y - 38}`} fill={L.amber} /> : <polygon points={`${x + 18},${y + 48} ${x - 4},${y + 43} ${x + 7},${y + 28}`} fill={L.amber} />}
+    <text x={x + 76} y={y + 8} {...T1} fontSize={24}>{lab}</text></g>;
+  const srcSym = (x: number, y: number) => <g><circle cx={x} cy={y} r={34} fill={L.bg0} stroke={L.cyan} strokeWidth={5} /><path d={`M ${x - 20} ${y} q 10 -20 20 0 t 20 0`} fill="none" stroke={L.cyan} strokeWidth={4} /></g>;
+  const speaker = (x: number, y: number, a: number) => <g transform={`translate(${x},${y})`}><path d="M -30 -34 L 0 -34 L 40 -74 L 40 74 L 0 34 L -30 34 Z" fill="#25313d" stroke="#4a5d70" strokeWidth={5} />
+    {[0, 1].map((k) => <path key={k} d={`M ${56 + k * 26} -${30 + k * 16} Q ${76 + k * 30} 0 ${56 + k * 26} ${30 + k * 16}`} fill="none" stroke={L.green} strokeWidth={4} opacity={0.3 + 0.6 * a} />)}</g>;
+  let left: React.ReactNode;
+  if (cls === "a") { const ic = 0.5 + 0.5 * s * 0.98;
+    left = <g><line x1={200} y1={200} x2={900} y2={200} stroke={L.red} strokeWidth={6} /><text x={200} y={180} {...T1} fontSize={26} fill={L.red}>+20 V</text>
+      <line x1={200} y1={880} x2={900} y2={880} stroke={L.wire} strokeWidth={6} />
+      <Res x={660} y={330} ohm={20} label="LOAD (20 Ω)" heat={0.5} />{W(`660,200 660,260`)}{W(`660,400 660,482`)}{Q(642, 540, false, ic, "")}{W(`660,598 660,880`)}
+      {srcSym(300, 640)}{W(`300,606 300,540 584,540`)}{W(`300,674 300,880`)}<text x={280} y={760} textAnchor="end" {...T1} fontSize={22} fill={L.cyan}>signal + bias</text>
+      <Dots pts={[[660, 200], [660, 880]]} t={t} speed={40 + ic * 160} gap={28} />
+      <text x={700} y={460} {...T1} fontSize={26} fill={L.electron}>iC = {ic.toFixed(2)} A</text>
+      <text x={520} y={960} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>current flows ALL the time (360°), even with no signal</text></g>; }
+  else if (cls === "c") { const pulse = s > 0.87 ? (s - 0.87) / 0.13 : 0;
+    left = <g><line x1={200} y1={200} x2={900} y2={200} stroke={L.red} strokeWidth={6} /><text x={200} y={180} {...T1} fontSize={26} fill={L.red}>+12 V</text>
+      <line x1={200} y1={880} x2={900} y2={880} stroke={L.wire} strokeWidth={6} />
+      {W(`560,200 560,260`)}<path d={`M 560 260 ` + [0, 1, 2, 3].map(() => "a 16 16 0 1 1 0 32").join(" ")} fill="none" stroke={L.amber} strokeWidth={6} />{W(`560,388 560,420 660,420`)}
+      {W(`560,240 760,240 760,300`)}<line x1={720} y1={310} x2={800} y2={310} stroke={L.amber} strokeWidth={8} /><line x1={720} y1={334} x2={800} y2={334} stroke={L.amber} strokeWidth={8} />{W(`760,344 760,420 660,420`)}
+      <text x={470} y={330} {...T1} fontSize={24}>L</text><text x={820} y={330} {...T1} fontSize={24}>C</text><text x={830} y={400} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={22} fontWeight={700}>tuned tank</text>
+      {W(`660,420 660,482`)}{Q(642, 540, false, pulse, "")}{W(`660,598 660,880`)}
+      {srcSym(300, 640)}{W(`300,606 300,540 584,540`)}{W(`300,674 300,880`)}<text x={280} y={760} textAnchor="end" {...T1} fontSize={22} fill={L.cyan}>biased below cutoff</text>
+      {pulse > 0 && <Dots pts={[[660, 420], [660, 880]]} t={t} speed={300} gap={26} />}
+      <text x={520} y={960} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>short current kicks keep the LC tank ringing</text></g>; }
+  else { const dz = cls === "b" ? 0.7 / 10 : 0; const v = s; const on1 = Math.max(0, v - dz), on2 = Math.max(0, -v - dz);
+    left = <g><line x1={300} y1={170} x2={900} y2={170} stroke={L.red} strokeWidth={6} /><text x={300} y={150} {...T1} fontSize={26} fill={L.red}>+12 V</text>
+      <line x1={300} y1={910} x2={900} y2={910} stroke={L.cyan} strokeWidth={6} /><text x={300} y={950} {...T1} fontSize={26} fill={L.cyan}>−12 V</text>
+      {W(`660,170 660,322`)}{Q(642, 380, false, on1, "NPN")}{W(`660,438 660,642`)}{Q(642, 700, true, on2, "PNP")}{W(`660,758 660,910`)}
+      {W(`660,540 820,540`)}{speaker(860, 540, Math.abs(v))}<text x={860} y={650} textAnchor="middle" {...T1} fontSize={22}>8 Ω</text>
+      {cls === "ab" ? <>{W(`584,380 470,380 470,470`)}<polygon points="452,470 488,470 470,500" fill={L.amber} /><line x1={452} y1={500} x2={488} y2={500} stroke={L.amber} strokeWidth={4} />
+          {W(`470,500 470,580`)}<polygon points="452,580 488,580 470,610" fill={L.amber} /><line x1={452} y1={610} x2={488} y2={610} stroke={L.amber} strokeWidth={4} />{W(`470,610 470,700 584,700`)}
+          <text x={500} y={470} fill={L.amber} fontFamily={SANS} fontSize={22} fontWeight={700}>2 diodes: 1.4 V pre-bias</text>{W(`470,540 360,540`)}</>
+        : <>{W(`584,380 500,380 500,700 584,700`)}{W(`500,540 360,540`)}</>}
+      {srcSym(320, 540)}
+      {on1 > 0 && <Dots pts={[[660, 170], [660, 540], [820, 540]]} t={t} speed={60 + on1 * 200} gap={28} />}
+      {on2 > 0 && <Dots pts={[[820, 540], [660, 540], [660, 910]]} t={t} speed={60 + on2 * 200} gap={28} color={L.amber} />}
+      <text x={600} y={990} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>NPN pushes the top half, PNP pulls the bottom half</text></g>; }
+  const GX = 1040, GW = 780;
+  let right: React.ReactNode;
+  if (mode === "calc") right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
+    opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  else if (mode === "eff") { const bars: [string, number, string][] = [["A", 25, L.red], ["B", 78.5, L.green], ["AB", 70, L.amber], ["C", 90, L.cyan]];
+    right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>MAXIMUM EFFICIENCY</text>
+      {bars.map(([n, e, c], k) => <g key={k} opacity={cls === n.toLowerCase() || p > 0.6 ? 1 : 0.35}><rect x={GX + 40 + k * 190} y={820 - e * 5.2 * Math.min(1, p * 1.5)} width={120} height={e * 5.2 * Math.min(1, p * 1.5)} rx={8} fill={c} />
+        <text x={GX + 100 + k * 190} y={800 - e * 5.2 * Math.min(1, p * 1.5)} textAnchor="middle" {...T1} fontSize={30} fill={c}>{e}%</text>
+        <text x={GX + 100 + k * 190} y={870} textAnchor="middle" {...T1} fontSize={32}>{n}</text></g>)}
+      <text x={GX + GW / 2} y={940} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>(A: resistive load; AB ≈ just under B)</text></g>; }
+  else { const tr = (cy: number, fn: (u: number) => number, col: string, name: string, h = 90) => { const q: string[] = [];
+      for (let k = 0; k <= 300; k++) { const u = k / 300; q.push(`${GX + GW * u},${cy - fn(2 * Math.PI * (2 * u) - ph * 0) * h}`); }
+      return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><text x={GX + 8} y={cy - h - 14} fill={col} fontFamily={SANS} fontSize={24} fontWeight={800}>{name}</text>
+        <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} /></g>; };
+    const dz = cls === "b" ? 0.25 : 0;
+    const out = (x: number) => { const v = Math.sin(x); return cls === "b" ? (Math.abs(v) < dz ? 0 : v - Math.sign(v) * dz) : v; };
+    right = cls === "a" ? <g>{tr(290, (x) => Math.sin(x), L.cyan, "input signal")}{tr(600, (x) => 0.5 + 0.49 * Math.sin(x), L.electron, "collector current (never zero)", 160)}
+        <line x1={GX} y1={600 - 80} x2={GX + GW} y2={600 - 80} stroke={L.amber} strokeDasharray="6 8" strokeWidth={2} /><text x={GX + GW} y={600 - 90} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={20}>ICQ = 0.5 A</text>
+        {tr(880, (x) => -Math.sin(x), L.green, "output: complete waveform")}</g>
+      : cls === "c" ? <g>{tr(290, (x) => Math.sin(x), L.cyan, "input")}{tr(590, (x) => Math.max(0, (Math.sin(x) - 0.87) / 0.13), L.electron, "collector current: short pulses (< 180°)", 130)}{tr(880, (x) => Math.sin(x), L.green, "tank output: clean sine")}</g>
+      : <g>{tr(290, (x) => Math.max(0, out(x)), L.electron, "NPN current (top halves)")}{tr(560, (x) => Math.min(0, out(x)), L.amber, "PNP current (bottom halves)")}
+        {tr(860, out, L.green, cls === "b" ? "output: CROSSOVER DISTORTION at zero" : "output: smooth, no crossover gap")}</g>; }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(20,60)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.pamp = PampScene;
+
+// ------------------------------------------------------------------ 555 timer: inside, astable, monostable
+/** {"type":"t555","mode":"inside"|"astable"|"mono"|"calc","lines":[...]}
+ *  Astable: VCC 9 V, R1 1 kΩ, R2 10 kΩ, C 10 µF -> tH 76.2 ms, tL 69.3 ms, f 6.86 Hz, duty 52.4 %. Mono: R 100 kΩ, C 10 µF -> T = 1.1 s. */
+export const T555Scene: React.FC<any> = ({ dur, mode = "astable", lines = [], base = "" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string, c = L.wire) => <polyline points={pts} fill="none" stroke={c} strokeWidth={5} strokeLinejoin="round" />;
+  // astable simulation in slow motion (real tH 76 ms -> shown 1.52 s)
+  const slow = 20, tH = 0.0762, tL = 0.0693, per = tH + tL;
+  const ts = (t / slow) % per; const high = ts < tH;
+  const vc = high ? 9 * (1 - (2 / 3) * Math.exp(-ts / (11e3 * 10e-6))) : 6 * Math.exp(-(ts - tH) / (10e3 * 10e-6));
+  // mono: trigger every 3 s (real) shown at 1:1, T = 1.1 s
+  const tm = t % 3; const monoHigh = tm > 0.3 && tm < 1.4; const vcm = monoHigh ? 9 * (1 - Math.exp(-(tm - 0.3) / 1.0)) : 0;
+  const out = mode === "mono" ? monoHigh : high;
+  const chip = (x: number, y: number) => <g><rect x={x} y={y} width={240} height={360} rx={18} fill="#1b1b1b" />
+    <text x={x + 120} y={y + 190} textAnchor="middle" fill="#ddd" fontFamily={MONO} fontSize={52} fontWeight={800}>555</text>
+    {["GND", "TRIG", "OUT", "RESET"].map((n, k) => <g key={n}><rect x={x - 30} y={y + 40 + k * 80} width={30} height={20} fill="#c0c0c0" /><text x={x + 12} y={y + 57 + k * 80} fill="#aaa" fontFamily={MONO} fontSize={18}>{k + 1} {n}</text></g>)}
+    {["VCC", "DIS", "THR", "CTRL"].map((n, k) => <g key={n}><rect x={x + 240} y={y + 40 + k * 80} width={30} height={20} fill="#c0c0c0" /><text x={x + 228} y={y + 57 + k * 80} textAnchor="end" fill="#aaa" fontFamily={MONO} fontSize={18}>{n} {8 - k}</text></g>)}</g>;
+  let left: React.ReactNode;
+  if (mode === "inside") {
+    const cmp = (x: number, y: number, lab: string, on: boolean) => <g><polygon points={`${x},${y - 50} ${x},${y + 50} ${x + 90},${y}`} fill={on ? "rgba(46,196,160,0.25)" : L.bg0} stroke={L.amber} strokeWidth={5} />
+      <text x={x + 10} y={y - 18} {...T1} fontSize={22}>+</text><text x={x + 10} y={y + 30} {...T1} fontSize={22}>−</text><text x={x + 45} y={y - 62} textAnchor="middle" {...T1} fontSize={20}>{lab}</text></g>;
+    left = <g>
+      <line x1={180} y1={180} x2={900} y2={180} stroke={L.red} strokeWidth={6} /><text x={180} y={160} {...T1} fontSize={24} fill={L.red}>VCC 9 V</text>
+      <line x1={180} y1={900} x2={900} y2={900} stroke={L.wire} strokeWidth={6} />
+      <Res x={240} y={270} ohm={5000} label="5k" /><Res x={240} y={540} ohm={5000} label="5k" /><Res x={240} y={800} ohm={5000} label="5k" />
+      {W(`240,180 240,200`)}{W(`240,340 240,470`)}{W(`240,610 240,730`)}{W(`240,870 240,900`)}
+      <text x={160} y={410} textAnchor="end" {...T1} fontSize={22} fill={L.amber}>6 V</text><text x={160} y={680} textAnchor="end" {...T1} fontSize={22} fill={L.amber}>3 V</text>
+      {W(`240,400 400,400`)}{cmp(400, 380, "THRESHOLD > 6 V?", !high)}{W(`240,670 400,670 400,710`)}{cmp(400, 690, "TRIGGER < 3 V?", false)}
+      <rect x={600} y={440} width={170} height={190} rx={12} fill={L.panel} stroke={L.cyan} strokeWidth={4} /><text x={685} y={530} textAnchor="middle" {...T1} fontSize={24} fill={L.cyan}>FLIP-</text><text x={685} y={560} textAnchor="middle" {...T1} fontSize={24} fill={L.cyan}>FLOP</text>
+      {W(`490,380 560,380 560,480 600,480`)}{W(`490,690 560,690 560,590 600,590`)}
+      {W(`770,535 870,535`)}<circle cx={870} cy={535} r={10} fill={out ? L.green : L.dim} /><text x={870} y={505} textAnchor="middle" {...T1} fontSize={24} fill={out ? L.green : L.dim}>OUT {out ? "HIGH" : "LOW"}</text>
+      <circle cx={690} cy={790} r={46} fill={L.bg0} stroke={L.amber} strokeWidth={5} /><text x={690} y={798} textAnchor="middle" {...T1} fontSize={20}>DIS</text>{W(`690,630 690,744`)}{W(`690,836 690,900`)}
+      <text x={760} y={800} fill={L.dim} fontFamily={SANS} fontSize={22}>{out ? "discharge OFF" : "discharge ON"}</text></g>;
+  } else {
+    const mono = mode === "mono" || base === "mono";
+    left = <g>
+      <line x1={140} y1={180} x2={900} y2={180} stroke={L.red} strokeWidth={6} /><text x={140} y={160} {...T1} fontSize={24} fill={L.red}>+9 V</text>
+      <line x1={140} y1={900} x2={900} y2={900} stroke={L.wire} strokeWidth={6} />
+      {chip(380, 360)}
+      {W(`650,410 700,410 700,180`)}{W(`350,410 300,410 300,900`)}{W(`350,650 320,650 320,180`)}
+      {mono ? <><Res x={760} y={300} ohm={100e3} label="R" />{W(`760,180 760,230`)}{W(`760,370 760,570`)}{W(`650,490 760,490`)}{W(`650,570 760,570`)}
+          <line x1={720} y1={640} x2={800} y2={640} stroke={L.amber} strokeWidth={7} /><line x1={720} y1={664} x2={800} y2={664} stroke={L.amber} strokeWidth={7} />{W(`760,570 760,640`)}{W(`760,664 760,900`)}
+          <text x={812} y={660} {...T1} fontSize={22}>C 10µ</text>
+          {W(`350,490 200,490`)}<circle cx={200} cy={490} r={20} fill={tm < 0.3 ? L.red : "#3a4a5a"} /><text x={200} y={450} textAnchor="middle" {...T1} fontSize={22}>BUTTON</text></>
+        : <><Res x={780} y={270} ohm={1000} label="R1" />{W(`780,180 780,200`)}{W(`780,340 780,370`)}<Res x={780} y={440} ohm={10e3} label="R2" />{W(`650,490 690,490 690,370 780,370`)}
+          {W(`780,510 780,600`)}{W(`650,570 720,570 720,600 780,600`)}<line x1={740} y1={640} x2={820} y2={640} stroke={L.amber} strokeWidth={7} /><line x1={740} y1={664} x2={820} y2={664} stroke={L.amber} strokeWidth={7} />
+          {W(`780,600 780,640`)}{W(`780,664 780,900`)}<text x={832} y={660} {...T1} fontSize={22}>C 10µ</text>{W(`350,490 330,490 330,600 780,600`)}</>}
+      {W(`350,570 220,570 220,700`)}<circle cx={220} cy={730} r={28} fill={out ? "#ff5a5a" : "#4a2020"} />{out && <circle cx={220} cy={730} r={52} fill="#ff5a5a" opacity={0.3} />}{W(`220,758 220,900`)}
+      <text x={220} y={800} textAnchor="middle" {...T1} fontSize={22}>LED</text></g>;
+  }
+  const GX = 1040, GW = 780;
+  let right: React.ReactNode;
+  if (mode === "calc") right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
+    opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  else { const mono = mode === "mono"; const N = 300; const span = mono ? 3 : 3 * per * slow; const qc: string[] = [], qo: string[] = [];
+    for (let k = 0; k <= N; k++) { const tt = t - span + span * k / N; let v: number, o: boolean;
+      if (mono) { const m = ((tt % 3) + 3) % 3; o = m > 0.3 && m < 1.4; v = o ? 9 * (1 - Math.exp(-(m - 0.3) / 1.0)) : 0; }
+      else { const q = (((tt / slow) % per) + per) % per; o = q < tH; v = o ? 9 * (1 - (2 / 3) * Math.exp(-q / 0.11)) : 6 * Math.exp(-(q - tH) / 0.1); }
+      const x = GX + GW * k / N; qc.push(`${x},${560 - v / 9 * 300}`); qo.push(`${x},${o ? 700 : 860}`); }
+    right = <g>
+      <text x={GX + 8} y={230} fill={L.amber} fontFamily={SANS} fontSize={24} fontWeight={800}>capacitor voltage{mono ? "" : " (slowed 20×)"}</text>
+      <line x1={GX} y1={560} x2={GX + GW} y2={560} stroke={L.dim} strokeWidth={2} />
+      {!mono && <><line x1={GX} y1={360} x2={GX + GW} y2={360} stroke={L.red} strokeDasharray="6 8" strokeWidth={2} /><text x={GX + GW} y={350} textAnchor="end" fill={L.red} fontFamily={MONO} fontSize={20}>⅔ VCC = 6 V</text>
+        <line x1={GX} y1={460} x2={GX + GW} y2={460} stroke={L.cyan} strokeDasharray="6 8" strokeWidth={2} /><text x={GX + GW} y={485} textAnchor="end" fill={L.cyan} fontFamily={MONO} fontSize={20}>⅓ VCC = 3 V</text></>}
+      {mono && <><line x1={GX} y1={360} x2={GX + GW} y2={360} stroke={L.red} strokeDasharray="6 8" strokeWidth={2} /><text x={GX + GW} y={350} textAnchor="end" fill={L.red} fontFamily={MONO} fontSize={20}>⅔ VCC → output ends</text></>}
+      <polyline points={qc.join(" ")} fill="none" stroke={L.amber} strokeWidth={5} />
+      <text x={GX + 8} y={680} fill={L.green} fontFamily={SANS} fontSize={24} fontWeight={800}>output (pin 3)</text>
+      <polyline points={qo.join(" ")} fill="none" stroke={L.green} strokeWidth={5} />
+      <text x={GX + GW / 2} y={950} textAnchor="middle" {...T1} fontSize={28}>{mono ? "one press → one 1.1 s pulse" : "tH 76 ms · tL 69 ms · f = 6.9 Hz"}</text></g>; }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(20,60)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.t555 = T555Scene;

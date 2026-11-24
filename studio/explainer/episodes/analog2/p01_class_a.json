@@ -1,0 +1,136 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Class A Power Amplifier Explained | Always On, 25% Efficiency, Every Watt Calculated | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Class A Power Amplifier Explained | Always On, 25% Efficiency, Every Watt Calculated | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The Class A power amplifier step by step: a transistor that conducts for the full 360 degrees, biased at ICQ = 0.5 A in the middle of the load line, a complete undistorted output, and why it wastes so much: 10 W from the supply for at most 2.5 W of audio, 25% efficiency, transistor heat at idle, and the transformer-coupled 50% version.",
+  "tags": [
+   "class a amplifier",
+   "power amplifier",
+   "amplifier efficiency",
+   "audio amplifier",
+   "conduction angle",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Class A",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "CLASS A POWER AMPLIFIER",
+   "subtitle": "The cleanest amplifier, and the most wasteful",
+   "narration": "Welcome back. So far our amplifiers handled tiny signals, millivolts and milliamps. But a speaker needs real power, watts. That's the job of a power amplifier. Power amplifiers are grouped into classes by how long the transistor conducts in each cycle. Today, Class A: the simplest, the cleanest, and the most wasteful."
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "How it works",
+   "narration": "Here's a Class A stage. Twenty volts, the load, twenty ohms, in the collector, and the transistor biased so that half an amp flows with no signal at all. That's the Q point, in the middle of the load line. When the signal arrives, the collector current swings up and down around half an amp, between almost zero and almost one amp. But it never stops. The transistor conducts for the full cycle, three hundred and sixty degrees. That's what Class A means.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Why it sounds clean",
+   "narration": "Because the transistor is always on, it never has to switch on or off. It stays in its smooth, linear region the whole time. The output is a faithful, complete copy of the input, with very low distortion. That's why some audio enthusiasts still love Class A amplifiers.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "The price: efficiency",
+   "narration": "But look at the efficiency. Even with no music playing, half an amp flows from twenty volts: ten watts, all the time. At the very most, the load gets two and a half watts of signal. Efficiency: two and a half over ten, twenty five percent. Three quarters of the power becomes heat.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Every number. Q point: I C Q is half an amp, V C E Q is twenty minus zero point five times twenty, ten volts. Power from the supply: twenty volts times half an amp, ten watts, constant. Biggest signal: the voltage can swing ten volts peak, and the current half an amp peak. Output power: ten over root two, times zero point five over root two, two point five watts. Efficiency: twenty five percent. At idle, the transistor burns ten volts times half an amp, five watts. With a transformer coupled load instead, the maximum rises to fifty percent.",
+   "cls": "a",
+   "lines": [
+    "ICQ = 0.5 A, VCEQ = 20 − 0.5 × 20 = 10 V",
+    "Pdc = VCC × ICQ = 20 × 0.5 = 10 W (always)",
+    "Pout(max) = (10 ÷ √2) × (0.5 ÷ √2) = 2.5 W",
+    "η = 2.5 ÷ 10 = 25 %",
+    "idle: P(transistor) = 10 V × 0.5 A = 5 W",
+    "transformer-coupled: η(max) = 50 %"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: boutique guitar amps",
+   "narration": "Class A amplifiers are rare today, but you'll still find them in boutique guitar amplifiers and high end headphone amps, where sound quality matters more than efficiency. They run hot, need big heat sinks, and drain power even when silent. For anything powered by a battery, Class A is out of the question.",
+   "title": "REAL WORLD: CLASS A GUITAR AMPS",
+   "sub": "prized for their clean, smooth sound, despite wasting most of their power as heat",
+   "src": "guitar",
+   "stage": "PREAMP",
+   "stage2": "CLASS A",
+   "sink": "speaker",
+   "note1": "small signal",
+   "note2": "always conducting, always hot",
+   "note3": "clean, rich tone"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking a Class A amplifier cools down when quiet. It's hottest at idle, when the transistor carries the full bias current with no signal going to the load. Two: biasing away from the middle of the load line. Then the output clips on one side first. Three: quoting fifty percent efficiency for a simple resistive load. That's only with transformer coupling. With a resistor, it's twenty five.",
+   "cls": "a"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: CLASS B & AB",
+   "lines": [
+    "Conducts 360°, ICQ in the middle",
+    "Clean, low distortion",
+    "η(max) 25 % (50 % with transformer)"
+   ],
+   "cta": "Class B and AB are next",
+   "narration": "Quick recap. A Class A amplifier keeps its transistor on for the full cycle, biased in the middle of the load line. That gives a clean output, but it draws full current even when silent, so its efficiency is at most twenty five percent. Next, Class B and Class AB, which fix that waste with two transistors. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "",
+   "narration": "The cleanest amplifier there is. The transistor stays on the whole time, three hundred and sixty degrees, so the output is a perfect copy of the input.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "",
+   "narration": "But it draws full current even in silence. Ten watts from the supply for two and a half watts of sound. Twenty five percent efficiency.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "That's Class A: beautiful sound, and three quarters of the power turned into heat. Full lesson on the channel.",
+   "cls": "a",
+   "lines": [
+    "Pdc = 20 × 0.5 = 10 W",
+    "Pout(max) = 2.5 W",
+    "η = 25 %"
+   ]
+  }
+ ]
+}
