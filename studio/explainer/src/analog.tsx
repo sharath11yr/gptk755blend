@@ -3415,3 +3415,68 @@ export const DiodeScene: React.FC<any> = ({ dur, mode = "fwd", v = 5, r = 1000 }
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.diode = DiodeScene;
+
+/** {"type":"spec","mode":"zener"|"led"|"photo"|"varactor"|"tunnel"|"opto"} special diodes */
+export const SpecDiodeScene: React.FC<any> = ({ dur, mode = "zener" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={1060} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text><text x={1820} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  const graph = (title: string, pts: string, xl: string, yl: string, extra?: React.ReactNode) => <g><text x={1440} y={200} textAnchor="middle" {...T1} fontSize={30}>{title}</text>
+    <line x1={1080} y1={820} x2={1820} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={1080} y1={820} x2={1080} y2={260} stroke={L.dim} strokeWidth={3} />
+    <text x={1820} y={860} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{xl}</text><text x={1094} y={280} fill={L.dim} fontFamily={MONO} fontSize={22}>{yl}</text>
+    <polyline points={pts} fill="none" stroke={L.green} strokeWidth={6} />{extra}</g>;
+  let body: React.ReactNode;
+  if (mode === "zener") { const vin = 3 + 9 * p; const vz = 5.1; const on = vin > vz; const vo = on ? vz : vin; const iz = on ? (vin - vz) / 100 : 0;
+    const q: string[] = []; for (let k = 0; k <= 100; k++) { const v = 8 * k / 100; const i = v < vz ? 0 : Math.min(50, (v - vz) * 300); q.push(`${1080 + v * 85},${820 - i * 10}`); }
+    body = <g><Battery x={200} y={540} v={+vin.toFixed(1)} />{W("200,500 200,260 360,260")}<Res x={430} y={260} ohm={100} label="R" horizontal />{W("500,260 700,260 700,470")}
+      <g transform="translate(700,540) rotate(-90)"><rect x={-34} y={-34} width={68} height={68} fill={L.bg0} /><polygon points="-24,-28 -24,28 22,0" fill={on ? "rgba(46,196,160,0.35)" : L.bg0} stroke={on ? L.green : L.amber} strokeWidth={5} /><polyline points="12,-36 22,-28 22,28 32,36" fill="none" stroke={on ? L.green : L.amber} strokeWidth={6} /></g>
+      {W("700,610 700,820 200,820 200,580")}{on && <Dots pts={[[200, 500], [200, 260], [700, 260], [700, 820], [200, 820]]} t={t} speed={30 + iz * 3000} gap={46} r={8} color={L.amber} />}
+      <text x={760} y={548} {...T1} fontSize={26} fill={on ? L.green : L.text}>Zener 5.1 V (reverse)</text>
+      {graph("ZENER: BREAKS DOWN ON PURPOSE", q.join(" "), "reverse V →", "reverse I", <line x1={1080 + vz * 85} y1={820} x2={1080 + vz * 85} y2={280} stroke={L.amber} strokeDasharray="8 8" strokeWidth={3} />)}
+      <text x={600} y={940} textAnchor="middle" {...T1} fontSize={28}>Vin {vin.toFixed(1)} V → Vz {vo.toFixed(1)} V {on ? `(Iz ${(iz * 1000).toFixed(0)} mA)` : "(below Vz: off)"}</text></g>; }
+  else if (mode === "led") { const cols: [string, string, number][] = [["red", "#ff4040", 1.8], ["yellow", "#ffd23a", 2.1], ["green", "#3dd46a", 2.2], ["blue", "#4a7dff", 3.2], ["white", "#ffffff", 3.2]];
+    const k = Math.min(4, Math.floor(p * 5)); const [n, c, vf] = cols[k]; const R = (5 - vf) / 0.02;
+    body = <g><Battery x={200} y={540} v={5} />{W("200,500 200,260 360,260")}<Res x={430} y={260} ohm={R} label="R" horizontal />{W("500,260 700,260 700,470")}
+      <g transform="translate(700,540) rotate(90)"><polygon points="-24,-28 -24,28 22,0" fill={c} stroke={L.amber} strokeWidth={4} /><line x1={22} y1={-28} x2={22} y2={28} stroke={L.amber} strokeWidth={6} /></g>
+      <circle cx={700} cy={540} r={70} fill={c} opacity={0.25 + 0.15 * Math.sin(t * 4)} />
+      {[0, 1].map((j) => <line key={j} x1={740 + j * 20} y1={510 - j * 20} x2={790 + j * 20} y2={470 - j * 20} stroke={c === "#ffffff" ? "#bbb" : c} strokeWidth={5} />)}
+      {W("700,610 700,820 200,820 200,580")}<Dots pts={[[200, 500], [200, 260], [700, 260], [700, 820], [200, 820]]} t={t} speed={100} gap={46} r={8} color={L.amber} />
+      <text x={1440} y={250} textAnchor="middle" {...T1} fontSize={30}>LED: LIGHT FROM ELECTRONS FALLING</text>
+      {row(350, "colour", n, L.text)}{row(440, "forward voltage", `${vf} V`, L.amber)}{row(530, "R = (5 − Vf) ÷ 20 mA", `${R.toFixed(0)} Ω`, L.green)}
+      <text x={1440} y={680} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>no resistor → current runs away → LED burns</text></g>; }
+  else if (mode === "photo") { const light = 0.5 + 0.5 * Math.sin(p * Math.PI * 3); const i = 2 + 98 * light;
+    body = <g><Battery x={200} y={540} v={5} />{W("200,500 200,260 700,260 700,470")}
+      <g transform="translate(700,540) rotate(-90)"><rect x={-34} y={-34} width={68} height={68} fill={L.bg0} /><polygon points="-24,-28 -24,28 22,0" fill={L.bg0} stroke={L.amber} strokeWidth={5} /><line x1={22} y1={-28} x2={22} y2={28} stroke={L.amber} strokeWidth={6} /></g>
+      <circle cx={900} cy={380} r={50} fill="#ffd24a" opacity={0.2 + 0.8 * light} />{[0, 1, 2].map((j) => <line key={j} x1={860 - j * 15} y1={410 + j * 15} x2={760} y2={510} stroke="#ffb000" strokeWidth={4} opacity={light} />)}
+      {W("700,610 700,700")}<Res x={700} y={760} ohm={10000} label="10 kΩ" />{W("700,830 700,880 200,880 200,580")}
+      <Dots pts={[[200, 500], [200, 260], [700, 260], [700, 880], [200, 880]]} t={t} speed={10 + i * 2} gap={46} r={8} color={L.amber} />
+      <text x={760} y={640} {...T1} fontSize={24}>photodiode (reverse biased)</text>
+      <text x={1440} y={250} textAnchor="middle" {...T1} fontSize={30}>PHOTODIODE: LIGHT MAKES CURRENT</text>
+      {row(350, "light", `${Math.round(light * 100)}%`, L.amber)}{row(440, "reverse current", `${i.toFixed(0)} µA`, L.green)}{row(530, "voltage on 10 kΩ", `${(i * 1e-6 * 1e4).toFixed(2)} V`, L.text)}
+      <text x={1440} y={680} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>photons create electron-hole pairs in the depletion region</text></g>; }
+  else if (mode === "varactor") { const q: string[] = []; for (let k = 0; k <= 100; k++) { const v = 10 * k / 100; q.push(`${1080 + v * 72},${820 - 500 / Math.sqrt(1 + v)}`); }
+    const vr = 10 * p, c = 100 / Math.sqrt(1 + vr);
+    body = <g><rect x={240} y={330} width={200} height={300} fill="#b5473a" opacity={0.85} /><rect x={540 + vr * 20} y={330} width={240 - vr * 20} height={300} fill="#2e5a87" opacity={0.85} /><rect x={440} y={330} width={100 + vr * 20} height={300} fill="#e8eef4" />
+      <text x={490 + vr * 10} y={490} textAnchor="middle" {...T1} fontSize={24}>gap</text><text x={510} y={300} textAnchor="middle" {...T1} fontSize={28}>reverse voltage widens the gap</text>
+      <text x={510} y={720} textAnchor="middle" {...T1} fontSize={30} fill={L.green}>VR {vr.toFixed(1)} V → C {c.toFixed(0)} pF</text>
+      {graph("VARACTOR: VOLTAGE-CONTROLLED CAPACITOR", q.join(" "), "reverse V →", "C", <circle cx={1080 + vr * 72} cy={820 - 500 / Math.sqrt(1 + vr)} r={12} fill={L.amber} />)}</g>; }
+  else if (mode === "tunnel") { const q: string[] = []; for (let k = 0; k <= 200; k++) { const v = 0.6 * k / 200; const i = 10 * Math.exp(-Math.pow((v - 0.07) / 0.06, 2)) + (v > 0.3 ? Math.pow((v - 0.3) * 20, 2) : 0) + 1; q.push(`${1080 + v * 1200},${820 - Math.min(14, i) * 38}`); }
+    body = <g><text x={500} y={300} textAnchor="middle" {...T1} fontSize={30}>OTHER SPECIAL DIODES</text>
+      {[["Tunnel", "current FALLS as V rises: negative resistance, GHz oscillators"], ["Avalanche", "designed to break down safely at high voltage: surge protection"], ["Laser diode", "LED with mirrors: one colour, one direction (barcode, fibre, DVD)"], ["PIN", "an intrinsic layer between P and N: fast RF switches, light detectors"], ["Schottky", "metal-semiconductor: 0.3 V, very fast (power supplies)"]].map(([a, b], k) =>
+        <g key={k}><text x={140} y={400 + k * 110} {...T1} fontSize={30} fill={L.amber}>{a}</text><text x={140} y={440 + k * 110} fill={L.text} fontFamily={SANS} fontSize={24}>{b}</text></g>)}
+      {graph("TUNNEL DIODE I-V", q.join(" "), "V →", "I", <text x={1300} y={640} fill={L.red} fontFamily={SANS} fontSize={24} fontWeight={800}>negative resistance region</text>)}</g>; }
+  else { const on = Math.sin(t * 2) > 0;
+    body = <g><rect x={640} y={300} width={640} height={480} rx={40} fill="#1b1b1b" /><line x1={960} y1={330} x2={960} y2={750} stroke="#555" strokeWidth={4} strokeDasharray="10 10" />
+      <text x={960} y={280} textAnchor="middle" {...T1} fontSize={28}>OPTOCOUPLER: signal crosses as LIGHT</text>
+      <g transform="translate(800,540) rotate(90)"><polygon points="-24,-28 -24,28 22,0" fill={on ? "#ff4040" : "#552222"} stroke={L.amber} strokeWidth={4} /><line x1={22} y1={-28} x2={22} y2={28} stroke={L.amber} strokeWidth={6} /></g>
+      {on && [0, 1, 2].map((j) => <line key={j} x1={840} y1={500 + j * 40} x2={1060} y2={500 + j * 40} stroke="#ff6060" strokeWidth={4} opacity={0.8} />)}
+      <circle cx={1130} cy={540} r={60} fill="none" stroke={on ? L.green : L.amber} strokeWidth={5} /><text x={1130} y={548} textAnchor="middle" {...T1} fontSize={22} fill={L.text}>photo-Q</text>
+      {W("200,440 800,440 800,500")}{W("800,580 800,640 200,640")}<text x={200} y={420} {...T1} fontSize={26} fill={L.cyan}>input side</text>
+      {W("1130,480 1130,440 1720,440")}{W("1130,600 1130,640 1720,640")}<text x={1720} y={420} textAnchor="end" {...T1} fontSize={26} fill={L.green}>output side</text>
+      <text x={960} y={880} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>no wire between the two sides: thousands of volts of isolation</text>
+      <text x={960} y={930} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>used in every phone charger's feedback (SMPS)</text></g>; }
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.spec = SpecDiodeScene;

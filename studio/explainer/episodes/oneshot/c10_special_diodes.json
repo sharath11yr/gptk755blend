@@ -1,0 +1,92 @@
+{
+ "title": "Analog One Shot Ch10",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 10: Special diodes",
+   "narration": "Chapter ten: special diodes. The same P N junction, engineered for different jobs: holding a fixed voltage, making light, sensing light, switching fast, acting as a variable capacitor, and more. Each one shown in a working circuit.",
+   "kicker": "CHAPTER 10",
+   "title": "SPECIAL DIODES",
+   "subtitle": "Zener, LED, photodiode, Schottky, varactor and more"
+  },
+  {
+   "type": "spec",
+   "chapter": "Zener diode",
+   "narration": "A Zener diode is designed to work in reverse breakdown, safely. Its symbol has bent ends on the bar. It's connected in reverse, with a resistor. Watch as we raise the input from three to twelve volts. Below five point one volts, the Zener is off, and the output follows the input. Once the input passes five point one, the Zener breaks down and holds its voltage at five point one, no matter how high the input goes. The extra voltage drops across the resistor, and the extra current flows through the Zener. That's a simple voltage regulator. Two mechanisms cause breakdown: the Zener effect below about five volts, where the strong field pulls electrons straight out of bonds, and the avalanche effect above, where fast electrons knock others loose in a chain reaction.",
+   "mode": "zener"
+  },
+  {
+   "type": "spec",
+   "chapter": "LED",
+   "narration": "An L E D, light emitting diode. When forward biased, electrons fall from a high energy level into holes, and give off the energy as light. The material decides the colour, and the colour decides the forward voltage: red about one point eight volts, yellow two point one, green two point two, blue and white about three point two. An L E D must always have a series resistor. Without it, its current rises out of control and it burns. To choose the resistor: supply minus forward voltage, divided by the current you want. Five volts, a red L E D, twenty milliamps: five minus one point eight, over zero point zero two, one hundred and sixty ohms.",
+   "mode": "led"
+  },
+  {
+   "type": "spec",
+   "chapter": "Photodiode",
+   "narration": "A photodiode works the other way: light in, current out. It's connected in reverse bias. In darkness, only a tiny leakage flows. When light hits the junction, photons break bonds and create electron hole pairs in the depletion region, and the field sweeps them out as current. More light, more current. Through a ten kilohm resistor, that current becomes a voltage. Photodiodes are in T V remote receivers, light meters, and fibre optic receivers.",
+   "mode": "photo"
+  },
+  {
+   "type": "schottky",
+   "chapter": "Schottky diode",
+   "narration": "The Schottky diode joins metal directly to N type silicon. It turns on at about zero point three volts instead of zero point seven, and switches off almost instantly, because it has no stored charge. That's why switching power supplies and solar chargers use it.",
+   "mode": "junction"
+  },
+  {
+   "type": "spec",
+   "chapter": "Varactor",
+   "narration": "A varactor uses the depletion region as the gap of a capacitor. Reverse bias it more, and the gap widens, so the capacitance falls: from a hundred picofarads at zero volts down to thirty at ten volts. So a voltage can tune a capacitor. Radios and T Vs use varactors to tune to channels electronically, with no moving parts.",
+   "mode": "varactor"
+  },
+  {
+   "type": "spec",
+   "chapter": "Tunnel, avalanche, laser, PIN",
+   "narration": "A few more you should recognise. The tunnel diode is so heavily doped that its current actually falls as voltage rises over part of its curve: negative resistance, used in very high frequency oscillators. The avalanche diode is built to break down safely at high voltages, protecting circuits from surges. The laser diode is an L E D with mirrors, giving a single colour in a narrow beam, used in barcode scanners and fibre optics. And the PIN diode has an undoped layer between P and N, used as a fast radio frequency switch and light detector.",
+   "mode": "tunnel"
+  },
+  {
+   "type": "spec",
+   "chapter": "Optocoupler",
+   "narration": "Finally, the optocoupler: an L E D and a light sensor sealed in one package, facing each other, with no electrical connection. A signal on the input side turns the L E D on, and the sensor on the output side responds. Information crosses as light, so the two sides can be thousands of volts apart. Every phone charger uses one to send feedback across its safety gap.",
+   "mode": "opto"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: special diodes",
+   "narration": "Question one: a blue L E D with three point two volts forward voltage on a nine volt supply, at fifteen milliamps. Find R and its power. R equals nine minus three point two, over zero point zero one five: three hundred and eighty seven ohms, use three ninety. Power: five point eight volts times fifteen milliamps, eighty seven milliwatts. A quarter watt resistor is fine. Question two: a five point one volt Zener with a hundred ohm resistor from twelve volts, no load. Find the Zener current and power. Twelve minus five point one, over a hundred: sixty nine milliamps. Power: five point one times sixty nine milliamps, zero point three five watts.",
+   "title": "NUMERICALS · SPECIAL DIODES",
+   "given": [
+    "blue LED 3.2 V",
+    "9 V, 15 mA"
+   ],
+   "lines": [
+    "R = (9 − 3.2) ÷ 0.015 = 387 Ω → 390 Ω",
+    "PR = 5.8 × 15 mA = 87 mW",
+    "Zener: IZ = (12 − 5.1) ÷ 100 = 69 mA",
+    "PZ = 5.1 × 0.069 = 0.35 W"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 10 recap",
+   "narration": "Recap. Zener: works in reverse breakdown, holds a fixed voltage. L E D: makes light, always needs a series resistor, R equals supply minus V f over I. Photodiode: reverse biased, light creates current. Schottky: zero point three volts and fast. Varactor: voltage controlled capacitor. Optocoupler: signal across an isolation gap as light. Next: rectifiers, turning A C into D C.",
+   "title": "CHAPTER 10 COMPLETE",
+   "lines": [
+    "Zener: fixed voltage in reverse breakdown",
+    "LED: R = (Vs − Vf) ÷ I",
+    "Photodiode: light → reverse current",
+    "Schottky 0.3 V · Varactor · Optocoupler"
+   ],
+   "cta": "Next: rectifiers"
+  }
+ ]
+}
