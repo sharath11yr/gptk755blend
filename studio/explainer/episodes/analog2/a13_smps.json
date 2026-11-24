@@ -1,0 +1,121 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "SMPS Explained | How a Phone Charger Turns 230 V AC into 5 V | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "SMPS Explained | How a Phone Charger Turns 230 V AC into 5 V | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The switch mode power supply (SMPS) inside every charger, step by step: bridge rectifier and bulk capacitor giving 325 V DC, a MOSFET switching a flyback transformer at 65 kHz, energy stored and released, the 28:1 turns ratio giving 5 V, optocoupler feedback, why high frequency makes the transformer tiny, and every value calculated.",
+  "tags": [
+   "smps",
+   "switch mode power supply",
+   "flyback converter",
+   "phone charger",
+   "rectifier",
+   "optocoupler",
+   "power supply",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "SMPS",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "SMPS: SWITCH MODE POWER SUPPLY",
+   "subtitle": "How a tiny charger turns 230 V AC into 5 V DC",
+   "narration": "Welcome back. We've built buck, boost and buck-boost converters. Now let's put it all together inside something you use every day: your phone charger. It takes two hundred and thirty volts A C from the wall and gives five volts D C, in a box smaller than a matchbox. This is the S M P S, the switch mode power supply. We'll build it stage by stage."
+  },
+  {
+   "type": "smps",
+   "mode": "build",
+   "chapter": "Building it, stage by stage",
+   "narration": "First the mains, two hundred and thirty volts A C. Then a bridge rectifier, four diodes, that flips the negative half cycles up. Then a big bulk capacitor that smooths it into high voltage D C. Next, the primary winding of a transformer, with a MOSFET switch Q at the bottom. On the other side, the secondary winding, a diode and an output capacitor, giving five volts. And finally, a feedback path through an optocoupler, back to the controller that drives the switch."
+  },
+  {
+   "type": "smps",
+   "mode": "rect",
+   "chapter": "Stage 1: AC to high-voltage DC",
+   "narration": "Stage one. The mains is two hundred and thirty volts r m s, which means it peaks at two hundred and thirty times root two, about three hundred and twenty five volts. The bridge flips every negative half cycle up, so we get bumps that are all positive. The bulk capacitor charges to the peak and fills in the gaps. Now we have about three hundred and twenty five volts D C. Careful: this part of a charger is dangerous."
+  },
+  {
+   "type": "smps",
+   "mode": "switch",
+   "chapter": "Stage 2: the switch and the transformer",
+   "narration": "Stage two. The MOSFET switches sixty five thousand times a second. When it's on, current flows through the primary winding, and the transformer's core stores energy, just like our inductor did. The secondary diode is pointing the wrong way, so nothing flows there yet. When the switch turns off, the stored energy comes out of the secondary winding, through the diode, into the output capacitor and the load. This is called a flyback converter. It's a buck-boost with a transformer instead of an inductor."
+  },
+  {
+   "type": "smps",
+   "mode": "switch",
+   "chapter": "Why the transformer?",
+   "narration": "Why use a transformer at all? Two reasons. First, the turns ratio steps the voltage down. Our transformer has twenty eight turns on the primary for every one on the secondary. Second, and more important, safety. The primary and secondary aren't connected by any wire, only by magnetism. So the dangerous three hundred and twenty five volts can never reach your phone, or your hand."
+  },
+  {
+   "type": "smps",
+   "mode": "fb",
+   "chapter": "Stage 3: feedback through light",
+   "narration": "Stage three, feedback. The output must stay at five volts whatever the phone draws. But the output side isn't allowed to have a wire back to the dangerous side. So we use an optocoupler: a tiny L E D and a light sensor in one package. If the output rises above five volts, the L E D glows brighter, and the controller makes the on pulses shorter. Information crosses the safety gap as light."
+  },
+  {
+   "type": "smps",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Every value. The D C voltage: two hundred and thirty times root two, three hundred and twenty five volts. A flyback works like a buck-boost, then divides by the turns ratio n. So V out equals V D C times D over one minus D, over n. With a thirty percent duty cycle, three hundred and twenty five times zero point three over zero point seven is one hundred and thirty nine volts, and divided by twenty eight, about five volts. And here's why chargers got tiny: the switch runs at sixty five thousand hertz instead of the mains fifty hertz, thirteen hundred times faster. The faster the switching, the less energy the core stores each cycle, so the transformer can be many times smaller."
+  },
+  {
+   "type": "app",
+   "app": "charger",
+   "chapter": "Real world: why chargers got small",
+   "narration": "This is exactly the difference you've seen. An old charger had a heavy fifty hertz transformer and a linear regulator: big, heavy, warm, and about half the power wasted. A modern S M P S charger switches at tens of kilohertz, so its transformer is the size of a fingertip, and it's about ninety percent efficient. Laptop adapters, T V power supplies, and computer power supplies all use the same idea."
+  },
+  {
+   "type": "smps",
+   "mode": "switch",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the transformer works on D C. A transformer needs changing current. The switch is what creates it, sixty five thousand times a second. Two: forgetting the isolation. The feedback must cross through the optocoupler, never a direct wire, or the output becomes dangerous. Three: touching the primary side. Even after unplugging, the bulk capacitor can hold three hundred and twenty five volts. Never open a charger."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: VOLTAGE MULTIPLIERS",
+   "lines": [
+    "Bridge + bulk C: 230 V AC → 325 V DC",
+    "Flyback: Vout = Vdc × D ÷ (1 − D) ÷ n",
+    "Opto feedback, isolation, high frequency = small"
+   ],
+   "cta": "Voltage multipliers are next",
+   "narration": "Quick recap. An S M P S rectifies the mains to three hundred and twenty five volts D C, switches it at high frequency through a transformer, and rectifies the output. The flyback output is V D C times D over one minus D, over n. An optocoupler carries the feedback across the safety gap, and high frequency makes everything small. That completes regulators. Next: voltage multipliers, making high voltage with just diodes and capacitors. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "smps",
+   "mode": "rect",
+   "chapter": "",
+   "narration": "How does a charger smaller than a matchbox turn two hundred and thirty volts into five? Step one: a bridge and a big capacitor turn the mains into three hundred and twenty five volts D C."
+  },
+  {
+   "type": "smps",
+   "mode": "switch",
+   "chapter": "",
+   "narration": "Step two: a MOSFET switches sixty five thousand times a second. On, the transformer stores energy. Off, the energy flies out the other side, stepped down twenty eight to one, into five volts."
+  },
+  {
+   "type": "smps",
+   "mode": "fb",
+   "chapter": "",
+   "narration": "And an optocoupler sends feedback back as light, so the dangerous side never touches your phone. High frequency is why the transformer can be so tiny. Full lesson on the channel."
+  }
+ ]
+}

@@ -2020,3 +2020,78 @@ export const ConvScene: React.FC<any> = ({ dur, kind = "buck", mode = "run", d: 
   return svg(<><g transform="translate(40,0)">{leftAll}</g>{right}</>);
 };
 ANALOG_SCENES.conv = ConvScene;
+
+// ------------------------------------------------------------------ SMPS: flyback mains charger (230 V AC -> 5 V DC)
+/** {"type":"smps","mode":"build"|"rect"|"switch"|"fb"|"calc"}
+ *  230 V rms -> bridge + bulk C -> 325 V DC -> MOSFET at 65 kHz, D = 0.3, flyback transformer n = 28:1
+ *  -> Vout = 325 × 0.3 / 0.7 / 28 = 4.98 V; optocoupler feedback. */
+export const SmpsScene: React.FC<any> = ({ dur, mode = "build" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const rv = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const on = (t * 0.7) % 1 < 0.3;
+  const T = 330, B = 720;
+  const W = (pts: string, c = L.wire) => <polyline points={pts} fill="none" stroke={c} strokeWidth={5} strokeLinejoin="round" />;
+  const lab = (x: number, y: number, s: string, c: string = L.text, sz = 22) => <text x={x} y={y} textAnchor="middle" fill={c} fontFamily={MONO} fontSize={sz} fontWeight={700}>{s}</text>;
+  const coil = (x: number, y: number, n: number, side: 1 | -1) => <path d={`M ${x} ${y} ` + Array.from({ length: n }, () => `a 14 14 0 1 ${side > 0 ? 1 : 0} 0 28`).join(" ")} fill="none" stroke={L.amber} strokeWidth={5} />;
+  const left = <g>
+    {/* mains */}
+    <g opacity={rv(0)}><circle cx={90} cy={(T + B) / 2} r={44} fill={L.bg0} stroke={L.cyan} strokeWidth={5} />
+      <path d={`M 64 ${(T + B) / 2} q 13 -26 26 0 t 26 0`} fill="none" stroke={L.cyan} strokeWidth={4} />
+      {lab(90, (T + B) / 2 + 80, "230 V AC", L.cyan)}{W(`90,${(T + B) / 2 - 44} 90,${T} 170,${T}`)}{W(`90,${(T + B) / 2 + 44} 90,${B} 170,${B}`)}</g>
+    {/* bridge */}
+    <g opacity={rv(0.12)}><polygon points={`230,${T - 10} 290,${(T + B) / 2} 230,${B + 10} 170,${(T + B) / 2}`} fill={L.bg0} stroke={L.amber} strokeWidth={5} />
+      {[[200, T + 80], [260, T + 80], [200, B - 80], [260, B - 80]].map(([x, y], k) => <polygon key={k} points={`${x - 12},${y - 10} ${x + 12},${y - 10} ${x},${y + 10}`} fill={L.amber} />)}
+      {W(`170,${T} 230,${T - 10}`)}{W(`170,${B} 230,${B + 10}`)}{lab(230, B + 60, "BRIDGE")}
+      {W(`290,${(T + B) / 2} 330,${(T + B) / 2} 330,${T} 470,${T}`)}{W(`170,${(T + B) / 2} 150,${(T + B) / 2} 150,${B + 100} 330,${B + 100} 330,${B} 600,${B}`)}</g>
+    {/* bulk cap */}
+    <g opacity={rv(0.25)}>{W(`400,${T} 400,${(T + B) / 2 - 12}`)}<line x1={370} y1={(T + B) / 2 - 12} x2={430} y2={(T + B) / 2 - 12} stroke={L.amber} strokeWidth={8} />
+      <line x1={370} y1={(T + B) / 2 + 12} x2={430} y2={(T + B) / 2 + 12} stroke={L.amber} strokeWidth={8} />{W(`400,${(T + B) / 2 + 12} 400,${B}`)}{lab(400, (T + B) / 2 + 60, "325 V", L.red)}{lab(400, (T + B) / 2 + 86, "DC", L.red)}</g>
+    {/* transformer primary + MOSFET */}
+    <g opacity={rv(0.4)}>{W(`470,${T} 500,${T} 500,${T + 40}`)}{coil(500, T + 40, 6, -1)}{W(`500,${T + 208} 500,${520}`)}
+      <rect x={474} y={520} width={52} height={80} rx={8} fill={on ? "rgba(46,196,160,0.25)" : L.bg0} stroke={on ? L.green : L.red} strokeWidth={5} />
+      {lab(500, 568, "Q", on ? L.green : L.red)}{W(`500,600 500,${B}`)}
+      <text x={470} y={650} textAnchor="end" fill={on ? L.green : L.red} fontFamily={MONO} fontSize={22} fontWeight={800}>{on ? "ON" : "OFF"}</text>
+      <line x1={545} y1={T + 30} x2={545} y2={T + 220} stroke={L.text} strokeWidth={4} /><line x1={555} y1={T + 30} x2={555} y2={T + 220} stroke={L.text} strokeWidth={4} />
+      {lab(550, T - 30, "TRANSFORMER 28 : 1")}</g>
+    {/* secondary */}
+    <g opacity={rv(0.6)}>{coil(600, T + 70, 3, 1)}{W(`600,${T + 70} 600,${T} 680,${T}`)}
+      <polygon points={`680,${T - 22} 680,${T + 22} 716,${T}`} fill={L.bg0} stroke={L.amber} strokeWidth={5} /><line x1={716} y1={T - 22} x2={716} y2={T + 22} stroke={L.amber} strokeWidth={5} />
+      {W(`716,${T} 900,${T}`)}{W(`600,${T + 154} 600,${B} 900,${B}`)}
+      {W(`790,${T} 790,${(T + B) / 2 - 12}`)}<line x1={760} y1={(T + B) / 2 - 12} x2={820} y2={(T + B) / 2 - 12} stroke={L.amber} strokeWidth={8} />
+      <line x1={760} y1={(T + B) / 2 + 12} x2={820} y2={(T + B) / 2 + 12} stroke={L.amber} strokeWidth={8} />{W(`790,${(T + B) / 2 + 12} 790,${B}`)}
+      <circle cx={900} cy={T} r={10} fill={L.green} /><circle cx={900} cy={B} r={10} fill={L.green} />{lab(900, T - 30, "5 V", L.green, 30)}</g>
+    {/* feedback */}
+    <g opacity={rv(0.8)}><path d={`M 900 ${B} L 900 ${B + 110} L 560 ${B + 110}`} fill="none" stroke={L.cyan} strokeWidth={4} strokeDasharray="10 8" />
+      <rect x={470} y={B + 80} width={90} height={60} rx={10} fill={L.panel} stroke={L.cyan} strokeWidth={4} />{lab(515, B + 118, "OPTO", L.cyan, 20)}
+      <path d={`M 470 ${B + 110} L 440 ${B + 110} L 440 560 L 474 560`} fill="none" stroke={L.cyan} strokeWidth={4} strokeDasharray="10 8" />
+      {lab(700, B + 175, "feedback: output → light → controller", L.cyan, 20)}</g>
+    {mode !== "build" && mode !== "calc" && (on ? <Dots pts={[[470, T], [500, T], [500, B], [400, B], [400, T], [470, T]]} t={t} speed={140} />
+      : <Dots pts={[[600, B], [600, T], [900, T], [900, B], [600, B]]} t={t} speed={140} color={L.amber} />)}
+  </g>;
+  const GX = 1040, GW = 780;
+  const tr = (cy: number, h: number, fn: (u: number) => number, col: string, name: string, top: string) => { const q: string[] = [];
+    for (let k = 0; k <= 400; k++) { const u = k / 400; if (u > (mode === "build" ? p : 1)) break; q.push(`${GX + GW * u},${cy - fn(u) * h}`); }
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} />
+      <text x={GX + 8} y={cy - h - 14} fill={col} fontFamily={SANS} fontSize={24} fontWeight={800}>{name}</text>
+      <text x={GX - 10} y={cy - h + 6} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={18}>{top}</text>
+      {q.length > 1 && <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={4} />}</g>; };
+  let right: React.ReactNode;
+  if (mode === "calc") { const ls = ["Vdc = 230 × √2 = 325 V", "flyback: Vout = Vdc × D ÷ (1 − D) ÷ n", "= 325 × 0.3 ÷ 0.7 ÷ 28", "= 139 ÷ 28 ≈ 5.0 V", "65 kHz vs 50 Hz: 1300× faster", "→ transformer can be ~100× smaller"];
+    right = <g>{ls.map((l, k) => <text key={k} x={GX + 10} y={240 + k * 105} fill={k === 3 ? L.green : L.text} fontFamily={MONO} fontSize={30} fontWeight={700}
+      opacity={interpolate(p, [k * 0.14, k * 0.14 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>; }
+  else if (mode === "rect") right = <g>
+    {tr(330, 120, (u) => Math.sin(u * 4 * Math.PI), L.cyan, "mains AC (325 V peak)", "325 V")}
+    {tr(620, 200, (u) => Math.abs(Math.sin(u * 4 * Math.PI)), L.amber, "after the bridge", "325 V")}
+    {tr(900, 200, (u) => 0.95 + 0.05 * Math.abs(Math.sin(u * 4 * Math.PI)), L.red, "after the bulk capacitor: DC", "325 V")}</g>;
+  else right = <g>
+    {tr(330, 150, (u) => ((u * 6) % 1 < 0.3 ? 1 : 0), L.cyan, "MOSFET switch, 65 kHz, D = 30%", "ON")}
+    {tr(620, 180, (u) => { const x = (u * 6) % 1; return x < 0.3 ? x / 0.3 : 0; }, L.amber, "primary current: energy stored", "")}
+    {tr(900, 180, (u) => { const x = (u * 6) % 1; return x < 0.3 ? 0 : 1 - (x - 0.3) / 0.7; }, L.green, "secondary current: energy released", "")}</g>;
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(60,120)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<><g transform="translate(60,0)">{left}</g>{right}</>);
+};
+ANALOG_SCENES.smps = SmpsScene;
