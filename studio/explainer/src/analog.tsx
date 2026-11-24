@@ -3141,3 +3141,71 @@ export const RVarScene: React.FC<any> = ({ dur, kind = "pot" }) => {
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{left}{right}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.rvar = RVarScene;
+
+/** {"type":"capx","mode":"inside"|"dcac"|"reverse"|"xc"|"combo"}: what a capacitor does, physically */
+export const CapXScene: React.FC<any> = ({ dur, mode = "inside" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={1040} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text><text x={1820} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  let body: React.ReactNode;
+  if (mode === "inside") { const q = 1 - Math.exp(-p * 5); const n = Math.round(q * 12);
+    body = <g><Battery x={200} y={540} v={9} />{W("200,500 200,250 600,250 600,420")}{W("200,580 200,830 600,830 600,660")}
+      <rect x={480} y={420} width={240} height={22} fill="#8a96a3" /><rect x={480} y={638} width={240} height={22} fill="#8a96a3" />
+      <rect x={480} y={442} width={240} height={196} fill="#e8eef4" /><text x={600} y={548} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>insulator (dielectric)</text>
+      {Array.from({ length: n }, (_, k) => <text key={k} x={494 + k * 19} y={412} {...T1} fontSize={26} fill={L.red}>+</text>)}
+      {Array.from({ length: n }, (_, k) => <circle key={k} cx={500 + k * 19} cy={676} r={8} fill={L.electron} />)}
+      {q < 0.97 && <><Dots pts={[[600, 420], [600, 250], [200, 250], [200, 500]]} t={t} speed={40 + 200 * (1 - q)} gap={46} r={9} color={L.electron} />
+        <Dots pts={[[200, 580], [200, 830], [600, 830], [600, 660]]} t={t} speed={40 + 200 * (1 - q)} gap={46} r={9} color={L.electron} /></>}
+      <text x={600} y={940} textAnchor="middle" {...T1} fontSize={28}>{q < 0.97 ? "electrons pulled OFF the top plate, pushed ONTO the bottom plate" : "full: plate voltage = battery → current stops"}</text>
+      <text x={820} y={440} {...T1} fontSize={24} fill={L.red}>+ plate</text><text x={820} y={670} {...T1} fontSize={24} fill={L.electron}>− plate</text></g>;
+    body = <g>{body}{row(330, "capacitor voltage", `${(9 * q).toFixed(1)} V`, L.green)}{row(420, "charge stored Q = C V", `${(100 * 9 * q).toFixed(0)} µC`, L.amber)}{row(510, "current", q < 0.97 ? "flowing" : "zero", L.cyan)}
+      <text x={1430} y={250} textAnchor="middle" {...T1} fontSize={30}>100 µF CAPACITOR CHARGING</text></g>; }
+  else if (mode === "dcac") { const half = p < 0.5; const u = half ? p * 2 : (p - 0.5) * 2;
+    const glow = half ? Math.exp(-u * 8) : 0.6 + 0.4 * Math.abs(Math.sin(t * 6));
+    body = <g>{half ? <Battery x={200} y={540} v={9} /> : <g><circle cx={200} cy={540} r={60} fill={L.bg0} stroke={L.cyan} strokeWidth={6} /><path d="M 166 540 q 17 -30 34 0 t 34 0" fill="none" stroke={L.cyan} strokeWidth={5} /></g>}
+      {W("200,480 200,260 420,260")}{W("200,600 200,820 800,820 800,600")}{W("520,260 800,260 800,480")}
+      <g transform="translate(470,260)"><rect x={-50} y={-50} width={100} height={100} fill={L.bg0} /><circle r={44} fill="#fff3a0" opacity={0.15 + 0.85 * glow} stroke={L.amber} strokeWidth={4} /></g>
+      <rect x={760} y={480} width={80} height={120} fill={L.bg0} /><line x1={760} y1={528} x2={840} y2={528} stroke={L.amber} strokeWidth={9} /><line x1={760} y1={552} x2={840} y2={552} stroke={L.amber} strokeWidth={9} />
+      <text x={860} y={548} {...T1} fontSize={26}>C</text>
+      {(half ? glow > 0.05 : true) && <Dots pts={half ? [[200, 480], [200, 260], [800, 260], [800, 480]] : (Math.sin(t * 6) > 0 ? [[200, 480], [200, 260], [800, 260], [800, 480]] : [[800, 480], [800, 260], [200, 260], [200, 480]])} t={t} speed={half ? 200 * glow : 150} gap={46} r={9} />}
+      <text x={500} y={940} textAnchor="middle" {...T1} fontSize={30} fill={half ? L.red : L.green}>{half ? "DC: a short flash while C charges, then NOTHING" : "AC: C keeps charging and discharging → current keeps flowing"}</text></g>;
+    body = <g>{body}<text x={1430} y={300} textAnchor="middle" {...T1} fontSize={32}>{half ? "DC IS BLOCKED" : "AC PASSES"}</text>
+      <text x={1430} y={380} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>{half ? "once full, no more charge can move" : "the plates refill every half cycle"}</text>
+      <text x={1430} y={470} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>no electron ever crosses the insulator</text></g>; }
+  else if (mode === "reverse") { const leak = p * p; const bulge = Math.max(0, p - 0.6) * 60; const pop = p > 0.93;
+    body = <g><Battery x={200} y={540} v={16} />{W("200,500 200,260 600,260 600,400")}{W("200,580 200,820 600,820 600,700")}
+      <g transform={`translate(600,550) scale(${1 + bulge / 400},1)`}><rect x={-80} y={-150} width={160} height={300} rx={20} fill={pop ? "#555" : "#2e5a87"} stroke="#4a5d70" strokeWidth={5} />
+        <rect x={-80} y={-150} width={34} height={300} fill="#ddd" opacity={0.8} /><text x={-63} y={10} textAnchor="middle" fill="#2e5a87" fontFamily={SANS} fontSize={40} fontWeight={800}>−</text>
+        <ellipse cx={0} cy={-150} rx={80 + bulge} ry={12 + bulge / 2} fill={pop ? "#333" : "#9aa5b1"} /></g>
+      <text x={470} y={360} {...T1} fontSize={26} fill={L.red}>"−" side wired to +</text>
+      {!pop && <Dots pts={[[200, 500], [200, 260], [600, 260], [600, 820], [200, 820]]} t={t} speed={30 + leak * 300} gap={40} r={8} />}
+      {p > 0.5 && !pop && Array.from({ length: 3 }, (_, k) => <path key={k} d={`M ${570 + k * 30} 380 q 10 -30 0 -60`} fill="none" stroke="#999" strokeWidth={4} opacity={0.5} />)}
+      {pop && <text x={600} y={330} textAnchor="middle" {...T1} fontSize={50} fill={L.red}>POP!</text>}</g>;
+    body = <g>{body}<text x={1430} y={260} textAnchor="middle" {...T1} fontSize={30}>WHAT IF: ELECTROLYTIC REVERSED?</text>
+      {row(360, "leakage current", `${(leak * 2000).toFixed(0)} mA`, L.red)}{row(450, "temperature", `${(25 + leak * 100).toFixed(0)} °C`, L.red)}
+      <text x={1430} y={600} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>the thin oxide layer dissolves → it conducts → gas → bulge → burst</text>
+      <text x={1430} y={660} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>ceramic capacitors have no polarity: either way is fine</text></g>; }
+  else if (mode === "xc") { const f = Math.pow(10, 1 + 3 * p); const xc = 1 / (2 * Math.PI * f * 10e-6); const i = 5 / Math.sqrt(xc * xc + 100 * 100);
+    body = <g><circle cx={200} cy={540} r={60} fill={L.bg0} stroke={L.cyan} strokeWidth={6} /><path d="M 166 540 q 17 -30 34 0 t 34 0" fill="none" stroke={L.cyan} strokeWidth={5} />
+      <text x={200} y={650} textAnchor="middle" {...T1} fontSize={24} fill={L.cyan}>5 V, {f >= 1000 ? (f / 1000).toFixed(1) + " kHz" : f.toFixed(0) + " Hz"}</text>
+      {W("200,480 200,260 420,260")}{W("200,600 200,820 800,820 800,600")}<Res x={490} y={260} ohm={100} label="100 Ω" horizontal />{W("560,260 800,260 800,480")}
+      <rect x={760} y={480} width={80} height={120} fill={L.bg0} /><line x1={760} y1={528} x2={840} y2={528} stroke={L.amber} strokeWidth={9} /><line x1={760} y1={552} x2={840} y2={552} stroke={L.amber} strokeWidth={9} /><text x={860} y={548} {...T1} fontSize={26}>10 µF</text>
+      <Dots pts={Math.sin(t * 6) > 0 ? [[200, 480], [200, 260], [800, 260], [800, 480]] : [[800, 480], [800, 260], [200, 260], [200, 480]]} t={t} speed={20 + i * 4000} gap={40} r={8} /></g>;
+    body = <g>{body}<text x={1430} y={260} textAnchor="middle" {...T1} fontSize={30}>HIGHER FREQUENCY → LESS OPPOSITION</text>
+      {row(360, "frequency f", f >= 1000 ? `${(f / 1000).toFixed(2)} kHz` : `${f.toFixed(0)} Hz`, L.cyan)}{row(450, "XC = 1 ÷ (2π f C)", `${xc.toFixed(1)} Ω`, L.amber)}{row(540, "current", `${(i * 1000).toFixed(1)} mA`, L.green)}
+      <text x={1430} y={680} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>DC is f = 0 → XC = infinite → blocked</text></g>; }
+  else { body = <g>
+      <text x={480} y={250} textAnchor="middle" {...T1} fontSize={30}>PARALLEL: plates side by side</text>
+      {[0, 1].map((k) => <g key={k}><rect x={300 + k * 180} y={330} width={140} height={14} fill="#8a96a3" /><rect x={300 + k * 180} y={380} width={140} height={14} fill="#8a96a3" /></g>)}
+      <text x={480} y={460} textAnchor="middle" fill={L.green} fontFamily={MONO} fontSize={28} fontWeight={800}>bigger plate area → C adds: 10 + 10 = 20 µF</text>
+      <text x={480} y={620} textAnchor="middle" {...T1} fontSize={30}>SERIES: plates further apart</text>
+      {[0, 1].map((k) => <g key={k}><rect x={410} y={680 + k * 100} width={140} height={14} fill="#8a96a3" /><rect x={410} y={730 + k * 100} width={140} height={14} fill="#8a96a3" /></g>)}
+      <text x={480} y={900} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={28} fontWeight={800}>like a bigger gap → 10 and 10 in series = 5 µF</text>
+      <text x={1430} y={300} textAnchor="middle" {...T1} fontSize={30}>OPPOSITE OF RESISTORS</text>
+      {row(400, "parallel", "C = C1 + C2", L.green)}{row(490, "series", "1/C = 1/C1 + 1/C2", L.amber)}{row(580, "C = ε A ÷ d", "area ↑, gap ↓ → C ↑", L.text)}
+      {row(670, "energy stored", "E = ½ C V²", L.cyan)}</g>; }
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.capx = CapXScene;

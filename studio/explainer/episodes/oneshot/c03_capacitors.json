@@ -1,0 +1,104 @@
+{
+ "title": "Analog One Shot Ch3",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 3: Capacitors",
+   "narration": "Chapter three: the capacitor. A resistor uses energy. A capacitor stores it. Capacitors smooth power supplies, block D C, pass signals, set timing, and build filters. Almost every circuit has them, so let's understand them completely.",
+   "kicker": "CHAPTER 3",
+   "title": "CAPACITORS",
+   "subtitle": "Storing charge, charging curves, DC vs AC, polarity"
+  },
+  {
+   "type": "capx",
+   "chapter": "What's inside, and how it charges",
+   "narration": "A capacitor is two metal plates separated by an insulator, called the dielectric. No current can pass through the insulator. Now connect a nine volt battery. Watch the electrons. The battery's positive terminal pulls electrons off the top plate, leaving it positive. The negative terminal pushes electrons onto the bottom plate, making it negative. Current flows in the wires, even though no electron crosses the gap. As the plates fill up, their voltage rises and pushes back against the battery. When the capacitor voltage equals nine volts, the current stops. The capacitor is fully charged, holding the charge on its plates.",
+   "mode": "inside"
+  },
+  {
+   "type": "capx",
+   "chapter": "Capacitance",
+   "narration": "How much charge it holds for each volt is its capacitance, C, measured in farads. Q equals C times V. A farad is huge, so real capacitors are in microfarads, nanofarads and picofarads. This one hundred microfarad capacitor at nine volts holds one hundred micro times nine, nine hundred microcoulombs. Disconnect the battery, and the charge stays. The capacitor is now like a tiny battery.",
+   "mode": "inside"
+  },
+  {
+   "type": "rc",
+   "chapter": "Charging through a resistor",
+   "narration": "In real circuits, a capacitor charges through a resistor. Ten volts, one kilohm, and one thousand microfarads. Watch the current meter and the graph. At the start, the capacitor is empty, so it acts like a wire, and the full current flows: ten volts over one kilohm, ten milliamps. As it charges, its voltage pushes back, and the current falls. The voltage rises fast at first, then slower and slower. That curved shape is called exponential.",
+   "mode": "charge",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001
+  },
+  {
+   "type": "rc",
+   "chapter": "The time constant",
+   "narration": "How fast? R times C, the time constant, tau. Here, one thousand ohms times one thousandth of a farad: one second. After one tau, the capacitor reaches sixty three percent of the supply: six point three volts. After two, eighty six percent. After five tau, ninety nine percent. We consider it fully charged after five tau: five seconds. Discharging follows the same curve downward: after one tau it falls to thirty seven percent.",
+   "mode": "both",
+   "v": 10,
+   "r": 1000,
+   "c": 0.001
+  },
+  {
+   "type": "capx",
+   "chapter": "Why DC is blocked and AC passes",
+   "narration": "This is the most important thing about capacitors. Put one in series with a bulb. With D C, the bulb flashes for a moment while the capacitor charges, then goes dark. Once full, no more current can flow. D C is blocked. Now switch to A C. The voltage keeps reversing, so the capacitor keeps charging one way, then the other. Current keeps flowing back and forth in the wires, and the bulb stays lit. A C passes. Remember: no electron ever crosses the insulator. The current flows by filling and emptying the plates.",
+   "mode": "dcac"
+  },
+  {
+   "type": "capx",
+   "chapter": "Capacitive reactance",
+   "narration": "How much does a capacitor oppose A C? That's its reactance, X C, equal to one over two pi f C. Watch: at ten hertz, a ten microfarad capacitor has over one point five kilohms of reactance, so little current flows. At one kilohertz, just sixteen ohms. Higher frequency, less opposition, because the plates don't have time to fill up and push back. At zero frequency, D C, reactance is infinite: blocked. Bigger capacitance also means less reactance.",
+   "mode": "xc"
+  },
+  {
+   "type": "capx",
+   "chapter": "What if: the polarity is reversed?",
+   "narration": "Electrolytic capacitors, the big cylindrical ones, have polarity. A stripe marks the negative leg. What if you connect it backwards? Inside, a very thin oxide layer forms the insulator, and it only survives one way round. Reversed, the oxide breaks down, a large leakage current flows, it heats up, gas builds inside, the top bulges, and it can burst. Always connect the negative stripe to the lower voltage. Ceramic and film capacitors have no polarity, so either way is fine.",
+   "mode": "reverse"
+  },
+  {
+   "type": "capx",
+   "chapter": "Series and parallel",
+   "narration": "Capacitors combine the opposite way to resistors. In parallel, it's like making the plates bigger, so capacitances add: ten plus ten, twenty microfarads. In series, it's like moving the plates further apart, so the total is less: two tens in series give five microfarads. And a capacitor stores energy: one half C V squared.",
+   "mode": "combo"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: capacitors",
+   "narration": "Question one: a forty seven kilohm resistor and a ten microfarad capacitor. Find the time constant and the time to fully charge. Tau equals R C: forty seven thousand times ten micro, zero point four seven seconds. Fully charged after five tau, two point three five seconds. Question two: find the reactance of a ten microfarad capacitor at fifty hertz. One over two pi times fifty times ten micro: three hundred and eighteen ohms. Question three: energy in a hundred microfarad capacitor at nine volts: half times a hundred micro times eighty one, four point zero five millijoules.",
+   "title": "NUMERICALS · CAPACITORS",
+   "given": [
+    "R = 47k",
+    "C = 10 µF"
+   ],
+   "lines": [
+    "τ = RC = 47k × 10µ = 0.47 s",
+    "full charge ≈ 5τ = 2.35 s",
+    "XC(50 Hz, 10 µF) = 1 ÷ (2π × 50 × 10µ) = 318 Ω",
+    "E = ½ C V² = ½ × 100µ × 81 = 4.05 mJ"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 3 recap",
+   "narration": "Recap. A capacitor is two plates and an insulator. It stores charge: Q equals C V. Through a resistor it charges with time constant R C: sixty three percent after one tau, full after five. It blocks D C and passes A C, with reactance one over two pi f C. Electrolytics have polarity: never reverse them. Parallel capacitors add, series ones reduce. Next, the inductor, the capacitor's magnetic twin.",
+   "title": "CHAPTER 3 COMPLETE",
+   "lines": [
+    "Q = C V, τ = R C (63% → 5τ full)",
+    "Blocks DC, passes AC: XC = 1 ÷ (2π f C)",
+    "Electrolytic: polarity matters",
+    "Parallel adds, series reduces"
+   ],
+   "cta": "Next: inductors"
+  }
+ ]
+}
