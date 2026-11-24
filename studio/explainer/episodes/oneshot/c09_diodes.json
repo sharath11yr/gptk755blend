@@ -1,0 +1,128 @@
+{
+ "title": "Analog One Shot Ch9",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 9: Diodes",
+   "narration": "Chapter nine: the diode, a one way valve for current. We'll see it conduct and block, read its I V curve, learn the three models used in calculations, see what happens when it's flipped, test it with a multimeter, and build logic gates from it.",
+   "kicker": "CHAPTER 9",
+   "title": "DIODES",
+   "subtitle": "One-way valves for current"
+  },
+  {
+   "type": "diode",
+   "chapter": "The symbol and forward bias",
+   "narration": "A diode is a P N junction with two leads. The P side is the anode, the N side is the cathode. In the symbol, the triangle points in the direction conventional current can flow, from anode to cathode, and the bar is the cathode, marked by a stripe on the real part. Here, five volts, a diode and a one kilohm resistor. The anode connects toward the positive side: forward bias. The diode conducts, and drops about zero point seven volts. The rest, four point three volts, is across the resistor. Current: four point three over one k, four point three milliamps. Orange is conventional current, anode to cathode. Blue electrons go the other way.",
+   "mode": "fwd",
+   "v": 5,
+   "r": 1000
+  },
+  {
+   "type": "diode",
+   "chapter": "What if: the diode is flipped?",
+   "narration": "Now flip the diode. The cathode faces the positive side: reverse bias. The depletion region widens, and the diode blocks. Current is essentially zero, just nanoamps of leakage. And here's what students miss: where does the five volts go? With no current, the resistor drops nothing, so all five volts appears across the diode. In a blocked diode, the full voltage sits across it.",
+   "mode": "rev",
+   "v": 5,
+   "r": 1000
+  },
+  {
+   "type": "diode",
+   "chapter": "The I-V curve",
+   "narration": "Plot the diode's current against its voltage. Forward: from zero to about zero point six volts, almost nothing flows. Around zero point seven, the knee, the current shoots up steeply. After that, the voltage barely changes, whatever the current. Reverse: only tiny leakage, until the breakdown voltage, where the junction suddenly conducts heavily. Ordinary diodes are destroyed by breakdown. Zener diodes are designed to use it.",
+   "mode": "iv"
+  },
+  {
+   "type": "diode",
+   "chapter": "Three diode models",
+   "narration": "To calculate, we model the diode. The ideal model: a perfect switch, zero volts when on, open when off. Good for quick checks. The practical model: a fixed zero point seven volt drop when on. This is what exams and interviews expect by default. The complete model: zero point seven volts plus a small bulk resistance, used when currents are large. Unless told otherwise, use the practical model.",
+   "mode": "models"
+  },
+  {
+   "type": "split",
+   "chapter": "What if: flipped, side by side",
+   "narration": "Side by side. Left: forward biased, four point three milliamps, the resistor gets four point three volts. Right: the same diode flipped, zero current, and the diode holds all five volts. Remember both halves. Every rectifier, clipper and clamper is built on exactly this behaviour.",
+   "a": {
+    "type": "diode",
+    "mode": "fwd",
+    "v": 5,
+    "r": 1000
+   },
+   "b": {
+    "type": "diode",
+    "mode": "rev",
+    "v": 5,
+    "r": 1000
+   },
+   "la": "FORWARD: conducts",
+   "lb": "FLIPPED: blocks"
+  },
+  {
+   "type": "diode",
+   "chapter": "Testing a diode",
+   "narration": "How do you check a real diode? Set the multimeter to the diode test symbol. Red probe on the anode, black on the cathode, the stripe end. A good silicon diode reads about zero point five to zero point eight: that's its forward voltage. Swap the probes: it should read O L, open. If it reads zero both ways, it's shorted. If O L both ways, it's open. Either way, replace it.",
+   "mode": "meter"
+  },
+  {
+   "type": "diode",
+   "chapter": "Diode OR gate",
+   "narration": "Diodes can even do logic. Two diodes, anodes on inputs A and B, cathodes joined to the output, with a resistor to ground. If either input is high, five volts, its diode conducts and lifts the output to about four point three volts: a one. Only when both are low is the output low. That's an OR gate.",
+   "mode": "or"
+  },
+  {
+   "type": "diode",
+   "chapter": "Diode AND gate",
+   "narration": "Flip the diodes and pull the output up to five volts with the resistor. Now if either input is low, its diode conducts and pulls the output down to about zero point seven volts: a zero. Only when both inputs are high are both diodes off, and the output stays at five volts: a one. That's an AND gate.",
+   "mode": "and"
+  },
+  {
+   "type": "dckt",
+   "chapter": "Series diodes",
+   "narration": "One more rule. Diodes in series add their drops. Two silicon diodes in series need one point four volts before current flows. With twelve volts and one kilohm: twelve minus one point four, ten point six milliamps. And in parallel, the diode that turns on first clamps the voltage for the other.",
+   "kind": "series",
+   "v": 12,
+   "r": 1000,
+   "label": "RULE",
+   "lines": [
+    "series diodes: drops add",
+    "2 × 0.7 = 1.4 V",
+    "I = (12 − 1.4) ÷ 1k = 10.6 mA"
+   ]
+  },
+  {
+   "type": "dckt",
+   "chapter": "Numericals: diodes",
+   "narration": "Question one: a nine volt supply, a silicon diode and a two point two kilohm resistor in series, forward biased. Find the current and diode power. Current: nine minus zero point seven, over two point two k, three point seven seven milliamps. Diode power: zero point seven times three point seven seven milliamps, two point six milliwatts. Question two: a germanium and a silicon diode in parallel, both forward biased from a supply through a resistor. Which conducts? The germanium, at zero point three volts. It holds the voltage at zero point three, so the silicon never reaches zero point seven, and stays off.",
+   "kind": "series",
+   "v": 9,
+   "r": 2200,
+   "label": "NUMERICALS",
+   "lines": [
+    "I = (9 − 0.7) ÷ 2.2k = 3.77 mA",
+    "PD = 0.7 × 3.77 mA = 2.6 mW",
+    "Ge ∥ Si: Ge turns on at 0.3 V",
+    "→ Si stays OFF (never reaches 0.7 V)"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 9 recap",
+   "narration": "Recap. A diode conducts from anode to cathode when forward biased, dropping about zero point seven volts, and blocks when reversed, holding the full voltage. Its I V curve has a knee at zero point seven and a reverse breakdown. Use the practical model. Test it with a meter: zero point six forward, O L reverse. Next: special diodes, Zener, L E D, photodiode, Schottky and more.",
+   "title": "CHAPTER 9 COMPLETE",
+   "lines": [
+    "Forward: ON, 0.7 V drop · Reverse: OFF, full V across it",
+    "I = (V − 0.7) ÷ R",
+    "Practical model by default",
+    "Meter: ~0.6 V forward, OL reverse"
+   ],
+   "cta": "Next: special diodes"
+  }
+ ]
+}

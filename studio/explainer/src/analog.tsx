@@ -3352,3 +3352,66 @@ export const SemiScene: React.FC<any> = ({ dur, mode = "lattice" }) => {
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.semi = SemiScene;
+
+/** {"type":"diode","mode":"fwd"|"rev"|"iv"|"models"|"meter"|"and"|"or","v":5,"r":1000} */
+export const DiodeScene: React.FC<any> = ({ dur, mode = "fwd", v = 5, r = 1000 }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const D = (x: number, y: number, rot: number, on: boolean, s = 1) => <g transform={`translate(${x},${y}) rotate(${rot}) scale(${s})`}><rect x={-34} y={-34} width={68} height={68} fill={L.bg0} />
+    <polygon points="-24,-28 -24,28 22,0" fill={on ? "rgba(46,196,160,0.35)" : L.bg0} stroke={on ? L.green : L.amber} strokeWidth={5} /><line x1={22} y1={-28} x2={22} y2={28} stroke={on ? L.green : L.amber} strokeWidth={6} /></g>;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={1060} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text><text x={1820} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  let body: React.ReactNode;
+  if (mode === "fwd" || mode === "rev") { const f = mode === "fwd"; const I = f ? (v - 0.7) / r : 0;
+    const loop = [[200, 540], [200, 260], [860, 260], [860, 820], [200, 820], [200, 540]];
+    body = <g><Battery x={200} y={540} v={v} />{W("200,500 200,260 420,260")}{W("540,260 860,260 860,470")}<Res x={860} y={540} ohm={r} label="R" />{W("860,610 860,820 200,820 200,580")}
+      {D(480, 260, f ? 0 : 180, f)}<text x={480} y={210} textAnchor="middle" {...T1} fontSize={24}>{f ? "anode → cathode" : "cathode ← anode"}</text>
+      <text x={420} y={320} {...T1} fontSize={24} fill={L.red}>{f ? "A" : "K"}</text><text x={530} y={320} {...T1} fontSize={24} fill={L.electron}>{f ? "K" : "A"}</text>
+      {f && <><Dots pts={loop} t={t} speed={90} gap={52} r={9} color={L.amber} /><Dots pts={[...loop].reverse()} t={t} speed={90} gap={52} r={8} color={L.electron} /></>}
+      <text x={530} y={960} textAnchor="middle" {...T1} fontSize={28} fill={f ? L.green : L.red}>{f ? "FORWARD: P (anode) at +, diode ON" : "REVERSE: diode flipped, it BLOCKS"}</text>
+      <text x={530} y={1010} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={22}>orange: conventional current · blue: electrons</text></g>;
+    body = <g>{body}<text x={1440} y={250} textAnchor="middle" {...T1} fontSize={30}>{f ? "FORWARD BIASED" : "REVERSE BIASED"}</text>
+      {row(350, "voltage across diode", f ? "0.7 V" : `${v} V`, L.amber)}{row(440, "voltage across R", f ? `${(v - 0.7).toFixed(1)} V` : "0 V", L.text)}{row(530, "current", f ? `${(I * 1000).toFixed(2)} mA` : "≈ 0 (nA leakage)", f ? L.green : L.red)}
+      <text x={1440} y={680} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>{f ? `I = (V − 0.7) ÷ R = (${v} − 0.7) ÷ ${r}` : "all the supply voltage sits across the diode"}</text></g>; }
+  else if (mode === "iv" || mode === "models") { const X0 = 960, Y0 = 640, vx = (vv: number) => X0 + vv * 380, iy = (i: number) => Y0 - i * 40;
+    const fwd = (vv: number) => vv < 0.55 ? 0 : Math.min(12, Math.pow((vv - 0.55) / 0.2, 2) * 2);
+    const q: string[] = []; for (let k = 0; k <= 200; k++) { const vv = -2.2 + 3.2 * k / 200; if (mode === "iv" && k / 200 > p * 1.1) break; const i = vv >= 0 ? fwd(vv) : vv > -2 ? -0.15 : -0.15 - (-2 - vv) * 60; q.push(`${vx(vv)},${iy(i)}`); }
+    body = mode === "iv" ? <g><text x={960} y={140} textAnchor="middle" {...T1} fontSize={32}>DIODE I-V CURVE</text>
+      <line x1={120} y1={Y0} x2={1800} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={1020} x2={X0} y2={160} stroke={L.dim} strokeWidth={3} />
+      <polyline points={q.join(" ")} fill="none" stroke={L.green} strokeWidth={7} />
+      <line x1={vx(0.7)} y1={Y0} x2={vx(0.7)} y2={200} stroke={L.amber} strokeDasharray="8 8" strokeWidth={3} /><text x={vx(0.7) + 12} y={220} {...T1} fontSize={26} fill={L.amber}>knee ≈ 0.7 V</text>
+      <text x={vx(0.35)} y={Y0 + 50} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>0 to 0.6 V: almost nothing</text>
+      <text x={vx(-1)} y={Y0 - 30} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>reverse: tiny leakage (nA)</text>
+      <text x={vx(-2) + 30} y={900} {...T1} fontSize={26} fill={L.red}>← breakdown: sudden big current</text>
+      <text x={1780} y={Y0 + 40} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={24}>V →</text><text x={X0 + 14} y={180} fill={L.dim} fontFamily={MONO} fontSize={24}>I ↑</text></g>
+      : <g>{[["IDEAL", "a perfect switch: 0 V when ON", (u: number) => u > 0 ? `${150 + 0},${300 - u * 220}` : ""], ["PRACTICAL", "0.7 V drop, then vertical", null], ["COMPLETE", "0.7 V + bulk resistance rB", null]].map(([n, d], k) => {
+          const x0 = 140 + k * 600; const g = (vv: number) => k === 0 ? (vv > 0 ? 1 : 0) : k === 1 ? (vv >= 0.7 ? 1 : 0) : (vv > 0.7 ? Math.min(1, (vv - 0.7) * 3) : 0);
+          const pts: string[] = []; for (let j = 0; j <= 100; j++) { const vv = -0.5 + 1.5 * j / 100; const gi = g(vv); pts.push(`${x0 + 60 + j * 4},${720 - (k === 1 && vv >= 0.7 ? Math.min(1, (vv - 0.7) * 40) : gi) * 360}`); }
+          return <g key={k}><text x={x0 + 260} y={250} textAnchor="middle" {...T1} fontSize={30}>{n as string}</text><text x={x0 + 260} y={290} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={22}>{d as string}</text>
+            <line x1={x0 + 40} y1={720} x2={x0 + 480} y2={720} stroke={L.dim} strokeWidth={3} /><line x1={x0 + 60 + 0.5 / 1.5 * 400} y1={740} x2={x0 + 60 + 0.5 / 1.5 * 400} y2={330} stroke={L.dim} strokeWidth={3} />
+            <polyline points={pts.join(" ")} fill="none" stroke={L.green} strokeWidth={6} /></g>; })}
+        <text x={960} y={860} textAnchor="middle" {...T1} fontSize={28}>exam/placement default: PRACTICAL model, 0.7 V for silicon (0.3 V germanium)</text></g>; }
+  else if (mode === "meter") { const f = p < 0.5;
+    body = <g><rect x={240} y={260} width={360} height={560} rx={40} fill="#f2c200" stroke="#a88600" strokeWidth={6} /><rect x={290} y={310} width={260} height={130} rx={12} fill="#cfe3c8" />
+      <text x={420} y={400} textAnchor="middle" fill="#123" fontFamily={MONO} fontSize={60} fontWeight={800}>{f ? "0.62" : "OL"}</text>
+      <circle cx={420} cy={600} r={90} fill="#333" /><text x={420} y={612} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={30}>→|</text>
+      <path d={`M 340 820 C 340 900 700 900 ${f ? 780 : 1020} 600`} fill="none" stroke={L.red} strokeWidth={8} /><path d={`M 500 820 C 500 950 900 950 ${f ? 1020 : 780} 600`} fill="none" stroke="#222" strokeWidth={8} />
+      <g transform="translate(900,600)"><rect x={-130} y={-30} width={260} height={60} rx={20} fill="#222" /><rect x={60} y={-30} width={22} height={60} fill="#ccc" /></g>
+      <text x={900} y={540} textAnchor="middle" {...T1} fontSize={24}>stripe = cathode</text>
+      <text x={900} y={720} textAnchor="middle" {...T1} fontSize={28} fill={f ? L.green : L.red}>{f ? "red on anode, black on cathode → 0.6-0.7: GOOD" : "reversed → OL (open): GOOD"}</text></g>;
+    body = <g>{body}<text x={1500} y={300} textAnchor="middle" {...T1} fontSize={30}>TESTING A DIODE</text>
+      {["forward: 0.5-0.8 V reading", "reverse: OL (no conduction)", "0 both ways: SHORTED (bad)", "OL both ways: OPEN (bad)"].map((l, k) => <text key={k} x={1200} y={400 + k * 70} fill={L.text} fontFamily={SANS} fontSize={28}>• {l}</text>)}</g>; }
+  else { const and = mode === "and"; const a = ((t / 3) | 0) % 4; const A = (a & 1) ? 5 : 0, B = (a & 2) ? 5 : 0;
+    const out = and ? Math.min(A, B) + (Math.min(A, B) ? 0 : 0.7) : Math.max(0, Math.max(A, B) - 0.7);
+    body = <g>{and ? <g><line x1={200} y1={200} x2={900} y2={200} stroke={L.red} strokeWidth={6} /><text x={200} y={180} {...T1} fontSize={26} fill={L.red}>+5 V</text><Res x={700} y={300} ohm={10000} label="R" />{W("700,200 700,230")}{W("700,370 700,520 900,520")}</g>
+        : <g><Res x={700} y={700} ohm={10000} label="R" />{W("700,520 700,630")}{W("700,770 700,880")}<line x1={200} y1={880} x2={900} y2={880} stroke={L.wire} strokeWidth={6} />{W("700,520 900,520")}</g>}
+      {[[400, A, "A"], [640, B, "B"]].map(([y, val, n]: any, k) => <g key={k}><text x={160} y={y + 10} {...T1} fontSize={30} fill={val ? L.green : L.dim}>{n} = {val ? 1 : 0}</text>{W(`240,${y} 360,${y}`)}
+        {D(420, y, and ? 180 : 0, and ? !val : !!val)}{W(`480,${y} 600,${y} 600,520 700,520`)}</g>)}
+      <circle cx={900} cy={520} r={12} fill={out > 2.5 ? L.green : L.dim} /><text x={920} y={500} {...T1} fontSize={30} fill={out > 2.5 ? L.green : L.dim}>OUT = {out > 2.5 ? 1 : 0} ({out.toFixed(1)} V)</text></g>;
+    body = <g>{body}<text x={1500} y={300} textAnchor="middle" {...T1} fontSize={30}>DIODE {and ? "AND" : "OR"} GATE</text>
+      {[0, 1, 2, 3].map((k) => { const a1 = k & 1, b1 = (k >> 1) & 1; const o = and ? a1 & b1 : a1 | b1; return <text key={k} x={1300} y={400 + k * 60} {...T1} fontSize={30} fill={k === a ? L.amber : L.text}>A={a1} B={b1} → {o}</text>; })}
+      <text x={1500} y={700} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>{and ? "any input LOW pulls the output down through its diode" : "any input HIGH lifts the output through its diode"}</text></g>; }
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.diode = DiodeScene;
