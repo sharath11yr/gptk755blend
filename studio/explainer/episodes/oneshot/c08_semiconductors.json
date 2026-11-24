@@ -1,0 +1,115 @@
+{
+ "title": "Analog One Shot Ch8",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 8: Semiconductors",
+   "narration": "Chapter eight: semiconductors. Diodes, transistors and every chip are made from them. To understand why a diode drops zero point seven volts, or why a transistor amplifies, we need to look inside the crystal. Don't worry, we'll keep it visual and simple.",
+   "kicker": "CHAPTER 8",
+   "title": "SEMICONDUCTORS",
+   "subtitle": "Silicon, holes, doping, and the PN junction"
+  },
+  {
+   "type": "atom",
+   "chapter": "Silicon: four outer electrons",
+   "narration": "Silicon is the most important material in electronics. A silicon atom has fourteen electrons, but only the four in the outermost shell matter. These are called valence electrons. Copper had one loose outer electron. Silicon has four, and as we'll see, it uses all four to bond.",
+   "element": "silicon"
+  },
+  {
+   "type": "semi",
+   "chapter": "The silicon crystal",
+   "narration": "In a silicon crystal, every atom shares its four outer electrons with four neighbours. Each shared pair is a covalent bond, shown by the two blue dots between atoms. Every electron is locked into a bond. So at very low temperature, pure silicon has no free electrons at all: it's an insulator. That's why it's called a semiconductor: not a good conductor, not a perfect insulator. Somewhere in between, and as we'll see, controllable.",
+   "mode": "lattice"
+  },
+  {
+   "type": "semi",
+   "chapter": "Heat creates electron-hole pairs",
+   "narration": "At room temperature, the atoms vibrate. Occasionally, a bond gets enough energy to break, and one electron escapes. It becomes a free electron, and can carry current. But it leaves behind a gap in the bond. That gap is called a hole. The hole is missing a negative charge, so it behaves like a positive charge. Every time a bond breaks, we get one free electron and one hole: an electron hole pair. Hotter silicon has more pairs, and conducts better. That's the opposite of a metal.",
+   "mode": "pair"
+  },
+  {
+   "type": "semi",
+   "chapter": "How holes move",
+   "narration": "Holes can move too. A neighbouring bonded electron can hop into the hole, filling it. But now there's a hole where that electron came from. So as electrons hop one way, the hole moves the other way. That's why we treat holes as positive charge carriers moving in the direction of conventional current. In pure, or intrinsic, silicon, the number of free electrons equals the number of holes.",
+   "mode": "hole"
+  },
+  {
+   "type": "semi",
+   "chapter": "N-type: adding phosphorus",
+   "narration": "Pure silicon has very few carriers. So we add a tiny amount of impurity. This is called doping. Add phosphorus, which has five outer electrons. Four of them bond with the silicon neighbours. The fifth has nowhere to go, and is free. Every phosphorus atom donates one free electron. This is N type silicon, N for negative, because the main carriers are electrons. Electrons are the majority carriers, and the few holes from heat are minority carriers. Note: the crystal is still electrically neutral. Each phosphorus atom that gave away an electron is a fixed positive ion.",
+   "mode": "ntype"
+  },
+  {
+   "type": "semi",
+   "chapter": "P-type: adding boron",
+   "narration": "Now add boron, which has only three outer electrons. It can bond with three neighbours, but the fourth bond is missing an electron: a hole. Every boron atom accepts an electron, creating a hole. This is P type silicon, P for positive, because the main carriers are holes. Holes are the majority carriers, electrons the minority. Doping is like adding just one impurity atom per million silicon atoms, but it increases conductivity thousands of times.",
+   "mode": "ptype"
+  },
+  {
+   "type": "semi",
+   "chapter": "Drift and diffusion",
+   "narration": "Carriers move in two ways. Drift: a voltage creates an electric field, which pushes electrons one way and holes the other. That's the current in a resistor. Diffusion: carriers spread out from where there are many to where there are few, like ink in water, with no voltage needed. Diffusion is what happens next, when we join P and N.",
+   "mode": "junction"
+  },
+  {
+   "type": "semi",
+   "chapter": "The PN junction forms",
+   "narration": "Join a piece of P type to a piece of N type. The N side has lots of electrons, the P side lots of holes. So electrons diffuse across into the P side, and holes into the N side. Where they meet, they recombine and disappear. Left behind near the junction are the fixed ions: negative boron ions on the P side, positive phosphorus ions on the N side. This thin zone with no free carriers is the depletion region. Its ions create an electric field that pushes back, and soon stops any more diffusion.",
+   "mode": "junction"
+  },
+  {
+   "type": "semi",
+   "chapter": "The barrier potential",
+   "narration": "That electric field is a built in voltage across the junction, called the barrier potential. For silicon it's about zero point seven volts. For germanium, about zero point three. To push current across the junction, an outside voltage must overcome this barrier. This is exactly why a silicon diode needs zero point seven volts before it conducts, and why a transistor's base emitter voltage is zero point seven. And temperature matters: the barrier drops about two millivolts for every degree hotter.",
+   "mode": "barrier"
+  },
+  {
+   "type": "semi",
+   "chapter": "Forward bias",
+   "narration": "Connect a battery with plus to the P side and minus to the N side. The positive terminal pushes holes toward the junction, the negative terminal pushes electrons toward it. The depletion region shrinks. Once the battery exceeds about zero point seven volts, the barrier is overcome, and carriers flood across. A large current flows. This is forward bias: the junction conducts.",
+   "mode": "forward"
+  },
+  {
+   "type": "semi",
+   "chapter": "Reverse bias",
+   "narration": "Now reverse the battery: plus to the N side, minus to the P side. Now the battery pulls electrons and holes away from the junction. The depletion region gets wider, and the barrier taller. Almost no current flows, just a tiny leakage from the few minority carriers, a few nanoamps. This is reverse bias: the junction blocks. One way it conducts, the other way it blocks. That's a diode, and it's next.",
+   "mode": "reverse"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals and quick questions",
+   "narration": "Question one: a silicon diode's barrier is zero point seven volts at twenty five degrees. What is it at seventy five degrees? It falls two millivolts per degree. Fifty degrees hotter: a hundred millivolts less. Zero point six volts. Question two, a classic interview question: is an N type semiconductor negatively charged? No. It has extra free electrons, but each one came from a phosphorus atom that became a positive ion. Overall it's neutral. Question three: why is silicon preferred over germanium? Lower leakage current, it works at higher temperatures, and it's cheap and plentiful as sand.",
+   "title": "QUICK QUESTIONS",
+   "given": [
+    "Vγ = 0.7 V at 25 °C"
+   ],
+   "lines": [
+    "ΔT = 50 °C → ΔV = 50 × 2 mV = 0.1 V",
+    "Vγ(75 °C) = 0.7 − 0.1 = 0.6 V",
+    "N-type charge? → NEUTRAL",
+    "Si vs Ge: less leakage, higher temp"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 8 recap",
+   "narration": "Recap. Silicon has four valence electrons locked in covalent bonds. Heat breaks some, creating electron hole pairs. Doping with phosphorus makes N type, with free electrons. Doping with boron makes P type, with holes. Join them, and diffusion forms a depletion region with a barrier of zero point seven volts for silicon. Forward bias shrinks it and current flows. Reverse bias widens it and blocks. Next: the diode.",
+   "title": "CHAPTER 8 COMPLETE",
+   "lines": [
+    "Holes act as + carriers",
+    "N-type: electrons majority · P-type: holes majority",
+    "PN junction: depletion region, 0.7 V barrier (Si)",
+    "Forward: conducts · Reverse: blocks"
+   ],
+   "cta": "Next: diodes"
+  }
+ ]
+}

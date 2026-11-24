@@ -3295,3 +3295,60 @@ export const XfmrScene: React.FC<any> = ({ dur, mode = "down" }) => {
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}{right}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.xfmr = XfmrScene;
+
+/** {"type":"semi","mode":"lattice"|"pair"|"hole"|"ntype"|"ptype"|"junction"|"barrier"|"forward"|"reverse"} semiconductor physics, drawn as a crystal */
+export const SemiScene: React.FC<any> = ({ dur, mode = "lattice" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const atom = (x: number, y: number, lab = "Si", col = "#8a96a3") => <g><circle cx={x} cy={y} r={34} fill={col} /><text x={x} y={y + 9} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={24} fontWeight={800}>{lab}</text></g>;
+  const grid = (x0: number, y0: number, nx: number, ny: number, sp: number, sub?: (i: number, j: number) => string | null, subCol?: string) => {
+    const els: React.ReactNode[] = [];
+    for (let i = 0; i < nx; i++) for (let j = 0; j < ny; j++) { const x = x0 + i * sp, y = y0 + j * sp;
+      if (i < nx - 1) els.push(<g key={`h${i}${j}`}><line x1={x + 34} y1={y} x2={x + sp - 34} y2={y} stroke={L.wire} strokeWidth={3} /><circle cx={x + sp / 2 - 10} cy={y} r={6} fill={L.electron} /><circle cx={x + sp / 2 + 10} cy={y} r={6} fill={L.electron} /></g>);
+      if (j < ny - 1) els.push(<g key={`v${i}${j}`}><line x1={x} y1={y + 34} x2={x} y2={y + sp - 34} stroke={L.wire} strokeWidth={3} /><circle cx={x} cy={y + sp / 2 - 10} r={6} fill={L.electron} /><circle cx={x} cy={y + sp / 2 + 10} r={6} fill={L.electron} /></g>);
+      const s = sub?.(i, j); els.push(<g key={`a${i}${j}`}>{atom(x, y, s || "Si", s ? subCol : "#8a96a3")}</g>); }
+    return <g>{els}</g>; };
+  const right = (title: string, lines: string[]) => <g><text x={1440} y={250} textAnchor="middle" {...T1} fontSize={32}>{title}</text>
+    {lines.map((l, k) => <text key={k} x={1100} y={350 + k * 70} fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={600} opacity={interpolate(p, [k * 0.15, k * 0.15 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>• {l}</text>)}</g>;
+  let body: React.ReactNode;
+  if (mode === "lattice") body = <g>{grid(200, 250, 5, 4, 170)}{right("PURE SILICON CRYSTAL", ["each Si atom has 4 outer electrons", "it shares them with 4 neighbours", "pairs of shared electrons = covalent bonds", "every electron is locked in a bond", "→ at 0 K: a perfect insulator"])}</g>;
+  else if (mode === "pair" || mode === "hole") { const hx = 200 + 170 * Math.floor(((mode === "hole" ? p * 4 : 0)) % 4) + 85 - 10, hy = 420;
+    const ex = mode === "pair" ? 200 + 170 + 85 - 10 + p * 500 : 0, ey = 420 - p * 160;
+    body = <g>{grid(200, 250, 5, 4, 170)}
+      {mode === "pair" && <g><circle cx={200 + 170 + 85 - 10} cy={420} r={14} fill="none" stroke={L.red} strokeWidth={4} /><circle cx={ex} cy={ey} r={10} fill={L.amber} />
+        <text x={ex + 20} y={ey - 14} {...T1} fontSize={24} fill={L.amber}>free electron</text><text x={360} y={470} {...T1} fontSize={24} fill={L.red}>hole (+)</text>
+        <text x={560} y={170} textAnchor="middle" {...T1} fontSize={26} fill={L.red}>heat breaks a bond</text></g>}
+      {mode === "hole" && <g><circle cx={hx} cy={hy} r={14} fill="none" stroke={L.red} strokeWidth={4} /><text x={hx} y={hy + 50} textAnchor="middle" {...T1} fontSize={24} fill={L.red}>hole →</text>
+        <text x={560} y={170} textAnchor="middle" {...T1} fontSize={26}>bonded electrons hop ← into the hole, so the hole moves →</text></g>}
+      {right(mode === "pair" ? "ELECTRON-HOLE PAIR" : "HOLES MOVE TOO", mode === "pair" ? ["heat gives an electron enough energy to escape", "it leaves a gap in the bond: a HOLE", "a hole acts like a + charge", "electrons and holes are made in pairs", "hotter → more pairs → more current"]
+        : ["a nearby bonded electron hops into the hole", "now the hole is where that electron was", "electrons hop one way, the hole moves the other", "so holes carry current like + charges", "intrinsic Si: equal electrons and holes"])}</g>; }
+  else if (mode === "ntype" || mode === "ptype") { const n = mode === "ntype";
+    body = <g>{grid(200, 250, 5, 4, 170, (i, j) => (i === 2 && j === 1) ? (n ? "P" : "B") : null, n ? "#2e5a87" : "#b5473a")}
+      {n ? <g><circle cx={540 + 30 * Math.sin(t * 2) + p * 300} cy={360 - 40 * Math.cos(t * 2)} r={11} fill={L.amber} /><text x={600 + p * 300} y={320} {...T1} fontSize={24} fill={L.amber}>5th electron: FREE</text></g>
+        : <g><circle cx={540 + 85 - 10} cy={420} r={14} fill="none" stroke={L.red} strokeWidth={4} /><text x={630} y={470} {...T1} fontSize={24} fill={L.red}>missing electron = hole</text></g>}
+      {right(n ? "N-TYPE: ADD PHOSPHORUS" : "P-TYPE: ADD BORON", n ? ["phosphorus has 5 outer electrons", "4 bond, the 5th is loose: a free electron", "majority carriers: electrons", "minority carriers: a few holes", "the crystal is still neutral overall"]
+        : ["boron has only 3 outer electrons", "one bond is missing an electron: a hole", "majority carriers: holes", "minority carriers: a few electrons", "the crystal is still neutral overall"])}</g>; }
+  else { // junction, barrier, forward, reverse
+    const W0 = mode === "junction" ? 40 + 140 * Math.min(1, p * 1.6) : mode === "forward" ? 60 * (1 - p) + 20 : mode === "reverse" ? 180 + 160 * p : 180;
+    const mid = 560;
+    body = <g><rect x={160} y={330} width={mid - 160} height={300} fill="#b5473a" opacity={0.85} /><rect x={mid} y={330} width={960 - mid} height={300} fill="#2e5a87" opacity={0.85} />
+      <rect x={mid - W0 / 2} y={330} width={W0} height={300} fill="#e8eef4" />
+      <text x={300} y={310} textAnchor="middle" {...T1} fontSize={30} fill={L.red}>P (holes)</text><text x={820} y={310} textAnchor="middle" {...T1} fontSize={30} fill={L.electron}>N (electrons)</text>
+      <text x={mid} y={680} textAnchor="middle" {...T1} fontSize={24}>depletion region</text>
+      {Array.from({ length: 16 }, (_, k) => { const x = 180 + ((k * 53 + t * (mode === "forward" ? 40 : 6)) % (mid - W0 / 2 - 200)); return <circle key={"h" + k} cx={x} cy={350 + (k * 37) % 260} r={10} fill="none" stroke="#fff" strokeWidth={3} />; })}
+      {Array.from({ length: 16 }, (_, k) => { const x = 940 - ((k * 53 + t * (mode === "forward" ? 40 : 6)) % (960 - mid - W0 / 2 - 20)); return <circle key={"e" + k} cx={x} cy={350 + (k * 41) % 260} r={8} fill="#ffd24a" />; })}
+      {Array.from({ length: Math.round(W0 / 30) }, (_, k) => <g key={"i" + k}><text x={mid - W0 / 2 + 8 + (k % 2) * 0} y={360 + k * 26} {...T1} fontSize={22} fill={L.red}>−</text>
+        <text x={mid + W0 / 2 - 22} y={360 + k * 26} {...T1} fontSize={22} fill={L.electron}>+</text></g>)}
+      {(mode === "forward" || mode === "reverse") && <g><line x1={160} y1={480} x2={80} y2={480} stroke={L.wire} strokeWidth={6} /><line x1={960} y1={480} x2={1040} y2={480} stroke={L.wire} strokeWidth={6} />
+        <text x={100} y={450} textAnchor="middle" {...T1} fontSize={34} fill={mode === "forward" ? L.red : L.electron}>{mode === "forward" ? "+" : "−"}</text>
+        <text x={1020} y={450} textAnchor="middle" {...T1} fontSize={34} fill={mode === "forward" ? L.electron : L.red}>{mode === "forward" ? "−" : "+"}</text></g>}
+      {mode === "barrier" && <g><polyline points={`160,860 ${mid - W0 / 2},860 ${mid + W0 / 2},760 960,760`} fill="none" stroke={L.amber} strokeWidth={6} /><text x={mid + 120} y={740} {...T1} fontSize={26} fill={L.amber}>barrier ≈ 0.7 V (Si), 0.3 V (Ge)</text></g>}</g>;
+    body = <g>{body}{right(mode === "junction" ? "FORMING THE PN JUNCTION" : mode === "barrier" ? "THE BARRIER POTENTIAL" : mode === "forward" ? "FORWARD BIAS: + TO P" : "REVERSE BIAS: + TO N",
+      mode === "junction" ? ["electrons diffuse from N into P, holes from P into N", "they meet and cancel (recombine) at the boundary", "left behind: fixed − ions on P side, + ions on N side", "this zone has no free carriers: depletion region", "its field stops further diffusion"]
+      : mode === "barrier" ? ["the ions create a built-in voltage", "silicon ≈ 0.7 V, germanium ≈ 0.3 V", "carriers need this much push to cross", "it's why a silicon diode drops 0.7 V", "hotter → barrier falls ≈ 2 mV per °C"]
+      : mode === "forward" ? ["battery + pushes holes toward the junction", "battery − pushes electrons toward it", "the depletion region shrinks", "above 0.7 V the barrier is overcome", "big current flows: the diode is ON"]
+      : ["battery + pulls electrons away from the junction", "battery − pulls holes away", "the depletion region gets WIDER", "almost no current: only a tiny leakage", "the diode is OFF"])}</g>; }
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.semi = SemiScene;
