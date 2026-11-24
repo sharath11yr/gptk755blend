@@ -1,0 +1,172 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "BJT Biasing Numericals | Fixed, Collector-Feedback & Voltage-Divider, Solved Step by Step | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "BJT Biasing Numericals | Fixed, Collector-Feedback & Voltage-Divider, Solved Step by Step | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Five solved BJT biasing problems, step by step with the circuit on screen: fixed bias with beta 150, collector-feedback bias with beta 150, voltage-divider bias by Thevenin with beta 150, checking for saturation when beta is 300, and designing RB for a chosen collector current.",
+  "tags": [
+   "bjt numericals",
+   "transistor biasing problems",
+   "fixed bias numerical",
+   "voltage divider bias numerical",
+   "q point calculation",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "BJT Numericals",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "BJT BIASING NUMERICALS",
+   "subtitle": "Five problems, solved step by step",
+   "narration": "Welcome back. Time to practise. We'll solve five B J T biasing problems, one step at a time, with the circuit right beside the working. Pause before each answer and try it yourself. All the circuits use twelve volts and V B E of zero point seven."
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 1: fixed bias, β = 150",
+   "narration": "Problem one. Fixed bias, R B five hundred and sixty five k, R C two k, and beta one fifty. Find I B, I C and V C E. Step one, the base loop: I B equals twelve minus zero point seven, over five hundred and sixty five k, twenty microamps. Step two: I C equals one fifty times twenty microamps, three milliamps. Step three: V C E equals twelve minus three milliamps times two k, six volts. Check: V C E is between zero point two and twelve, so it's active.",
+   "bias": "fixed",
+   "beta": 150,
+   "lines": [
+    "Given: VCC 12 V, RB 565k, RC 2k, β 150",
+    "IB = (12 − 0.7) ÷ 565k = 20 µA",
+    "IC = 150 × 20 µA = 3 mA",
+    "VCE = 12 − 3 mA × 2k = 6 V",
+    "0.2 < 6 < 12 → ACTIVE ✓"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 2: collector-feedback, β = 150",
+   "narration": "Problem two. Collector feedback, R B three hundred and sixty three k, R C two k, beta one fifty. I B equals eleven point three, over R B plus beta plus one times R C. That's three sixty three k plus one fifty one times two k, six hundred and sixty five k. I B, seventeen microamps. I C, one fifty times that, two point five five milliamps. V C E equals twelve minus I E times R C, twelve minus two point five seven times two, six point eight seven volts.",
+   "bias": "cf",
+   "beta": 150,
+   "lines": [
+    "Given: RB 363k (from C), RC 2k, β 150",
+    "IB = 11.3 ÷ (363k + 151 × 2k)",
+    "   = 11.3 ÷ 665k = 17.0 µA",
+    "IC = 150 × 17.0 µA = 2.55 mA",
+    "IE = 2.57 mA",
+    "VCE = 12 − 2.57 × 2 = 6.87 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 3: voltage-divider, β = 150",
+   "narration": "Problem three. Voltage divider bias: R one thirty three k, R two ten k, R C two k, R E one k, beta one fifty. Thevenin first: V T H, twelve times ten over forty three, two point seven nine volts. R T H, thirty three k parallel ten k, seven point six seven k. I B equals two point zero nine over seven point six seven k plus one fifty one k, thirteen point two microamps. I C, one point nine eight milliamps. I E, one point nine nine. V C E equals twelve minus three point nine five minus one point nine nine, six point zero six volts.",
+   "bias": "vd",
+   "beta": 150,
+   "lines": [
+    "VTH = 2.79 V, RTH = 7.67k",
+    "IB = 2.09 ÷ (7.67k + 151k) = 13.2 µA",
+    "IC = 150 × 13.2 µA = 1.98 mA",
+    "IE = 1.99 mA",
+    "VCE = 12 − 1.98×2 − 1.99×1",
+    "    = 6.06 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 4: is it saturated?",
+   "narration": "Problem four. Fixed bias again, but beta is three hundred. I B is still twenty microamps. Beta times I B would be six milliamps. But the most R C allows is twelve minus zero point two, over two k, five point nine milliamps. Six is more than five point nine, so the transistor is saturated. The real I C is five point nine milliamps, and V C E is about zero point two volts. Always check this. If beta I B is more than I C sat, the formula is wrong, and the transistor is fully on.",
+   "bias": "fixed",
+   "beta": 300,
+   "lines": [
+    "IB = 20 µA, β = 300",
+    "β × IB = 6 mA",
+    "IC(sat) = (12 − 0.2) ÷ 2k = 5.9 mA",
+    "6 mA > 5.9 mA → SATURATED",
+    "IC = 5.9 mA, VCE ≈ 0.2 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 5: design RB",
+   "narration": "Problem five, a design. We want I C equals two milliamps with fixed bias, R C two k, beta one hundred. Find R B. I B must be two milliamps over a hundred, twenty microamps. R B equals V C C minus V B E, over I B: eleven point three over twenty microamps, five hundred and sixty five k. Then V C E will be twelve minus two times two, eight volts. In practice, pick the nearest standard value, five hundred and sixty k.",
+   "bias": "fixed",
+   "lines": [
+    "Want IC = 2 mA, β = 100",
+    "IB = 2 mA ÷ 100 = 20 µA",
+    "RB = (12 − 0.7) ÷ 20 µA = 565 kΩ",
+    "nearest standard: 560 kΩ",
+    "VCE = 12 − 2 × 2 = 8 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "regions",
+   "chapter": "Common mistakes",
+   "narration": "The mistakes students make most in these problems. One: forgetting zero point seven in the base loop. Two: using I C instead of I E across R E, or across R C in collector feedback. Three: never checking for saturation. If beta times I B is more than V C C over the collector loop resistance, the transistor is saturated, and you must use I C sat instead.",
+   "bias": "basic"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: CE · CB · CC AMPLIFIERS",
+   "lines": [
+    "Base loop → IB, then IC = β IB",
+    "Collector loop → VCE (use IE through RE)",
+    "Always check: β IB < IC(sat)?"
+   ],
+   "cta": "Amplifier configurations are next",
+   "narration": "Quick recap. Every biasing problem has the same steps. Use the base loop to find I B, multiply by beta for I C, then use the collector loop for V C E, with I E through R E. And always check for saturation. Next, we finally amplify signals: the common emitter, common base and common collector amplifiers. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "Can you solve this in thirty seconds? Fixed bias, twelve volts, R B five sixty five k, R C two k, beta one fifty. Base current: eleven point three over five sixty five k, twenty microamps.",
+   "bias": "fixed",
+   "beta": 150,
+   "lines": [
+    "IB = (12 − 0.7) ÷ 565k = 20 µA"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "Collector current: one fifty times twenty microamps, three milliamps. V C E: twelve minus three times two, six volts. Active region.",
+   "bias": "fixed",
+   "beta": 150,
+   "lines": [
+    "IB = 20 µA",
+    "IC = 150 × 20 µA = 3 mA",
+    "VCE = 12 − 3 × 2 = 6 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "But with beta three hundred, beta times I B is six milliamps, more than the five point nine R C allows. So it's saturated. Always check. Five full problems on the channel.",
+   "bias": "fixed",
+   "beta": 300,
+   "lines": [
+    "β × IB = 6 mA > IC(sat) 5.9 mA",
+    "→ SATURATED, VCE ≈ 0.2 V"
+   ]
+  }
+ ]
+}

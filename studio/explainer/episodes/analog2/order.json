@@ -19,5 +19,7 @@
  "analog2/b03_pnp.json",
  "analog2/b04_fixed_bias.json",
  "analog2/b05_collector_feedback_bias.json",
- "analog2/b06_voltage_divider_bias.json"
+ "analog2/b06_voltage_divider_bias.json",
+ "analog2/b07_load_line_q_point.json",
+ "analog2/b08_bjt_numericals.json"
 ]

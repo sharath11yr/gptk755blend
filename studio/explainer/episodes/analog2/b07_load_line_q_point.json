@@ -1,0 +1,108 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "DC Load Line & Q-Point Explained | Where Should a Transistor Sit? | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "DC Load Line & Q-Point Explained | Where Should a Transistor Sit? | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The DC load line and Q-point step by step: drawing the load line from its two end points (cutoff and saturation), the output characteristic curves, finding the Q-point where they cross, how beta moves the Q-point with fixed bias, why the middle of the load line gives the biggest undistorted swing, and every value calculated for fixed and voltage-divider bias.",
+  "tags": [
+   "dc load line",
+   "q point",
+   "operating point",
+   "transistor characteristics",
+   "bjt biasing",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Load Line & Q-Point",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "DC LOAD LINE & Q-POINT",
+   "subtitle": "Every possible operating point, on one straight line",
+   "narration": "Welcome back. We've biased transistors three ways and found their Q points. Today we see all of it on one picture: the D C load line. It shows every operating point the circuit can possibly have, and exactly where our transistor sits. Once you can draw it, you can see at a glance whether an amplifier will work."
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Two easy points",
+   "narration": "The load line comes from the collector loop: V C E equals V C C minus I C times R C. It's a straight line, so we only need two points. First, cutoff: if I C is zero, V C E equals V C C, twelve volts. That's the point on the right. Second, saturation: if V C E is zero, I C equals V C C over R C, twelve over two k, six milliamps. That's the point at the top. Join them. Every possible state of this circuit lies on that line.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Adding the transistor curves",
+   "narration": "The blue lines are the transistor's output curves, one for each base current: ten, twenty, thirty, forty, fifty microamps. The load line says what the circuit allows. The curves say what the transistor does. The Q point is where they meet. For fixed bias with twenty microamps of base current, that's eight volts and two milliamps.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "β moves the Q-point",
+   "narration": "Now remember the beta problem. With beta at two hundred, the same twenty microamps gives four milliamps. The Q point slides up the load line to four volts. With beta at fifty, it slides down to ten volts and one milliamp. The load line never changes. Only the point on it moves.",
+   "bias": "fixed",
+   "beta": 200
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Voltage-divider bias",
+   "narration": "With voltage divider bias, R E is in the loop too, so the load line uses R C plus R E, three kilohms. Saturation: twelve over three k, four milliamps. Cutoff: still twelve volts. The Q point sits at six point two volts and one point nine two milliamps, almost exactly in the middle. And it stays there whatever the beta.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Why the middle?",
+   "narration": "Why the middle? A signal makes the operating point swing both ways along the line. From a Q point at six volts on a twelve volt line, it can swing six volts down and six up before hitting saturation or cutoff. That's the biggest possible undistorted swing. Put the Q point at ten volts instead, and it can only swing two volts up before cutoff clips it.",
+   "bias": "vd",
+   "lines": [
+    "Load line: VCE = VCC − IC (RC + RE)",
+    "cutoff: IC = 0 → VCE = 12 V",
+    "saturation: VCE = 0 → IC = 12 ÷ 3k = 4 mA",
+    "Q-point: (6.21 V, 1.92 mA)",
+    "swing room: ≈ 6 V either way",
+    "Q at 10 V: only 2 V before cutoff"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: headroom",
+   "narration": "Audio engineers call this headroom. An amplifier with its Q point in the middle can handle a loud passage cleanly. One with a badly placed or drifting Q point clips on the peaks, which sounds harsh and distorted. That's why designers draw the load line first, and choose resistors that put the Q point near the centre."
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting R E in the load line. With voltage divider bias, saturation current is V C C over R C plus R E. Two: thinking the load line depends on the transistor. It doesn't. It depends only on V C C and the resistors. The transistor picks the point on it. Three: placing the Q point at saturation for an amplifier. That's fine for a switch, but an amplifier needs room to swing.",
+   "bias": "vd"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: BJT NUMERICALS",
+   "lines": [
+    "Cutoff: (VCC, 0) · Saturation: (0, VCC ÷ R)",
+    "Q-point = load line ∩ transistor curve",
+    "Middle of the line → biggest swing"
+   ],
+   "cta": "BJT numericals are next",
+   "narration": "Quick recap. The D C load line joins cutoff, at V C C, and saturation, at V C C over the collector loop resistance. The transistor's curve picks the Q point on it. Put it in the middle for the biggest undistorted swing. Next, we put everything together and solve B J T numericals step by step. See you there."
+  }
+ ]
+}
