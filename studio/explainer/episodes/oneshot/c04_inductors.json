@@ -1,0 +1,95 @@
+{
+ "title": "Analog One Shot Ch4",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 4: Inductors",
+   "narration": "Chapter four: the inductor. A capacitor stores energy in an electric field between its plates. An inductor stores energy in a magnetic field around a coil. They behave like opposites, and together they make filters, oscillators, and every switching power supply.",
+   "kicker": "CHAPTER 4",
+   "title": "INDUCTORS",
+   "subtitle": "Magnetic fields, back-EMF, and why they resist change"
+  },
+  {
+   "type": "coil",
+   "chapter": "Current makes magnetism",
+   "narration": "Pass a current through a wire, and a magnetic field forms around it. Wind the wire into a coil, and the fields of all the turns add up into a strong field through the middle, like a bar magnet. Add an iron core, and it's stronger still. That coil is an inductor.",
+   "mode": "field"
+  },
+  {
+   "type": "indx",
+   "chapter": "Lenz's law: the coil fights change",
+   "narration": "Now the key behaviour. Connect ten volts to an inductor through a resistor. The current doesn't jump up. It rises slowly. Why? As the current grows, the magnetic field grows, and a changing field induces a voltage in the coil itself, pushing against the change. This is called back E M F, and it follows Lenz's law: an inductor always opposes any change in its current. At first, the back E M F is nearly ten volts, so almost no current. As the current levels off, the back E M F fades, and the current reaches its full value.",
+   "mode": "field"
+  },
+  {
+   "type": "rl",
+   "chapter": "The RL time constant",
+   "narration": "Here it is with real numbers: ten volts, ten ohms, ten henries. The time constant is L over R: ten over ten, one second. After one tau, the current reaches sixty three percent of its final value: zero point six three amps of the one amp maximum. After five tau, it's essentially full. The same shape as a capacitor's voltage, but here it's the current that rises slowly.",
+   "mode": "on",
+   "v": 10,
+   "r": 10,
+   "l": 10
+  },
+  {
+   "type": "indx",
+   "chapter": "What if: you switch it off?",
+   "narration": "Now a dangerous question. What happens if we suddenly open the switch? The inductor has energy stored in its field, and it refuses to let the current stop instantly. The voltage across an inductor is L times how fast the current changes. Stopping the current in an instant means an enormous rate of change, so the inductor produces a huge voltage spike, hundreds of volts from a twelve volt supply, enough to jump across the switch as a spark. This is how a car's ignition coil makes sparks. But it's also how relays and motors destroy the transistors that switch them.",
+   "mode": "spark"
+  },
+  {
+   "type": "indx",
+   "chapter": "The fix: a flyback diode",
+   "narration": "The fix is simple: a diode across the inductor, pointing up toward the supply side. While the switch is on, the diode is reverse biased and does nothing. When the switch opens, the inductor's current flows round through the diode, in a safe little loop, and dies away gently. The spike is limited to about zero point seven volts above the supply. Every relay and motor driver in this course will have this diode. Now you know why.",
+   "mode": "diode"
+  },
+  {
+   "type": "indx",
+   "chapter": "Inductive reactance",
+   "narration": "In A C, an inductor opposes current with its reactance, X L, equal to two pi f L. The opposite of a capacitor. At D C, zero frequency, X L is zero: an inductor is just a piece of wire. As frequency rises, the reactance grows, and less current flows. A one hundred millihenry inductor has six ohms at ten hertz, but six hundred and twenty eight ohms at one kilohertz. So inductors pass D C and block high frequencies. Capacitors do the reverse.",
+   "mode": "xl"
+  },
+  {
+   "type": "indx",
+   "chapter": "Series, parallel, energy",
+   "narration": "Inductors combine like resistors: in series they add, in parallel they combine like resistors in parallel. The energy stored in the field is one half L I squared.",
+   "mode": "combo"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: inductors",
+   "narration": "Question one: a two hundred millihenry inductor and a fifty ohm resistor. Find tau and the time to reach full current. Tau equals L over R: zero point two over fifty, four milliseconds. Full after five tau, twenty milliseconds. Question two: the reactance of a fifty millihenry inductor at one kilohertz: two pi times one thousand times zero point zero five, three hundred and fourteen ohms. Question three: energy stored in a ten henry inductor carrying one amp: half times ten times one squared, five joules.",
+   "title": "NUMERICALS · INDUCTORS",
+   "given": [
+    "L = 200 mH",
+    "R = 50 Ω"
+   ],
+   "lines": [
+    "τ = L ÷ R = 0.2 ÷ 50 = 4 ms",
+    "full ≈ 5τ = 20 ms",
+    "XL = 2π × 1000 × 0.05 = 314 Ω",
+    "E = ½ L I² = ½ × 10 × 1² = 5 J"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 4 recap",
+   "narration": "Recap. An inductor is a coil that stores energy in a magnetic field. It opposes changes in current, so current rises with time constant L over R. Switching it off suddenly causes a huge voltage spike, which a flyback diode prevents. Its reactance two pi f L is zero at D C and rises with frequency. Next, we study A C signals properly: sine waves, R M S, phase, and resonance.",
+   "title": "CHAPTER 4 COMPLETE",
+   "lines": [
+    "Opposes change in current (Lenz)",
+    "τ = L ÷ R",
+    "Switch-off spike → flyback diode",
+    "XL = 2π f L: passes DC, blocks high f"
+   ],
+   "cta": "Next: AC fundamentals"
+  }
+ ]
+}

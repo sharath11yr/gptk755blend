@@ -3209,3 +3209,48 @@ export const CapXScene: React.FC<any> = ({ dur, mode = "inside" }) => {
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.capx = CapXScene;
+
+/** {"type":"indx","mode":"field"|"spark"|"diode"|"xl"|"combo"}: inductor behaviour */
+export const IndXScene: React.FC<any> = ({ dur, mode = "field" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={1040} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text><text x={1820} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  const coil = (x: number, y: number, n = 6) => <path d={`M ${x} ${y} ` + Array.from({ length: n }, () => "a 18 18 0 1 1 0 36").join(" ")} fill="none" stroke={L.amber} strokeWidth={6} />;
+  let body: React.ReactNode;
+  if (mode === "field") { const i = 1 - Math.exp(-p * 5);
+    body = <g><Battery x={200} y={540} v={10} />{W("200,500 200,250 700,250 700,432")}{coil(700, 432, 6)}{W("700,648 700,830 200,830 200,580")}
+      {[1, 2, 3, 4].map((k) => <ellipse key={k} cx={700} cy={540} rx={40 + k * 45} ry={130 + k * 30} fill="none" stroke={L.cyan} strokeWidth={3} opacity={i * (1 - k * 0.18)} strokeDasharray="10 8" />)}
+      <Dots pts={[[200, 500], [200, 250], [700, 250], [700, 830], [200, 830]]} t={t} speed={20 + 160 * i} gap={44} r={9} color={L.electron} />
+      <text x={700} y={960} textAnchor="middle" {...T1} fontSize={28}>current builds a magnetic field; the field stores energy</text></g>;
+    body = <g>{body}<text x={1430} y={250} textAnchor="middle" {...T1} fontSize={30}>CURRENT RISES SLOWLY</text>
+      {row(350, "current (of 1 A max)", `${(i).toFixed(2)} A`, L.cyan)}{row(440, "back-EMF fighting it", `${(10 * (1 - i)).toFixed(1)} V`, L.red)}
+      <text x={1430} y={580} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>Lenz: the coil opposes any CHANGE in current</text>
+      <text x={1430} y={630} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>τ = L ÷ R, full after 5τ</text></g>; }
+  else if (mode === "spark" || mode === "diode") { const off = p > 0.35; const u = off ? (p - 0.35) / 0.65 : 0; const dio = mode === "diode";
+    const spike = off ? (dio ? 0.7 : 400 * Math.exp(-u * 2.5)) : 0;
+    body = <g><Battery x={200} y={540} v={12} />{W("200,500 200,250 380,250")}<circle cx={380} cy={250} r={9} fill={L.text} /><circle cx={470} cy={250} r={9} fill={L.text} />
+      <line x1={380} y1={250} x2={off ? 450 : 470} y2={off ? 200 : 250} stroke={off ? L.red : L.green} strokeWidth={7} />{W("470,250 700,250 700,432")}{coil(700, 432, 6)}{W("700,648 700,830 200,830 200,580")}
+      {off && !dio && u < 0.6 && <g><polyline points="400,240 420,215 412,215 440,185" fill="none" stroke="#fff3a0" strokeWidth={6} /><circle cx={425} cy={225} r={40} fill="#fff3a0" opacity={0.4} /></g>}
+      {dio && <g>{W("700,250 880,250 880,500")}<g transform="translate(880,540) rotate(-90)"><rect x={-28} y={-28} width={56} height={56} fill={L.bg0} /><polygon points="-20,-22 -20,22 18,0" fill={off ? "rgba(46,196,160,0.35)" : L.bg0} stroke={off ? L.green : L.amber} strokeWidth={5} /><line x1={18} y1={-22} x2={18} y2={22} stroke={off ? L.green : L.amber} strokeWidth={5} /></g>{W("880,580 880,830 700,830")}
+        {off && <Dots pts={[[700, 432], [700, 648], [700, 830], [880, 830], [880, 250], [700, 250], [700, 432]]} t={t} speed={120 * Math.exp(-u * 4)} gap={44} r={8} />}
+        <text x={940} y={545} {...T1} fontSize={24} fill={L.green}>flyback diode</text></g>}
+      <text x={560} y={960} textAnchor="middle" {...T1} fontSize={28} fill={off ? (dio ? L.green : L.red) : L.text}>{!off ? "switch closed: current flows, field stored" : dio ? "diode gives the current a safe loop: no spike" : "switch opened: field collapses → huge voltage spike → spark!"}</text></g>;
+    body = <g>{body}<text x={1430} y={250} textAnchor="middle" {...T1} fontSize={30}>{dio ? "THE FIX: FLYBACK DIODE" : "WHAT IF: YOU SWITCH AN INDUCTOR OFF?"}</text>
+      {row(350, "voltage across switch", off ? `${(12 + spike).toFixed(0)} V` : "0 V", spike > 20 ? L.red : L.green)}
+      <text x={1430} y={500} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>V = L × (change in I ÷ time): instant stop → enormous V</text>
+      <text x={1430} y={560} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>this kills transistors driving relays and motors</text></g>; }
+  else if (mode === "xl") { const f = Math.pow(10, 1 + 3 * p); const xl = 2 * Math.PI * f * 0.1; const i = 5 / Math.sqrt(xl * xl + 100 * 100);
+    body = <g><circle cx={200} cy={540} r={60} fill={L.bg0} stroke={L.cyan} strokeWidth={6} /><path d="M 166 540 q 17 -30 34 0 t 34 0" fill="none" stroke={L.cyan} strokeWidth={5} />
+      {W("200,480 200,260 420,260")}{W("200,600 200,820 700,820 700,648")}<Res x={490} y={260} ohm={100} label="100 Ω" horizontal />{W("560,260 700,260 700,432")}{coil(700, 432, 6)}<text x={760} y={548} {...T1} fontSize={26}>100 mH</text>
+      <Dots pts={Math.sin(t * 6) > 0 ? [[200, 480], [200, 260], [700, 260], [700, 820], [200, 820]] : [[200, 820], [700, 820], [700, 260], [200, 260], [200, 480]]} t={t} speed={20 + i * 4000} gap={40} r={8} /></g>;
+    body = <g>{body}<text x={1430} y={260} textAnchor="middle" {...T1} fontSize={30}>HIGHER FREQUENCY → MORE OPPOSITION</text>
+      {row(360, "frequency", f >= 1000 ? `${(f / 1000).toFixed(2)} kHz` : `${f.toFixed(0)} Hz`, L.cyan)}{row(450, "XL = 2π f L", `${xl.toFixed(0)} Ω`, L.amber)}{row(540, "current", `${(i * 1000).toFixed(1)} mA`, L.green)}
+      <text x={1430} y={680} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>DC (f = 0) → XL = 0: just a wire. Opposite of a capacitor</text></g>; }
+  else body = <g><text x={960} y={260} textAnchor="middle" {...T1} fontSize={32}>INDUCTORS COMBINE LIKE RESISTORS</text>
+    {row(380, "series", "L = L1 + L2", L.green)}{row(470, "parallel", "1/L = 1/L1 + 1/L2", L.amber)}{row(560, "energy stored", "E = ½ L I²", L.cyan)}{row(650, "time constant", "τ = L ÷ R", L.text)}
+    {coil(300, 330, 5)}{coil(450, 330, 5)}<text x={375} y={560} textAnchor="middle" {...T1} fontSize={26}>10 + 10 = 20 mH (series)</text></g>;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.indx = IndXScene;
