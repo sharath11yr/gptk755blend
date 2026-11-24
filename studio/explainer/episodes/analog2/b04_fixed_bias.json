@@ -1,0 +1,134 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Fixed Bias (Base Bias) Explained | Q-Point, β Problem, Every Value Calculated | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Fixed Bias (Base Bias) Explained | Q-Point, β Problem, Every Value Calculated | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Fixed bias (base bias) for a BJT step by step: what biasing means and why an amplifier needs it, the circuit with RB from VCC to the base, IB, IC and VCE calculated, the Q-point on the load line, and the big problem: watching IC swing from 1 mA to 4 mA as beta changes from 50 to 200.",
+  "tags": [
+   "fixed bias",
+   "base bias",
+   "transistor biasing",
+   "q point",
+   "bjt biasing",
+   "beta stability",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Fixed Bias",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "FIXED BIAS",
+   "subtitle": "The simplest way to bias a transistor, and its big weakness",
+   "narration": "Welcome back. To amplify a signal, a transistor has to sit in the active region, not off, not fully on, but in the middle, with room to swing both ways. Setting that resting point is called biasing. There are several ways to do it. Today the simplest: fixed bias, also called base bias. We'll build it, calculate everything, and then discover its big weakness."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Building it",
+   "narration": "Here's fixed bias. The supply is twelve volts. R C, two kilohms, from the supply to the collector. The emitter goes straight to ground. And one resistor, R B, five hundred and sixty five kilohms, from the supply straight to the base. That's it. The base current is fixed by R B and the supply. Watch the currents: twenty microamps into the base, two milliamps through the collector, and V C E is eight volts.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "The Q-point",
+   "narration": "This resting point is called the Q point, the quiescent, or quiet, point. On the output characteristics, the load line runs from twelve volts at zero current to six milliamps at zero volts. Our Q point sits at eight volts and two milliamps. When a signal comes in, the operating point swings up and down along this line. Ideally the Q point should sit near the middle, so the signal has room to swing both ways without hitting cutoff or saturation.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's calculate it. Going round the base loop: the supply, minus the drop across R B, minus V B E, equals zero. So I B is V C C minus V B E, over R B. Twelve minus zero point seven, over five hundred and sixty five kilohms, twenty microamps. I C is beta times I B, two milliamps. V C E is V C C minus I C times R C: twelve minus two milliamps times two kilohms, eight volts. And the transistor dissipates eight volts times two milliamps, sixteen milliwatts.",
+   "bias": "fixed",
+   "lines": [
+    "IB = (VCC − VBE) ÷ RB",
+    "   = (12 − 0.7) ÷ 565 kΩ = 20 µA",
+    "IC = β × IB = 100 × 20 µA = 2 mA",
+    "VCE = VCC − IC × RC",
+    "    = 12 − 2 mA × 2 kΩ = 8 V",
+    "P = VCE × IC = 8 × 2 mA = 16 mW",
+    "Q-point: (8 V, 2 mA)"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "The big problem: β",
+   "narration": "Now the problem. Beta isn't a fixed number. Two transistors with the same part number can have betas of fifty or two hundred, and beta rises as the transistor warms up. Watch what happens as beta changes from fifty to two hundred. The base current stays at twenty microamps, because R B fixes it. So the collector current follows beta: one milliamp at beta fifty, two at a hundred, three at one fifty, four at two hundred. V C E falls from ten volts to four. The Q point wanders all over the load line.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "Why it matters",
+   "narration": "Why does that matter? If the Q point moves up near saturation, the top of the output signal gets clipped. If it moves down near cutoff, the bottom gets clipped. Either way, the signal is distorted. A four to one change in the collector current is far too much for a reliable amplifier. Fixed bias is simple, but it's the least stable bias there is.",
+   "bias": "fixed",
+   "beta": 200
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: an amplifier warming up",
+   "narration": "Here's what that looks like in practice. An audio amplifier starts cold, and as it warms up, the transistor's beta rises. With fixed bias, the collector current climbs with it, the Q point drifts, and soon the output clips: you hear distortion. With a better bias circuit, which we'll build next, the collector current hardly changes, and the sound stays clean."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting V B E. The base current is V C C minus zero point seven, over R B, not V C C over R B. Two: trusting beta from the datasheet as an exact number. It's a range, often fifty to three hundred. Three: placing the Q point near one end of the load line. Then even a small signal clips. Aim for V C E around half of V C C.",
+   "bias": "fixed"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: COLLECTOR-FEEDBACK BIAS",
+   "lines": [
+    "IB = (VCC − 0.7) ÷ RB",
+    "IC = β IB, VCE = VCC − IC RC",
+    "IC ∝ β: unstable Q-point"
+   ],
+   "cta": "Collector-feedback bias is next",
+   "narration": "Quick recap. Fixed bias uses one resistor from the supply to the base. I B is V C C minus zero point seven over R B, I C is beta times I B, and V C E is V C C minus I C R C. But I C follows beta directly, so the Q point is unstable. Next, collector feedback bias, a tiny change that makes it much more stable. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "",
+   "narration": "The simplest way to bias a transistor: one resistor from the supply to the base. Twenty microamps in the base, two milliamps in the collector, eight volts across it. Perfect. Or is it?",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "",
+   "narration": "Swap in another transistor with a different beta. From fifty to two hundred, the collector current swings from one milliamp to four. The operating point wanders all over the place.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "",
+   "narration": "Near saturation or cutoff, the signal clips and distorts. That's why fixed bias is rarely used in real amplifiers. Full lesson on the channel.",
+   "bias": "fixed",
+   "beta": 200
+  }
+ ]
+}

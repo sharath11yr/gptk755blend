@@ -13,5 +13,11 @@
  "analog2/a12_buck_boost.json",
  "analog2/a13_smps.json",
  "analog2/a14_voltage_multipliers.json",
- "analog2/a15_schottky.json"
+ "analog2/a15_schottky.json",
+ "analog2/b01_bjt_basics.json",
+ "analog2/b02_npn.json",
+ "analog2/b03_pnp.json",
+ "analog2/b04_fixed_bias.json",
+ "analog2/b05_collector_feedback_bias.json",
+ "analog2/b06_voltage_divider_bias.json"
 ]

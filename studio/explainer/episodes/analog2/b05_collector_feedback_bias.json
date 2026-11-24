@@ -1,0 +1,108 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Collector-Feedback Bias Explained | Negative Feedback Stabilises the Q-Point | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Collector-Feedback Bias Explained | Negative Feedback Stabilises the Q-Point | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Collector-feedback bias step by step: moving RB from VCC to the collector, how negative feedback works (more IC lowers VC, which lowers IB), the formula IB = (VCC - VBE) / (RB + (beta+1) RC) derived and calculated, and the beta test: IC changing only from 1.2 to 3.0 mA as beta goes from 50 to 200, compared with fixed bias.",
+  "tags": [
+   "collector feedback bias",
+   "transistor biasing",
+   "negative feedback",
+   "q point stability",
+   "bjt",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Collector-Feedback Bias",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "COLLECTOR-FEEDBACK BIAS",
+   "subtitle": "Move one wire, and the transistor corrects itself",
+   "narration": "Welcome back. Fixed bias had a big problem: the collector current followed beta, so the Q point wandered. Today we fix much of that by moving just one wire. Instead of connecting R B to the supply, we connect it to the collector. That creates negative feedback, and the transistor starts correcting itself."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Building it",
+   "narration": "Here's the circuit. Twelve volts, R C two kilohms to the collector, emitter to ground. And now R B, three hundred and sixty three kilohms, goes from the collector to the base. That's the only change. Watch the values: twenty microamps of base current, two milliamps of collector current, and V C E almost eight volts. The same Q point as before.",
+   "bias": "cf"
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "How the feedback works",
+   "narration": "Here's the clever part. Suppose the collector current tries to rise. More current through R C means a bigger voltage drop across it, so the collector voltage falls. But R B gets its current from the collector. A lower collector voltage means less base current. And less base current pulls the collector current back down. The circuit fights any change. That's negative feedback.",
+   "bias": "cf"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "The β test",
+   "narration": "Let's run the same test as before. Beta goes from fifty to two hundred. With fixed bias, the collector current went from one to four milliamps. Now watch: one point two two milliamps at fifty, two at a hundred, two point five five at one fifty, and two point nine five at two hundred. Still changes, but much less. As beta rises, the base current automatically drops, from twenty four microamps to under fifteen.",
+   "bias": "cf"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's derive it. Round the loop from the supply: through R C carrying I C plus I B, which is beta plus one times I B, then through R B carrying I B, then V B E. So V C C equals beta plus one, times I B, times R C, plus I B R B, plus zero point seven. Solve: I B equals V C C minus V B E, over R B plus beta plus one times R C. Eleven point three over three hundred and sixty three k plus two hundred and two k: twenty microamps. I C, two milliamps. V C E is V C C minus I E R C, twelve minus two point zero two milliamps times two k, seven point nine six volts.",
+   "bias": "cf",
+   "lines": [
+    "VCC = (β+1) IB RC + IB RB + VBE",
+    "IB = (VCC − VBE) ÷ (RB + (β+1) RC)",
+    "   = 11.3 ÷ (363k + 101 × 2k) = 20 µA",
+    "IC = 100 × 20 µA = 2 mA",
+    "VCE = 12 − 2.02 mA × 2 kΩ = 7.96 V",
+    "β = 200: IB = 11.3 ÷ 765k = 14.8 µA",
+    "→ IC = 2.95 mA (fixed bias: 4 mA)"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "On the load line",
+   "narration": "On the load line, the Q point sits at about eight volts and two milliamps. With fixed bias, a beta change of four times moved the Q point from ten volts all the way to four. Now it only moves between about nine and a half and six volts. Better, but not perfect.",
+   "bias": "cf"
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: a self-correcting amplifier",
+   "narration": "Collector feedback is used in simple single transistor amplifiers, because it's cheap: still only two resistors, but much more stable. As the amplifier warms up and beta rises, the feedback pulls the base current down and keeps the sound cleaner. For the best stability, though, engineers use the voltage divider bias, coming next."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using I C instead of I C plus I B through R C. R C carries both, because R B takes its current from the collector node. Two: thinking the feedback makes I C completely independent of beta. It only reduces the effect. Three: forgetting that this feedback also reduces the amplifier's A C gain, because the signal feeds back too.",
+   "bias": "cf"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: VOLTAGE-DIVIDER BIAS",
+   "lines": [
+    "RB from collector: negative feedback",
+    "IB = (VCC − 0.7) ÷ (RB + (β+1) RC)",
+    "β 50→200: IC 1.2→3.0 mA (fixed: 1→4)"
+   ],
+   "cta": "Voltage-divider bias is next",
+   "narration": "Quick recap. In collector feedback bias, R B connects to the collector. If the collector current rises, the collector voltage falls, the base current falls, and the current is pulled back. I B is V C C minus zero point seven, over R B plus beta plus one times R C. Next, the most stable and most used bias of all: voltage divider bias. See you there."
+  }
+ ]
+}

@@ -1,0 +1,141 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Voltage-Divider Bias Explained | The Most Stable BJT Bias, Thevenin Method | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Voltage-Divider Bias Explained | The Most Stable BJT Bias, Thevenin Method | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Voltage-divider bias (self bias) step by step: R1 and R2 fixing the base voltage, the emitter resistor RE providing feedback, the Thevenin method with every value calculated (VTH 2.79 V, RTH 7.67 k, IC 1.92 mA, VCE 6.2 V), the approximate method, and the beta test: IC changing only from 1.78 to 2.00 mA as beta goes from 50 to 200.",
+  "tags": [
+   "voltage divider bias",
+   "self bias",
+   "transistor biasing",
+   "thevenin",
+   "emitter resistor",
+   "q point",
+   "bjt",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Voltage-Divider Bias",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "VOLTAGE-DIVIDER BIAS",
+   "subtitle": "The bias used in almost every real amplifier",
+   "narration": "Welcome back. Fixed bias was unstable. Collector feedback was better. Today, the best: voltage divider bias, also called self bias. It's the one used in almost every discrete transistor amplifier, because its Q point barely cares what the beta is. We'll build it, calculate it two ways, and run the beta test."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Building it",
+   "narration": "Twelve volt supply. R C, two kilohms, to the collector. Now two resistors make a voltage divider for the base: R one, thirty three kilohms, from the supply to the base, and R two, ten kilohms, from the base to ground. And one new part: R E, one kilohm, between the emitter and ground. The results: nineteen microamps of base current, one point nine two milliamps of collector current, and V C E six point two volts. Right near the middle of the twelve volt supply.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Why it's so stable",
+   "narration": "Here's why it works. The divider holds the base at a fairly fixed voltage, about two point six volts. The emitter sits zero point seven below that, at about one point nine volts. So the voltage across R E is fixed, which fixes the emitter current: about one point nine volts over one kilohm, roughly one point nine milliamps. Notice: beta isn't in that reasoning at all. And R E gives feedback: if I C rises, the emitter voltage rises, the base emitter voltage shrinks, and the current is pulled back.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "The β test",
+   "narration": "The test. Beta from fifty to two hundred. Fixed bias: one to four milliamps. Collector feedback: one point two to three. Now voltage divider bias: one point seven eight milliamps at beta fifty, one point nine two at a hundred, one point nine eight at one fifty, two point zero zero at two hundred. Almost flat. A four times change in beta changes the collector current by only about twelve percent.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Exact: the Thevenin method",
+   "narration": "The exact calculation uses Thevenin. Replace the divider with one voltage and one resistor. V T H is twelve times ten over forty three, two point seven nine volts. R T H is thirty three k in parallel with ten k, seven point six seven k. Then the base loop: I B equals V T H minus zero point seven, over R T H plus beta plus one times R E. Two point zero nine over seven point six seven k plus one hundred and one k: nineteen point two microamps. I C is one point nine two milliamps, I E one point nine four. V C E equals twelve minus one point nine two times two, minus one point nine four times one: six point two one volts.",
+   "bias": "vd",
+   "lines": [
+    "VTH = 12 × 10k ÷ 43k = 2.79 V",
+    "RTH = 33k ∥ 10k = 7.67 kΩ",
+    "IB = (VTH − 0.7) ÷ (RTH + (β+1) RE)",
+    "   = 2.09 ÷ (7.67k + 101k) = 19.2 µA",
+    "IC = 1.92 mA, IE = 1.94 mA",
+    "VCE = 12 − 1.92×2 − 1.94×1 = 6.21 V",
+    "β = 200 → IC = 2.00 mA"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Quick: the approximate method",
+   "narration": "There's a quicker way, good when beta times R E is much bigger than ten times R two. Here, a hundred times one k is a hundred k, which is ten times R two. So ignore the base current. V B is just the divider: two point seven nine volts. V E is two point seven nine minus zero point seven, two point zero nine volts. I E is two point zero nine over one k, two point zero nine milliamps. V C E is twelve minus two point zero nine times three k, about five point seven volts. Close to the exact answer, in four lines.",
+   "bias": "vd",
+   "lines": [
+    "check: β RE ≥ 10 R2 → 100k ≥ 100k ✓",
+    "VB ≈ 12 × 10k ÷ 43k = 2.79 V",
+    "VE = 2.79 − 0.7 = 2.09 V",
+    "IE ≈ IC = 2.09 V ÷ 1 kΩ = 2.09 mA",
+    "VCE ≈ 12 − 2.09 mA × 3 kΩ = 5.73 V",
+    "(exact: 1.92 mA, 6.21 V)"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: stable amplifiers",
+   "narration": "This is why audio preamplifiers, radio front ends, and sensor amplifiers built from single transistors almost always use voltage divider bias. As the transistor warms up and beta climbs, the collector current hardly moves. The Q point stays where the designer put it, and the signal stays clean. And when the A C gain matters, a capacitor across R E, the bypass capacitor, keeps the gain high. We'll see that soon."
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using the approximate method when the condition fails. If beta times R E isn't much bigger than R two, use Thevenin. Two: forgetting R E in the V C E calculation. V C E is V C C minus I C R C minus I E R E. Three: making R one and R two too large. Then the base current loads the divider, and the stability is lost. Keep the divider current at least ten times the base current.",
+   "bias": "vd"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: LOAD LINE & Q-POINT",
+   "lines": [
+    "Divider fixes VB, RE fixes IE",
+    "IB = (VTH − 0.7) ÷ (RTH + (β+1) RE)",
+    "β 50→200: IC 1.78→2.00 mA"
+   ],
+   "cta": "Load line & Q-point is next",
+   "narration": "Quick recap. In voltage divider bias, R one and R two fix the base voltage, and R E fixes the emitter current. Use Thevenin for the exact answer, or the approximation when beta R E is at least ten R two. Beta from fifty to two hundred barely moves I C. Next, the D C load line and Q point in depth. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "",
+   "narration": "Every real transistor has a different beta. With fixed bias, that sends the collector current from one milliamp to four. Unusable.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "",
+   "narration": "Now add a voltage divider on the base and a resistor on the emitter. Same beta change, fifty to two hundred, and the collector current moves only from one point seven eight to two milliamps.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "",
+   "narration": "Why? The divider holds the base voltage, so the emitter voltage is fixed, so the emitter current is fixed, whatever the beta. That's voltage divider bias, used in almost every transistor amplifier. Full lesson on the channel.",
+   "bias": "vd"
+  }
+ ]
+}

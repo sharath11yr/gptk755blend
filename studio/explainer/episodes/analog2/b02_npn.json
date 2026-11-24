@@ -1,0 +1,138 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "NPN Transistor Explained | Currents, Alpha & Beta, Every Value Calculated | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "NPN Transistor Explained | Currents, Alpha & Beta, Every Value Calculated | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The NPN transistor in depth: electron flow from emitter to collector, the biasing rule (BE forward, CB reverse), IB, IC and IE measured live, alpha and beta and how they relate, the input and output characteristics, every value calculated, and a transistor switching a fan.",
+  "tags": [
+   "npn transistor",
+   "bjt",
+   "alpha beta",
+   "current gain",
+   "transistor characteristics",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "NPN Transistor",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "THE NPN TRANSISTOR",
+   "subtitle": "Inside the most common transistor, with every current calculated",
+   "narration": "Welcome back. Last time we met the transistor. Today we go deeper into the most common type, the N P N. We'll follow the electrons, measure all three currents, and meet the two numbers that describe every transistor: alpha and beta."
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Following the electrons",
+   "narration": "Inside the N P N, the emitter is N type, packed with electrons. Forward biasing the base emitter junction pushes them into the base. The base is P type, so an electron there could fall into a hole and recombine. But the base is so thin that almost none have time to. The collector base junction is reverse biased, and its electric field sweeps the electrons into the collector. About ninety nine percent make it."
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "The three currents",
+   "narration": "Let's measure. Twenty microamps into the base. Two milliamps into the collector. And two point zero two milliamps out of the emitter. Notice the direction: conventional current flows into the base and collector, and out of the emitter. That's why the arrow on the N P N symbol points out of the emitter.",
+   "ibx": 2e-05
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "Beta",
+   "narration": "Beta is the ratio of collector current to base current. I C over I B. Two milliamps over twenty microamps, one hundred. Watch the base current change: whatever it is, the collector current is one hundred times bigger. Real transistors have betas from about fifty to several hundred. Even two transistors of the same part number can differ a lot, which will matter when we bias them."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "A real NPN circuit",
+   "narration": "Here's a complete circuit. A five volt source drives the base through two hundred and fifteen kilohms. The collector connects to twelve volts through two kilohms. The base current is twenty microamps, the collector current is two milliamps, and V C E is eight volts. The transistor sits nicely in the active region, ready to amplify.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "The output characteristics",
+   "narration": "This graph shows the transistor's output characteristics: collector current against V C E, for different base currents. Each blue line is one base current: ten, twenty, thirty, forty, fifty microamps. Notice they're almost flat. The collector current depends on the base current, not on V C E. Our circuit's load line runs from twelve volts at zero current to six milliamps at zero volts. Where it crosses the twenty microamp line is the operating point: eight volts, two milliamps.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Alpha and beta",
+   "narration": "Now alpha. Alpha is the collector current over the emitter current: the fraction of electrons that make it across. Two over two point zero two, zero point nine nine. They're linked: alpha equals beta over beta plus one, a hundred over a hundred and one, zero point nine nine. And beta equals alpha over one minus alpha, zero point nine nine over zero point zero one, about a hundred. Small changes in alpha make huge changes in beta: alpha of zero point nine nine five gives beta of one hundred and ninety nine.",
+   "bias": "basic",
+   "lines": [
+    "β = IC ÷ IB = 2 mA ÷ 20 µA = 100",
+    "α = IC ÷ IE = 2 ÷ 2.02 = 0.990",
+    "α = β ÷ (β + 1) = 100 ÷ 101 = 0.990",
+    "β = α ÷ (1 − α) = 0.99 ÷ 0.01 ≈ 100",
+    "α = 0.995 → β = 0.995 ÷ 0.005 = 199",
+    "IE = (β + 1) × IB = 101 × 20 µA = 2.02 mA"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: switching a fan",
+   "narration": "The N P N is the go-to transistor for switching loads from logic. Its emitter goes to ground, and the load sits between the supply and the collector. That's called a low side switch. When the microcontroller pin goes high, base current flows, the transistor saturates, and the fan gets the full supply."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: drawing current flowing into the emitter of an N P N. Conventional current flows out of the emitter, the way the arrow points. Two: using alpha and beta interchangeably. Alpha is just under one, beta is around a hundred. Three: designing a circuit that depends on an exact beta. Beta varies from part to part and with temperature, so good designs, as we'll see, work for any beta.",
+   "bias": "basic"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: PNP TRANSISTOR",
+   "lines": [
+    "BE forward, CB reverse; electrons E → C",
+    "β = IC ÷ IB, α = IC ÷ IE",
+    "α = β ÷ (β + 1), IE = (β + 1) IB"
+   ],
+   "cta": "PNP is next",
+   "narration": "Quick recap. In an N P N, electrons flow from the emitter through the thin base into the collector. Beta is I C over I B, around a hundred. Alpha is I C over I E, just under one. Alpha equals beta over beta plus one. Next, the N P N's mirror image: the P N P transistor. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "",
+   "narration": "How does a transistor amplify? In an N P N, electrons leave the emitter, and the base is so thin that ninety nine percent shoot straight through into the collector."
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "",
+   "narration": "So a tiny base current controls a collector current one hundred times bigger. Twenty microamps in the base, two milliamps in the collector. That ratio is beta."
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "And the fraction that makes it across is alpha: two over two point zero two, zero point nine nine. Beta, a hundred. Alpha, just under one. Full lesson on the channel.",
+   "bias": "basic",
+   "lines": [
+    "β = IC ÷ IB = 100",
+    "α = IC ÷ IE = 0.990",
+    "α = β ÷ (β + 1)"
+   ]
+  }
+ ]
+}

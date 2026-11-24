@@ -1,0 +1,114 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "BJT Basics Explained | How a Transistor Works, From Zero | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "BJT Basics Explained | How a Transistor Works, From Zero | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The bipolar junction transistor from zero: three layers (emitter, base, collector), why the base is thin, how a tiny base current controls a big collector current (IC = beta x IB), cutoff, active and saturation regions shown live, and how a microcontroller pin switches a fan through one transistor.",
+  "tags": [
+   "bjt",
+   "transistor",
+   "bipolar junction transistor",
+   "how transistor works",
+   "npn",
+   "current gain beta",
+   "transistor as switch",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "BJT Basics",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "THE TRANSISTOR (BJT)",
+   "subtitle": "How a tiny current controls a big one",
+   "narration": "Welcome back. The transistor is the most important invention in electronics. Your phone has billions of them. Today we start the bipolar junction transistor, the B J T, from absolute zero. What's inside it, how a tiny current controls a big one, and the three ways it can behave."
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Three layers",
+   "narration": "A B J T is a sandwich of three layers of semiconductor. In an N P N transistor: N type, then P type, then N type. The first N layer is the emitter. It's heavily doped, so it's packed with free electrons, ready to send them out. The middle P layer is the base. It's very thin and lightly doped. The last N layer is the collector. It's the biggest, and it collects the electrons. Watch the electrons. They rush out of the emitter, and because the base is so thin, almost all of them shoot straight through it into the collector. Only about one in a hundred gets caught in the base and leaves through the base wire."
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Two junctions, two jobs",
+   "narration": "So there are two junctions. Between the base and emitter, a P N junction, just like a diode. We forward bias it, about zero point seven volts, so the emitter can send electrons. Between the collector and base, another junction, which we reverse bias. That reverse voltage pulls the electrons that reach the base across into the collector. Remember this rule: B E forward, C B reverse. That's how a transistor amplifies."
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "A small current controls a big one",
+   "narration": "Now the magic. Here's the transistor symbol. The arrow is on the emitter, pointing out, which tells us it's N P N. We push a small current into the base, I B. Watch: as the base current rises from ten to forty microamps, the collector current rises from one milliamp to four milliamps. Always one hundred times bigger. That number is the current gain, beta. I C equals beta times I B. A tiny current at the base controls a current a hundred times bigger."
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "Where the current goes",
+   "narration": "And all of it leaves through the emitter. The emitter current is the base current plus the collector current. I E equals I B plus I C. With twenty microamps in the base and two milliamps in the collector, the emitter carries two point zero two milliamps. The base current is so small that I E and I C are almost equal.",
+   "ibx": 2e-05
+  },
+  {
+   "type": "bjt",
+   "mode": "regions",
+   "chapter": "Cutoff, active, saturation",
+   "narration": "Now let's build a real circuit. Twelve volts on top, a two kilohm resistor R C to the collector, and the base fed from an adjustable voltage through two hundred and fifteen kilohms. Watch as we raise the base voltage from zero. Below zero point seven volts, no base current flows, and no collector current. The transistor is off. This is cutoff. Above zero point seven, base current flows, and the collector current follows it, one hundred times bigger. This is the active region, where it amplifies. But keep going: R C limits the collector current to about five point nine milliamps. Even with more base current, the collector can't take more. The transistor is fully on, with only about zero point two volts across it. That's saturation.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's calculate the active region at five volts on the base. Base current: five minus zero point seven, over two hundred and fifteen kilohms, twenty microamps. Collector current: beta times I B, one hundred times twenty microamps, two milliamps. Emitter current: I B plus I C, two point zero two milliamps. Voltage across R C: two milliamps times two kilohms, four volts. So V C E is twelve minus four, eight volts. And the most collector current R C allows: twelve minus zero point two, over two kilohms, five point nine milliamps.",
+   "bias": "basic",
+   "lines": [
+    "IB = (5 − 0.7) ÷ 215 kΩ = 20 µA",
+    "IC = β × IB = 100 × 20 µA = 2 mA",
+    "IE = IB + IC = 2.02 mA",
+    "V(RC) = 2 mA × 2 kΩ = 4 V",
+    "VCE = 12 − 4 = 8 V",
+    "IC(sat) = (12 − 0.2) ÷ 2 kΩ = 5.9 mA",
+    "active: 0.2 V < VCE < 12 V"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: a pin switching a fan",
+   "narration": "Here's the most common use of all. A microcontroller pin can only give about one milliamp. A relay or a fan motor needs one hundred milliamps or more. So the pin drives the base of a transistor. Pin low: cutoff, fan off. Pin high: enough base current to drive the transistor into saturation, fully on, and the fan spins. One transistor turns a tiny signal into real power."
+  },
+  {
+   "type": "bjt",
+   "mode": "regions",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the transistor creates current. It doesn't. The collector current comes from the supply. The transistor only controls how much flows. Two: forgetting the base resistor. Connect the base straight to a voltage source and the base emitter diode takes a huge current and burns out. Three: assuming I C always equals beta times I B. That's only true in the active region. In saturation, R C limits the current, and more base current changes nothing.",
+   "bias": "basic"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: NPN TRANSISTOR",
+   "lines": [
+    "Emitter sends, thin base, collector collects",
+    "IC = β × IB, IE = IB + IC",
+    "Cutoff · Active (amplify) · Saturation (switch ON)"
+   ],
+   "cta": "NPN in depth is next",
+   "narration": "Quick recap. A B J T has an emitter, a thin base and a collector. With the base emitter junction forward biased and the collector base junction reverse biased, a small base current controls a collector current beta times bigger, and I E equals I B plus I C. It works in cutoff, active, or saturation. Next, the N P N transistor in depth. See you there."
+  }
+ ]
+}

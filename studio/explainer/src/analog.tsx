@@ -9,6 +9,8 @@ const useU = () => { const { width, height } = useVideoConfig(); return { u: Mat
 const fmt = (v: number, unit: string) => {
   const a = Math.abs(v);
   if (unit === "A" && a < 1) return `${+(v * 1000).toFixed(a < 0.01 ? 2 : 1)} mA`;
+  if (unit === "Ω" && a >= 1e6) return `${+(v / 1e6).toFixed(2)} MΩ`;
+  if (unit === "Ω" && a >= 1e3) return `${+(v / 1e3).toFixed(2)} kΩ`;
   return `${+v.toFixed(a < 10 ? 2 : 1)} ${unit}`;
 };
 
@@ -1361,6 +1363,46 @@ export const AppScene: React.FC<any> = ({ dur, app = "crossover", focus = "both"
       <text x={1370} y={770} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>12 V BATTERY</text>
     </svg></AbsoluteFill>;
   }
+  if (app === "relay") {
+    const on = Math.sin(t * 1.2) > 0;
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>REAL WORLD: A TINY PIN SWITCHING A BIG LOAD</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>a microcontroller pin gives ~1 mA; one transistor turns that into the ~100 mA a relay or motor needs</text>
+      <rect x={140} y={400} width={300} height={260} rx={14} fill="#1b1b1b" />{Array.from({ length: 6 }, (_, k) => <g key={k}><rect x={160 + k * 46} y={380} width={16} height={20} fill="#c0c0c0" /><rect x={160 + k * 46} y={660} width={16} height={20} fill="#c0c0c0" /></g>)}
+      <text x={290} y={540} textAnchor="middle" fill="#ddd" fontFamily={MONO} fontSize={30} fontWeight={800}>MICRO</text>
+      <text x={290} y={740} textAnchor="middle" fill={on ? L.green : L.dim} fontFamily={MONO} fontSize={26} fontWeight={800}>pin: {on ? "HIGH 5 V · 1 mA" : "LOW 0 V"}</text>
+      <path d="M 440 530 L 700 530" stroke={on ? L.cyan : L.dim} strokeWidth={6} />
+      <circle cx={760} cy={530} r={70} fill={L.bg0} stroke={on ? L.green : L.amber} strokeWidth={6} /><text x={760} y={540} textAnchor="middle" fill={L.amber} fontFamily={MONO} fontSize={28} fontWeight={800}>NPN</text>
+      <text x={760} y={650} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={26} fontWeight={800}>{on ? "SATURATED: switch ON" : "CUTOFF: switch OFF"}</text>
+      <path d="M 780 460 L 780 330 L 1100 330" stroke={on ? L.electron : L.dim} strokeWidth={6} fill="none" />
+      <rect x={1100} y={260} width={260} height={150} rx={14} fill="#2d5ea8" /><text x={1230} y={345} textAnchor="middle" fill="#fff" fontFamily={MONO} fontSize={30} fontWeight={800}>RELAY</text>
+      <text x={1230} y={450} textAnchor="middle" fill={L.electron} fontFamily={MONO} fontSize={24} fontWeight={800}>{on ? "100 mA" : "0 mA"}</text>
+      <path d="M 1360 335 L 1500 335" stroke={on ? L.amber : L.dim} strokeWidth={6} />
+      <g transform="translate(1600,500)"><circle r={110} fill="#25313d" stroke="#4a5d70" strokeWidth={6} />
+        {[0, 1, 2].map((k) => <rect key={k} x={-14} y={-100} width={28} height={90} rx={10} fill="#8aa1b4" transform={`rotate(${k * 120 + (on ? t * 400 : 0)})`} />)}<circle r={18} fill="#8aa1b4" /></g>
+      <text x={1600} y={680} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={800}>{on ? "FAN RUNNING" : "FAN OFF"}</text>
+    </svg></AbsoluteFill>;
+  }
+  if (app === "thermal") {
+    const T = 25 + 50 * ((t / 6) % 1); const b = 100 * (1 + (T - 25) / 50);
+    const fixIc = 2 * b / 100, vdIc = 1.924 + (2.004 - 1.924) * Math.min(1, (b - 100) / 100);
+    const sine = (x0: number, y: number, clip: number, col: string) => { const q: string[] = []; for (let x = 0; x <= 520; x += 4) { let v = 70 * Math.sin(x / 30 - t * 4); v = Math.max(-clip, Math.min(clip, v)); q.push(`${x0 + x},${y - v}`); } return <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} />; };
+    const clipF = Math.max(15, 70 - (fixIc - 2) * 55);
+    return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <text x={960} y={110} textAnchor="middle" fill={L.text} fontFamily={SANS} fontSize={46} fontWeight={800}>REAL WORLD: AN AMPLIFIER WARMING UP</text>
+      <text x={960} y={160} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>as a transistor heats, its β rises; good biasing keeps the sound clean anyway</text>
+      <rect x={120} y={260} width={160} height={560} rx={80} fill="#25313d" stroke="#4a5d70" strokeWidth={5} />
+      <rect x={160} y={780 - 480 * (T - 25) / 50} width={80} height={480 * (T - 25) / 50 + 20} rx={40} fill={L.red} />
+      <text x={200} y={880} textAnchor="middle" fill={L.red} fontFamily={MONO} fontSize={34} fontWeight={800}>{T.toFixed(0)} °C</text>
+      <text x={200} y={930} textAnchor="middle" fill={L.text} fontFamily={MONO} fontSize={28} fontWeight={800}>β ≈ {b.toFixed(0)}</text>
+      <text x={700} y={300} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={32} fontWeight={800}>FIXED BIAS: IC = {fixIc.toFixed(2)} mA</text>
+      {sine(440, 450, clipF, L.amber)}<text x={700} y={590} textAnchor="middle" fill={clipF < 60 ? L.red : L.dim} fontFamily={SANS} fontSize={26} fontWeight={700}>{clipF < 60 ? "Q-point drifts → output clips → distorted sound" : "sounds fine… for now"}</text>
+      <text x={700} y={680} textAnchor="middle" fill={L.green} fontFamily={SANS} fontSize={32} fontWeight={800}>VOLTAGE-DIVIDER BIAS: IC = {vdIc.toFixed(2)} mA</text>
+      {sine(440, 820, 999, L.green)}<text x={700} y={960} textAnchor="middle" fill={L.green} fontFamily={SANS} fontSize={26} fontWeight={700}>Q-point stays put → clean sound</text>
+      <g transform="translate(1500,560)"><path d="M -120 -60 L -40 -60 L 60 -160 L 60 160 L -40 60 L -120 60 Z" fill="#25313d" stroke="#4a5d70" strokeWidth={6} />
+        {[0, 1, 2].map((k) => <path key={k} d={`M ${110 + k * 50} -${70 + k * 30} Q ${150 + k * 60} 0 ${110 + k * 50} ${70 + k * 30}`} fill="none" stroke={L.green} strokeWidth={5} opacity={0.4 + 0.5 * Math.abs(Math.sin(t * 4 - k))} />)}</g>
+    </svg></AbsoluteFill>;
+  }
   if (app === "adc") {
     const noisy = (x: number, a: number, b: number) => a * Math.sin(x / 40 - t * 4) + b * Math.sin(x / 4 - t * 30);
     const wv = (x0: number, x1: number, y: number, a: number, b: number, col: string) => { const q: string[] = [];
@@ -2269,3 +2311,143 @@ export const SchottkyScene: React.FC<any> = ({ dur, mode = "junction" }) => {
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.schottky = SchottkyScene;
+
+// ------------------------------------------------------------------ BJT engine (structure, control, biasing, load line, regions, β-stability)
+/** {"type":"bjt","mode":"layers"|"control"|"circuit"|"beta"|"loadline"|"regions"|"calc","kind":"npn"|"pnp",
+ *   "bias":"basic"|"fixed"|"cf"|"vd","beta":100,"lines":[...]}
+ *  VCC = 12 V, RC = 2 kΩ, VBE = 0.7 V. fixed RB = 565 kΩ; cf RB = 363 kΩ; vd R1 = 33k, R2 = 10k, RE = 1k; basic VBB = 5 V, RB = 215 kΩ. */
+const BJ = { VCC: 12, RC: 2000, VBE: 0.7, VSAT: 0.2 };
+export const bjtSolve = (bias: string, b: number) => {
+  let ib = 0, re = 0;
+  if (bias === "basic") ib = (5 - BJ.VBE) / 215e3;
+  else if (bias === "fixed") ib = (BJ.VCC - BJ.VBE) / 565e3;
+  else if (bias === "cf") ib = (BJ.VCC - BJ.VBE) / (363e3 + (b + 1) * BJ.RC);
+  else { const vth = BJ.VCC * 10 / 43, rth = 33e3 * 10e3 / 43e3; re = 1000; ib = (vth - BJ.VBE) / (rth + (b + 1) * re); }
+  let ic = b * ib; const icsat = (BJ.VCC - BJ.VSAT) / (BJ.RC + re); let sat = false;
+  if (ic > icsat) { ic = icsat; sat = true; }
+  const ie = ic + ib; const vce = bias === "cf" ? BJ.VCC - ie * BJ.RC : BJ.VCC - ic * BJ.RC - ie * re;
+  return { ib, ic, ie, vce: sat ? BJ.VSAT : vce, sat, re };
+};
+const uA = (a: number) => `${+(a * 1e6).toFixed(1)} µA`;
+const mAs = (a: number) => `${+(a * 1e3).toFixed(2)} mA`;
+export const BjtScene: React.FC<any> = ({ dur, mode = "circuit", kind = "npn", bias = "fixed", beta = 100, lines = [], ibx }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const npn = kind !== "pnp";
+  const B = mode === "beta" ? 50 + 150 * p : beta;
+  const vbb = mode === "regions" ? 15 * p : 5;
+  const s = mode === "regions" ? (() => { const ib = Math.max(0, (vbb - BJ.VBE) / 215e3); let ic = B * ib; const icsat = (BJ.VCC - BJ.VSAT) / BJ.RC; const sat = ic > icsat; if (sat) ic = icsat;
+    return { ib, ic, ie: ib + ic, vce: sat ? BJ.VSAT : BJ.VCC - ic * BJ.RC, sat, re: 0 }; })() : bjtSolve(bias, B);
+  // ---------- transistor symbol at (x,y): base at x-60, collector up, emitter down
+  const Q = (x: number, y: number, glow = 0) => <g>
+    {glow > 0 && <circle cx={x} cy={y} r={95} fill={L.green} opacity={0.1 + 0.15 * glow} />}
+    <circle cx={x} cy={y} r={70} fill={L.bg0} stroke={L.amber} strokeWidth={5} />
+    <line x1={x - 25} y1={y - 40} x2={x - 25} y2={y + 40} stroke={L.amber} strokeWidth={9} />
+    <line x1={x - 70} y1={y} x2={x - 25} y2={y} stroke={L.amber} strokeWidth={6} />
+    <line x1={x - 25} y1={y - 18} x2={x + 20} y2={y - 60} stroke={L.amber} strokeWidth={6} /><line x1={x + 20} y1={y - 60} x2={x + 20} y2={y - 70} stroke={L.amber} strokeWidth={6} />
+    <line x1={x - 25} y1={y + 18} x2={x + 20} y2={y + 60} stroke={L.amber} strokeWidth={6} /><line x1={x + 20} y1={y + 60} x2={x + 20} y2={y + 70} stroke={L.amber} strokeWidth={6} />
+    {npn ? <polygon points={`${x + 20},${y + 60} ${x - 6},${y + 52} ${x + 8},${y + 36}`} fill={L.amber} />
+         : <polygon points={`${x - 22},${y - 21} ${x + 3},${y - 31} ${x - 11},${y - 45}`} fill={L.amber} />}
+    <text x={x + 34} y={y - 70} fill={L.dim} fontFamily={MONO} fontSize={22}>{npn ? "C" : "E"}</text>
+    <text x={x + 34} y={y + 90} fill={L.dim} fontFamily={MONO} fontSize={22}>{npn ? "E" : "C"}</text>
+    <text x={x - 90} y={y - 14} fill={L.dim} fontFamily={MONO} fontSize={22}>B</text></g>;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const rail = 200, gnd = 880, XQ = 640, YQ = 560, XC = XQ + 20;
+  let left: React.ReactNode = null;
+  if (mode === "layers") {
+    const lay = npn ? [["N", "#2e5a87", "EMITTER"], ["P", "#b5473a", "BASE"], ["N", "#2e5a87", "COLLECTOR"]] : [["P", "#b5473a", "EMITTER"], ["N", "#2e5a87", "BASE"], ["P", "#b5473a", "COLLECTOR"]];
+    const xs = [120, 420, 520], ws = [300, 100, 380];
+    left = <g>{lay.map(([l, c, n], k) => <g key={k}><rect x={xs[k]} y={360} width={ws[k]} height={260} fill={c} />
+        <text x={xs[k] + ws[k] / 2} y={510} textAnchor="middle" fill="#fff" fontFamily={SANS} fontSize={48} fontWeight={800}>{l}</text>
+        <text x={xs[k] + ws[k] / 2} y={k === 1 ? 320 : 680} textAnchor="middle" {...T1} fontSize={24}>{n}</text>
+        <line x1={xs[k] + ws[k] / 2} y1={k === 1 ? 330 : 620} x2={xs[k] + ws[k] / 2} y2={k === 1 ? 360 : 650} stroke={L.wire} strokeWidth={5} /></g>)}
+      {Array.from({ length: 14 }, (_, k) => { const u = ((k / 14 + t * 0.25) % 1); const x = 130 + u * 760; const y = 390 + ((k * 53) % 200);
+        const toBase = k % 14 === 0 && u > 0.38; return <circle key={k} cx={toBase ? 470 : x} cy={toBase ? 390 - (u - 0.38) * 200 : y} r={9} fill={npn ? L.electron : "#ff9f6b"} opacity={toBase && u > 0.6 ? 0 : 1} />; })}
+      <text x={510} y={780} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>{npn ? "electrons" : "holes"} rush from emitter, straight through the THIN base, into the collector</text></g>;
+  } else if (mode === "control") {
+    const ib = (ibx ?? 0) || (10e-6 + 30e-6 * p); const ic = beta * ib;
+    left = <g>
+      {W(`${XC},${YQ - 70} ${XC},${rail}`)}{W(`${XC},${YQ + 70} ${XC},${gnd}`)}{W(`${XQ - 70},${YQ} 300,${YQ}`)}
+      {Q(XQ, YQ, ic / 4e-3)}
+      <Dots pts={[[300, YQ], [XQ - 30, YQ], [XC, YQ + 70], [XC, gnd]]} t={t} speed={20 + ib * 2e6} gap={70} r={5} color={L.cyan} />
+      <Dots pts={[[XC, rail], [XC, gnd]]} t={t} speed={40 + ic * 4e4} gap={28} />
+      <text x={300} y={YQ - 30} {...T1} fontSize={28} fill={L.cyan}>IB = {uA(ib)}</text>
+      <text x={XC + 40} y={rail + 60} {...T1} fontSize={28} fill={L.electron}>IC = {mAs(ic)}</text>
+      <text x={XC + 40} y={gnd - 40} {...T1} fontSize={28}>IE = IB + IC</text></g>;
+  } else {
+    const bOn = true; const showRE = bias === "vd";
+    const ieY = showRE ? 760 : gnd;
+    left = <g>
+      <line x1={120} y1={rail} x2={900} y2={rail} stroke={L.red} strokeWidth={6} /><text x={120} y={rail - 20} {...T1} fontSize={28} fill={L.red}>+12 V</text>
+      <line x1={120} y1={gnd} x2={900} y2={gnd} stroke={L.wire} strokeWidth={6} /><text x={120} y={gnd + 44} {...T1} fontSize={26} fill={L.dim}>0 V</text>
+      {npn ? <><Res x={XC} y={320} ohm={BJ.RC} label="RC" />{W(`${XC},${rail} ${XC},250`)}{W(`${XC},390 ${XC},${YQ - 70}`)}</>
+        : <>{W(`${XC},${rail} ${XC},${YQ - 70}`)}<Res x={XC} y={780} ohm={BJ.RC} label="RC" /></>}
+      {Q(XQ, YQ, mode === "regions" ? (s.sat ? 1 : 0.4) : 0)}
+      {!npn ? <g>{W(`${XC},${YQ + 70} ${XC},710`)}{W(`${XC},850 ${XC},${gnd}`)}</g> : showRE ? <g><Res x={XC} y={ieY - 30} ohm={1000} label="RE" />{W(`${XC},${YQ + 70} ${XC},${ieY - 100}`)}{W(`${XC},${ieY + 40} ${XC},${gnd}`)}</g> : W(`${XC},${YQ + 70} ${XC},${gnd}`)}
+      {bias === "fixed" && npn && <g><Res x={420} y={380} ohm={565e3} label="RB" />{W(`420,${rail} 420,310`)}{W(`420,450 420,${YQ} ${XQ - 70},${YQ}`)}</g>}
+      {bias === "fixed" && !npn && <g><Res x={420} y={740} ohm={565e3} label="RB" />{W(`420,${gnd} 420,810`)}{W(`420,670 420,${YQ} ${XQ - 70},${YQ}`)}
+        <text x={260} y={500} fill={L.amber} fontFamily={SANS} fontSize={22} fontWeight={700}>RB pulls the base DOWN</text></g>}
+      {bias === "basic" && <g><Battery x={250} y={720} v={vbb} />{W(`250,680 250,${YQ} 330,${YQ}`)}{W(`250,760 250,${gnd}`)}<Res x={400} y={YQ} ohm={215e3} label="RB" horizontal />{W(`470,${YQ} ${XQ - 70},${YQ}`)}</g>}
+      {bias === "cf" && <g>{W(`${XC},450 360,450 360,470`)}<Res x={360} y={520} ohm={363e3} label="RB" />{W(`360,590 360,${YQ} ${XQ - 70},${YQ}`)}
+        <text x={200} y={430} fill={L.amber} fontFamily={SANS} fontSize={22} fontWeight={700}>RB from the COLLECTOR</text></g>}
+      {bias === "vd" && <g><Res x={420} y={350} ohm={33e3} label="R1" />{W(`420,${rail} 420,280`)}{W(`420,420 420,${YQ} ${XQ - 70},${YQ}`)}
+        <Res x={420} y={700} ohm={10e3} label="R2" />{W(`420,${YQ} 420,630`)}{W(`420,770 420,${gnd}`)}</g>}
+      {mode !== "calc" && <g>
+        <Dots pts={[[XC, rail], [XC, YQ - 70], [XC, YQ + 70], [XC, gnd]]} t={t} speed={30 + s.ic * 3e4} gap={30} />
+        <text x={XC + 50} y={470} {...T1} fontSize={26} fill={L.electron}>IC = {mAs(s.ic)}</text>
+        <text x={XQ - 90} y={YQ - 30} textAnchor="end" {...T1} fontSize={24} fill={L.cyan}>IB = {uA(s.ib)}</text>
+        <text x={XC + 50} y={YQ + 10} {...T1} fontSize={26} fill={L.green}>{npn ? "VCE" : "VEC"} = {s.vce.toFixed(2)} V</text></g>}
+    </g>;
+  }
+  // ---------- right side
+  const GX = 1040, GW = 780;
+  let right: React.ReactNode = null;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={GX} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text>
+    <text x={GX + GW} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  if (mode === "calc") right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
+      opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  else if (mode === "layers") right = <g><text x={GX + GW / 2} y={250} textAnchor="middle" {...T1} fontSize={32}>{npn ? "NPN" : "PNP"} TRANSISTOR</text>
+    {[`emitter: heavily doped, sends ${npn ? "electrons" : "holes"}`, "base: very THIN and lightly doped", "collector: large, collects them", `BE junction: forward biased (≈0.7 V)`, "CB junction: reverse biased", "≈99% reach the collector, ≈1% leave via the base"].map((l, k) =>
+      <text key={k} x={GX - 20} y={360 + k * 85} fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={600} opacity={interpolate(p, [k * 0.13, k * 0.13 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>• {l}</text>)}</g>;
+  else if (mode === "control") { const ib = (ibx ?? 0) || (10e-6 + 30e-6 * p);
+    right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>A SMALL CURRENT CONTROLS A BIG ONE</text>
+      <rect x={GX + 100} y={800 - ib * 1e6 * 12} width={180} height={ib * 1e6 * 12} rx={8} fill={L.cyan} /><rect x={GX + 480} y={800 - ib * beta * 1e3 * 120} width={180} height={ib * beta * 1e3 * 120} rx={8} fill={L.electron} />
+      <text x={GX + 190} y={850} textAnchor="middle" fill={L.cyan} fontFamily={MONO} fontSize={28} fontWeight={800}>IB {uA(ib)}</text>
+      <text x={GX + 570} y={850} textAnchor="middle" fill={L.electron} fontFamily={MONO} fontSize={28} fontWeight={800}>IC {mAs(ib * beta)}</text>
+      <text x={GX + GW / 2} y={930} textAnchor="middle" {...T1} fontSize={30}>IC = β × IB, β = {beta}</text>
+</g>; }
+  else if (mode === "beta") { const pts = (bs: string, col: string) => { const q: string[] = []; for (let k = 0; k <= 100; k++) { const b = 50 + 150 * k / 100; if (b > B + 0.5) break; q.push(`${GX + (b - 50) / 150 * GW},${820 - bjtSolve(bs, b).ic / 6e-3 * 560}`); }
+      return <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={bs === bias ? 7 : 3} opacity={bs === bias ? 1 : 0.35} />; };
+    right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={30}>IC as β changes from 50 to 200</text>
+      <line x1={GX} y1={820} x2={GX + GW} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={820} x2={GX} y2={240} stroke={L.dim} strokeWidth={3} />
+      {[50, 100, 150, 200].map((b) => <text key={b} x={GX + (b - 50) / 150 * GW} y={860} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>β={b}</text>)}
+      {[0, 2, 4, 6].map((m) => <text key={m} x={GX - 10} y={820 - m / 6 * 560 + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{m} mA</text>)}
+      {pts(bias, L.green)}
+      <text x={GX + GW / 2} y={940} textAnchor="middle" {...T1} fontSize={28}>β = {B.toFixed(0)} → IC = {mAs(s.ic)}, VCE = {s.vce.toFixed(1)} V{s.sat ? " (SATURATED)" : ""}</text></g>; }
+  else if (mode === "loadline") { const vx = (v: number) => GX + v / 12 * GW, iy = (i: number) => 820 - i / 6.5e-3 * 560; const icsat = (BJ.VCC - 0) / (BJ.RC + s.re);
+    const reveal = Math.min(1, p * 2);
+    right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={30}>OUTPUT CHARACTERISTICS + LOAD LINE</text>
+      <line x1={GX} y1={820} x2={GX + GW} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={820} x2={GX} y2={240} stroke={L.dim} strokeWidth={3} />
+      {[0, 3, 6, 9, 12].map((v) => <text key={v} x={vx(v)} y={860} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{v} V</text>)}
+      <text x={GX + GW} y={900} textAnchor="end" fill={L.dim} fontFamily={SANS} fontSize={22}>VCE</text>
+      {[0, 2, 4, 6].map((m) => <text key={m} x={GX - 10} y={iy(m / 1000) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{m} mA</text>)}
+      {[10, 20, 30, 40, 50].map((ib) => { const ic = beta * ib * 1e-6; return <g key={ib}><polyline points={`${vx(0)},${iy(0)} ${vx(0.3)},${iy(ic * 0.95)} ${vx(12)},${iy(ic * 1.06)}`} fill="none" stroke={L.cyan} strokeWidth={3} opacity={0.6} />
+        <text x={vx(12) - 4} y={iy(ic * 1.06) - 8} textAnchor="end" fill={L.cyan} fontFamily={MONO} fontSize={18}>IB {ib} µA</text></g>; })}
+      <line x1={vx(0)} y1={iy(icsat)} x2={vx(0) + (vx(12) - vx(0)) * reveal} y2={iy(icsat) + (iy(0) - iy(icsat)) * reveal} stroke={L.amber} strokeWidth={6} />
+      <text x={vx(0) + 14} y={iy(icsat) - 12} fill={L.amber} fontFamily={MONO} fontSize={22} fontWeight={700}>IC(sat) = 12 ÷ {(BJ.RC + s.re) / 1000} k = {mAs(icsat)}</text>
+      <text x={vx(12) - 8} y={iy(0) - 16} textAnchor="end" fill={L.amber} fontFamily={MONO} fontSize={22} fontWeight={700}>VCE(off) = 12 V</text>
+      {p > 0.5 && <g><circle cx={vx(s.vce)} cy={iy(s.ic)} r={14} fill={L.green} /><text x={vx(s.vce) + (s.vce > 6 ? -20 : 20)} y={iy(s.ic) - 18} textAnchor={s.vce > 6 ? "end" : "start"} fill={L.green} fontFamily={MONO} fontSize={26} fontWeight={800}>Q ({s.vce.toFixed(1)} V, {mAs(s.ic)})</text></g>}</g>; }
+  else if (mode === "regions") { const reg = s.sat ? "SATURATION" : s.ic < 1e-6 ? "CUTOFF" : "ACTIVE";
+    right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>REGION: {reg}</text>
+      {row(330, "β", `${B.toFixed(0)}`, L.text)}{row(420, "IB", uA(s.ib), L.cyan)}{row(510, "IC", mAs(s.ic), L.electron)}{row(600, "VCE", `${s.vce.toFixed(2)} V`, L.green)}</g>; }
+  else right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>{({ basic: "BASIC BIAS", fixed: "FIXED BIAS", cf: "COLLECTOR-FEEDBACK BIAS", vd: "VOLTAGE-DIVIDER BIAS" } as any)[bias]}</text>
+    {row(320, "β", `${B.toFixed(0)}`, L.text)}{row(410, "base current IB", uA(s.ib), L.cyan)}{row(500, "collector current IC", mAs(s.ic), L.electron)}
+    {row(590, "emitter current IE", mAs(s.ie), L.text)}{row(680, "VCE", `${s.vce.toFixed(2)} V`, L.green)}
+    {row(770, "power in transistor", `${(s.vce * s.ic * 1000).toFixed(1)} mW`, L.red)}</g>;
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(40,60)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.bjt = BjtScene;

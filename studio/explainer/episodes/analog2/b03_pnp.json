@@ -1,0 +1,112 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "PNP Transistor Explained | Holes, Reversed Currents & How to Bias It | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "PNP Transistor Explained | Holes, Reversed Currents & How to Bias It | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The PNP transistor step by step: P-N-P layers with holes as carriers, why every current and voltage is reversed compared with NPN, the emitter at the positive supply, base pulled down to switch it on, the arrow pointing in, a full PNP circuit with every value calculated, and where PNP high-side switches are used.",
+  "tags": [
+   "pnp transistor",
+   "bjt",
+   "npn vs pnp",
+   "high side switch",
+   "holes",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "PNP Transistor",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "THE PNP TRANSISTOR",
+   "subtitle": "The mirror image of the NPN",
+   "narration": "Welcome back. We've learned the N P N. Today, its mirror image: the P N P transistor. Everything works the same way, but upside down: the layers, the carriers, the currents and the voltages are all reversed. Once you see the pattern, you'll never mix them up."
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Three layers, reversed",
+   "narration": "A P N P is P type, N type, P type. The emitter is P type, full of holes. The base is a thin N layer. The collector is P type. Now the holes are the carriers. They flow from the emitter, through the thin base, into the collector. Just like electrons in the N P N, about ninety nine percent make it through.",
+   "kind": "pnp"
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "The currents reverse",
+   "narration": "So the currents reverse too. In a P N P, conventional current flows into the emitter, and out of the base and the collector. That's why the arrow on the P N P symbol points in, toward the base. Pointing In: P N P. The same beta applies: twenty microamps out of the base, two milliamps out of the collector.",
+   "kind": "pnp",
+   "ibx": 2e-05
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "A PNP circuit",
+   "narration": "Here's a P N P circuit. The emitter goes to plus twelve volts. The collector goes down through R C, two kilohms, to ground. And to turn it on, we pull the base down, through R B, five hundred and sixty five kilohms, to ground. The base sits zero point seven volts below the emitter, at eleven point three volts. Base current flows out of the base, twenty microamps, and the collector current is two milliamps, flowing down through R C.",
+   "kind": "pnp",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. The base emitter voltage is reversed: the base sits zero point seven volts below the emitter. Base current: twelve minus zero point seven, over five hundred and sixty five kilohms, twenty microamps. Collector current: one hundred times that, two milliamps. Voltage across R C: two milliamps times two kilohms, four volts, so the collector sits at four volts. V E C, emitter to collector, is twelve minus four, eight volts. Same numbers as the N P N, just upside down.",
+   "kind": "pnp",
+   "bias": "fixed",
+   "lines": [
+    "VB = VE − 0.7 = 12 − 0.7 = 11.3 V",
+    "IB = 11.3 ÷ 565 kΩ = 20 µA (out of base)",
+    "IC = β × IB = 100 × 20 µA = 2 mA",
+    "VC = IC × RC = 2 mA × 2 kΩ = 4 V",
+    "VEC = 12 − 4 = 8 V",
+    "NPN: VCE = +8 V · PNP: VCE = −8 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Turning it on and off",
+   "narration": "For a P N P, on and off are reversed too. Base pulled near the supply: no base current, cutoff, off. Base pulled down, more than zero point seven volts below the emitter: base current flows, and it turns on. Pull it down hard enough, and it saturates.",
+   "kind": "pnp",
+   "bias": "fixed"
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: high-side switches",
+   "narration": "So why use P N P at all? Sometimes the load must connect to ground, and the switch has to go between the supply and the load. That's a high side switch, and a P N P is perfect for it, with its emitter on the supply. Battery protection circuits, power switches for sensors, and the output stages of many amplifiers use P N P transistors, often paired with N P N ones."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: drawing the arrow the wrong way. N P N, Not Pointing iN. P N P, Points iN. Two: grounding the emitter of a P N P like an N P N. Its emitter goes to the positive side. Three: driving the base high to turn it on. A P N P turns on when the base goes low, below the emitter.",
+   "kind": "pnp",
+   "bias": "fixed"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: FIXED BIAS",
+   "lines": [
+    "PNP: holes, arrow points IN",
+    "Emitter to +V, pull base DOWN to turn on",
+    "Same β, all currents and voltages reversed"
+   ],
+   "cta": "Biasing starts next",
+   "narration": "Quick recap. A P N P has P N P layers and uses holes. Its arrow points in, the emitter goes to the positive supply, and pulling the base down turns it on. Same beta, every current and voltage reversed. Next, we start biasing: how to set a transistor's operating point, starting with fixed bias. See you there."
+  }
+ ]
+}
