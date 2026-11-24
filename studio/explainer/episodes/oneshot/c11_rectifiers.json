@@ -1,0 +1,204 @@
+{
+ "title": "Analog One Shot Ch11",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 11: Rectifiers",
+   "narration": "Chapter eleven: rectifiers. Every charger and power supply must turn A C into D C, and the first step is a rectifier: diodes that let current through in one direction only. We'll build all three types, half wave, centre tap full wave, and bridge, and trace the current path in the positive half and the negative half for each, then smooth the output with a capacitor.",
+   "kicker": "CHAPTER 11",
+   "title": "RECTIFIERS",
+   "subtitle": "Turning AC into DC, half cycle by half cycle"
+  },
+  {
+   "type": "rect",
+   "chapter": "Half-wave: positive half",
+   "narration": "The half wave rectifier. A transformer gives twelve volts r m s, which peaks at twelve times root two, about seventeen volts. Then one diode in series, and the load resistor. Positive half cycle: the top of the secondary is positive. The diode's anode is at the higher voltage, so it's forward biased and conducts. Follow the orange conventional current: out of the top of the secondary, through the diode, down through the load, and back to the bottom. Blue electrons go the opposite way. The load sees the input minus zero point seven: a positive bump peaking at sixteen point three volts.",
+   "kind": "hw",
+   "half": "pos"
+  },
+  {
+   "type": "rect",
+   "chapter": "Half-wave: negative half",
+   "narration": "Negative half cycle. Now the top of the secondary is negative. The diode's anode is at the lower voltage: reverse biased. It blocks. No current flows, so the load gets zero volts. The whole negative half is thrown away. The output: positive bumps with gaps between them. That's pulsating D C: it never goes negative, but it's far from smooth.",
+   "kind": "hw",
+   "half": "neg"
+  },
+  {
+   "type": "rect",
+   "chapter": "Half-wave: the full picture",
+   "narration": "Here it is running. Bump, gap, bump, gap. The ripple repeats at fifty hertz, the same as the mains.",
+   "kind": "hw",
+   "half": "all"
+  },
+  {
+   "type": "rect",
+   "chapter": "What if: the diode is flipped?",
+   "narration": "What if we flip the diode? Now it conducts on the negative half cycle instead, and current flows through the load the other way. The output is negative bumps. You get a negative supply. So the diode's direction decides the polarity of the output. Flip the diode, flip the output.",
+   "kind": "hw",
+   "half": "all",
+   "flip": true
+  },
+  {
+   "type": "numerical",
+   "chapter": "Half-wave: the numbers",
+   "narration": "The formulas. Output peak: V m minus zero point seven, seventeen minus zero point seven, sixteen point three volts. The D C, or average, value: peak over pi, five point one nine volts. The R M S value: peak over two, eight point one five volts. Peak inverse voltage, the most reverse voltage the diode must survive: the full peak, seventeen volts. Ripple factor, how much A C remains compared with D C: one point two one. Efficiency: forty point six percent maximum. Transformer utilisation factor: zero point two eight seven. Half wave is simple, but wasteful.",
+   "title": "HALF-WAVE FORMULAS",
+   "given": [
+    "Vm = 17 V",
+    "Si diode"
+   ],
+   "lines": [
+    "Vp(out) = 17 − 0.7 = 16.3 V",
+    "Vdc = Vp ÷ π = 5.19 V · Vrms = Vp ÷ 2 = 8.15 V",
+    "PIV = Vm = 17 V",
+    "ripple factor 1.21 · η 40.6% · TUF 0.287",
+    "ripple frequency = 50 Hz"
+   ]
+  },
+  {
+   "type": "rect",
+   "chapter": "Centre-tap: positive half",
+   "narration": "The centre tap full wave rectifier uses both halves. It needs a centre tapped transformer, twelve, zero, twelve, and two diodes. The load connects between the diodes' joined cathodes and the centre tap. Positive half cycle: the top end is positive compared to the centre tap. The top diode conducts. Current flows from the top end, through the top diode, down through the load, and back into the centre tap. The bottom diode is reverse biased and off.",
+   "kind": "ct",
+   "half": "pos"
+  },
+  {
+   "type": "rect",
+   "chapter": "Centre-tap: negative half",
+   "narration": "Negative half cycle: now the bottom end is positive compared to the centre tap. The bottom diode conducts, and current flows from the bottom end, through the bottom diode, and down through the load, in the same direction as before. That's the trick: both halves push current the same way through the load. The negative half is flipped up instead of thrown away.",
+   "kind": "ct",
+   "half": "neg"
+  },
+  {
+   "type": "rect",
+   "chapter": "Centre-tap: running",
+   "narration": "Running continuously: a bump for every half cycle, no gaps. The ripple frequency doubles to one hundred hertz, which makes smoothing much easier.",
+   "kind": "ct",
+   "half": "all"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Centre-tap: the numbers",
+   "narration": "The numbers. Output peak: sixteen point three volts, from each half winding. D C value: two times the peak over pi, ten point four volts, double the half wave. R M S: peak over root two, eleven point five volts. But the peak inverse voltage is the catch: when one diode conducts, the other diode sees both halves of the winding, twice V m, about thirty four volts. Ripple factor: zero point four eight. Efficiency: eighty one point two percent. T U F: zero point six nine three. Drawbacks: the centre tapped transformer is bigger, and the diodes need double the P I V.",
+   "title": "CENTRE-TAP FORMULAS",
+   "given": [
+    "12-0-12 V",
+    "Vm = 17 V"
+   ],
+   "lines": [
+    "Vp(out) = 16.3 V",
+    "Vdc = 2Vp ÷ π = 10.4 V · Vrms = Vp ÷ √2 = 11.5 V",
+    "PIV = 2 Vm ≈ 34 V (!)",
+    "ripple factor 0.48 · η 81.2% · TUF 0.693",
+    "ripple frequency = 100 Hz"
+   ]
+  },
+  {
+   "type": "rect",
+   "chapter": "Bridge: positive half",
+   "narration": "The bridge rectifier: full wave from an ordinary transformer, with four diodes in a diamond. The load connects across the left and right corners. Positive half cycle: the top of the secondary is positive. Current flows down into the top corner, through D one to the right corner, through the load from right to left, through D four, and back to the bottom of the secondary. D one and D four conduct. D two and D three are reverse biased.",
+   "kind": "br",
+   "half": "pos"
+  },
+  {
+   "type": "rect",
+   "chapter": "Bridge: negative half",
+   "narration": "Negative half cycle: the bottom of the secondary is positive. Current enters the bottom corner, goes through D three to the right corner, through the load, again from right to left, the same direction, then through D two, and back to the top of the secondary. D two and D three conduct. Every half cycle, two diodes conduct in series, so we lose two times zero point seven, one point four volts.",
+   "kind": "br",
+   "half": "neg"
+  },
+  {
+   "type": "rect",
+   "chapter": "Bridge: running",
+   "narration": "Running: full wave output again, peaking at fifteen point six volts, with one hundred hertz ripple. The current through the load never changes direction.",
+   "kind": "br",
+   "half": "all"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Bridge: the numbers",
+   "narration": "The numbers. Output peak: seventeen minus one point four, fifteen point six volts. D C value: two times peak over pi, nine point nine three volts. P I V: only V m, seventeen volts, half that of the centre tap. Efficiency eighty one point two percent, ripple factor zero point four eight, T U F zero point eight one two, the best of the three. That's why the bridge rectifier is the most used: no centre tap, low P I V, full wave. The cost is one point four volts of diode drop instead of zero point seven.",
+   "title": "BRIDGE FORMULAS",
+   "given": [
+    "12 V rms",
+    "Vm = 17 V"
+   ],
+   "lines": [
+    "Vp(out) = 17 − 1.4 = 15.6 V",
+    "Vdc = 2Vp ÷ π = 9.93 V",
+    "PIV = Vm = 17 V",
+    "ripple 0.48 · η 81.2% · TUF 0.812"
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "Comparing the three",
+   "narration": "Side by side. Half wave: one diode, D C equals V p over pi, P I V V m, ripple at fifty hertz, forty percent efficiency. Centre tap: two diodes, D C two V p over pi, P I V two V m, needs a centre tap. Bridge: four diodes, D C two V p over pi, P I V V m, no centre tap, but two diode drops. In placement interviews, the classic question is: which needs the highest P I V? The centre tap, at two V m.",
+   "title": "COMPARISON",
+   "given": [
+    "HW",
+    "CT",
+    "Bridge"
+   ],
+   "lines": [
+    "diodes: 1 · 2 · 4",
+    "Vdc: Vp/π · 2Vp/π · 2Vp/π",
+    "PIV: Vm · 2Vm · Vm",
+    "ripple f: 50 · 100 · 100 Hz",
+    "η: 40.6% · 81.2% · 81.2%"
+   ]
+  },
+  {
+   "type": "rectifier",
+   "chapter": "The capacitor filter",
+   "narration": "Pulsating D C is still bumpy. Add a big capacitor across the load. On each rising bump, the diodes conduct and charge the capacitor up to the peak. When the input falls, the diodes switch off, because the capacitor is now at a higher voltage than the input, and the capacitor alone feeds the load, discharging slowly. Then the next bump tops it up. The output becomes nearly flat D C, with a small sawtooth ripple. Notice the diodes only conduct for a short moment near each peak.",
+   "cap": true,
+   "cycles": 2
+  },
+  {
+   "type": "rect",
+   "chapter": "Ripple and choosing the capacitor",
+   "narration": "How big is the ripple? Approximately the load current divided by f times C, where f is the ripple frequency. Our bridge feeds a one kilohm load at about fifteen point six volts: fifteen point six milliamps. With a thousand microfarads at a hundred hertz: fifteen point six milliamps over a hundred times a thousand micro, zero point one five six volts. Tiny. With a half wave rectifier, the ripple frequency is only fifty hertz, so the same capacitor gives double the ripple. Bigger capacitor, more current, lower ripple.",
+   "kind": "br",
+   "half": "all",
+   "cap": true
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: rectifiers",
+   "narration": "Question one: a bridge rectifier from a nine volt r m s transformer, silicon diodes. Find the peak output, the D C output and the P I V. V m: nine times root two, twelve point seven volts. Peak output: twelve point seven minus one point four, eleven point three volts. D C: two times eleven point three over pi, seven point two volts. P I V: twelve point seven volts. Question two: a full wave supply delivers two hundred milliamps and must have under one volt of ripple. Find C. C equals I over f V r: zero point two over a hundred times one, two thousand microfarads.",
+   "title": "NUMERICALS · RECTIFIERS",
+   "given": [
+    "9 V rms bridge"
+   ],
+   "lines": [
+    "Vm = 9 × √2 = 12.7 V",
+    "Vp(out) = 12.7 − 1.4 = 11.3 V",
+    "Vdc = 2 × 11.3 ÷ π = 7.2 V · PIV = 12.7 V",
+    "C = I ÷ (f Vr) = 0.2 ÷ (100 × 1) = 2000 µF"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 11 recap",
+   "narration": "Recap. Half wave: one diode, uses only the positive half, D C equals V p over pi. Centre tap: two diodes, both halves, but P I V two V m. Bridge: four diodes, both halves, P I V V m, two diode drops. In each half cycle, trace which diodes are forward biased and which way the current flows through the load: always the same direction. Flip the diodes and the output flips polarity. A capacitor filter smooths it, with ripple I over f C. Next: clippers.",
+   "title": "CHAPTER 11 COMPLETE",
+   "lines": [
+    "HW: Vdc = Vp/π, PIV Vm, 50 Hz ripple",
+    "CT: Vdc = 2Vp/π, PIV 2Vm",
+    "Bridge: Vdc = 2Vp/π, PIV Vm, −1.4 V",
+    "Filter: Vr ≈ I ÷ (f C)"
+   ],
+   "cta": "Next: clippers"
+  }
+ ],
+ "plain_titles": true
+}

@@ -38,7 +38,7 @@ const Film: React.FC<{ ep: any; pick?: number[]; hook?: string; short?: boolean 
         const d = framesOf(s); const from = at; at += d; const Comp = LAB_SCENES[s.type] || DOMAIN_SCENES[s.type] || STORY_SCENES[s.type] || VISUAL_SCENES[s.type] || ANALOG_SCENES[s.type] || SOLVE_SCENES[s.type] || SCENES[s.type];
         const vis = s.type === "cover" && s.visual ? (LAB_SCENES[s.visual.type] || DOMAIN_SCENES[s.visual.type] || STORY_SCENES[s.visual.type] || VISUAL_SCENES[s.visual.type]) : undefined;
         // opening and ending play over the lesson's main animation (never a static card)
-        const bgScene = lab && (s.type === "lab-title" || s.type === "lab-outro") ? mainVisual(ep) : null;
+        const bgScene = lab && !ep.plain_titles && (s.type === "lab-title" || s.type === "lab-outro") ? mainVisual(ep) : null;
         const Bg = bgScene ? (LAB_SCENES[bgScene.type] || DOMAIN_SCENES[bgScene.type] || STORY_SCENES[bgScene.type] || VISUAL_SCENES[bgScene.type]) : undefined;
         return (
           <Sequence key={s.idx} from={from} durationInFrames={d}>

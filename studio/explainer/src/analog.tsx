@@ -3480,3 +3480,57 @@ export const SpecDiodeScene: React.FC<any> = ({ dur, mode = "zener" }) => {
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.spec = SpecDiodeScene;
+
+/** {"type":"rect","kind":"hw"|"ct"|"br","half":"pos"|"neg"|"all","cap":false,"flip":false} rectifiers with per-half current paths (12 V rms secondary = 17 V peak) */
+export const RectScene: React.FC<any> = ({ dur, kind = "hw", half = "all", cap = false, flip = false }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.04, dur * 0.96], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string, c = L.wire) => <polyline points={pts} fill="none" stroke={c} strokeWidth={6} strokeLinejoin="round" />;
+  const cyc = half === "all" ? 2 : 0.5; const th = half === "neg" ? Math.PI + Math.PI * p : 2 * Math.PI * cyc * p; const s = Math.sin(th); const pos = s >= 0;
+  const VP = 17, drop = kind === "br" ? 1.4 : 0.7;
+  const D = (x: number, y: number, rot: number, on: boolean) => <g transform={`translate(${x},${y}) rotate(${rot})`}><rect x={-30} y={-30} width={60} height={60} fill={L.bg0} />
+    <polygon points="-22,-24 -22,24 18,0" fill={on ? "rgba(46,196,160,0.4)" : L.bg0} stroke={on ? L.green : L.amber} strokeWidth={5} /><line x1={18} y1={-24} x2={18} y2={24} stroke={on ? L.green : L.amber} strokeWidth={5} /></g>;
+  const coilV = (x: number, y0: number, n: number, col: string) => <path d={`M ${x} ${y0} ` + Array.from({ length: n }, () => "a 18 18 0 1 0 0 36").join(" ")} fill="none" stroke={col} strokeWidth={5} />;
+  const vout = (x: number) => { const v = Math.sin(x); if (kind === "hw") return (flip ? Math.max(0, -v * VP - drop) * -1 : Math.max(0, v * VP - drop)); return Math.max(0, Math.abs(v) * VP - drop); };
+  let left: React.ReactNode; let path: number[][] = []; let on: boolean[] = [];
+  const RLx = 820;
+  if (kind === "hw") { const cond = flip ? !pos : pos;
+    left = <g>{coilV(200, 360, 6, L.amber)}<rect x={232} y={350} width={10} height={236} fill="#8a96a3" />{coilV(280, 360, 6, L.green)}
+      <text x={130} y={480} textAnchor="end" {...T1} fontSize={24}>230 V</text><text x={300} y={320} {...T1} fontSize={22} fill={L.green}>12 V rms</text>
+      <text x={330} y={350} {...T1} fontSize={28} fill={pos ? L.red : L.cyan}>{pos ? "+" : "−"}</text><text x={330} y={610} {...T1} fontSize={28} fill={pos ? L.cyan : L.red}>{pos ? "−" : "+"}</text>
+      {W("280,360 280,300 440,300")}{D(500, 300, flip ? 180 : 0, cond && Math.abs(s) > 0.05)}{W(`560,300 ${RLx},300 ${RLx},440`)}<Res x={RLx} y={510} ohm={1000} label="RL" />{W(`${RLx},580 ${RLx},${cap ? 800 : 800} 280,800 280,576`)}
+      {cap && <g>{W(`${RLx},300 680,300 680,470`)}<line x1={640} y1={490} x2={720} y2={490} stroke={L.amber} strokeWidth={8} /><line x1={640} y1={514} x2={720} y2={514} stroke={L.amber} strokeWidth={8} />{W("680,524 680,800")}<text x={600} y={500} textAnchor="end" {...T1} fontSize={24}>C</text></g>}</g>;
+    path = [[280, 360], [280, 300], [RLx, 300], [RLx, 800], [280, 800], [280, 576]]; if (flip) path = [...path].reverse(); on = [cond && Math.abs(s) > 0.05]; }
+  else if (kind === "ct") { const cond = pos;
+    left = <g>{coilV(200, 300, 10, L.amber)}<rect x={232} y={290} width={10} height={380} fill="#8a96a3" />{coilV(280, 300, 5, L.green)}{coilV(280, 480, 5, L.green)}
+      <text x={130} y={500} textAnchor="end" {...T1} fontSize={24}>230 V</text><text x={300} y={270} {...T1} fontSize={22} fill={L.green}>12-0-12 V</text>
+      {W("280,300 280,260 440,260")}{D(500, 260, 0, pos && Math.abs(s) > 0.05)}{W(`560,260 640,260`)}{W("280,660 280,720 440,720")}{D(500, 720, 0, !pos && Math.abs(s) > 0.05)}{W("560,720 640,720 640,260")}
+      {W(`640,260 ${RLx},260 ${RLx},420`)}<Res x={RLx} y={490} ohm={1000} label="RL" />{W(`${RLx},560 ${RLx},880 280,880 280,480`)}<circle cx={280} cy={480} r={9} fill={L.text} /><text x={300} y={500} {...T1} fontSize={20}>CT</text>
+      <text x={330} y={330} {...T1} fontSize={26} fill={pos ? L.red : L.cyan}>{pos ? "+" : "−"}</text><text x={330} y={690} {...T1} fontSize={26} fill={pos ? L.cyan : L.red}>{pos ? "−" : "+"}</text></g>;
+    path = pos ? [[280, 300], [280, 260], [RLx, 260], [RLx, 880], [280, 880], [280, 480]] : [[280, 660], [280, 720], [640, 720], [640, 260], [RLx, 260], [RLx, 880], [280, 880], [280, 480]]; on = [cond]; }
+  else { const cx = 560, cy = 540;
+    left = <g>{coilV(160, 450, 5, L.amber)}<rect x={192} y={440} width={10} height={200} fill="#8a96a3" />{coilV(240, 450, 5, L.green)}
+      <text x={240} y={420} {...T1} fontSize={22} fill={L.green}>12 V rms</text><text x={280} y={470} {...T1} fontSize={26} fill={pos ? L.red : L.cyan}>{pos ? "+" : "−"}</text><text x={280} y={650} {...T1} fontSize={26} fill={pos ? L.cyan : L.red}>{pos ? "−" : "+"}</text>
+      {W(`240,450 240,${cy - 150 - 40} ${cx},${cy - 190} ${cx},${cy - 150}`)}{W(`240,630 240,${cy + 190} ${cx},${cy + 190} ${cx},${cy + 150}`)}
+      <polygon points={`${cx},${cy - 150} ${cx + 150},${cy} ${cx},${cy + 150} ${cx - 150},${cy}`} fill="none" stroke={L.wire} strokeWidth={5} />
+      {D(cx + 75, cy - 75, 45, pos)}{D(cx - 75, cy - 75, -45, !pos)}{D(cx + 75, cy + 75, -45, !pos)}{D(cx - 75, cy + 75, 45, pos)}
+      <text x={cx + 75} y={cy - 120} {...T1} fontSize={22}>D1</text><text x={cx - 110} y={cy - 120} {...T1} fontSize={22}>D2</text><text x={cx + 75} y={cy + 140} {...T1} fontSize={22}>D3</text><text x={cx - 110} y={cy + 140} {...T1} fontSize={22}>D4</text>
+      {W(`${cx - 150},${cy} ${cx - 72},${cy}`)}{W(`${cx + 72},${cy} ${cx + 150},${cy}`)}<Res x={cx} y={cy} ohm={1000} label="RL" horizontal />
+      <text x={cx + 160} y={cy - 16} {...T1} fontSize={26} fill={L.green}>+</text><text x={cx - 180} y={cy - 16} {...T1} fontSize={26} fill={L.cyan}>−</text></g>;
+    path = pos ? [[240, 450], [240, cy - 190], [cx, cy - 190], [cx, cy - 150], [cx + 150, cy], [cx - 150, cy], [cx, cy + 150], [cx, cy + 190], [240, cy + 190], [240, 630]]
+      : [[240, 630], [240, cy + 190], [cx, cy + 190], [cx, cy + 150], [cx + 150, cy], [cx - 150, cy], [cx, cy - 150], [cx, cy - 190], [240, cy - 190], [240, 450]]; on = [true]; }
+  const flowing = on[0] && Math.abs(s) > 0.05;
+  const leftAll = <g>{left}{flowing && <><Dots pts={path} t={t} speed={40 + 160 * Math.abs(s)} gap={50} r={9} color={L.amber} /><Dots pts={[...path].reverse()} t={t} speed={40 + 160 * Math.abs(s)} gap={50} r={7} color={L.electron} /></>}
+    <text x={520} y={990} textAnchor="middle" {...T1} fontSize={28} fill={pos ? L.red : L.cyan}>{pos ? "POSITIVE half cycle" : "NEGATIVE half cycle"}{kind === "br" ? (pos ? ": D1 and D4 conduct" : ": D2 and D3 conduct") : kind === "ct" ? (pos ? ": top diode conducts" : ": bottom diode conducts") : (flip ? (pos ? ": diode OFF" : ": diode ON (flipped)") : (pos ? ": diode ON" : ": diode OFF"))}</text>
+    <text x={520} y={1040} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={22}>orange: conventional current · blue: electrons</text></g>;
+  const GX = 1080, GW = 760;
+  const tr = (cy: number, fn: (x: number) => number, col: string, name: string, sc: number) => { const q: string[] = []; const N = 300; const tot = half === "all" ? 2 : 1;
+    for (let k = 0; k <= N; k++) { const u = k / N; const x = (half === "neg" ? Math.PI : 0) + 2 * Math.PI * tot * u * (half === "all" ? 1 : 0.5) ; if (x > th + 0.001) break; q.push(`${GX + GW * u},${cy - fn(x) * sc}`); }
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><text x={GX} y={cy - 130} fill={col} fontFamily={SANS} fontSize={26} fontWeight={800}>{name}</text><polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} /></g>; };
+  let capOut = (x: number) => vout(x);
+  if (cap) { capOut = (x: number) => { const pk = VP - drop; const per = kind === "hw" ? 2 * Math.PI : Math.PI; const ph = ((x - Math.PI / 2) % per + per) % per; const dec = pk * (1 - 0.12 * ph / per); return Math.max(dec, vout(x)); }; }
+  const right = <g>{tr(360, (x) => Math.sin(x) * VP, L.cyan, "secondary: ±17 V peak", 6)}{tr(800, cap ? capOut : vout, L.green, cap ? "output with capacitor: nearly flat DC" : `output across RL (peak ${(VP - drop).toFixed(1)} V)`, 8)}</g>;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{leftAll}{right}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.rect = RectScene;
