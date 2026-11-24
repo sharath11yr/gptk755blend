@@ -1,0 +1,104 @@
+{
+ "title": "Analog One Shot Ch2",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 2: Resistors",
+   "narration": "Chapter two: the resistor, the most common component in electronics. What's inside it, how to read its value, how much power it can take, and the special resistors that change with a knob, with light, or with heat.",
+   "kicker": "CHAPTER 2",
+   "title": "RESISTORS",
+   "subtitle": "Inside, colour code, power, and variable types"
+  },
+  {
+   "type": "resistor",
+   "chapter": "What's inside",
+   "narration": "Cut a resistor open. Inside is a ceramic rod coated with a thin film of carbon or metal. A spiral groove is cut into the film, making the path long and thin. A longer, thinner path means more collisions for the electrons, so more resistance. By cutting the spiral more or less, the factory sets the exact value. Two metal caps and wires connect the ends, and the whole thing is painted and marked with coloured bands.",
+   "mode": "cutaway"
+  },
+  {
+   "type": "resistor",
+   "chapter": "Reading the colour code",
+   "narration": "Every colour is a number. Black zero, brown one, red two, orange three, yellow four, green five, blue six, violet seven, grey eight, white nine. Hold the resistor so the gold or silver band is on the right. Read from the left: first band, first digit. Second band, second digit. Third band, the multiplier, the number of zeros. Brown, black, red: one, zero, then two zeros. One thousand ohms, one kilohm. The last band is the tolerance: gold means plus or minus five percent, so the real value is between nine fifty and one thousand and fifty ohms.",
+   "mode": "bands",
+   "bands": [
+    "brown",
+    "black",
+    "red",
+    "gold"
+   ],
+   "r": 1000
+  },
+  {
+   "type": "resistor",
+   "chapter": "Another one",
+   "narration": "Try this one. Yellow, violet, orange, gold. Yellow four, violet seven, orange three zeros. Forty seven thousand ohms, forty seven kilohms, plus or minus five percent. Five band resistors work the same way, with three digits before the multiplier, used for more precise values.",
+   "mode": "bands",
+   "bands": [
+    "yellow",
+    "violet",
+    "orange",
+    "gold"
+   ],
+   "r": 47000
+  },
+  {
+   "type": "rvar",
+   "chapter": "Power rating",
+   "narration": "Every resistor turns electrical energy into heat, and it can only get rid of so much heat. That's its power rating. A small quarter watt resistor can safely handle zero point two five watts. Watch this one hundred ohm, quarter watt resistor as we raise the voltage. At five volts, the power is five squared over a hundred, zero point two five watts: right at the limit. Beyond that, it overheats, smokes, and burns. Rule of thumb: choose a resistor rated at least twice the power you calculate.",
+   "kind": "burn"
+  },
+  {
+   "type": "rvar",
+   "chapter": "Potentiometer",
+   "narration": "A potentiometer is a resistor with a sliding contact, the wiper. Connect its two ends across ten volts, and take the output from the wiper. Moving the wiper changes how much resistance is below it, so it's an adjustable voltage divider. At the bottom, zero volts. Halfway, five volts. At the top, ten. This is the volume knob on a speaker. If you use only two terminals, one end and the wiper, it becomes a rheostat, a variable resistor.",
+   "kind": "pot"
+  },
+  {
+   "type": "rvar",
+   "chapter": "LDR: light-dependent resistor",
+   "narration": "An L D R is a resistor that changes with light. In darkness, about a hundred kilohms. In bright light, about a kilohm. Put it in a divider with ten kilohms, and the output voltage tells you how bright it is. In the dark the output is low, in bright light it's high. That's how street lights know when to turn on at dusk.",
+   "kind": "ldr"
+  },
+  {
+   "type": "rvar",
+   "chapter": "Thermistor",
+   "narration": "A thermistor changes with temperature. The common type, N T C, means negative temperature coefficient: hotter means less resistance. At twenty five degrees it's ten kilohms. At eighty degrees, much lower. In a divider, the output voltage rises as it heats up. Thermistors measure temperature in battery chargers, ovens, and fire alarms.",
+   "kind": "ntc"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: resistors",
+   "narration": "Question one: what's the colour code for two hundred and twenty ohms, five percent? Two, two, and one zero: red, red, brown, gold. Question two: a two point two kilohm resistor carries ten milliamps. What power rating do you need? P equals I squared R: zero point zero one squared times two thousand two hundred, zero point two two watts. Double it for safety, zero point four four. So use a half watt resistor.",
+   "title": "NUMERICALS · RESISTORS",
+   "given": [
+    "220 Ω ±5%",
+    "2.2 kΩ at 10 mA"
+   ],
+   "lines": [
+    "220 = 2, 2, ×10 → red red brown gold",
+    "P = I²R = (0.01)² × 2200 = 0.22 W",
+    "×2 safety = 0.44 W → use ½ W"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 2 recap",
+   "narration": "Recap. A resistor is a thin carbon or metal film path that creates collisions. Read it with the colour code: digit, digit, multiplier, tolerance. Never exceed its power rating, P equals V squared over R or I squared R. Potentiometers make adjustable dividers, L D Rs sense light, thermistors sense heat. Next, the capacitor: a component that stores charge.",
+   "title": "CHAPTER 2 COMPLETE",
+   "lines": [
+    "Colour code: digit, digit, ×10ⁿ, tolerance",
+    "Power rating: P ≤ rating (use 2× margin)",
+    "Pot = adjustable divider; LDR = light; NTC = heat"
+   ],
+   "cta": "Next: capacitors"
+  }
+ ]
+}

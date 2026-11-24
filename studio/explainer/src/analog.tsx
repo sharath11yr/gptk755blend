@@ -3096,3 +3096,48 @@ export const SplitScene: React.FC<any> = ({ dur, a = {}, b = {}, la = "", lb = "
     <div style={{ position: "absolute", left: "50%", top: "10%", bottom: "6%", width: 3, background: L.off }} /></AbsoluteFill>;
 };
 ANALOG_SCENES.split = SplitScene;
+
+/** {"type":"rvar","kind":"pot"|"ldr"|"ntc"|"burn"}: variable resistors in a live divider / power-rating test */
+export const RVarScene: React.FC<any> = ({ dur, kind = "pot" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const tri = (u: number) => 1 - Math.abs(1 - 2 * u);
+  let left: React.ReactNode, right: React.ReactNode;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={1040} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text><text x={1820} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  if (kind === "pot") { const w = tri(p); const vout = 10 * w;
+    left = <g><Battery x={200} y={540} v={10} />{W("200,500 200,250 520,250 520,300")}{W("200,580 200,830 520,830 520,780")}
+      <rect x={490} y={300} width={60} height={480} rx={10} fill={L.bg0} stroke={L.amber} strokeWidth={5} />
+      <path d={"M 520 300 " + Array.from({ length: 16 }, (_, k) => `L ${k % 2 ? 505 : 535} ${300 + (k + 1) * 30}`).join(" ")} fill="none" stroke={L.amber} strokeWidth={4} />
+      <polygon points={`${575},${780 - 480 * w} ${615},${760 - 480 * w} ${615},${800 - 480 * w}`} fill={L.cyan} />{W(`615,${780 - 480 * w} 800,${780 - 480 * w} 800,540`)}
+      <circle cx={800} cy={540} r={10} fill={L.green} /><text x={800} y={600} textAnchor="middle" {...T1} fontSize={30} fill={L.green}>Vout = {vout.toFixed(1)} V</text>
+      <text x={600} y={220} textAnchor="middle" {...T1} fontSize={26}>POTENTIOMETER 10 kΩ (wiper = arrow)</text></g>;
+    right = <g><text x={1430} y={240} textAnchor="middle" {...T1} fontSize={32}>A VARIABLE VOLTAGE DIVIDER</text>
+      {row(340, "wiper position", `${Math.round(w * 100)}% up`, L.cyan)}{row(430, "resistance below wiper", `${(10 * w).toFixed(1)} kΩ`, L.text)}{row(520, "Vout = 10 V × below ÷ total", `${vout.toFixed(1)} V`, L.green)}
+      <text x={1430} y={660} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>volume knobs, light dimmers, sensors' trim adjust</text></g>; }
+  else if (kind === "ldr" || kind === "ntc") { const ldr = kind === "ldr"; const x = tri(p);
+    const R = ldr ? 1000 * Math.pow(100, 1 - x) : 10000 * Math.exp(3950 * (1 / (273 + 20 + 60 * x) - 1 / 298));
+    const vout = 5 * 10000 / (10000 + R);
+    left = <g><Battery x={200} y={540} v={5} />{W("200,500 200,230 520,230 520,280")}{W("200,580 200,850 520,850 520,800")}
+      <Res x={520} y={360} ohm={R} label={ldr ? "LDR" : "THERMISTOR"} />{W("520,430 520,640")}<Res x={520} y={720} ohm={10000} label="10 kΩ" />
+      <circle cx={520} cy={540} r={10} fill={L.green} />{W("520,540 760,540")}<text x={780} y={548} {...T1} fontSize={30} fill={L.green}>{vout.toFixed(2)} V</text>
+      {ldr ? <g><circle cx={760} cy={300} r={40 + 30 * x} fill="#ffd24a" opacity={0.15 + 0.7 * x} />{[0, 1, 2].map((k) => <line key={k} x1={720 - k * 20} y1={330 + k * 20} x2={600} y2={370} stroke="#ffb000" strokeWidth={4} opacity={x} />)}
+          <text x={760} y={230} textAnchor="middle" {...T1} fontSize={26} fill="#c08a00">light {Math.round(x * 100)}%</text></g>
+        : <g><rect x={720} y={230} width={40} height={200} rx={20} fill="none" stroke={L.dim} strokeWidth={4} /><rect x={728} y={420 - 180 * x} width={24} height={180 * x + 6} rx={12} fill={L.red} />
+          <text x={800} y={340} {...T1} fontSize={28} fill={L.red}>{(20 + 60 * x).toFixed(0)} °C</text></g>}</g>;
+    right = <g><text x={1430} y={240} textAnchor="middle" {...T1} fontSize={32}>{ldr ? "LDR: MORE LIGHT → LESS R" : "NTC THERMISTOR: HOTTER → LESS R"}</text>
+      {row(340, ldr ? "light level" : "temperature", ldr ? `${Math.round(x * 100)}%` : `${(20 + 60 * x).toFixed(0)} °C`, L.amber)}
+      {row(430, ldr ? "LDR resistance" : "thermistor resistance", R >= 1000 ? `${(R / 1000).toFixed(1)} kΩ` : `${R.toFixed(0)} Ω`, L.text)}{row(520, "divider output", `${vout.toFixed(2)} V`, L.green)}
+      <text x={1430} y={660} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={26}>{ldr ? "street lights that switch on at dusk" : "temperature sensing, fire alarms, battery chargers"}</text></g>; }
+  else { const v = 2 + 10 * p, R = 100, P = v * v / R; const burnt = P > 0.5 && p > 0.9;
+    left = <g><Battery x={200} y={540} v={+v.toFixed(1)} />{W("200,500 200,300 440,300")}{W("600,300 800,300 800,780 200,780 200,580")}
+      <Res x={520} y={300} ohm={100} label="R (¼ W)" horizontal heat={P / 0.25 * 0.5} />
+      {P > 0.25 && Array.from({ length: 4 }, (_, k) => <path key={k} d={`M ${480 + k * 25} 240 q 10 -30 0 -60 q -10 -30 0 -60`} fill="none" stroke="#888" strokeWidth={4} opacity={Math.min(1, (P - 0.25) * 2) * (0.4 + 0.4 * Math.sin(t * 3 + k))} />)}
+      {burnt && <text x={520} y={420} textAnchor="middle" {...T1} fontSize={34} fill={L.red}>BURNT!</text>}</g>;
+    right = <g><text x={1430} y={240} textAnchor="middle" {...T1} fontSize={32}>POWER RATING TEST: 100 Ω, ¼ W</text>
+      {row(340, "voltage", `${v.toFixed(1)} V`, L.text)}{row(430, "P = V² ÷ R", `${P.toFixed(2)} W`, P > 0.25 ? L.red : L.green)}{row(520, "rating", "0.25 W", L.amber)}
+      <text x={1430} y={660} textAnchor="middle" fill={P > 0.25 ? L.red : L.green} fontFamily={SANS} fontSize={30} fontWeight={800}>{P > 0.25 ? "over the rating: overheating" : "safe"}</text></g>; }
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{left}{right}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.rvar = RVarScene;
