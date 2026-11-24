@@ -1,0 +1,97 @@
+{
+ "title": "Analog One Shot Ch6",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 6: Transformers",
+   "narration": "Chapter six: the transformer. Every mains powered device starts here: it changes two hundred and thirty volts A C into a safer, lower voltage, before rectifiers turn it into D C. It's simple, and it uses exactly what we learned about inductors.",
+   "kicker": "CHAPTER 6",
+   "title": "TRANSFORMERS",
+   "subtitle": "Changing AC voltages with two coils and a core"
+  },
+  {
+   "type": "xfmr",
+   "chapter": "How it works",
+   "narration": "A transformer is two coils wound on one iron core, with no electrical connection between them. The primary coil gets A C. The alternating current makes an alternating magnetic field, shown as blue dots circulating in the core. The iron guides that field through the secondary coil. A changing field through a coil induces a voltage in it. That's Faraday's law. So A C in the primary produces A C in the secondary, with energy carried across by magnetism.",
+   "mode": "down"
+  },
+  {
+   "type": "xfmr",
+   "chapter": "Turns ratio: step-down",
+   "narration": "The secret is the number of turns. Each turn picks up the same voltage. So the voltage is proportional to the number of turns: V s over V p equals N s over N p. Here, nine hundred and sixty turns on the primary and fifty on the secondary: a ratio of about nineteen point two to one. Two hundred and thirty volts in, twelve volts out. A step-down transformer.",
+   "mode": "down"
+  },
+  {
+   "type": "xfmr",
+   "chapter": "Step-up",
+   "narration": "Swap the coils, more turns on the secondary, and it steps up: twelve volts in, two hundred and thirty out. Power stations do this to send electricity over long distances at very high voltage, which means less current, and less loss in the cables.",
+   "mode": "up"
+  },
+  {
+   "type": "xfmr",
+   "chapter": "Centre-tapped transformer",
+   "narration": "A centre tapped transformer has a connection in the middle of the secondary. Measured from the centre tap, the top end gives twelve volts and the bottom end gives twelve volts, but in opposite phase: when the top goes positive, the bottom goes negative. We'll use exactly this in the centre tap full wave rectifier.",
+   "mode": "ct"
+  },
+  {
+   "type": "xfmr",
+   "chapter": "What if: you connect DC?",
+   "narration": "A student's question: what if we connect D C to a transformer? A steady current makes a steady field. No change, so nothing is induced: the output is zero. And worse, the primary is just a coil of copper wire with very little resistance, and at D C its reactance is zero. A huge current flows, and the transformer overheats and burns. Transformers only work with A C.",
+   "mode": "dc"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Power, current, efficiency",
+   "narration": "An ideal transformer doesn't create power. Power in equals power out: V p I p equals V s I s. So when the voltage steps down, the current steps up by the same ratio. If the twelve volt secondary supplies one amp, twelve watts, the primary draws twelve over two thirty, fifty two milliamps. Real transformers lose a few percent as heat in the copper and the core, so efficiency is usually ninety to ninety eight percent. And there's isolation: the secondary has no wire connection to the mains, which is what makes it safe to touch.",
+   "title": "POWER BALANCE",
+   "given": [
+    "230 V → 12 V",
+    "Is = 1 A"
+   ],
+   "lines": [
+    "Vp × Ip = Vs × Is",
+    "Ip = 12 × 1 ÷ 230 = 52 mA",
+    "Is ÷ Ip = Np ÷ Ns",
+    "efficiency = Pout ÷ Pin (90-98%)"
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: transformers",
+   "narration": "Question one: a transformer has two thousand primary turns and one hundred secondary turns. With two hundred and thirty volts in, what comes out? Two thirty times one hundred over two thousand, eleven point five volts. Question two: a transformer gives twenty four volts at two amps from two thirty volts, with ninety percent efficiency. Find the primary current. Output: forty eight watts. Input: forty eight over zero point nine, fifty three point three watts. Primary current: fifty three point three over two thirty, zero point two three amps.",
+   "title": "NUMERICALS · TRANSFORMERS",
+   "given": [
+    "Np = 2000",
+    "Ns = 100",
+    "Vp = 230 V"
+   ],
+   "lines": [
+    "Vs = 230 × 100 ÷ 2000 = 11.5 V",
+    "Q2: Pout = 24 × 2 = 48 W",
+    "Pin = 48 ÷ 0.9 = 53.3 W",
+    "Ip = 53.3 ÷ 230 = 0.23 A"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 6 recap",
+   "narration": "Recap. A transformer uses a changing magnetic field in an iron core to move energy between two coils. The voltage ratio equals the turns ratio, and the current goes the opposite way, so power is kept. It steps down, steps up, and with a centre tap gives two opposite halves. It only works on A C. Next, filters: using R, L and C to choose which frequencies pass.",
+   "title": "CHAPTER 6 COMPLETE",
+   "lines": [
+    "Vs ÷ Vp = Ns ÷ Np",
+    "Vp Ip = Vs Is (ideal)",
+    "Centre tap: two opposite halves",
+    "AC only: DC → no output, overheating"
+   ],
+   "cta": "Next: filters"
+  }
+ ]
+}

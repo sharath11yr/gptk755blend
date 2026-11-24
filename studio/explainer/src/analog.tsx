@@ -3254,3 +3254,44 @@ export const IndXScene: React.FC<any> = ({ dur, mode = "field" }) => {
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.indx = IndXScene;
+
+/** {"type":"xfmr","mode":"down"|"up"|"ct"|"dc"} transformer with live waveforms. Turns np:ns; down 230→12 V rms (19.2:1). */
+export const XfmrScene: React.FC<any> = ({ dur, mode = "down" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const dc = mode === "dc", up = mode === "up", ct = mode === "ct";
+  const vp = up ? 12 : 230, vs = up ? 230 : 12; const np = up ? 50 : 960, ns = up ? 960 : 50;
+  const s = Math.sin(t * 3); const fl = dc ? 0 : s;
+  const coil = (x: number, n: number, col: string, y0 = 330) => <path d={`M ${x} ${y0} ` + Array.from({ length: n }, () => "a 22 22 0 1 0 0 44").join(" ")} fill="none" stroke={col} strokeWidth={6} />;
+  const body = <g>
+    <rect x={420} y={260} width={360} height={560} rx={10} fill="none" stroke="#8a96a3" strokeWidth={40} />
+    {[0, 1, 2].map((k) => <rect key={k} x={430 + k * 4} y={270} width={2} height={540} fill="#6b7785" opacity={0.3} />)}
+    {/* flux arrows in the core */}
+    {!dc && Array.from({ length: 6 }, (_, k) => { const u = ((k / 6 + t * 0.4 * Math.sign(fl || 1)) % 1 + 1) % 1; const per = 2 * (360 + 560); let d = u * per, x = 420, y = 260;
+      if (d < 360) { x = 420 + d; } else if (d < 920) { x = 780; y = 260 + d - 360; } else if (d < 1280) { x = 780 - (d - 920); y = 820; } else { y = 820 - (d - 1280); }
+      return <circle key={k} cx={x} cy={y} r={8} fill={L.cyan} opacity={Math.abs(fl)} />; })}
+    {coil(420, up ? 4 : 10, L.amber)}{ct ? <>{coil(780, 5, L.green)}{coil(780, 5, L.green, 550)}</> : coil(780, up ? 10 : 4, L.green)}
+    <g><circle cx={150} cy={550} r={60} fill={L.bg0} stroke={dc ? L.red : L.cyan} strokeWidth={6} />
+      {dc ? <text x={150} y={562} textAnchor="middle" {...T1} fontSize={30} fill={L.red}>DC</text> : <path d="M 116 550 q 17 -30 34 0 t 34 0" fill="none" stroke={L.cyan} strokeWidth={5} />}
+      <text x={150} y={660} textAnchor="middle" {...T1} fontSize={26}>{vp} V {dc ? "DC" : "AC"}</text></g>
+    {W(`150,490 150,330 420,330`)}{W(`150,610 150,${up ? 506 : 770} 420,${up ? 506 : 770}`)}
+    <text x={340} y={240} textAnchor="middle" {...T1} fontSize={24} fill={L.amber}>primary {np} turns</text>
+    {ct ? <g>{W("780,330 960,330")}{W("780,550 960,550")}{W("780,770 960,770")}<circle cx={960} cy={330} r={9} fill={L.green} /><circle cx={960} cy={550} r={9} fill={L.text} /><circle cx={960} cy={770} r={9} fill={L.green} />
+        <text x={980} y={340} {...T1} fontSize={24} fill={L.green}>12 V</text><text x={980} y={560} {...T1} fontSize={24}>0 (centre tap)</text><text x={980} y={780} {...T1} fontSize={24} fill={L.green}>12 V</text></g>
+      : <g>{W(`780,330 960,330`)}{W(`780,${up ? 770 : 506} 960,${up ? 770 : 506}`)}<text x={880} y={240} textAnchor="middle" {...T1} fontSize={24} fill={L.green}>secondary {ns} turns</text></g>}
+  </g>;
+  const GX = 1100, GW = 740;
+  const tr = (cy: number, a: number, col: string, name: string) => { const q: string[] = []; for (let k = 0; k <= 200; k++) { const u = k / 200; q.push(`${GX + GW * u},${cy - a * Math.sin(2 * Math.PI * 2 * u + t * 3)}`); }
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><text x={GX} y={cy - 120} fill={col} fontFamily={SANS} fontSize={26} fontWeight={800}>{name}</text><polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} /></g>; };
+  const right = dc ? <g><text x={1470} y={300} textAnchor="middle" {...T1} fontSize={30} fill={L.red}>WHAT IF: DC INTO A TRANSFORMER?</text>
+      <text x={1470} y={400} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>steady current → steady field → NO change</text>
+      <text x={1470} y={460} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>no change → no induced voltage → output 0 V</text>
+      <text x={1470} y={540} textAnchor="middle" fill={L.red} fontFamily={SANS} fontSize={28} fontWeight={800}>and the primary is just copper wire:</text>
+      <text x={1470} y={590} textAnchor="middle" fill={L.red} fontFamily={SANS} fontSize={28} fontWeight={800}>huge current → it overheats and burns</text></g>
+    : <g>{tr(380, up ? 30 : 100, L.amber, `primary: ${vp} V rms`)}{tr(760, ct ? 60 : up ? 100 : 30, L.green, ct ? "each half: 12 V rms (opposite phases)" : `secondary: ${vs} V rms`)}
+      <text x={GX + GW / 2} y={950} textAnchor="middle" {...T1} fontSize={28}>Vs ÷ Vp = Ns ÷ Np = {ns} ÷ {np}</text></g>;
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{body}{right}</svg></AbsoluteFill>;
+};
+ANALOG_SCENES.xfmr = XfmrScene;
