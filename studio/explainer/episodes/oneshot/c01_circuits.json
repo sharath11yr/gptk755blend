@@ -1,0 +1,229 @@
+{
+ "title": "Analog One Shot Ch1",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 1: Circuit basics",
+   "narration": "Chapter one. Now that we know what current, voltage and resistance are, let's connect them. In this chapter: what a circuit is, Ohm's law, series and parallel circuits, Kirchhoff's two laws, voltage and current dividers, power, and real sources. These ideas are used in every single circuit for the rest of this course, so take them slowly.",
+   "kicker": "CHAPTER 1",
+   "title": "CIRCUIT BASICS",
+   "subtitle": "Ohm's law, series, parallel, Kirchhoff, power"
+  },
+  {
+   "type": "dual",
+   "chapter": "What is a circuit?",
+   "narration": "A circuit is a closed loop that current can flow around. It needs three things: a source of voltage, like this battery, a path, the wires, and a load, something that uses the energy, like this bulb. Current leaves the positive terminal, flows through the load, and returns to the negative terminal. The loop must be complete.",
+   "mode": "both",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "dual",
+   "chapter": "Open circuit",
+   "narration": "Now open the switch. The loop is broken. Even though the battery still has nine volts, there's no complete path, so no current flows anywhere in the loop, and the bulb goes off. This is an open circuit. Notice: the voltage is still there across the open gap. Nine volts across the switch, zero current.",
+   "mode": "open",
+   "v": 9,
+   "r": 90
+  },
+  {
+   "type": "ohm",
+   "chapter": "Ohm's law",
+   "narration": "Let's measure. Put a one hundred ohm resistor across a variable voltage and slowly raise it. At zero volts, zero current. At one volt, ten milliamps. At ten volts, a hundred milliamps. Double the voltage, double the current. The graph is a straight line. This is Ohm's law: V equals I times R. Now add a two hundred ohm resistor, the flatter line. For the same voltage, half the current. Bigger resistance, less current. Every time you see V, I and R, think of this triangle: V equals I R, I equals V over R, R equals V over I.",
+   "r": [
+    100,
+    200
+   ],
+   "vmax": 12
+  },
+  {
+   "type": "dc",
+   "chapter": "A simple circuit with meters",
+   "narration": "A twelve volt battery and a one hundred ohm resistor. The ammeter, which measures current, is placed in series, in the loop. Current: twelve over one hundred, zero point one two amps, one hundred and twenty milliamps. The voltmeter, which measures voltage, is placed across the resistor. It reads the full twelve volts.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    100
+   ],
+   "show": [
+    "current",
+    "voltage"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "Series circuit",
+   "narration": "Now two resistors one after the other: one hundred and two hundred ohms. That's a series circuit. There's only one path, so the same current flows through both. In series, resistances add: one hundred plus two hundred, three hundred ohms. Current: twelve over three hundred, forty milliamps. And the voltage splits. Across the hundred ohm resistor: forty milliamps times one hundred, four volts. Across the two hundred: eight volts. Four plus eight, twelve. The bigger resistor gets the bigger share.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    100,
+    200
+   ],
+   "show": [
+    "current",
+    "voltage"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "Parallel circuit",
+   "narration": "Now the same two resistors side by side, both connected directly across the battery. That's parallel. Each resistor gets the full twelve volts. The current through the hundred ohm one: twelve over a hundred, one hundred and twenty milliamps. Through the two hundred: sixty milliamps. The battery supplies both: one hundred and eighty milliamps. In parallel, voltage is the same, and currents add. The smaller resistor takes the bigger current.",
+   "mode": "parallel",
+   "v": 12,
+   "r": [
+    100,
+    200
+   ],
+   "show": [
+    "current"
+   ]
+  },
+  {
+   "type": "split",
+   "chapter": "What if: one bulb fails?",
+   "narration": "Here's a question students always ask: what happens if one part fails, breaking open? In series, there's only one path. Break it anywhere and everything stops, like old Christmas lights. In parallel, each branch has its own path to the battery. One branch breaking doesn't affect the others. That's why every socket and light in your house is wired in parallel.",
+   "a": {
+    "type": "dual",
+    "mode": "open",
+    "v": 9,
+    "r": 90
+   },
+   "b": {
+    "type": "dc",
+    "mode": "parallel",
+    "v": 12,
+    "r": [
+     100,
+     200
+    ],
+    "show": [
+     "current"
+    ]
+   },
+   "la": "SERIES: one break → all off",
+   "lb": "PARALLEL: others keep working"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Equivalent resistance",
+   "narration": "The formulas. Series: R total equals R one plus R two plus and so on. Parallel: one over R total equals one over R one plus one over R two. For two resistors, there's a shortcut: product over sum. One hundred times two hundred, over three hundred, sixty six point seven ohms. Check: twelve volts over sixty six point seven ohms, one hundred and eighty milliamps. Exactly what we measured. Notice the parallel total is always smaller than the smallest resistor, because adding a path makes it easier for current to flow.",
+   "title": "EQUIVALENT RESISTANCE",
+   "given": [
+    "R1 = 100 Ω",
+    "R2 = 200 Ω"
+   ],
+   "lines": [
+    "Series: R = R1 + R2 = 300 Ω",
+    "Parallel: 1/R = 1/R1 + 1/R2",
+    "Two resistors: R = R1R2 ÷ (R1 + R2)",
+    "= 20000 ÷ 300 = 66.7 Ω",
+    "I = 12 ÷ 66.7 = 180 mA ✓"
+   ]
+  },
+  {
+   "type": "kcl",
+   "chapter": "Kirchhoff's current law",
+   "narration": "Kirchhoff's current law, K C L. At any junction, the current flowing in equals the current flowing out. Charge can't pile up or vanish. Here, five amps and three amps flow in, total eight. Two amps and six amps flow out, total eight. If you know all the currents except one, K C L finds the missing one.",
+   "currents": [
+    5,
+    3,
+    -2,
+    -6
+   ]
+  },
+  {
+   "type": "kvl",
+   "chapter": "Kirchhoff's voltage law",
+   "narration": "Kirchhoff's voltage law, K V L. Go around any closed loop, and the voltage rises equal the voltage drops. Here, twelve volts from the battery, and three resistors: one hundred, two hundred and three hundred ohms. Total six hundred ohms, so twenty milliamps flows. Drops: two volts, four volts, six volts. Two plus four plus six, twelve. Energy given by the source equals energy used in the loop.",
+   "v": 12,
+   "r": [
+    100,
+    200,
+    300
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "The voltage divider",
+   "narration": "Two resistors in series across a voltage make a voltage divider, one of the most used circuits in electronics. The output voltage across R two is V in times R two over R one plus R two. With twelve volts, R one ten k and R two five k: twelve times five over fifteen, four volts. We'll use this exact circuit to bias transistors later. And the current divider: in parallel, the current through one branch is the total times the other resistor over the sum. One hundred and eighty milliamps total, through the hundred ohm branch: one eighty times two hundred over three hundred, one hundred and twenty milliamps.",
+   "title": "DIVIDERS",
+   "given": [
+    "Vin = 12 V",
+    "R1 = 10k",
+    "R2 = 5k"
+   ],
+   "lines": [
+    "Vout = Vin × R2 ÷ (R1 + R2)",
+    "= 12 × 5k ÷ 15k = 4 V",
+    "Current divider: I1 = I × R2 ÷ (R1 + R2)",
+    "= 180 mA × 200 ÷ 300 = 120 mA"
+   ]
+  },
+  {
+   "type": "dc",
+   "chapter": "Power and heat",
+   "narration": "Power is how fast energy is used: P equals V times I, in watts. Using Ohm's law, it's also I squared R, or V squared over R. In our series circuit, the hundred ohm resistor has four volts and forty milliamps: zero point one six watts. The two hundred ohm one: eight volts times forty milliamps, zero point three two watts. Real resistors have a power rating, like a quarter watt. Exceed it, and they overheat and burn. Always check.",
+   "mode": "series",
+   "v": 12,
+   "r": [
+    100,
+    200
+   ],
+   "show": [
+    "current",
+    "voltage",
+    "heat"
+   ]
+  },
+  {
+   "type": "mpt",
+   "chapter": "Real sources and maximum power",
+   "narration": "A real battery isn't perfect. It has a small internal resistance inside it. When you draw current, some voltage drops inside, so the terminal voltage falls. Here, a twelve volt source with two ohms inside. Sweep the load resistance and watch the power delivered to it. Too small a load: big current, but most voltage is lost inside. Too large: little current. The maximum power is delivered when the load equals the internal resistance: two ohms, giving eighteen watts. That's the maximum power transfer theorem.",
+   "vth": 12,
+   "rth": 2
+  },
+  {
+   "type": "theorem",
+   "chapter": "Thevenin's theorem: simplify any circuit",
+   "narration": "One more powerful idea. Thevenin's theorem says: any circuit of sources and resistors, seen from two terminals, behaves exactly like one voltage source in series with one resistor. To find the Thevenin voltage, remove the load and measure the open circuit voltage. To find the Thevenin resistance, replace the sources with short circuits and find the resistance looking in. We'll use this to simplify transistor bias circuits later. In this example, a twelve volt and a six volt source feed point A through four ohms each. With the load removed, the voltmeter reads nine volts: that's V Thevenin. Short both sources, and from A and B you see four ohms in parallel with four ohms: two ohms. So this whole circuit acts like a nine volt source with two ohms in series.",
+   "mode": "open"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: chapter 1",
+   "narration": "Two placement style questions. One: a twelve volt supply drives three resistors in series: two k, four k and six k. Find the current and the voltage across the four k. Total: twelve k. Current: one milliamp. Voltage across four k: four volts. Two: a ten ohm and a fifteen ohm resistor are in parallel across six volts. Find the total current and the power. Equivalent: one fifty over twenty five, six ohms. Current: one amp. Power: six watts.",
+   "title": "NUMERICALS · CIRCUITS",
+   "given": [
+    "12 V",
+    "2k + 4k + 6k"
+   ],
+   "lines": [
+    "R = 12k → I = 12 ÷ 12k = 1 mA",
+    "V(4k) = 1 mA × 4k = 4 V",
+    "Q2: 10 ∥ 15 = 150 ÷ 25 = 6 Ω",
+    "I = 6 V ÷ 6 Ω = 1 A, P = 6 × 1 = 6 W"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 1 recap",
+   "narration": "Recap. A circuit needs a complete loop. Ohm's law: V equals I R. Series: same current, voltages add, resistances add. Parallel: same voltage, currents add, total resistance smaller than the smallest. K C L: current in equals current out. K V L: rises equal drops around a loop. Power: V I, I squared R, V squared over R. Next, the resistor itself in detail.",
+   "title": "CHAPTER 1 COMPLETE",
+   "lines": [
+    "V = I R",
+    "Series: R adds, same I · Parallel: same V, I adds",
+    "KCL: in = out · KVL: rises = drops",
+    "P = VI = I²R = V²/R"
+   ],
+   "cta": "Next: resistors"
+  }
+ ]
+}
