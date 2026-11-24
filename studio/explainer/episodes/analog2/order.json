@@ -28,5 +28,10 @@
  "analog2/b12_small_signal_model.json",
  "analog2/b13_coupling_bypass_capacitors.json",
  "analog2/b14_darlington.json",
- "analog2/b15_current_mirror.json"
+ "analog2/b15_current_mirror.json",
+ "analog2/f01_jfet.json",
+ "analog2/f02_mosfet_vs_bjt.json",
+ "analog2/f03_mosfet.json",
+ "analog2/f04_mosfet_numericals.json",
+ "analog2/f05_cmos_inverter.json"
 ]

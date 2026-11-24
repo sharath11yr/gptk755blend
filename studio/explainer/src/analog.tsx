@@ -2649,3 +2649,140 @@ export const PairScene: React.FC<any> = ({ dur, kind = "darlington", mode = "run
   return svg(<>{left}{right}</>);
 };
 ANALOG_SCENES.pair = PairScene;
+
+// ------------------------------------------------------------------ FET engine: JFET, enhancement MOSFET, CMOS inverter
+/** {"type":"fet","kind":"jfet"|"nmos","mode":"structure"|"transfer"|"output"|"circuit"|"switch"|"cmos"|"calc","lines":[...]}
+ *  JFET: IDSS = 10 mA, VP = −4 V, self-bias RS = 500 Ω, RD = 1 kΩ, VDD = 12 V -> ID = 3.36 mA, VGS = −1.68 V, VDS = 6.96 V.
+ *  nMOS: k = 0.5 mA/V², VT = 2 V; divider VG = 4 V (2 MΩ / 1 MΩ), RS = 1 kΩ, RD = 6.8 kΩ -> ID = 0.764 mA, VGS = 3.24 V, VDS = 6.04 V. */
+const jfetId = (vgs: number) => vgs <= -4 ? 0 : 10e-3 * (1 + vgs / 4) ** 2;
+const mosId = (vgs: number) => vgs <= 2 ? 0 : 0.5e-3 * (vgs - 2) ** 2;
+export const FetScene: React.FC<any> = ({ dur, kind = "nmos", mode = "structure", lines = [], base = "" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string, c = L.wire) => <polyline points={pts} fill="none" stroke={c} strokeWidth={6} strokeLinejoin="round" />;
+  const jf = kind === "jfet";
+  // sweeping gate voltage for structure/transfer
+  const vgs = jf ? -4 * p : 6 * p;
+  const id = jf ? jfetId(vgs) : mosId(vgs);
+  const GX = 1040, GW = 780;
+  // symbol: drain up, source down, gate left
+  const Sym = (x: number, y: number, n = true) => <g>
+    <circle cx={x} cy={y} r={66} fill={L.bg0} stroke={L.amber} strokeWidth={5} />
+    {jf ? <><line x1={x - 6} y1={y - 44} x2={x - 6} y2={y + 44} stroke={L.amber} strokeWidth={8} /><line x1={x - 66} y1={y + 20} x2={x - 6} y2={y + 20} stroke={L.amber} strokeWidth={6} />
+        <polygon points={`${x - 6},${y + 20} ${x - 26},${y + 10} ${x - 26},${y + 30}`} fill={L.amber} /></>
+      : <><line x1={x - 26} y1={y - 40} x2={x - 26} y2={y + 40} stroke={L.amber} strokeWidth={6} /><line x1={x - 66} y1={y + 30} x2={x - 26} y2={y + 30} stroke={L.amber} strokeWidth={6} />
+        {[-34, 0, 34].map((d) => <line key={d} x1={x - 8} y1={y + d - 12} x2={x - 8} y2={y + d + 12} stroke={L.amber} strokeWidth={8} />)}
+        <line x1={x - 8} y1={y} x2={x + 20} y2={y} stroke={L.amber} strokeWidth={5} /><polygon points={n ? `${x - 8},${y} ${x + 10},${y - 9} ${x + 10},${y + 9}` : `${x + 18},${y} ${x},${y - 9} ${x},${y + 9}`} fill={L.amber} /></>}
+    <line x1={jf ? x - 6 : x - 8} y1={y - 34} x2={x + 20} y2={y - 34} stroke={L.amber} strokeWidth={5} /><line x1={x + 20} y1={y - 34} x2={x + 20} y2={y - 66} stroke={L.amber} strokeWidth={5} />
+    <line x1={jf ? x - 6 : x - 8} y1={y + 34} x2={x + 20} y2={y + 34} stroke={L.amber} strokeWidth={5} /><line x1={x + 20} y1={y + 34} x2={x + 20} y2={y + 66} stroke={L.amber} strokeWidth={5} />
+    {!jf && <line x1={x + 20} y1={y} x2={x + 20} y2={y + 34} stroke={L.amber} strokeWidth={5} />}
+    <text x={x + 34} y={y - 70} fill={L.dim} fontFamily={MONO} fontSize={22}>{n ? "D" : "S"}</text><text x={x + 34} y={y + 90} fill={L.dim} fontFamily={MONO} fontSize={22}>{n ? "S" : "D"}</text>
+    <text x={x - 86} y={y + 22} fill={L.dim} fontFamily={MONO} fontSize={22}>G</text></g>;
+  const lm = mode === "calc" && base ? base : mode;
+  let left: React.ReactNode, right: React.ReactNode = null;
+  if (lm === "structure") {
+    if (jf) { const w = 160 * (1 - Math.min(1, -vgs / 4)); // open channel width
+      left = <g><rect x={140} y={360} width={760} height={260} fill="#2e5a87" /><text x={520} y={340} textAnchor="middle" {...T1} fontSize={26}>N-CHANNEL</text>
+        <rect x={360} y={360} width={320} height={(260 - w) / 2} fill="#b5473a" /><rect x={360} y={620 - (260 - w) / 2} width={320} height={(260 - w) / 2} fill="#b5473a" />
+        <text x={520} y={350 + (260 - w) / 4 + 20} textAnchor="middle" fill="#fff" fontFamily={SANS} fontSize={24} fontWeight={800}>P gate</text>
+        <text x={110} y={500} textAnchor="end" {...T1} fontSize={26}>S</text><text x={930} y={500} {...T1} fontSize={26}>D</text>
+        {Array.from({ length: 12 }, (_, k) => { const u = (k / 12 + t * 0.3 * (id / 10e-3 + 0.05)) % 1; return w > 4 ? <circle key={k} cx={150 + u * 740} cy={490 + ((k * 37) % Math.max(10, w - 20)) - Math.max(10, w - 20) / 2} r={8} fill={L.electron} /> : null; })}
+        <text x={520} y={720} textAnchor="middle" {...T1} fontSize={28} fill={L.amber}>VGS = {vgs.toFixed(1)} V → channel {w < 4 ? "PINCHED OFF" : "narrows"}</text></g>; }
+    else { const on = vgs > 2; const depth = Math.min(1, Math.max(0, (vgs - 2) / 4));
+      left = <g><rect x={140} y={430} width={760} height={260} fill="#b5473a" /><text x={520} y={720} textAnchor="middle" fill="#fff" fontFamily={SANS} fontSize={26} fontWeight={800}>P-type body</text>
+        <rect x={140} y={430} width={180} height={90} fill="#2e5a87" /><rect x={720} y={430} width={180} height={90} fill="#2e5a87" />
+        <text x={230} y={485} textAnchor="middle" fill="#fff" fontFamily={SANS} fontSize={26} fontWeight={800}>N+</text><text x={810} y={485} textAnchor="middle" fill="#fff" fontFamily={SANS} fontSize={26} fontWeight={800}>N+</text>
+        <rect x={320} y={400} width={400} height={30} fill="#d8dde8" /><rect x={320} y={360} width={400} height={40} fill="#8a96a3" />
+        <text x={520} y={388} textAnchor="middle" fill="#111" fontFamily={SANS} fontSize={22} fontWeight={800}>GATE (metal) · oxide below</text>
+        {on && <rect x={320} y={430} width={400} height={10 + 30 * depth} fill="#2e5a87" opacity={0.9} />}
+        {on && Array.from({ length: 10 }, (_, k) => { const u = (k / 10 + t * 0.3 * (0.2 + depth)) % 1; return <circle key={k} cx={180 + u * 680} cy={445 + ((k * 13) % 20)} r={7} fill={L.electron} />; })}
+        <text x={230} y={410} textAnchor="middle" {...T1} fontSize={24}>S</text><text x={810} y={410} textAnchor="middle" {...T1} fontSize={24}>D</text>
+        <text x={520} y={800} textAnchor="middle" {...T1} fontSize={28} fill={on ? L.green : L.amber}>VGS = {vgs.toFixed(1)} V → {on ? "channel FORMED (VGS > VT = 2 V)" : "no channel: OFF"}</text></g>; }
+    right = <g><text x={GX + GW / 2} y={220} textAnchor="middle" {...T1} fontSize={32}>{jf ? "JFET: GATE SQUEEZES THE CHANNEL" : "MOSFET: GATE CREATES THE CHANNEL"}</text>
+      <text x={GX + GW / 2} y={360} textAnchor="middle" {...T1} fontSize={60} fill={L.electron}>ID = {(id * 1000).toFixed(2)} mA</text>
+      <text x={GX + GW / 2} y={460} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={28}>gate current ≈ 0 (voltage-controlled)</text></g>;
+  } else if (lm === "transfer" || lm === "output") {
+    const isT = mode === "transfer";
+    left = <g>{W(`640,200 640,474`)}{Sym(620, 540)}{W(`640,606 640,880`)}{W(`554,${jf ? 560 : 570} 360,${jf ? 560 : 570}`)}
+      <text x={360} y={jf ? 530 : 540} {...T1} fontSize={26} fill={L.cyan}>VGS = {vgs.toFixed(1)} V</text>
+      <Dots pts={[[640, 200], [640, 880]]} t={t} speed={30 + id * 1e4} gap={30} />
+      <text x={680} y={300} {...T1} fontSize={28} fill={L.electron}>ID = {(id * 1000).toFixed(2)} mA</text>
+      <text x={520} y={960} textAnchor="middle" fill={L.dim} fontFamily={SANS} fontSize={24}>{jf ? "N-channel JFET" : "N-channel enhancement MOSFET"}</text></g>;
+    if (isT) { const vx = (v: number) => jf ? GX + (v + 4) / 4 * GW : GX + v / 6 * GW, iy = (i: number) => 820 - i / (jf ? 10e-3 : 8e-3) * 560;
+      const q: string[] = []; for (let k = 0; k <= 200; k++) { const v = jf ? -4 + 4 * k / 200 : 6 * k / 200; if (jf ? v < vgs - 0.01 : v > vgs + 0.01) continue; q.push(`${vx(v)},${iy(jf ? jfetId(v) : mosId(v))}`); }
+      right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={30}>TRANSFER CURVE: ID vs VGS</text>
+        <line x1={GX} y1={820} x2={GX + GW} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={jf ? GX + GW : GX} y1={820} x2={jf ? GX + GW : GX} y2={240} stroke={L.dim} strokeWidth={3} />
+        {(jf ? [-4, -3, -2, -1, 0] : [0, 2, 4, 6]).map((v) => <text key={v} x={vx(v)} y={860} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{v} V</text>)}
+        <polyline points={q.join(" ")} fill="none" stroke={L.green} strokeWidth={6} />
+        <text x={GX + GW / 2} y={940} textAnchor="middle" {...T1} fontSize={26}>{jf ? "ID = IDSS (1 − VGS ÷ VP)², IDSS 10 mA, VP −4 V" : "ID = k (VGS − VT)², k 0.5 mA/V², VT 2 V"}</text></g>; }
+    else { const vx = (v: number) => GX + v / 12 * GW, iy = (i: number) => 820 - i / (jf ? 11e-3 : 9e-3) * 560;
+      const gs = jf ? [0, -1, -2, -3] : [6, 5, 4, 3];
+      right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={30}>OUTPUT CURVES: ID vs VDS</text>
+        <line x1={GX} y1={820} x2={GX + GW} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={820} x2={GX} y2={240} stroke={L.dim} strokeWidth={3} />
+        {[0, 3, 6, 9, 12].map((v) => <text key={v} x={vx(v)} y={860} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{v} V</text>)}
+        {gs.map((g, k) => { const isat = jf ? jfetId(g) : mosId(g); const vov = jf ? g + 4 : g - 2; const q: string[] = [];
+          for (let j = 0; j <= 120; j++) { const v = 12 * j / 120; const i = v < vov ? isat * (2 * v / vov - (v / vov) ** 2) : isat; q.push(`${vx(v)},${iy(i)}`); }
+          return <g key={k} opacity={p > k * 0.2 ? 1 : 0.15}><polyline points={q.join(" ")} fill="none" stroke={L.cyan} strokeWidth={4} />
+            <text x={vx(12) - 6} y={iy(isat) - 10} textAnchor="end" fill={L.cyan} fontFamily={MONO} fontSize={20}>VGS {g} V</text></g>; })}
+        <text x={vx(1.2)} y={300} textAnchor="middle" fill={L.amber} fontFamily={SANS} fontSize={24} fontWeight={800}>OHMIC</text>
+        <text x={vx(8)} y={300} textAnchor="middle" fill={L.green} fontFamily={SANS} fontSize={24} fontWeight={800}>SATURATION (constant current)</text></g>; }
+  } else if (lm === "circuit" || lm === "calc") {
+    const s = jf ? { id: 3.362e-3, vgs: -1.68, vds: 6.96 } : { id: 0.764e-3, vgs: 3.24, vds: 6.04 };
+    left = <g>
+      <line x1={200} y1={200} x2={900} y2={200} stroke={L.red} strokeWidth={6} /><text x={200} y={180} {...T1} fontSize={26} fill={L.red}>+12 V</text>
+      <line x1={200} y1={880} x2={900} y2={880} stroke={L.wire} strokeWidth={6} />
+      <Res x={640} y={310} ohm={jf ? 1000 : 6800} label="RD" />{W(`640,200 640,240`)}{W(`640,380 640,474`)}{Sym(620, 540)}
+      <Res x={640} y={740} ohm={jf ? 500 : 1000} label="RS" />{W(`640,606 640,670`)}{W(`640,810 640,880`)}
+      {jf ? <><Res x={400} y={700} ohm={1e6} label="RG" />{W(`554,560 400,560 400,630`)}{W(`400,770 400,880`)}</>
+        : <><Res x={400} y={330} ohm={2e6} label="R1" />{W(`400,200 400,260`)}{W(`400,400 400,570 554,570`)}<Res x={400} y={720} ohm={1e6} label="R2" />{W(`400,570 400,650`)}{W(`400,790 400,880`)}</>}
+      {mode === "circuit" && <><Dots pts={[[640, 200], [640, 880]]} t={t} speed={30 + s.id * 3e4} gap={30} />
+        <text x={690} y={440} {...T1} fontSize={26} fill={L.electron}>ID = {(s.id * 1000).toFixed(2)} mA</text>
+        <text x={690} y={640} {...T1} fontSize={24} fill={L.green}>VDS = {s.vds.toFixed(2)} V</text>
+        <text x={470} y={jf ? 530 : 540} textAnchor="end" {...T1} fontSize={22} fill={L.cyan}>IG = 0</text></>}</g>;
+    if (mode === "calc") right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
+      opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+    else { const row = (y: number, a: string, b: string, col: string) => <g><text x={GX} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text><text x={GX + GW} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+      right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>{jf ? "JFET SELF-BIAS" : "MOSFET VOLTAGE-DIVIDER BIAS"}</text>
+        {row(320, "gate current", "0", L.cyan)}{row(410, "VGS", `${s.vgs.toFixed(2)} V`, L.text)}{row(500, "drain current ID", `${(s.id * 1000).toFixed(2)} mA`, L.electron)}{row(590, "VDS", `${s.vds.toFixed(2)} V`, L.green)}</g>; }
+  } else if (lm === "switch") {
+    const on = Math.sin(t * 1.3) > 0;
+    left = <g>
+      <line x1={200} y1={200} x2={900} y2={200} stroke={L.red} strokeWidth={6} /><text x={200} y={180} {...T1} fontSize={26} fill={L.red}>+12 V</text>
+      <line x1={200} y1={880} x2={900} y2={880} stroke={L.wire} strokeWidth={6} />
+      <Res x={640} y={320} ohm={12} label="LOAD" heat={on ? 0.6 : 0} />{W(`640,200 640,250`)}{W(`640,390 640,474`)}{Sym(620, 540)}{W(`640,606 640,880`)}
+      {W(`554,570 360,570`)}<rect x={220} y={530} width={140} height={80} rx={10} fill="#1b1b1b" /><text x={290} y={578} textAnchor="middle" fill="#ddd" fontFamily={MONO} fontSize={22} fontWeight={800}>{on ? "5 V" : "0 V"}</text>
+      {on && <Dots pts={[[640, 200], [640, 880]]} t={t} speed={200} gap={26} />}
+      <text x={690} y={440} {...T1} fontSize={26} fill={on ? L.electron : L.dim}>{on ? "ID = 1 A" : "ID = 0"}</text>
+      <text x={380} y={540} {...T1} fontSize={22} fill={L.cyan}>IG = 0</text></g>;
+    right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>MOSFET vs BJT AS A SWITCH (1 A)</text>
+      {[["", "BJT", "MOSFET"], ["controlled by", "current", "voltage"], ["drive needed", "≈ 20 mA base", "≈ 0 (gate)"], ["when ON", "VCE ≈ 0.2 V", "RDS(on) 0.05 Ω"], ["heat at 1 A", "0.2 W", "0.05 W"], ["switching", "slower", "fast"]].map((r, i) =>
+        r.map((c, j) => <text key={`${i}${j}`} x={GX + (j === 0 ? 0 : 340 + (j - 1) * 260)} y={300 + i * 95} textAnchor={j === 0 ? "start" : "middle"} fill={i === 0 ? L.amber : j === 0 ? L.dim : L.text}
+          fontFamily={j === 0 ? SANS : MONO} fontSize={i === 0 ? 32 : 26} fontWeight={800} opacity={interpolate(p, [i * 0.12, i * 0.12 + 0.08], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{c}</text>))}</g>;
+  } else { // cmos inverter
+    const vin = 5 * p; const pOn = vin < 3, nOn = vin > 2; const vout = vin < 2 ? 5 : vin > 3 ? 0 : 5 - (vin - 2) * 5;
+    left = <g>
+      <line x1={200} y1={200} x2={900} y2={200} stroke={L.red} strokeWidth={6} /><text x={200} y={180} {...T1} fontSize={26} fill={L.red}>VDD = +5 V</text>
+      <line x1={200} y1={880} x2={900} y2={880} stroke={L.wire} strokeWidth={6} />
+      <g opacity={pOn ? 1 : 0.35}>{W(`640,200 640,284`)}{Sym(620, 350, false)}</g>
+      <text x={720} y={330} {...T1} fontSize={24} fill={pOn ? L.green : L.dim}>PMOS {pOn ? "ON" : "OFF"}</text>
+      {W(`640,416 640,474`)}<g opacity={nOn ? 1 : 0.35}>{Sym(620, 540)}</g>{W(`640,606 640,880`)}
+      <text x={720} y={600} {...T1} fontSize={24} fill={nOn ? L.green : L.dim}>NMOS {nOn ? "ON" : "OFF"}</text>
+      {W(`554,380 460,380 460,570 554,570`)}{W(`460,475 300,475`)}<text x={300} y={455} {...T1} fontSize={28} fill={L.cyan}>Vin {vin.toFixed(1)} V</text>
+      {W(`640,445 820,445`)}<circle cx={820} cy={445} r={10} fill={L.green} /><text x={830} y={420} {...T1} fontSize={28} fill={L.green}>Vout {vout.toFixed(1)} V</text></g>;
+    const vx = (v: number) => GX + v / 5 * GW, vy = (v: number) => 820 - v / 5 * 560; const q: string[] = [];
+    for (let k = 0; k <= 200; k++) { const v = 5 * k / 200; if (v > vin) break; const o = v < 2 ? 5 : v > 3 ? 0 : 5 - (v - 2) * 5; q.push(`${vx(v)},${vy(o)}`); }
+    right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={30}>CMOS INVERTER: Vout vs Vin</text>
+      <line x1={GX} y1={820} x2={GX + GW} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={820} x2={GX} y2={240} stroke={L.dim} strokeWidth={3} />
+      {[0, 1, 2, 3, 4, 5].map((v) => <text key={v} x={vx(v)} y={860} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{v} V</text>)}
+      <polyline points={q.join(" ")} fill="none" stroke={L.green} strokeWidth={6} />
+      <text x={GX + GW / 2} y={940} textAnchor="middle" {...T1} fontSize={28}>{vin < 2 ? "input LOW → output HIGH (1)" : vin > 3 ? "input HIGH → output LOW (0)" : "switching point"}</text></g>;
+  }
+  if (mode === "calc" && base) right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
+    opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(40,60)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.fet = FetScene;

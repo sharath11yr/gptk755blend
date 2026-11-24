@@ -1,0 +1,125 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "MOSFET Numericals | Square Law, Biasing, Saturation Check, Gain - Solved | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "MOSFET Numericals | Square Law, Biasing, Saturation Check, Gain - Solved | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "Five MOSFET problems solved step by step with the circuit on screen: drain current from the square law, a fixed gate bias with VDS and the saturation check, voltage-divider bias with a source resistor solved by the quadratic, transconductance and voltage gain, and an ohmic-region switching check with RDS(on).",
+  "tags": [
+   "mosfet numericals",
+   "mosfet problems",
+   "square law",
+   "mosfet biasing",
+   "transconductance",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "MOSFET Numericals",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "MOSFET NUMERICALS",
+   "subtitle": "Five problems, solved step by step",
+   "narration": "Welcome back. Practice time for MOSFETs. Five problems, each solved one step at a time. All use an N channel enhancement MOSFET with a threshold of two volts and k of zero point five milliamps per volt squared, on a twelve volt supply. Pause and try each one first."
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 1: the square law",
+   "narration": "Problem one. V G S is five volts. Find I D in saturation. I D equals k times V G S minus V T, squared: zero point five milliamps times five minus two, squared, zero point five times nine, four point five milliamps.",
+   "kind": "nmos",
+   "lines": [
+    "VGS = 5 V, VT = 2 V, k = 0.5 mA/V²",
+    "ID = k (VGS − VT)²",
+    "   = 0.5m × (5 − 2)²",
+    "   = 0.5m × 9 = 4.5 mA"
+   ],
+   "base": "transfer"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 2: VDS and the saturation check",
+   "narration": "Problem two. Same five volts on the gate, R D one point five k, no source resistor. Find V D S and check the region. V D S equals twelve minus four point five milliamps times one point five k: twelve minus six point seven five, five point two five volts. Saturation needs V D S at least V G S minus V T, three volts. Five point two five is more than three, so it's saturated, and the answer is valid.",
+   "kind": "nmos",
+   "lines": [
+    "ID = 4.5 mA, RD = 1.5 kΩ",
+    "VDS = 12 − 4.5m × 1.5k = 5.25 V",
+    "need VDS ≥ VGS − VT = 3 V",
+    "5.25 ≥ 3 → SATURATION ✓"
+   ]
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 3: divider + source resistor",
+   "narration": "Problem three. Our biased amplifier: gate divider two megohms and one megohm, R S one k, R D six point eight k. V G is four volts. V G S equals four minus I D times one k. Substitute: I D equals zero point five milliamps times two minus one k I D, squared. Expand into a quadratic. In milliamps: I D squared minus six I D plus four equals zero. The roots are five point two four and zero point seven six four milliamps. The first would make V G S negative, below threshold, so it's impossible. I D is zero point seven six four milliamps.",
+   "kind": "nmos",
+   "lines": [
+    "VG = 4 V, VGS = 4 − ID (mA) × 1",
+    "ID = 0.5 (2 − ID)²",
+    "→ ID² − 6 ID + 4 = 0",
+    "ID = 5.24 mA (VGS < VT ✗) or 0.764 mA ✓",
+    "VGS = 3.24 V, VDS = 6.04 V"
+   ]
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 4: gm and gain",
+   "narration": "Problem four. For problem three, find g m and the gain with the source resistor bypassed. g m equals two k times V G S minus V T: two times zero point five milliamps times one point two four, one point two four milliamps per volt. Gain equals minus g m times R D: minus one point two four milliamps times six point eight k, minus eight point four. Without the bypass capacitor, gain is minus g m R D over one plus g m R S: minus eight point four over two point two four, minus three point seven five.",
+   "kind": "nmos",
+   "lines": [
+    "gm = 2k (VGS − VT)",
+    "   = 2 × 0.5m × 1.24 = 1.24 mA/V",
+    "Av = −gm RD = −1.24m × 6.8k = −8.4",
+    "no bypass: Av = −gm RD ÷ (1 + gm RS)",
+    "          = −8.4 ÷ 2.24 = −3.75"
+   ]
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "Problem 5: as a switch",
+   "narration": "Problem five. A MOSFET with R D S on of zero point zero five ohms switches a twelve ohm load from twelve volts. Find the current and the MOSFET's heat. The current is twelve over twelve point zero five, essentially one amp. The voltage across the MOSFET: one amp times zero point zero five, fifty millivolts. Heat: one squared times zero point zero five, zero point zero five watts. In the ohmic region, the square law doesn't apply. Use R D S on.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Common mistakes",
+   "narration": "The mistakes that cost marks. One: picking the wrong root of the quadratic. Always check that V G S is above V T. Two: skipping the saturation check: V D S at least V G S minus V T. Three: using the square law for a MOSFET used as a switch. There, it's in the ohmic region, so use R D S on.",
+   "kind": "nmos",
+   "lines": [
+    "✓ pick the root with VGS > VT",
+    "✓ check VDS ≥ VGS − VT",
+    "✓ switch → use RDS(on), not the square law"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: CMOS INVERTER",
+   "lines": [
+    "ID = k (VGS − VT)²",
+    "Quadratic: keep the root with VGS > VT",
+    "gm = 2k (VGS − VT), Av = −gm RD"
+   ],
+   "cta": "CMOS inverter is next",
+   "narration": "Quick recap. Use the square law in saturation, check V D S is at least V G S minus V T, pick the quadratic root with V G S above threshold, and use g m equals two k times V G S minus V T for the gain. Next, the circuit built from two MOSFETs that powers every computer: the C M O S inverter. See you there."
+  }
+ ]
+}

@@ -1,0 +1,139 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "MOSFET Explained in Depth | Enhancement & Depletion, Threshold, Square Law, Biasing | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "MOSFET Explained in Depth | Enhancement & Depletion, Threshold, Square Law, Biasing | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The MOSFET in depth: N-channel enhancement MOSFET structure, threshold voltage VT, the square law ID = k(VGS - VT)^2, ohmic and saturation regions, enhancement vs depletion vs P-channel, voltage-divider biasing with every value calculated (ID 0.764 mA, VGS 3.24 V, VDS 6.04 V), transconductance and amplifier gain -8.4, and processor power stages.",
+  "tags": [
+   "mosfet",
+   "enhancement mosfet",
+   "depletion mosfet",
+   "threshold voltage",
+   "mosfet biasing",
+   "transconductance",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "MOSFET",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "THE MOSFET IN DEPTH",
+   "subtitle": "Threshold, square law, regions and biasing",
+   "narration": "Welcome back. Last time we compared MOSFETs with B J Ts. Today we go deep into the MOSFET itself: how its channel forms, the square law that governs its current, its two regions, the different types, and how to bias it as an amplifier, with every value calculated."
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "The channel, step by step",
+   "narration": "Our N channel enhancement MOSFET: P body, N plus source and drain, thin oxide, metal gate. Watch the gate voltage rise. Below two volts, the threshold, there's no channel, and no current. At two volts, a thin layer of electrons, called an inversion layer, forms under the gate. Above it, the channel deepens, and the current grows quickly.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "transfer",
+   "chapter": "The square law",
+   "narration": "Plot it: drain current against gate voltage. Zero below the threshold. Above it, the current follows a square law: I D equals k times V G S minus V T, squared. With k equal to zero point five milliamps per volt squared: at three volts, zero point five milliamps. At four volts, two milliamps. At six volts, eight milliamps.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "output",
+   "chapter": "Ohmic and saturation",
+   "narration": "The output curves. At low drain voltage, the MOSFET acts as a resistor whose value the gate controls: the ohmic region. That's where it's used as a switch. Once V D S exceeds V G S minus V T, the channel pinches off at the drain end, and the current levels off: the saturation region. There, it's a voltage controlled current source, perfect for amplifying.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "Types of MOSFET",
+   "narration": "There are four types. Our N channel enhancement MOSFET is normally off, and needs a positive gate voltage. A P channel enhancement MOSFET is its mirror: normally off, and needs a negative gate voltage. A depletion MOSFET is built with a channel already there, so it's normally on, and the gate voltage can increase or reduce the current. Enhancement N and P channel types are by far the most common, and together they make C M O S, as we'll see.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "circuit",
+   "chapter": "Biasing it",
+   "narration": "To use it as an amplifier, we bias it in saturation. A voltage divider, two megohms and one megohm, sets the gate at four volts. No gate current flows, so the divider isn't loaded at all, and we can use huge resistors. R S, one kilohm, in the source gives stability. R D, six point eight kilohms, in the drain. The result: zero point seven six milliamps, V G S three point two four volts, and V D S six point zero four volts.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's solve it. V G is twelve times one megohm over three megohms, four volts. V G S equals V G minus I D R S, four minus I D times one k. Put that into the square law: I D equals zero point five milliamps times two minus I D times one k, squared. The solution: I D is zero point seven six four milliamps. So V G S is four minus zero point seven six four, three point two four volts. V D S equals twelve minus zero point seven six four times seven point eight k, six point zero four volts. Check saturation: V D S, six, is bigger than V G S minus V T, one point two four. Yes. The transconductance g m is two k times V G S minus V T, one point two four milliamps per volt. Gain: minus g m R D, minus eight point four.",
+   "kind": "nmos",
+   "lines": [
+    "VG = 12 × 1M ÷ 3M = 4 V (IG = 0)",
+    "VGS = 4 − ID × 1k",
+    "ID = 0.5m × (VGS − 2)² → ID = 0.764 mA",
+    "VGS = 3.24 V, VDS = 12 − 0.764 × 7.8 = 6.04 V",
+    "saturation? 6.04 > 3.24 − 2 = 1.24 ✓",
+    "gm = 2k(VGS − VT) = 1.24 mA/V",
+    "Av = −gm × RD = −1.24m × 6.8k = −8.4"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: powering processors",
+   "narration": "The buck converters that feed your laptop's processor are built from MOSFETs. They switch tens of amps, hundreds of thousands of times a second, with only milliohms of resistance when on. And the processor itself is built from billions of tiny MOSFETs. The MOSFET is the most manufactured device in human history."
+  },
+  {
+   "type": "fet",
+   "mode": "output",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using the square law in the ohmic region. It only applies in saturation, when V D S is at least V G S minus V T. Always check. Two: forgetting that the gate current is zero. With MOSFETs, the divider voltage is exact, no loading. Three: expecting MOSFET amplifiers to match B J T gain. Their transconductance is lower at the same current, so a single stage gives less gain.",
+   "kind": "nmos"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: MOSFET NUMERICALS",
+   "lines": [
+    "Channel forms when VGS > VT",
+    "Saturation: ID = k (VGS − VT)²",
+    "gm = 2k (VGS − VT), Av = −gm RD"
+   ],
+   "cta": "MOSFET numericals are next",
+   "narration": "Quick recap. A MOSFET's channel forms above the threshold voltage. In saturation, I D equals k times V G S minus V T squared. Bias it with a divider, which the gate doesn't load, and a source resistor. The gain is minus g m R D, with g m equal to two k times V G S minus V T. Next, MOSFET numericals, solved step by step. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "",
+   "narration": "How does a MOSFET turn on? Raise the gate voltage. Above two volts, the threshold, electrons gather under the gate and form a channel. No channel, no current. Channel, current.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "transfer",
+   "chapter": "",
+   "narration": "And the current follows a square law: k times V G S minus V T, squared. Three volts, half a milliamp. Four volts, two milliamps. Six volts, eight.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "output",
+   "chapter": "",
+   "narration": "Below pinch off, it's a resistor, used as a switch. Above, it's a current source, used as an amplifier. That's the MOSFET. Full lesson on the channel.",
+   "kind": "nmos"
+  }
+ ]
+}

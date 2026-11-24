@@ -1,0 +1,136 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "CMOS Inverter Explained | Two MOSFETs, the Building Block of Every Chip | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "CMOS Inverter Explained | Two MOSFETs, the Building Block of Every Chip | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The CMOS inverter step by step: a P-channel MOSFET on top and an N-channel below, input low turns the PMOS on and output goes high, input high turns the NMOS on and output goes low, the transfer curve and switching point, why it draws almost no power when idle, dynamic power P = C V^2 f calculated, and why processors contain billions of them.",
+  "tags": [
+   "cmos inverter",
+   "cmos",
+   "pmos nmos",
+   "logic gate",
+   "digital electronics",
+   "power consumption",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "CMOS Inverter",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "THE CMOS INVERTER",
+   "subtitle": "Two MOSFETs: the building block of every computer",
+   "narration": "Welcome back. Our last F E T video, and the most important circuit in modern technology. Every processor, every memory chip, every phone is built from billions of copies of this: the C M O S inverter. Just two MOSFETs, one P channel and one N channel. Let's see how it works."
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Building it",
+   "narration": "At the top, a P channel MOSFET, with its source connected to the supply, five volts. At the bottom, an N channel MOSFET, with its source connected to ground. Their drains meet in the middle: that's the output. And both gates are joined together: that's the input. C M O S stands for complementary MOS: one of each type, working as a pair.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Input low, output high",
+   "narration": "Start with the input at zero volts. For the N channel MOSFET, V G S is zero, below its threshold: off. For the P channel MOSFET, the gate is five volts below its source: it's fully on. So the output connects to the supply through the P channel transistor: five volts. Input low, output high. As the input rises past the switching point, around half the supply, the two swap. Input high: the N channel turns on, the P channel turns off, and the output connects to ground: zero volts. Input high, output low. That's an inverter: a NOT gate.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Almost no power",
+   "narration": "Here's why the whole world uses it. In either steady state, one transistor is always off. So there's no path from the supply to ground, and almost no current flows. A C M O S chip sitting still uses almost no power. Current only flows briefly while switching, to charge and discharge the tiny capacitance of the next gate.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "So the power depends on switching. Each switch charges a capacitance C to the supply voltage V. The dynamic power is C times V squared times f. For one gate driving one femtofarad at one volt and one gigahertz: ten to the minus fifteen, times one, times ten to the nine, one microwatt. A billion such gates switching all the time would need a thousand watts. That's why chips run at about one volt, and only a fraction of gates switch at once. Halving the voltage cuts the power by four.",
+   "kind": "nmos",
+   "lines": [
+    "P = C × V² × f",
+    "C = 1 fF, V = 1 V, f = 1 GHz",
+    "P = 10⁻¹⁵ × 1² × 10⁹ = 1 µW per gate",
+    "× 10⁹ gates all switching = 1000 W!",
+    "halve V → P ÷ 4"
+   ],
+   "base": "cmos"
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Other gates",
+   "narration": "Inverters are just the start. Put two N channel MOSFETs in series and two P channel MOSFETs in parallel, and you get a NAND gate. Swap them, and you get a NOR gate. With NAND gates alone you can build any logic circuit: adders, memories, entire processors. All from the same complementary idea.",
+   "kind": "nmos"
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: billions in your processor",
+   "narration": "A modern processor contains tens of billions of transistors, nearly all arranged as C M O S gates. That's why the buck converters around it supply about one volt: lower voltage means less power per switch, by V squared. And it's why your phone's battery lasts all day when idle: C M O S barely uses any power when it isn't switching."
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: putting the P channel MOSFET at the bottom. The P channel goes to the supply, the N channel to ground. Two: thinking C M O S uses no power. It uses power whenever it switches, C V squared f. Three: leaving a C M O S input floating. It can drift to the switching point, where both transistors conduct at once, and the chip heats up.",
+   "kind": "nmos"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: POWER AMPLIFIERS",
+   "lines": [
+    "PMOS to VDD, NMOS to ground, gates joined",
+    "in LOW → out HIGH, in HIGH → out LOW",
+    "Idle power ≈ 0; dynamic P = C V² f"
+   ],
+   "cta": "Power amplifiers are next",
+   "narration": "Quick recap. A C M O S inverter has a P channel MOSFET to the supply and an N channel to ground. Input low turns on the P channel, output high. Input high turns on the N channel, output low. One is always off, so it uses almost no power when idle, and only C V squared f when switching. That completes F E Ts. Next, power amplifiers. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "",
+   "narration": "Every computer is built from this: two MOSFETs. Input low: the top one turns on, output high. Input high: the bottom one turns on, output low.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "",
+   "narration": "One is always off, so in steady state there's no path from supply to ground. Almost no power.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "Power is only used when switching: C times V squared times f. That's why chips run at about one volt. Full lesson on the channel.",
+   "kind": "nmos",
+   "lines": [
+    "P = C × V² × f",
+    "halve V → P ÷ 4"
+   ],
+   "base": "cmos"
+  }
+ ]
+}

@@ -1,0 +1,107 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "MOSFET vs BJT | Which Transistor to Use and Why | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "MOSFET vs BJT | Which Transistor to Use and Why | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "MOSFET versus BJT side by side: current control vs voltage control, gate current of zero, how an insulated gate creates a channel at VGS above VT, switching 1 A with each (0.2 W vs 0.05 W of heat), switching speed, cost, gain, noise, and when to choose each, every value calculated.",
+  "tags": [
+   "mosfet vs bjt",
+   "mosfet",
+   "bjt",
+   "transistor comparison",
+   "power switching",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "MOSFET vs BJT",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "MOSFET vs BJT",
+   "subtitle": "Two kinds of transistor, and when to use each",
+   "narration": "Welcome back. We've met the B J T and the J F E T. Now the transistor that runs the modern world: the MOSFET. It's in every phone, computer and power supply. Today we compare it head to head with the B J T, so you'll always know which one to choose."
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "How a MOSFET is built",
+   "narration": "An N channel enhancement MOSFET starts with a P type body. Two heavily doped N regions sit at the surface: the source and the drain. Between them, a very thin layer of glass, silicon dioxide, and on top of it, the metal gate. With zero volts on the gate, there's no channel. The P body blocks current. The MOSFET is off.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "Making a channel",
+   "narration": "Now raise the gate voltage. The positive gate attracts electrons to the surface just under the oxide. Above the threshold voltage, V T, two volts here, enough electrons gather to form a thin N type channel joining source and drain. Current flows. The higher the gate voltage, the deeper the channel, and the more current. And because the gate sits on glass, an insulator, no D C current flows into it at all.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "Switching a 1 A load",
+   "narration": "Let's switch a one amp load with each. A B J T needs base current, around twenty milliamps for one amp, and when on, it still has about zero point two volts across it: zero point two watts of heat. A power MOSFET needs zero gate current. When on, it behaves like a tiny resistor, R D S on, maybe zero point zero five ohms: one amp squared times zero point zero five, just zero point zero five watts. Four times less heat.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "The comparison",
+   "narration": "Here's the full picture. The B J T is current controlled, the MOSFET voltage controlled. The B J T needs drive current, the MOSFET almost none. The MOSFET wastes less power when switched on, and switches faster. So why keep B J Ts? They're cheap, they turn on reliably at just zero point seven volts, they have higher gain per stage for small analog signals, and they handle static electricity better. A MOSFET's thin gate oxide can be destroyed by a static spark.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers, for switching one amp. B J T: base current, one amp over beta of fifty, twenty milliamps. Heat: V C E sat times I C, zero point two volts times one amp, zero point two watts. MOSFET: gate current, zero. Heat: I squared times R D S on, one squared times zero point zero five, zero point zero five watts. And for the gate: the MOSFET only needs current while its gate capacitance charges, for a few nanoseconds, during each switch.",
+   "kind": "nmos",
+   "lines": [
+    "BJT: IB = 1 A ÷ β(50) = 20 mA",
+    "BJT heat = 0.2 V × 1 A = 0.2 W",
+    "MOSFET: IG = 0 (insulated gate)",
+    "MOSFET heat = I² × RDS(on)",
+    "            = 1² × 0.05 = 0.05 W",
+    "→ 4× less heat, no drive current"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: from a micro pin",
+   "narration": "For a microcontroller switching a fan, motor or L E D strip, the MOSFET is usually the better choice today. The pin just sets a voltage on the gate, draws no current, and the MOSFET switches amps with very little heat. A B J T would need a base resistor and would load the pin. But for small signals and simple, cheap circuits, the B J T is still everywhere."
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: driving a MOSFET from three point three volts when its threshold is near that. It only half turns on, and gets hot. Use a logic level MOSFET. Two: leaving the gate floating. With no current path, it can drift on. Always add a pull down resistor. Three: handling MOSFETs carelessly. Static electricity can punch through the thin gate oxide.",
+   "kind": "nmos"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: MOSFET IN DEPTH",
+   "lines": [
+    "BJT: current-controlled · MOSFET: voltage-controlled",
+    "MOSFET: IG = 0, low RDS(on), fast",
+    "BJT: cheap, 0.7 V, high small-signal gain"
+   ],
+   "cta": "MOSFET in depth is next",
+   "narration": "Quick recap. A B J T is controlled by current and drops about zero point two volts when on. A MOSFET is controlled by voltage, takes no gate current, and behaves like a tiny resistor when on, so it wastes less power and switches faster. B J Ts remain great for cheap, simple and small signal circuits. Next, the MOSFET in depth. See you there."
+  }
+ ]
+}
