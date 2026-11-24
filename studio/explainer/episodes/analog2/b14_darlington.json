@@ -1,0 +1,142 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Darlington Pair Explained | Two Transistors, β of 10,000 | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Darlington Pair Explained | Two Transistors, β of 10,000 | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The Darlington pair step by step: Q1's emitter feeding Q2's base, how 10 uA at the input becomes 100 mA at the load, total gain beta1 x beta2 = 10,000 calculated, the 1.4 V base-emitter drop, higher saturation voltage and slower switching, and driving a motor or relay straight from a weak signal.",
+  "tags": [
+   "darlington pair",
+   "darlington transistor",
+   "current gain",
+   "beta",
+   "transistor driver",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Darlington Pair",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "DARLINGTON PAIR",
+   "subtitle": "Two transistors, one huge gain",
+   "narration": "Welcome back. One transistor multiplies current by about a hundred. What if that's not enough? Connect two together the right way, and the gains multiply: a hundred times a hundred, ten thousand. That's the Darlington pair. Let's build it and calculate it."
+  },
+  {
+   "type": "pair",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Twelve volts. First transistor, Q one, with its base fed through R B, one point zero six megohms. Now the key connection: Q one's emitter goes straight into the base of Q two. Q two's emitter goes to ground. Both collectors connect together, to the load, a fifty ohm motor or relay, from the supply.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "How the current grows",
+   "narration": "Follow the current. Ten microamps into Q one's base. Q one multiplies it by about a hundred, and its emitter carries one point zero one milliamps. That becomes Q two's base current. Q two multiplies it by a hundred again. The load current: a hundred milliamps. Ten microamps in, a hundred milliamps out. Ten thousand times.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "sweep",
+   "chapter": "Controlling it",
+   "narration": "Watch as the input current changes from two to ten microamps. The load current follows, from twenty to a hundred milliamps. A tiny change at the input makes a huge change at the output.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. The base loop now has two base emitter drops: zero point seven plus zero point seven, one point four volts. So I B one is twelve minus one point four, over one point zero six megohms, ten microamps. Q one's emitter current is beta plus one times that, one point zero one milliamps, which is Q two's base current. Q two's collector current: a hundred times one point zero one, about a hundred milliamps. The overall gain is about beta one times beta two, ten thousand. And V C E is twelve minus a hundred milliamps times fifty ohms, seven volts.",
+   "kind": "darlington",
+   "lines": [
+    "VBE(total) = 0.7 + 0.7 = 1.4 V",
+    "IB1 = (12 − 1.4) ÷ 1.06 MΩ = 10 µA",
+    "IB2 = IE1 = 101 × 10 µA = 1.01 mA",
+    "IC ≈ 100 × 1.01 mA ≈ 100 mA",
+    "β(total) ≈ β1 × β2 = 10 000",
+    "VCE = 12 − 0.1 × 50 = 7 V"
+   ]
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "The trade-offs",
+   "narration": "There's a price. One: the input needs one point four volts to turn on, not zero point seven. Two: when fully on, the Darlington can't saturate as hard as one transistor. Q two's collector can't go lower than Q one's V C E sat plus Q two's V B E, about zero point nine volts. At high current, that wastes power as heat. Three: it switches off more slowly, because Q two's base has no easy path to discharge.",
+   "kind": "darlington"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: driving motors from a sensor",
+   "narration": "Darlingtons are perfect when a weak signal must drive a heavy load. A light sensor or a microcontroller pin, giving microamps, can drive a motor, a solenoid, or a string of relays directly. Chips like the ULN two thousand and three contain seven Darlington pairs, and they're used in printers, stepper motors and industrial controllers.",
+   "title": "REAL WORLD: A WEAK SIGNAL DRIVING A MOTOR",
+   "sub": "microamps from a sensor, ×10 000 through a Darlington, enough to spin a motor",
+   "src": "sensor",
+   "stage": "DARLINGTON",
+   "sink": "speaker",
+   "note1": "~10 µA",
+   "note2": "β ≈ 10 000",
+   "note3": "~100 mA load"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using zero point seven volts for the base emitter drop. A Darlington needs one point four. Two: expecting a saturation voltage of zero point two volts. It's closer to one volt, so it heats up more at high currents. Three: using it in fast switching circuits. Its slow turn off makes it a poor choice above a few kilohertz.",
+   "kind": "darlington"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: CURRENT MIRROR",
+   "lines": [
+    "Q1 emitter → Q2 base",
+    "β ≈ β1 × β2 = 10 000",
+    "VBE = 1.4 V, VCE(sat) ≈ 0.9 V, slower"
+   ],
+   "cta": "Current mirror is next",
+   "narration": "Quick recap. In a Darlington pair, the first transistor's emitter drives the second transistor's base, so the gains multiply: about beta one times beta two, ten thousand. The cost: one point four volts to turn on, a higher saturation voltage, and slower switching. Next, the current mirror, the circuit that copies a current. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "",
+   "narration": "How do you drive a motor with ten microamps? Connect two transistors so the first one's emitter feeds the second one's base. Ten microamps becomes one milliamp, then a hundred milliamps.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "sweep",
+   "chapter": "",
+   "narration": "The gains multiply: a hundred times a hundred, ten thousand. Change the input a little, and the load current changes a lot.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "The catch: it needs one point four volts to turn on, and it runs warmer. That's the Darlington pair. Full lesson on the channel.",
+   "kind": "darlington",
+   "lines": [
+    "VBE = 1.4 V",
+    "β ≈ β1 × β2 = 10 000",
+    "VCE(sat) ≈ 0.9 V"
+   ]
+  }
+ ]
+}

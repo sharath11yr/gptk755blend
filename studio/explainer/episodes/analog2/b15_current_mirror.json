@@ -1,0 +1,108 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Current Mirror Explained | Copying a Current with Two Transistors | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Current Mirror Explained | Copying a Current with Two Transistors | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The BJT current mirror step by step: a diode-connected transistor Q1 setting the base voltage, Q2 copying its current, Iref = (VCC - 0.7) / R = 1 mA calculated, Iout = Iref x beta / (beta + 2) = 0.98 mA, the output staying constant as the load changes from 1 k to 12 k until Q2 saturates, matching and temperature, and its use inside every op-amp chip.",
+  "tags": [
+   "current mirror",
+   "current source",
+   "bjt current mirror",
+   "diode connected transistor",
+   "integrated circuits",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Current Mirror",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "CURRENT MIRROR",
+   "subtitle": "Set a current once, copy it anywhere",
+   "narration": "Welcome back. Our last B J T circuit, and one of the cleverest. The current mirror sets a current in one branch, and copies it, exactly, into another branch, no matter what's connected there. It's inside almost every analog chip ever made. Let's build it."
+  },
+  {
+   "type": "pair",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Two matched transistors, side by side, with their bases joined and both emitters to ground. On the left, a resistor R, eleven point three kilohms, from twelve volts to Q one's collector. And here's the trick: Q one's collector is tied to its own base. Now Q one behaves like a diode. On the right, Q two's collector goes to the load.",
+   "kind": "mirror"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "How it copies",
+   "narration": "Twelve volts across R and Q one's base emitter drop sets the reference current: twelve minus zero point seven, over eleven point three k, one milliamp. That current gives Q one a base emitter voltage of about zero point seven volts. Q two's base is connected to the same point, so it has exactly the same base emitter voltage. Two identical transistors with the same V B E carry the same current. So Q two copies it: about one milliamp through the load.",
+   "kind": "mirror"
+  },
+  {
+   "type": "pair",
+   "mode": "sweep",
+   "chapter": "Change the load",
+   "narration": "Now the real test. Change the load from one kilohm to fourteen. The output current stays at zero point nine eight milliamps, flat, whatever the load. That's a current source. Until the load gets so big that Q two runs out of voltage: at about twelve kilohms, Q two saturates, and the current finally falls.",
+   "kind": "mirror"
+  },
+  {
+   "type": "pair",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. I ref equals V C C minus V B E, over R: eleven point three over eleven point three k, one milliamp. The two base currents come out of I ref, so the output is slightly less: I out equals I ref times beta over beta plus two, a hundred over a hundred and two, zero point nine eight milliamps. The maximum load: Q two needs about zero point two volts, so R L max is twelve minus zero point two, over zero point nine eight milliamps, about twelve kilohms.",
+   "kind": "mirror",
+   "lines": [
+    "Iref = (12 − 0.7) ÷ 11.3 kΩ = 1 mA",
+    "Iout = Iref × β ÷ (β + 2)",
+    "     = 1 mA × 100 ÷ 102 = 0.98 mA",
+    "RL(max) = (12 − 0.2) ÷ 0.98 mA",
+    "        ≈ 12 kΩ",
+    "Iout ≈ Iref, whatever the load"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: inside every op-amp",
+   "narration": "Open up an op amp chip and you'll find current mirrors everywhere. They bias the input stage, act as active loads that give huge gain, and set the currents of every stage from one reference. On a chip, the transistors are made side by side at the same moment, so they match almost perfectly, which is exactly what a mirror needs.",
+   "title": "REAL WORLD: INSIDE EVERY OP-AMP CHIP",
+   "sub": "current mirrors bias the stages and act as active loads, all from one reference current",
+   "src": "sensor",
+   "stage": "MIRRORS + DIFF PAIR",
+   "stage2": "GAIN STAGE",
+   "sink": "adc",
+   "note1": "tiny input",
+   "note2": "every stage biased by mirrors",
+   "note3": "huge gain"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using two transistors that aren't matched. If their V B E differ by just a few millivolts, the currents differ a lot. That's why mirrors are built on chips, or from matched pairs. Two: forgetting the base currents. I out is I ref times beta over beta plus two, slightly less than I ref. Three: letting the load get too big. Once Q two saturates, it's no longer a current source.",
+   "kind": "mirror"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: JFET",
+   "lines": [
+    "Q1 diode-connected sets VBE",
+    "Q2 same VBE → same current",
+    "Iout = Iref × β ÷ (β + 2)"
+   ],
+   "cta": "FETs are next",
+   "narration": "Quick recap. In a current mirror, a diode connected transistor sets a base emitter voltage from the reference current, and a matched second transistor with the same V B E copies that current into any load, until it saturates. I out is I ref times beta over beta plus two. That completes B J Ts. Next, we start field effect transistors, with the J F E T. See you there."
+  }
+ ]
+}

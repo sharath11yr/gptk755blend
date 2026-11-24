@@ -2511,6 +2511,16 @@ export const AmpScene: React.FC<any> = ({ dur, cfg = "ce", mode = "run", bypass 
   let right: React.ReactNode;
   if (mode === "calc") right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
     opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+  else if (mode === "xc") { const fx = (f: number) => GX + (Math.log10(f) - 1) / 3.3 * GW, yz = (z: number) => 820 - (Math.log10(z)) / 4 * 560;
+    const q: string[] = []; for (let k = 0; k <= 200; k++) { const f = Math.pow(10, 1 + 3.3 * k / 200); if (k / 200 > p * 1.2) break; q.push(`${fx(f)},${yz(1 / (2 * Math.PI * f * 100e-6))}`); }
+    right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={30}>REACTANCE OF Cin = 100 µF</text>
+      <line x1={GX} y1={820} x2={GX + GW} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={820} x2={GX} y2={240} stroke={L.dim} strokeWidth={3} />
+      {[10, 100, 1000, 10000].map((f) => <text key={f} x={fx(f)} y={860} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{f >= 1000 ? f / 1000 + "k" : f} Hz</text>)}
+      {[1, 10, 100, 1000].map((z) => <text key={z} x={GX - 10} y={yz(z) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{z >= 1000 ? z / 1000 + "k" : z} Ω</text>)}
+      <line x1={GX} y1={yz(114)} x2={GX + GW} y2={yz(114)} stroke={L.red} strokeDasharray="8 8" strokeWidth={3} /><text x={GX + GW} y={yz(114) - 12} textAnchor="end" fill={L.red} fontFamily={MONO} fontSize={22} fontWeight={700}>Zin ÷ 10 = 114 Ω</text>
+      <line x1={fx(20)} y1={820} x2={fx(20)} y2={240} stroke={L.amber} strokeDasharray="6 8" strokeWidth={2} /><text x={fx(20) + 8} y={260} fill={L.amber} fontFamily={MONO} fontSize={22} fontWeight={700}>20 Hz</text>
+      <polyline points={q.join(" ")} fill="none" stroke={L.green} strokeWidth={6} />
+      <text x={GX + GW / 2} y={940} textAnchor="middle" {...T1} fontSize={28}>at 20 Hz: XC = 1 ÷ (2π × 20 × 100µ) = 80 Ω</text></g>; }
   else if (mode === "compare") { const rows = [["", "CE", "CB", "CC"], ["voltage gain", "−149", "+149", "0.99"], ["input Z", "1.1 kΩ", "13 Ω", "7.1 kΩ"], ["output Z", "2 kΩ", "2 kΩ", "≈13 Ω"], ["phase", "180°", "0°", "0°"], ["used for", "gain", "high freq", "buffer"]];
     right = <g>{rows.map((r, i) => r.map((c, j) => <text key={`${i}${j}`} x={GX + (j === 0 ? 0 : 230 + (j - 1) * 190)} y={260 + i * 100} textAnchor={j === 0 ? "start" : "middle"}
       fill={i === 0 ? L.amber : j === 0 ? L.dim : L.text} fontFamily={j === 0 ? SANS : MONO} fontSize={i === 0 ? 34 : 28} fontWeight={800}
@@ -2565,3 +2575,77 @@ export const ChainScene: React.FC<any> = ({ title = "", sub = "", src = "mic", s
   </svg></AbsoluteFill>;
 };
 ANALOG_SCENES.chain = ChainScene;
+
+// ------------------------------------------------------------------ Darlington pair and current mirror
+/** {"type":"pair","kind":"darlington"|"mirror","mode":"build"|"run"|"sweep"|"calc","lines":[...]}
+ *  Darlington: β1 = β2 = 100, β ≈ 10 000, RB = 1.06 MΩ -> IB1 = 10 µA, IC = 100 mA into RL = 50 Ω, VBE = 1.4 V.
+ *  Mirror: R = 11.3 kΩ -> Iref = 1 mA; Iout = Iref × β/(β+2) = 0.98 mA, flat until RL ≈ 11.8 kΩ. */
+export const PairScene: React.FC<any> = ({ dur, kind = "darlington", mode = "run", lines = [] }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const { width: VW, height: VH } = useVideoConfig();
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const rv = (a: number) => mode === "build" ? interpolate(p, [a, a + 0.12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
+  const W = (pts: string, c = L.wire) => <polyline points={pts} fill="none" stroke={c} strokeWidth={6} strokeLinejoin="round" />;
+  const Q = (x: number, y: number, lab: string, mirror = false) => { const sx = mirror ? -1 : 1; return <g transform={`translate(${x},${y}) scale(${sx},1)`}>
+    <circle r={58} fill={L.bg0} stroke={L.amber} strokeWidth={5} /><line x1={-20} y1={-32} x2={-20} y2={32} stroke={L.amber} strokeWidth={8} />
+    <line x1={-58} y1={0} x2={-20} y2={0} stroke={L.amber} strokeWidth={6} /><line x1={-20} y1={-14} x2={18} y2={-48} stroke={L.amber} strokeWidth={6} /><line x1={18} y1={-48} x2={18} y2={-58} stroke={L.amber} strokeWidth={6} />
+    <line x1={-20} y1={14} x2={18} y2={48} stroke={L.amber} strokeWidth={6} /><line x1={18} y1={48} x2={18} y2={58} stroke={L.amber} strokeWidth={6} /><polygon points="18,48 -4,43 7,28" fill={L.amber} />
+    <text x={mirror ? -70 : 70} y={8} textAnchor="middle" transform={mirror ? "scale(-1,1)" : undefined} {...T1} fontSize={26}>{lab}</text></g>; };
+  const rail = 200, gnd = 880;
+  let left: React.ReactNode, right: React.ReactNode;
+  const GX = 1040, GW = 780;
+  const row = (y: number, a: string, b: string, col: string) => <g><text x={GX} y={y} fill={L.dim} fontFamily={SANS} fontSize={30} fontWeight={700}>{a}</text>
+    <text x={GX + GW} y={y} textAnchor="end" fill={col} fontFamily={MONO} fontSize={34} fontWeight={800}>{b}</text></g>;
+  if (kind === "darlington") {
+    const ib = 10e-6 * (mode === "sweep" ? 0.2 + 0.8 * p : 1), ie1 = 101 * ib, ic = 10000 * ib;
+    left = <g>
+      <line x1={200} y1={rail} x2={900} y2={rail} stroke={L.red} strokeWidth={6} /><text x={200} y={rail - 20} {...T1} fontSize={26} fill={L.red}>+12 V</text>
+      <line x1={200} y1={gnd} x2={900} y2={gnd} stroke={L.wire} strokeWidth={6} />
+      <g opacity={rv(0)}><Res x={300} y={360} ohm={1.06e6} label="RB" />{W(`300,${rail} 300,290`)}{W(`300,430 300,480 422,480`)}{Q(480, 480, "Q1")}</g>
+      <g opacity={rv(0.25)}>{W(`498,538 498,640 602,640`)}{Q(660, 640, "Q2")}{W(`678,698 678,${gnd}`)}</g>
+      <g opacity={rv(0.45)}>{W(`498,422 498,300 678,300`)}<Res x={678} y={360} ohm={50} label="LOAD" />{W(`678,${rail} 678,290`)}{W(`678,430 678,582`)}</g>
+      {mode !== "build" && mode !== "calc" && <g>
+        <Dots pts={[[300, rail], [300, 480], [430, 480], [498, 538], [498, 640]]} t={t} speed={25} gap={70} r={5} color={L.cyan} />
+        <Dots pts={[[498, 560], [498, 640], [610, 640], [678, 698], [678, gnd]]} t={t} speed={50} gap={45} r={6} color={L.amber} />
+        <Dots pts={[[678, rail], [678, 582], [678, gnd]]} t={t} speed={60 + ic * 800} gap={24} />
+        <text x={320} y={540} {...T1} fontSize={24} fill={L.cyan}>IB1 = {uA(ib)}</text>
+        <text x={360} y={700} {...T1} fontSize={24} fill={L.amber}>IB2 = IE1 = {mAs(ie1)}</text>
+        <text x={710} y={480} {...T1} fontSize={26} fill={L.electron}>IC = {(ic * 1000).toFixed(0)} mA</text></g>}</g>;
+    if (mode === "calc") right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
+      opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+    else right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>DARLINGTON PAIR</text>
+      {row(320, "Q1 base current", uA(ib), L.cyan)}{row(410, "Q1 emitter = Q2 base", mAs(ie1), L.amber)}{row(500, "load current", `${(ic * 1000).toFixed(0)} mA`, L.electron)}
+      {row(590, "overall gain β1 × β2", "≈ 10 000", L.green)}{row(680, "base-emitter drop", "0.7 + 0.7 = 1.4 V", L.text)}</g>;
+  } else {
+    const RL = mode === "sweep" ? 1000 + 13000 * p : 5000; const iref = 1e-3, iout0 = iref * 100 / 102;
+    const vce2 = 12 - RL * iout0; const sat = vce2 < 0.2; const iout = sat ? 11.8 / RL : iout0;
+    left = <g>
+      <line x1={200} y1={rail} x2={900} y2={rail} stroke={L.red} strokeWidth={6} /><text x={200} y={rail - 20} {...T1} fontSize={26} fill={L.red}>+12 V</text>
+      <line x1={200} y1={gnd} x2={900} y2={gnd} stroke={L.wire} strokeWidth={6} />
+      <g opacity={rv(0)}><Res x={330} y={340} ohm={11.3e3} label="R" />{W(`330,${rail} 330,270`)}{W(`330,410 330,522`)}{Q(348, 580, "Q1", true)}{W(`330,638 330,${gnd}`)}</g>
+      <g opacity={rv(0.25)}>{W(`330,470 450,470 450,580 406,580`)}<text x={460} y={460} fill={L.amber} fontFamily={SANS} fontSize={22} fontWeight={700}>Q1: base tied to collector</text></g>
+      <g opacity={rv(0.4)}>{W(`450,580 602,580`)}{Q(660, 580, "Q2")}{W(`678,638 678,${gnd}`)}</g>
+      <g opacity={rv(0.6)}><Res x={678} y={340} ohm={RL} label="LOAD" />{W(`678,${rail} 678,270`)}{W(`678,410 678,522`)}</g>
+      {mode !== "build" && mode !== "calc" && <g>
+        <Dots pts={[[330, rail], [330, 522], [330, 638], [330, gnd]]} t={t} speed={90} gap={34} />
+        <Dots pts={[[678, rail], [678, 522], [678, 638], [678, gnd]]} t={t} speed={90 * iout / iref} gap={34} />
+        <text x={310} y={250} textAnchor="end" {...T1} fontSize={24} fill={L.electron}>Iref = 1 mA</text>
+        <text x={740} y={480} {...T1} fontSize={26} fill={sat ? L.red : L.green}>Iout = {mAs(iout)}</text></g>}</g>;
+    if (mode === "calc") right = <g>{(lines as string[]).map((l, k) => <text key={k} x={GX} y={220 + k * 92} fill={k === lines.length - 1 ? L.green : L.text} fontFamily={MONO} fontSize={28} fontWeight={700}
+      opacity={interpolate(p, [k / Math.max(1, lines.length) * 0.85, k / Math.max(1, lines.length) * 0.85 + 0.06], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>{l}</text>)}</g>;
+    else { const rx = (r: number) => GX + (r - 1000) / 13000 * GW, iy = (i: number) => 820 - i / 1.5e-3 * 560;
+      const q: string[] = []; for (let k = 0; k <= 200; k++) { const r = 1000 + 13000 * k / 200; if (mode === "sweep" && r > RL) break; const v = 12 - r * iout0; q.push(`${rx(r)},${iy(v < 0.2 ? 11.8 / r : iout0)}`); }
+      right = <g><text x={GX + GW / 2} y={170} textAnchor="middle" {...T1} fontSize={30}>OUTPUT CURRENT vs LOAD</text>
+        <line x1={GX} y1={820} x2={GX + GW} y2={820} stroke={L.dim} strokeWidth={3} /><line x1={GX} y1={820} x2={GX} y2={240} stroke={L.dim} strokeWidth={3} />
+        {[1, 4, 8, 12, 14].map((r) => <text key={r} x={rx(r * 1000)} y={860} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{r}k</text>)}
+        {[0, 0.5, 1, 1.5].map((m) => <text key={m} x={GX - 10} y={iy(m / 1000) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{m} mA</text>)}
+        <polyline points={q.join(" ")} fill="none" stroke={L.green} strokeWidth={6} />
+        <line x1={rx(12040)} y1={820} x2={rx(12040)} y2={240} stroke={L.red} strokeDasharray="6 8" strokeWidth={2} /><text x={rx(12040) - 8} y={270} textAnchor="end" fill={L.red} fontFamily={MONO} fontSize={20}>Q2 saturates</text>
+        <text x={GX + GW / 2} y={940} textAnchor="middle" {...T1} fontSize={28}>LOAD = {(RL / 1000).toFixed(1)} kΩ → Iout = {mAs(iout)}{sat ? " (saturated)" : ""}</text></g>; }
+  }
+  const svg = (inner: React.ReactNode) => <AbsoluteFill><svg viewBox={VH > VW ? "0 0 1080 1920" : "0 0 1920 1080"} width="100%" height="100%">{inner}</svg></AbsoluteFill>;
+  if (VH > VW) return svg(<><g transform="translate(40,60)">{left}</g><g transform="translate(-960,900)">{right}</g></>);
+  return svg(<>{left}{right}</>);
+};
+ANALOG_SCENES.pair = PairScene;

@@ -1,0 +1,115 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Coupling, Bypass & Decoupling Capacitors Explained | Choosing Their Values | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Coupling, Bypass & Decoupling Capacitors Explained | Choosing Their Values | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The three capacitor jobs in a transistor amplifier, step by step: coupling capacitors that pass AC and block DC between stages, the emitter bypass capacitor that lifts the gain from -2 to -149, decoupling capacitors that keep the supply clean, and how to choose each value from its reactance at the lowest frequency (Cin 100 uF, XC 80 ohms at 20 Hz), every value calculated.",
+  "tags": [
+   "coupling capacitor",
+   "bypass capacitor",
+   "decoupling capacitor",
+   "capacitive reactance",
+   "bjt amplifier",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Amplifier Capacitors",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "COUPLING, BYPASS & DECOUPLING CAPACITORS",
+   "subtitle": "Three capacitors, three different jobs",
+   "narration": "Welcome back. Every transistor amplifier we've built had capacitors around it. They aren't decoration. Each has a precise job, and choosing the wrong value can ruin the bass, the gain, or the whole circuit. Today: coupling, bypass and decoupling capacitors, and how to calculate each one."
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Where they sit",
+   "narration": "Here's our common emitter amplifier. C in sits between the source and the base. C out sits between the collector and the next stage. Those two are coupling capacitors. C E sits across the emitter resistor. That's the bypass capacitor. And though it isn't drawn, every real amplifier also has capacitors from the supply to ground, called decoupling capacitors.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Coupling: pass AC, block DC",
+   "narration": "Why couple through a capacitor? The base sits at about two point six volts D C, set by the bias. If we connected the source directly, its own D C level would shift the base and wreck the Q point. A capacitor blocks D C completely, but lets the A C signal through. So the signal gets in, and the bias stays put. Same at the output: the next stage doesn't see the collector's six volts, only the signal.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "xc",
+   "chapter": "Choosing a coupling capacitor",
+   "narration": "How big? A capacitor's reactance rises at low frequencies: X C equals one over two pi f C. If X C is too big at the lowest frequency, it eats the signal, and the bass is lost. Rule of thumb: at the lowest frequency, X C should be at most a tenth of the input impedance it feeds. Our input impedance is one point one four k, so we want X C under one hundred and fourteen ohms at twenty hertz. A hundred microfarads gives eighty ohms. Good.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "bypass",
+   "chapter": "Bypass: get the gain back",
+   "narration": "The bypass capacitor's job is different. R E is great for D C stability, but for A C it kills the gain. With C E across it, A C signals go around R E. Watch: with C E, the gain is minus a hundred and forty nine. Remove it, and the gain drops to minus two. The bypass capacitor lets us have D C stability and A C gain at the same time.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Choosing the values",
+   "narration": "The calculations. Coupling capacitor: X C should be at most Z in over ten, one hundred and fourteen ohms at twenty hertz. C equals one over two pi times twenty times one hundred and fourteen, about seventy microfarads. Use a hundred. The bypass capacitor must short something much smaller, r e, thirteen point four ohms. For X C equal to r e at twenty hertz, C is one over two pi times twenty times thirteen point four, about six hundred microfarads. Use six hundred and eighty. That's why bypass capacitors are the biggest in the circuit.",
+   "cfg": "ce",
+   "lines": [
+    "Cin: XC ≤ Zin ÷ 10 = 114 Ω at 20 Hz",
+    "C ≥ 1 ÷ (2π × 20 × 114) = 70 µF → 100 µF",
+    "check: XC = 1 ÷ (2π × 20 × 100µ) = 80 Ω",
+    "CE: XC ≤ re = 13.4 Ω at 20 Hz",
+    "C ≥ 1 ÷ (2π × 20 × 13.4) = 594 µF → 680 µF",
+    "decoupling: 100 nF + 10-100 µF on supply"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: decoupling the supply",
+   "narration": "The third job: decoupling. A real supply has long wires with resistance and inductance. When the amplifier draws a sudden burst of current, the supply voltage dips, and that dip feeds into every stage, causing noise or even oscillation. A small capacitor, often one hundred nanofarads, right at each stage's supply pin, plus a larger one nearby, supplies those bursts locally. Look at any circuit board: those little capacitors next to every chip are decoupling capacitors.",
+   "title": "REAL WORLD: DECOUPLING EVERY STAGE",
+   "sub": "small capacitors beside each stage keep the supply clean, so noise doesn't travel between stages",
+   "src": "guitar",
+   "stage": "STAGE 1 + 100 nF",
+   "stage2": "STAGE 2 + 100 nF",
+   "sink": "speaker",
+   "note1": "weak signal",
+   "note2": "each stage has its own decoupling",
+   "note3": "clean, no hum or howl"
+  },
+  {
+   "type": "amp",
+   "mode": "bypass",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: coupling capacitors too small. The low frequencies vanish, and music sounds thin. Two: putting an electrolytic capacitor in backwards. Its positive side must face the higher D C voltage. At the input, that's the base side. Three: leaving out decoupling. The circuit may work on the bench, then hum, or squeal, when another stage is connected.",
+   "cfg": "ce"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: DARLINGTON PAIR",
+   "lines": [
+    "Coupling: pass AC, block DC, XC ≤ Zin ÷ 10",
+    "Bypass: shorts RE for AC → full gain",
+    "Decoupling: 100 nF at every supply pin"
+   ],
+   "cta": "Darlington pair is next",
+   "narration": "Quick recap. Coupling capacitors pass the signal and block D C, sized so their reactance is under a tenth of the next impedance at the lowest frequency. The bypass capacitor shorts R E for A C, restoring the gain, and it's the biggest. Decoupling capacitors keep the supply clean. Next, the Darlington pair: two transistors acting as one with enormous gain. See you there."
+  }
+ ]
+}

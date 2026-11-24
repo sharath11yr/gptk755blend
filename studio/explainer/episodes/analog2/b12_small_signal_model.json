@@ -1,0 +1,165 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "BJT Small-Signal Model Explained | re Model, Hybrid-π, Gain & Impedance Step by Step | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "BJT Small-Signal Model Explained | re Model, Hybrid-π, Gain & Impedance Step by Step | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The BJT small-signal model step by step: separating DC bias from the AC signal, why the base-emitter junction looks like a resistor re = 26 mV / IE for small signals, the re model and its link to the hybrid-pi model (r-pi = beta re, gm = IC / 26 mV), the AC equivalent circuit (capacitors and supply become shorts), and using it to calculate gain and impedances of CE, CB and CC.",
+  "tags": [
+   "small signal model",
+   "re model",
+   "hybrid pi model",
+   "transconductance",
+   "ac equivalent circuit",
+   "bjt amplifier analysis",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Small-Signal Model",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "THE SMALL-SIGNAL MODEL",
+   "subtitle": "How engineers calculate every amplifier",
+   "narration": "Welcome back. In the last three videos we calculated gains and impedances with r e. Today we see where that comes from: the small signal model. It replaces the transistor with a simple circuit of a resistor and a current source, and it's the tool behind every amplifier calculation."
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "DC and AC, separately",
+   "narration": "An amplifier carries two things at once. The D C bias, which sets the Q point, and the small A C signal riding on top. The trick is to analyse them separately. First, D C: we did that with biasing, and got one point nine four milliamps of emitter current. Then A C, with the small signal model.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "The re model",
+   "narration": "For small signals, the base emitter diode behaves like a small resistor. Its value depends on the D C current through it: r e equals twenty six millivolts over I E. Twenty six millivolts over one point nine four milliamps is thirteen point four ohms. Looking into the base, that resistance appears beta times bigger, because the base current is beta times smaller: beta r e, one point three four kilohms. And the collector is a current source, beta times the base current.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "The hybrid-π view",
+   "narration": "You'll also see this called the hybrid pi model. It's the same idea, with different names. r pi is the resistance from base to emitter, beta times r e, one point three four k. And g m, the transconductance, says how much collector current changes per volt at the base: I C over twenty six millivolts, one point nine two milliamps over twenty six millivolts, about seventy four milliamps per volt. The collector current source is g m times v b e.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Building the AC circuit",
+   "narration": "To draw the A C equivalent circuit, follow two rules. One: large capacitors become short circuits, because at signal frequencies their reactance is tiny. Two: the D C supply becomes ground, because it has no A C on it. So R C now goes from the collector to ground, R one and R two are in parallel from base to ground, and with C E, the emitter goes straight to ground. Then replace the transistor with the model.",
+   "cfg": "ce",
+   "lines": [
+    "AC rules:",
+    "1. big capacitors → short circuits",
+    "2. DC supply (+12 V) → ground",
+    "R1 ∥ R2 = 7.67 kΩ (base to ground)",
+    "RC: collector to ground",
+    "CE shorts RE → emitter grounded"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Using it: CE gain",
+   "narration": "Now the gain falls out. The input voltage appears across beta r e, so the base current is v in over beta r e. The collector current is beta times that: v in over r e. That current flows through R C, giving v out equals minus R C over r e, times v in. Minus two thousand over thirteen point four, minus one hundred and forty nine. Exactly what we used.",
+   "cfg": "ce",
+   "lines": [
+    "ib = vin ÷ (β re)",
+    "ic = β ib = vin ÷ re",
+    "vout = −ic × RC = −(RC ÷ re) × vin",
+    "Av = −2000 ÷ 13.4 = −149",
+    "gm = IC ÷ 26 mV = 74 mA/V",
+    "Av = −gm × RC = −0.074 × 2000 = −149"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Using it: CC and CB",
+   "narration": "The same model gives the others. For the emitter follower, the output is across R E, so the gain is R E over r e plus R E, zero point nine eight seven, and the input impedance is beta times r e plus R E. For common base, the input sees r e directly, thirteen point four ohms, and the gain is R C over r e, plus one forty nine. One model, every configuration.",
+   "cfg": "cc",
+   "lines": [
+    "CC: Av = RE ÷ (re + RE) = 0.987",
+    "CC: Zb = β (re + RE) = 101 kΩ",
+    "CB: Zin = re = 13.4 Ω",
+    "CB: Av = RC ÷ re = +149",
+    "one model → every configuration"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: designing a sensor amplifier",
+   "narration": "Every engineer designing an amplifier, for a sensor, a microphone or a radio, does exactly this. First, set the D C bias. Then draw the small signal model and calculate the gain and impedances. And circuit simulators like SPICE use these same models, with more detail, to predict how real circuits will behave before anyone builds them.",
+   "title": "REAL WORLD: DESIGNING A SENSOR AMPLIFIER",
+   "sub": "bias first, then the small-signal model predicts gain and impedance before anything is built",
+   "src": "sensor",
+   "stage": "BIAS + MODEL",
+   "stage2": "AMPLIFIER",
+   "sink": "adc",
+   "note1": "millivolts",
+   "note2": "predicted gain −149",
+   "note3": "to the ADC"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using the small signal model for big signals. It only holds when the signal is small, a few millivolts at the base. Two: calculating r e from the wrong current. It uses the D C emitter current from the bias, not the signal current. Three: forgetting to short the supply in the A C circuit. R C goes to ground for A C, not to twelve volts.",
+   "cfg": "ce"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: COUPLING, DECOUPLING & BYPASS CAPACITORS",
+   "lines": [
+    "re = 26 mV ÷ IE, rπ = β re, gm = IC ÷ 26 mV",
+    "AC: big Cs → shorts, supply → ground",
+    "Av(CE) = −RC ÷ re = −gm RC"
+   ],
+   "cta": "Capacitors are next",
+   "narration": "Quick recap. Analyse D C and A C separately. For small signals, the transistor becomes r e, twenty six millivolts over I E, plus a current source. In the hybrid pi view, r pi is beta r e, and g m is I C over twenty six millivolts. In the A C circuit, big capacitors and the supply become shorts. Next, those capacitors in detail: coupling, decoupling and bypass. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "",
+   "narration": "How do engineers calculate a transistor amplifier? For small signals, the base emitter junction acts like a resistor: twenty six millivolts over the emitter current. Here, thirteen point four ohms.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "Then the gain is just R C over r e. Two thousand over thirteen point four: one hundred and forty nine, inverted.",
+   "cfg": "ce",
+   "lines": [
+    "re = 26 mV ÷ 1.94 mA = 13.4 Ω",
+    "Av = −RC ÷ re = −149"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "",
+   "narration": "Ten millivolts in, one point four nine volts out, exactly as the model predicts. That's the small signal model. Full lesson on the channel.",
+   "cfg": "ce"
+  }
+ ]
+}

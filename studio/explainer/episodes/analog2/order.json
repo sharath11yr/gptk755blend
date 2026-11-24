@@ -24,5 +24,9 @@
  "analog2/b08_bjt_numericals.json",
  "analog2/b09_common_emitter.json",
  "analog2/b10_common_base.json",
- "analog2/b11_common_collector.json"
+ "analog2/b11_common_collector.json",
+ "analog2/b12_small_signal_model.json",
+ "analog2/b13_coupling_bypass_capacitors.json",
+ "analog2/b14_darlington.json",
+ "analog2/b15_current_mirror.json"
 ]
