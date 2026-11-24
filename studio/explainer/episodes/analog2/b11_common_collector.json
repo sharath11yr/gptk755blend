@@ -1,0 +1,107 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Emitter Follower (Common Collector) Explained | Gain ≈ 1, Why It's So Useful | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Emitter Follower (Common Collector) Explained | Gain ≈ 1, Why It's So Useful | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The common collector amplifier (emitter follower) step by step: output taken from the emitter, a voltage gain of 0.987 that follows the input, input impedance 7.1 k and output impedance about 13 ohms, why a buffer with no voltage gain is so useful, every value calculated, and driving headphones from a weak source.",
+  "tags": [
+   "emitter follower",
+   "common collector amplifier",
+   "buffer amplifier",
+   "impedance matching",
+   "bjt",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Common Collector",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "EMITTER FOLLOWER (COMMON COLLECTOR)",
+   "subtitle": "An amplifier with a gain of one, and why we need it",
+   "narration": "Welcome back. The third configuration is the strangest: an amplifier whose voltage gain is just under one. The output simply follows the input. It's the common collector amplifier, better known as the emitter follower. By the end, you'll see why it's one of the most useful circuits in electronics."
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Our bias again: R one, R two, and R E. But now there's no R C. The collector goes straight to the supply. For A C, the supply is ground, so the collector is common. The input goes into the base through C in, and the output comes from the emitter, through C out.",
+   "cfg": "cc"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Running it",
+   "narration": "Ten millivolts in. Out of the emitter: nine point eight seven millivolts, in phase. The emitter just follows the base, always about zero point seven volts below it. When the base rises by ten millivolts, the emitter rises by almost ten millivolts. Gain zero point nine eight seven.",
+   "cfg": "cc"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "So what's the point? Impedance. The voltage gain is R E over r e plus R E: one thousand over one thousand and thirteen, zero point nine eight seven. The input impedance: looking into the base, you see beta times r e plus R E, a hundred and one k, in parallel with the divider's seven point six seven k: about seven point one k. And the output impedance is roughly r e, about thirteen ohms. High impedance in, low impedance out.",
+   "cfg": "cc",
+   "lines": [
+    "Av = RE ÷ (re + RE) = 1000 ÷ 1013 = 0.987",
+    "Zb = β (re + RE) = 100 × 1013 = 101 kΩ",
+    "Zin = 7.67k ∥ 101k = 7.13 kΩ",
+    "Zout ≈ re = 13.4 Ω (plus source ÷ β)",
+    "current gain ≈ β + 1 = 101"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "compare",
+   "chapter": "Why gain of one is useful",
+   "narration": "Think of it as a buffer. A weak source, like a sensor with a high internal resistance, can't drive a low impedance load like a speaker or headphones: its voltage would collapse. Put an emitter follower in between. The source sees a high input impedance and barely has to work. The load sees a low output impedance and gets all the current it needs. Same voltage, but a hundred times more current.",
+   "cfg": "cc"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: driving headphones",
+   "narration": "Here's a classic. A preamp stage makes a good signal, but its output impedance is a few kilohms. Headphones are around thirty two ohms. Connected directly, the signal would almost vanish. An emitter follower in between takes the voltage as it is, and supplies the current the headphones need. Many headphone amplifiers end with an emitter follower stage.",
+   "title": "REAL WORLD: DRIVING HEADPHONES",
+   "sub": "a high-impedance preamp output buffered by an emitter follower to drive a 32 Ω load",
+   "src": "mic",
+   "stage": "CE PREAMP",
+   "stage2": "EMITTER FOLLOWER",
+   "sink": "headphones",
+   "note1": "10 mV",
+   "note2": "voltage gain, then current gain",
+   "note3": "32 Ω headphones"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: expecting a voltage gain above one. An emitter follower is always just below one. Two: forgetting the zero point seven volt offset. The D C output sits about zero point seven volts below the base. Three: thinking it's useless because the voltage doesn't grow. Its job is current gain and impedance matching, and it's essential.",
+   "cfg": "cc"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: SMALL-SIGNAL MODEL",
+   "lines": [
+    "Output at the emitter, collector to VCC",
+    "Av = RE ÷ (re + RE) ≈ 0.99, in phase",
+    "High Zin, low Zout: a buffer"
+   ],
+   "cta": "The small-signal model is next",
+   "narration": "Quick recap. The emitter follower takes its output from the emitter. Its voltage gain is just under one, with no inversion, but it has a high input impedance and a very low output impedance, so it works as a buffer with large current gain. Next, the small signal model in depth, the tool behind all these gain calculations. See you there."
+  }
+ ]
+}

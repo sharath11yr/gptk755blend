@@ -1,0 +1,127 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Common Emitter Amplifier Explained | Gain of 149, Phase Inversion, re Calculated | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": false,
+ "yt": {
+  "title": "Common Emitter Amplifier Explained | Gain of 149, Phase Inversion, re Calculated | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The common emitter amplifier step by step on a voltage-divider-biased BJT: coupling capacitors, the emitter bypass capacitor, a 10 mV signal coming out as 1.49 V and upside down, the re = 26 mV / IE method, voltage gain -RC/re = -149 calculated, input impedance 1.14 k, output impedance 2 k, what happens without the bypass capacitor, and the microphone preamp.",
+  "tags": [
+   "common emitter amplifier",
+   "ce amplifier",
+   "voltage gain",
+   "re model",
+   "bypass capacitor",
+   "bjt amplifier",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Common Emitter Amplifier",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "COMMON EMITTER AMPLIFIER",
+   "subtitle": "Turn 10 millivolts into 1.5 volts",
+   "narration": "Welcome back. We've learned to bias a transistor. Now we use it. Today, the most important amplifier of all, the common emitter amplifier. We'll feed in a tiny ten millivolt signal and get out one and a half volts, a hundred and fifty times bigger, and upside down. And we'll calculate every number."
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "We start with our voltage divider bias: R one thirty three k, R two ten k, R C two k, R E one k, giving one point nine four milliamps of emitter current. Now three capacitors. C in couples the signal into the base. It passes A C but blocks D C, so the source can't upset the bias. C out couples the output from the collector to the next stage, also blocking D C. And C E, the bypass capacitor, across R E. For A C signals, it shorts R E to ground. We'll see why that matters. The emitter is common to input and output, for A C, which gives the amplifier its name.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Running it",
+   "narration": "Now the signal. Ten millivolts peak goes into the base. Watch the output at the collector: one point four nine volts peak. A gain of a hundred and forty nine. But look carefully: when the input goes up, the output goes down. The output is inverted, a hundred and eighty degrees out of phase. That's the minus sign in the gain: minus one hundred and forty nine.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Why it inverts",
+   "narration": "Why upside down? When the input rises, the base current rises, so the collector current rises. More current through R C means a bigger voltage drop across it. And the collector voltage is twelve volts minus that drop. So the collector voltage falls. Input up, output down.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "The re model",
+   "narration": "To calculate the gain, we use the small signal model. For small signals, the base emitter junction acts like a small resistor, called r e. It equals twenty six millivolts over the emitter current. Here, twenty six millivolts over one point nine four milliamps, thirteen point four ohms. Looking into the base, you see beta times r e, one point three four k. And the collector acts as a current source, beta times the base current.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Now every value. r e equals twenty six millivolts over one point nine four milliamps, thirteen point four ohms. The voltage gain is minus R C over r e: minus two thousand over thirteen point four, minus one hundred and forty nine. So ten millivolts in gives one point four nine volts out. The input impedance is R one, parallel R two, parallel beta r e: seven point six seven k parallel one point three four k, about one point one four k. The output impedance is about R C, two k.",
+   "cfg": "ce",
+   "lines": [
+    "re = 26 mV ÷ IE = 26 mV ÷ 1.94 mA = 13.4 Ω",
+    "Av = −RC ÷ re = −2000 ÷ 13.4 = −149",
+    "vout = 149 × 10 mV = 1.49 V (inverted)",
+    "Zin = R1 ∥ R2 ∥ βre",
+    "    = 7.67k ∥ 1.34k = 1.14 kΩ",
+    "Zout ≈ RC = 2 kΩ"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "bypass",
+   "chapter": "Remove the bypass capacitor",
+   "narration": "Watch what happens when we remove C E. Without it, R E is back in the signal path, and the gain becomes minus R C over r e plus R E: two thousand over one thousand and thirteen, just minus one point nine seven. The gain collapses from one forty nine to two. But it's very stable, and the input impedance rises. Designers often bypass only part of R E to choose a gain in between.",
+   "cfg": "ce"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: the microphone preamp",
+   "narration": "A microphone gives only a few millivolts. Before anything else can use that signal, a recording interface, a phone, or an amplifier, it needs a preamplifier. A common emitter stage is the classic choice: it can multiply those few millivolts by a hundred or more, enough for the next stage to work with.",
+   "title": "REAL WORLD: THE MICROPHONE PREAMP",
+   "sub": "a few millivolts from the mic, boosted about 100× by a common emitter stage",
+   "src": "mic",
+   "stage": "COMMON EMITTER",
+   "sink": "speaker",
+   "note1": "~10 mV",
+   "note2": "gain ≈ −149",
+   "note3": "≈ 1.5 V"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the minus sign. A common emitter inverts. Two: using the D C bias current for r e but with the wrong units. It's twenty six millivolts over the emitter current in amps, or twenty six over milliamps gives ohms. Three: expecting a gain of a hundred and forty nine with no bypass capacitor. Without C E, the gain is only about R C over R E, two.",
+   "cfg": "ce",
+   "lines": [
+    "Av is NEGATIVE (180° phase shift)",
+    "re = 26 mV ÷ IE (26 ÷ 1.94 mA = 13.4 Ω)",
+    "no CE: Av = −RC ÷ (re + RE) = −1.97"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: COMMON BASE AMPLIFIER",
+   "lines": [
+    "re = 26 mV ÷ IE = 13.4 Ω",
+    "Av = −RC ÷ re = −149 (inverted)",
+    "no CE: Av ≈ −RC ÷ RE"
+   ],
+   "cta": "Common base is next",
+   "narration": "Quick recap. A common emitter amplifier takes the input at the base and the output at the collector. With the emitter bypassed, its gain is minus R C over r e, minus a hundred and forty nine here, with the output inverted. Without the bypass, the gain drops to about R C over R E. Next, the common base amplifier. See you there."
+  }
+ ]
+}

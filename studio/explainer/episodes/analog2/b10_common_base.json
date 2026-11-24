@@ -1,0 +1,133 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "tag": "GETYR ECE",
+ "title": "Common Base Amplifier Explained | High Gain, Low Input Impedance, No Inversion | Analog Electronics",
+ "short": [
+  2,
+  3
+ ],
+ "post_short": true,
+ "yt": {
+  "title": "Common Base Amplifier Explained | High Gain, Low Input Impedance, No Inversion | Analog Electronics",
+  "playlist": "Analog Electronics",
+  "description": "The common base amplifier step by step: grounding the base for AC with a capacitor, feeding the signal into the emitter, a gain of +149 with no phase inversion, why its input impedance is only re (13.4 ohms), current gain alpha, why it excels at high frequencies, every value calculated, and its use in radio front ends.",
+  "tags": [
+   "common base amplifier",
+   "cb amplifier",
+   "bjt amplifier",
+   "input impedance",
+   "high frequency amplifier",
+   "analog electronics"
+  ]
+ },
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Common Base Amplifier",
+   "kicker": "ANALOG ELECTRONICS",
+   "title": "COMMON BASE AMPLIFIER",
+   "subtitle": "Same transistor, input into the emitter",
+   "narration": "Welcome back. The common emitter amplifier put the signal into the base. Today, we put it into the emitter instead, and hold the base still. That's the common base amplifier. It has the same voltage gain, but no inversion, a tiny input impedance, and a special talent for high frequencies."
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "The same voltage divider bias: R one, R two, R C, R E. But now a capacitor C B connects the base to ground. For D C, the base still sits at its bias voltage. For A C signals, the base is held at ground. The input signal goes into the emitter through C in, and the output comes from the collector through C out. The base is common to input and output.",
+   "cfg": "cb"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Running it",
+   "narration": "Ten millivolts into the emitter. The output: one point four nine volts, and look, in phase with the input. No inversion. When the emitter voltage goes up, the base emitter voltage gets smaller, since the base is fixed. Less current flows, less drop across R C, and the collector voltage rises. Input up, output up. The gain is plus one hundred and forty nine.",
+   "cfg": "cb"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. r e is the same, thirteen point four ohms. Voltage gain equals R C over r e, plus one hundred and forty nine. But the input impedance is just r e, thirteen point four ohms. Tiny! The source has to supply the whole emitter current. And the current gain is alpha, just under one. So the common base amplifies voltage, but not current.",
+   "cfg": "cb",
+   "lines": [
+    "re = 26 mV ÷ 1.94 mA = 13.4 Ω",
+    "Av = +RC ÷ re = +149 (in phase)",
+    "Zin ≈ re = 13.4 Ω (very low!)",
+    "Zout ≈ RC = 2 kΩ",
+    "current gain Ai = α ≈ 0.99"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "compare",
+   "chapter": "Why use it?",
+   "narration": "So why use it? Its low input impedance makes it hard to drive from most sources. But it has one huge advantage: high frequencies. In a common emitter, a tiny capacitance between collector and base gets multiplied by the gain, the Miller effect, and kills the high frequency response. In a common base, the base is grounded, so that capacitance does no harm. Common base stages work up to hundreds of megahertz.",
+   "cfg": "cb"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: radio front ends",
+   "narration": "That's why common base stages appear in radio receivers. An antenna has a low impedance, around fifty or seventy five ohms, which matches the common base input well. And radio signals are at very high frequencies, where a common base stage keeps its gain. Many designs combine a common emitter and a common base into one stage, called a cascode, to get the best of both.",
+   "title": "REAL WORLD: THE RADIO FRONT END",
+   "sub": "a low-impedance antenna into a common base stage that keeps its gain at high frequency",
+   "src": "antenna",
+   "stage": "COMMON BASE",
+   "sink": "adc",
+   "note1": "~50 Ω, µV-mV",
+   "note2": "gain ≈ +149, fast",
+   "note3": "to the tuner"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the base capacitor. Without C B, the base isn't grounded for A C, and the circuit doesn't work as common base. Two: expecting it to invert. It doesn't. Common base gain is positive. Three: driving it from a high impedance source. With only thirteen ohms of input impedance, most of a high impedance source's signal would be lost.",
+   "cfg": "cb"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Next",
+   "title": "NEXT: COMMON COLLECTOR (EMITTER FOLLOWER)",
+   "lines": [
+    "Base grounded for AC, input at emitter",
+    "Av = +RC ÷ re = +149, no inversion",
+    "Zin ≈ re (low), great at high frequency"
+   ],
+   "cta": "Emitter follower is next",
+   "narration": "Quick recap. A common base amplifier grounds the base for A C and feeds the signal into the emitter. Its gain is plus R C over r e, with no inversion, but its input impedance is only r e. It shines at high frequencies. Next, the third configuration, the common collector, or emitter follower. See you there."
+  }
+ ],
+ "short_scenes": [
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "",
+   "narration": "Same transistor, same gain of one hundred and forty nine, but no inversion. How? Put the signal into the emitter, and hold the base still with a capacitor. That's the common base amplifier.",
+   "cfg": "cb"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "",
+   "narration": "The catch: its input impedance is just r e, thirteen ohms. The source has to supply the whole current.",
+   "cfg": "cb",
+   "lines": [
+    "Av = +RC ÷ re = +149",
+    "Zin ≈ re = 13.4 Ω"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "compare",
+   "chapter": "",
+   "narration": "But with the base grounded, it's free of the Miller effect, so it keeps its gain at very high frequencies. That's why radios use it. Full lesson on the channel.",
+   "cfg": "cb"
+  }
+ ]
+}

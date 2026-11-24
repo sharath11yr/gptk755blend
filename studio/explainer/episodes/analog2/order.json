@@ -21,5 +21,8 @@
  "analog2/b05_collector_feedback_bias.json",
  "analog2/b06_voltage_divider_bias.json",
  "analog2/b07_load_line_q_point.json",
- "analog2/b08_bjt_numericals.json"
+ "analog2/b08_bjt_numericals.json",
+ "analog2/b09_common_emitter.json",
+ "analog2/b10_common_base.json",
+ "analog2/b11_common_collector.json"
 ]
