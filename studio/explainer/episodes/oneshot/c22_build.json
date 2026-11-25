@@ -1,0 +1,146 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "title": "Analog One Shot Ch22",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 22: Build your own circuits",
+   "narration": "Chapter twenty two: designing your own circuits. Knowing how circuits work is one thing. Choosing every part value yourself, from a requirement, is what makes you an engineer. We'll design four real circuits from scratch: a five volt power supply, a transistor switch for a motor, a small audio amplifier, and an L E D blinker. For every part, we'll say why it's that value.",
+   "kicker": "CHAPTER 22",
+   "title": "BUILD YOUR OWN CIRCUITS",
+   "subtitle": "From a requirement to every part value"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Your tools",
+   "narration": "Before building, know your tools. A breadboard: rows of five holes are connected together, and the long rails at the sides carry the supply and ground. A multimeter: voltage across a part, current in series with the circuit, resistance with the power off, and the diode test. An oscilloscope: shows the waveform against time, so you can see ripple, clipping and frequency. And datasheets: always check maximum voltage, current, power and pin order before using a part.",
+   "title": "PRACTICAL TOOLS",
+   "given": [
+    "breadboard",
+    "multimeter",
+    "oscilloscope"
+   ],
+   "lines": [
+    "breadboard: 5-hole rows joined, side rails = supply",
+    "V across a part, I in series, Ω with power OFF",
+    "scope: see ripple, clipping, frequency",
+    "datasheet: max V, I, P and the pinout"
+   ]
+  },
+  {
+   "type": "rect",
+   "chapter": "Design 1: a 5 V, 500 mA power supply",
+   "narration": "Design one: a five volt supply for five hundred milliamps from the mains. Step one, the transformer: the regulator needs about three volts of headroom, plus ripple and diode drops, so aim for about ten volts D C before it. A nine volt r m s transformer gives twelve point seven volts peak, minus one point four for the bridge: eleven point three volts. Step two, the bridge rectifier: four one amp diodes like the one N four double oh one, rated fifty volts or more. Step three, the filter capacitor: for one volt of ripple at five hundred milliamps and a hundred hertz, C equals zero point five over a hundred times one: five thousand microfarads, use four seven hundred or more, rated at least twenty five volts.",
+   "kind": "br",
+   "half": "all",
+   "cap": true
+  },
+  {
+   "type": "zreg",
+   "chapter": "Design 1: the regulator",
+   "narration": "Step four, the regulator: a seven eight oh five, which is a refined series regulator, gives a steady five volts. Its heat: eleven point three minus five, times half an amp, about three watts, so it needs a heat sink. Step five, small capacitors at its input and output, a third of a microfarad and a tenth, to keep it stable. And a fuse in the mains side. Every value came from a calculation we learned.",
+   "kind": "series",
+   "mode": "calc",
+   "lines": [
+    "7805: Vout = 5 V (needs ≈ 2-3 V headroom)",
+    "heat = (11.3 − 5) × 0.5 = 3.2 W → heat sink",
+    "0.33 µF in, 0.1 µF out (stability)",
+    "fuse on the mains side"
+   ]
+  },
+  {
+   "type": "bjt",
+   "chapter": "Design 2: a transistor switch for a motor",
+   "narration": "Design two: a microcontroller pin, five volts, must switch a twelve volt motor drawing two hundred milliamps. Choose an N P N transistor rated for well over two hundred milliamps, like the B C three three seven, with a minimum beta of about a hundred. For a solid switch we want saturation, so give it more base current than needed: needed is two hundred over a hundred, two milliamps; use five times more, ten milliamps. Base resistor: five minus zero point seven, over ten milliamps, four thirty ohms. Use four seventy. And across the motor, a flyback diode, because the motor is an inductor.",
+   "mode": "regions",
+   "bias": "basic"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Design 2: the numbers",
+   "narration": "The design numbers. Load current two hundred milliamps. Minimum beta one hundred, so at least two milliamps of base current. Overdrive by five times for hard saturation: ten milliamps. R B equals four point three over ten milliamps, four thirty ohms, standard four seventy. Transistor heat when on: zero point two volts times zero point two amps, forty milliwatts. And the one N four double oh one flyback diode across the motor, pointing to the twelve volt rail.",
+   "title": "SWITCH DESIGN",
+   "given": [
+    "IC = 200 mA",
+    "βmin = 100",
+    "pin = 5 V"
+   ],
+   "lines": [
+    "IB(min) = 200 mA ÷ 100 = 2 mA",
+    "overdrive ×5 → IB = 10 mA",
+    "RB = (5 − 0.7) ÷ 10 mA = 430 Ω → 470 Ω",
+    "P = 0.2 V × 0.2 A = 40 mW",
+    "flyback diode across the motor"
+   ]
+  },
+  {
+   "type": "amp",
+   "chapter": "Design 3: a microphone amplifier",
+   "narration": "Design three: amplify a ten millivolt microphone signal about a hundred times, from a twelve volt supply. A common emitter stage with voltage divider bias. Step one, pick the current: about two milliamps. Step two, put the emitter at about ten percent of the supply, around two volts: R E equals two volts over two milliamps, one kilohm. Step three, put the collector halfway between the emitter and the supply for the biggest swing: R C about two kilohms. Step four, the divider: the base must sit at two point seven volts; with beta times R E at a hundred k, keep R two under ten k: thirty three k and ten k. Step five, the gain: r e is thirteen point four ohms, so with R E bypassed, R C over r e is about one fifty. Exactly the amplifier we built in chapter sixteen.",
+   "cfg": "ce",
+   "mode": "run"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Design 3: the capacitors",
+   "narration": "Step six, the capacitors for audio down to twenty hertz. Input impedance about one point one k, so the coupling capacitor needs under a hundred and fourteen ohms at twenty hertz: a hundred microfarads. The bypass must be below r e at twenty hertz: six hundred and eighty microfarads. And a hundred nanofarad decoupling capacitor at the supply pin. Now you can design an amplifier from nothing but a requirement.",
+   "title": "AMPLIFIER DESIGN",
+   "given": [
+    "gain ≈ 100",
+    "12 V",
+    "audio 20 Hz+"
+   ],
+   "lines": [
+    "IC ≈ 2 mA, VE ≈ 2 V → RE = 1 kΩ",
+    "VC midway → RC = 2 kΩ",
+    "VB = 2.7 V → R1 = 33k, R2 = 10k",
+    "gain ≈ RC ÷ re = 2k ÷ 13.4 ≈ 149",
+    "Cin 100 µF, CE 680 µF, 100 nF decoupling"
+   ]
+  },
+  {
+   "type": "t555",
+   "chapter": "Design 4: an LED blinker",
+   "narration": "Design four: blink an L E D about once a second, with a five five five. For a one hertz astable with roughly equal on and off times, make R one small and R two large. Choose C equals ten microfarads. Then f equals one point four four over R one plus two R two, times C. For one hertz: R one plus two R two equals one hundred and forty four kilohms. Choose R one equals four point seven k and R two equals sixty eight k: f equals one point four four over one forty point seven k times ten micro, about one point zero two hertz. The L E D resistor: five minus two, over fifteen milliamps, two hundred ohms, use two twenty.",
+   "mode": "astable"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Design 4: the numbers",
+   "narration": "The numbers once more. C ten microfarads. R one four point seven k, R two sixty eight k. High time: zero point six nine three times seventy two point seven k times ten micro, zero point five zero seconds. Low time: zero point six nine three times sixty eight k times ten micro, zero point four seven seconds. About one blink per second. You've just designed four complete circuits.",
+   "title": "BLINKER DESIGN",
+   "given": [
+    "f ≈ 1 Hz",
+    "C = 10 µF"
+   ],
+   "lines": [
+    "R1 + 2R2 = 1.44 ÷ (1 × 10µ) = 144k",
+    "R1 = 4.7k, R2 = 68k → f = 1.02 Hz",
+    "tH = 0.693 × 72.7k × 10µ = 0.50 s",
+    "tL = 0.693 × 68k × 10µ = 0.47 s",
+    "LED R = (5 − 2) ÷ 15 mA ≈ 220 Ω"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 22 recap",
+   "narration": "Recap. Every design starts from a requirement and uses the formulas we learned. Power supply: transformer, bridge, capacitor for ripple, regulator with headroom and a heat sink. Switch: overdrive the base for saturation, add a flyback diode. Amplifier: choose the current, put V E near ten percent and V C midway, size the divider and the capacitors. Timer: pick C, then solve for the resistors. Next, the final placement revision.",
+   "title": "CHAPTER 22 COMPLETE",
+   "lines": [
+    "Supply: transformer → bridge → C → regulator",
+    "Switch: overdrive IB ×5, flyback diode",
+    "Amplifier: IC, VE ≈ 10% VCC, VC midway",
+    "Timer: pick C, solve R1, R2"
+   ],
+   "cta": "Next: placement revision"
+  }
+ ]
+}

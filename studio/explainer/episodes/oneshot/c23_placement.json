@@ -1,0 +1,116 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "title": "Analog One Shot Ch23",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 23: Placement rapid-fire",
+   "narration": "The final chapter: placement rapid fire. These are the analog questions asked again and again in interviews and written tests. Try to answer each one before the answer appears.",
+   "kicker": "CHAPTER 23",
+   "title": "PLACEMENT RAPID-FIRE",
+   "subtitle": "The most asked analog questions"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Diodes",
+   "narration": "Rapid fire: diodes. What is the barrier potential of Si and Ge? 0.7 V and 0.3 V. Why does a diode block in reverse bias? Majority carriers are pulled away, the depletion region widens. What is the PIV of a centre-tap rectifier? 2 Vm. Ripple frequency of a full-wave rectifier on 50 Hz? 100 Hz. Why is a Zener reverse biased? It regulates in breakdown.",
+   "title": "RAPID-FIRE · DIODES",
+   "given": [
+    "Diodes"
+   ],
+   "lines": [
+    "What is the barrier potential of Si and Ge? 0.7 V and 0.3 V.",
+    "Why does a diode block in reverse bias? Majority carriers are pulled away, the depletion region widens.",
+    "What is the PIV of a centre-tap rectifier? 2 Vm.",
+    "Ripple frequency of a full-wave rectifier on 50 Hz? 100 Hz.",
+    "Why is a Zener reverse biased? It regulates in breakdown."
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "Clippers & clampers",
+   "narration": "Rapid fire: clippers & clampers. A clipper changes the shape; a clamper keeps the shape and shifts the DC level. In a shunt clipper, why a series resistor? To limit current when the diode conducts. Clamper condition? RL·C much greater than the signal period. Positive clamper output for ±10 V input? −0.7 V to +19.3 V.",
+   "title": "RAPID-FIRE · CLIPPERS & CLAMPERS",
+   "given": [
+    "Clippers & clampers"
+   ],
+   "lines": [
+    "A clipper changes the shape; a clamper keeps the shape and shifts the DC level.",
+    "In a shunt clipper, why a series resistor? To limit current when the diode conducts.",
+    "Clamper condition? RL·C much greater than the signal period.",
+    "Positive clamper output for ±10 V input? −0.7 V to +19.3 V."
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "BJT",
+   "narration": "Rapid fire: bjt. IB = 20 µA, β = 150: IC = 3 mA. α = 0.98: β = 49. Most stable bias? Voltage divider. Which configuration has the highest input impedance? CC (emitter follower). Which configuration inverts? CE, 180°. Transistor as a switch uses which regions? Cutoff and saturation. What causes thermal runaway? Rising temperature → more leakage → more current → more heat.",
+   "title": "RAPID-FIRE · BJT",
+   "given": [
+    "BJT"
+   ],
+   "lines": [
+    "IB = 20 µA, β = 150: IC = 3 mA.",
+    "α = 0.98: β = 49.",
+    "Most stable bias? Voltage divider.",
+    "Which configuration has the highest input impedance? CC (emitter follower).",
+    "Which configuration inverts? CE, 180°.",
+    "Transistor as a switch uses which regions? Cutoff and saturation.",
+    "What causes thermal runaway? Rising temperature → more leakage → more current → more heat."
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "FET & op-amps",
+   "narration": "Rapid fire: fet & op-amps. Why is a MOSFET's input impedance so high? Insulated (oxide) gate. CMOS idle power? Almost zero: one transistor is always off. Golden rules of op-amps? V+ = V− and no input current, with negative feedback. Inverting gain with Rf = 100k, Rin = 10k? −10. What is slew rate? Maximum rate of output change, V/µs. Comparator vs Schmitt trigger? Schmitt has hysteresis from positive feedback.",
+   "title": "RAPID-FIRE · FET & OP-AMPS",
+   "given": [
+    "FET & op-amps"
+   ],
+   "lines": [
+    "Why is a MOSFET's input impedance so high? Insulated (oxide) gate.",
+    "CMOS idle power? Almost zero: one transistor is always off.",
+    "Golden rules of op-amps? V+ = V− and no input current, with negative feedback.",
+    "Inverting gain with Rf = 100k, Rin = 10k? −10.",
+    "What is slew rate? Maximum rate of output change, V/µs.",
+    "Comparator vs Schmitt trigger? Schmitt has hysteresis from positive feedback."
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "Everything else",
+   "narration": "Rapid fire: everything else. Capacitor blocks DC, passes AC; inductor passes DC, blocks high frequency. Cutoff of RC filter? 1/(2πRC), output 70.7%. Barkhausen criterion? Loop gain 1, phase 360°. Class B efficiency? 78.5% max; Class A 25%. 555 astable frequency? 1.44/((R1+2R2)C).",
+   "title": "RAPID-FIRE · EVERYTHING ELSE",
+   "given": [
+    "Everything else"
+   ],
+   "lines": [
+    "Capacitor blocks DC, passes AC; inductor passes DC, blocks high frequency.",
+    "Cutoff of RC filter? 1/(2πRC), output 70.7%.",
+    "Barkhausen criterion? Loop gain 1, phase 360°.",
+    "Class B efficiency? 78.5% max; Class A 25%.",
+    "555 astable frequency? 1.44/((R1+2R2)C)."
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Course complete",
+   "narration": "And that's the complete analog electronics course. We started with a single electron and finished designing real circuits: resistors, capacitors, inductors, A C, filters, semiconductors, diodes, rectifiers, clippers, clampers, regulators, B J Ts, F E Ts, feedback, oscillators, power amplifiers, op amps and the five five five. If this helped you, share it with a friend who's preparing for exams or placements, and subscribe for more. All the best.",
+   "title": "COURSE COMPLETE",
+   "lines": [
+    "From an electron to complete circuits",
+    "Every concept, every what-if, every numerical",
+    "Now go build something!"
+   ],
+   "cta": "Subscribe for more"
+  }
+ ]
+}

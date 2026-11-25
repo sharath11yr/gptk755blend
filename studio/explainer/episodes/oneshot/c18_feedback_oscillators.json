@@ -1,0 +1,110 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "title": "Analog One Shot Ch18",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 18: Feedback and oscillators",
+   "narration": "Chapter eighteen: feedback and oscillators. Feeding part of the output back to the input changes everything about an amplifier. Fed back to oppose the input, it makes the amplifier stable and accurate. Fed back to help the input, it makes the circuit generate its own signal: an oscillator.",
+   "kicker": "CHAPTER 18",
+   "title": "FEEDBACK & OSCILLATORS",
+   "subtitle": "Negative feedback stabilises, positive feedback oscillates"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Negative feedback",
+   "narration": "Negative feedback means a fraction of the output is fed back so that it opposes the input. Here, the two resistors feed a tenth of the output back to the minus input. If the output rises too high, more is subtracted, and it comes back down. The result: the gain is no longer the huge, unreliable open loop gain, but set precisely by two resistors: one plus R f over R g, ten. We trade gain for accuracy and stability. The formula: A f equals A over one plus A beta, where beta is the fraction fed back. With A of two hundred thousand and beta of zero point one, A f is almost exactly one over beta: ten.",
+   "kind": "noninv"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Effects of negative feedback",
+   "narration": "What does negative feedback buy us? It stabilises the gain against temperature and transistor changes. It widens the bandwidth, by the same factor the gain drops. It reduces distortion and noise. And it changes impedances: depending on how the output is sampled and how the feedback is mixed in, there are four types. Voltage series raises input impedance and lowers output impedance, like our non-inverting amplifier. Voltage shunt lowers both, like the inverting amplifier. Current series and current shunt raise output impedance.",
+   "title": "NEGATIVE FEEDBACK",
+   "given": [
+    "A = 200 000",
+    "β = 0.1"
+   ],
+   "lines": [
+    "Af = A ÷ (1 + Aβ) ≈ 1/β = 10",
+    "gain × bandwidth stays constant",
+    "less distortion and noise",
+    "4 types: voltage/current × series/shunt",
+    "voltage-series: Zin ↑, Zout ↓"
+   ]
+  },
+  {
+   "type": "osc",
+   "chapter": "Positive feedback and the Barkhausen criterion",
+   "narration": "Now positive feedback: the fed back signal adds to the input. If the loop gain, the amplifier gain times the feedback fraction, is at least one, and the total phase shift around the loop is three sixty degrees, any tiny noise gets amplified, fed back in phase, amplified again, and grows into a steady oscillation. These two conditions are the Barkhausen criterion: A beta equals one, and the phase shift is zero or three sixty degrees. Watch the output grow from noise and settle.",
+   "kind": "phase"
+  },
+  {
+   "type": "osc",
+   "chapter": "RC phase-shift oscillator",
+   "narration": "The R C phase shift oscillator. An inverting amplifier gives a hundred and eighty degrees. Three R C sections each add about sixty degrees: another hundred and eighty. Three sixty in total, so it oscillates at the one frequency where that's exactly true: one over two pi R C root six. The R C network attenuates by twenty nine, so the amplifier needs a gain of at least twenty nine. With ten kilohms and ten nanofarads: six hundred and fifty hertz.",
+   "kind": "phase"
+  },
+  {
+   "type": "osc",
+   "chapter": "Wien bridge oscillator",
+   "narration": "The Wien bridge oscillator uses a series R C and a parallel R C. At one frequency, one over two pi R C, the phase shift through this network is zero, and it passes exactly one third of the signal. So a non-inverting amplifier with a gain of three keeps it going. It produces a very clean sine wave, which is why audio signal generators use it. With ten kilohms and ten nanofarads: one point five nine kilohertz.",
+   "kind": "wien"
+  },
+  {
+   "type": "osc",
+   "chapter": "Colpitts oscillator",
+   "narration": "For radio frequencies, R C networks are too lossy, so we use an L C tank. The Colpitts oscillator uses one inductor and two capacitors in series, tapping the feedback between them. It oscillates at the tank's resonant frequency, one over two pi root L C, where C is C one and C two in series.",
+   "kind": "colpitts"
+  },
+  {
+   "type": "osc",
+   "chapter": "Hartley oscillator",
+   "narration": "The Hartley oscillator is the mirror image: one capacitor and two inductors, or one tapped inductor, with the feedback taken from the tap. It's easy to tune with a variable capacitor. f equals one over two pi root of L one plus L two, times C.",
+   "kind": "hartley"
+  },
+  {
+   "type": "osc",
+   "chapter": "Crystal oscillator",
+   "narration": "For precise timing, the crystal oscillator. A thin slice of quartz vibrates mechanically when a voltage is applied, and behaves like an L C tank with an incredibly high Q. Its frequency is accurate to about one part in a hundred thousand. Every watch uses a thirty two point seven six eight kilohertz crystal, and every microcontroller and computer uses one for its clock.",
+   "kind": "crystal"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: feedback and oscillators",
+   "narration": "Question one: an amplifier with open loop gain ten thousand and feedback fraction zero point zero one. Closed loop gain? Ten thousand over one plus a hundred, ninety nine. Question two: an R C phase shift oscillator with R ten k and C ten n. f equals one over two pi times ten k times ten n times root six: six hundred and fifty hertz. Question three: a Colpitts with L one hundred microhenries and C one equals C two equals two nanofarads. Series C, one nanofarad. f equals one over two pi root of a hundred micro times one nano: five hundred and three kilohertz.",
+   "title": "NUMERICALS · FEEDBACK & OSCILLATORS",
+   "given": [
+    "A = 10⁴",
+    "β = 0.01"
+   ],
+   "lines": [
+    "Af = 10⁴ ÷ (1 + 100) = 99",
+    "RC: f = 1 ÷ (2π × 10k × 10n × √6) = 650 Hz",
+    "Colpitts: C = 2n ∥ series 2n = 1 nF",
+    "f = 1 ÷ (2π √(100µ × 1n)) = 503 kHz"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 18 recap",
+   "narration": "Recap. Negative feedback trades gain for stability, bandwidth, low distortion and controlled impedances: A f equals A over one plus A beta. Positive feedback with loop gain one and three sixty degrees of phase makes an oscillator, the Barkhausen criterion. R C phase shift and Wien bridge for audio, Colpitts and Hartley for radio, crystal for precision. Next: op-amps.",
+   "title": "CHAPTER 18 COMPLETE",
+   "lines": [
+    "Af = A ÷ (1 + Aβ)",
+    "Barkhausen: Aβ = 1, phase 360°",
+    "RC: f = 1/(2πRC√6) · Wien: 1/(2πRC)",
+    "LC: 1/(2π√LC) · crystal: precision"
+   ],
+   "cta": "Next: op-amps"
+  }
+ ]
+}

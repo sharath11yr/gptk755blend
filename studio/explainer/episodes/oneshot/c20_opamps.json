@@ -1,0 +1,170 @@
+{
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "title": "Analog One Shot Ch20",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 20: Op-amps",
+   "narration": "Chapter twenty: the operational amplifier. An op amp is a complete high gain differential amplifier on a chip, with two inputs and one output. With a couple of resistors, it becomes an amplifier with any gain you want, an adder, a subtractor, an integrator, a comparator, a filter. It's the most useful analog chip there is, and the favourite topic in placement interviews.",
+   "kicker": "CHAPTER 20",
+   "title": "OP-AMPS",
+   "subtitle": "Two golden rules, a dozen circuits"
+  },
+  {
+   "type": "pair",
+   "chapter": "What's inside an op-amp",
+   "narration": "Inside an op amp are circuits we already know. The input stage is a differential pair: two matched transistors sharing a current from a current mirror. It amplifies only the difference between the two inputs, and rejects anything common to both. Then a high gain stage, and finally a push pull emitter follower output stage, Class A B, to drive loads. The result: an amplifier whose output is a huge gain, around two hundred thousand, times the difference between the plus input and the minus input.",
+   "kind": "mirror",
+   "mode": "run"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Open loop: why it slams to the rails",
+   "narration": "Without feedback, that huge gain is useless as an amplifier. Put just half a volt between the inputs: two hundred thousand times half a volt would be a hundred thousand volts. But the output can't go beyond its supply rails, so it slams to about plus eleven or minus eleven volts and stays there. This is called saturation, and an op amp with no feedback is a comparator. Remember this: everything that follows only works with negative feedback.",
+   "kind": "open"
+  },
+  {
+   "type": "numerical",
+   "chapter": "The two golden rules",
+   "narration": "With negative feedback, two golden rules let us analyse any op amp circuit. Rule one, the virtual short: the op amp adjusts its output until the voltage at its two inputs is the same. V plus equals V minus. It's not actually connected, the op amp is just working to keep them equal. Rule two: the inputs draw no current. Ideal input impedance is infinite. And the ideal op amp also has infinite gain, zero output impedance, and infinite bandwidth. Real ones come close.",
+   "title": "THE GOLDEN RULES (with negative feedback)",
+   "given": [
+    "ideal op-amp"
+   ],
+   "lines": [
+    "1. V+ = V− (virtual short)",
+    "2. no current into the inputs",
+    "ideal: A = ∞, Zin = ∞, Zout = 0, BW = ∞",
+    "only with NEGATIVE feedback!"
+   ]
+  },
+  {
+   "type": "opamp",
+   "chapter": "Inverting amplifier",
+   "narration": "The inverting amplifier. The plus input is grounded. By rule one, the minus input is also held at zero volts: a virtual ground. Now the input current: v in over R in, through R in, arrives at the minus input. By rule two, it can't enter the op amp, so it must continue through R f. The output must then be at zero minus that current times R f. So v out equals minus R f over R in, times v in. With one k and ten k, the gain is minus ten. A zero point eight volt input becomes eight volts, inverted. Input impedance: just R in.",
+   "kind": "inv"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Non-inverting amplifier",
+   "narration": "The non-inverting amplifier. The input goes to the plus pin. By rule one, the minus pin follows it. R f and R g form a divider from the output: the minus pin sees v out times R g over R f plus R g. Set that equal to v in, and v out equals v in times one plus R f over R g. With nine k and one k: a gain of ten, in phase. Its input impedance is huge, since the input goes straight into the op amp's plus pin.",
+   "kind": "noninv"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Voltage follower",
+   "narration": "Remove R g and short R f: the output connects straight to the minus input. Then v out equals v in: a gain of one. Why bother? Because the input impedance is enormous and the output impedance tiny. It's a buffer, like the emitter follower, used to connect a weak source to a heavy load without loading it.",
+   "kind": "buffer"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Summing amplifier",
+   "narration": "The summing amplifier. Several inputs, each through its own resistor, into the virtual ground. Each input's current is independent, because the minus pin is held at zero volts. The currents add, and all flow through R f. So v out equals minus R f times the sum of each v over its R. Here, V one through five k, V two and V three through ten k, with R f ten k: v out equals minus two V one plus V two plus V three. Audio mixers work this way.",
+   "kind": "sum"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Difference amplifier",
+   "narration": "The difference amplifier, or subtractor. With matched resistor pairs, v out equals R two over R one, times V two minus V one. Here both inputs carry two volts in common, plus a small signal on V two. The common two volts is cancelled. Only the difference is amplified, by ten. How well it rejects the common part is the common mode rejection ratio, C M R R.",
+   "kind": "diff"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Instrumentation amplifier",
+   "narration": "The instrumentation amplifier improves the difference amplifier: two non-inverting buffers in front, so both inputs have huge input impedance, then a difference amplifier. One resistor, R G, sets the gain. It's used for tiny signals buried in common noise: E C G electrodes, strain gauges, thermocouples. The gain is one plus two R over R G, times R two over R one.",
+   "title": "INSTRUMENTATION AMPLIFIER",
+   "given": [
+    "3 op-amps",
+    "one gain resistor RG"
+   ],
+   "lines": [
+    "two buffers → huge Zin on both inputs",
+    "then a difference amplifier",
+    "A = (1 + 2R/RG) × (R2/R1)",
+    "very high CMRR: ECG, strain gauges"
+   ]
+  },
+  {
+   "type": "opamp",
+   "chapter": "Integrator",
+   "narration": "Swap R f for a capacitor. The input current, v in over R, flows into the capacitor and charges it steadily. A constant input makes a steadily rising capacitor voltage, so the output ramps. A square wave in gives a triangle wave out. v out equals minus one over R C times the integral of v in. Used in wave generators and analog computers. In practice, a large resistor across the capacitor stops it drifting into saturation.",
+   "kind": "integ"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Differentiator",
+   "narration": "Swap them the other way: a capacitor at the input, a resistor in feedback. Now the current depends on how fast the input changes. The output is the slope of the input: v out equals minus R C times d v in by d t. A triangle wave in, with constant slopes, gives a square wave out. It amplifies fast changes, so it's also sensitive to noise.",
+   "kind": "diffr"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Active filter",
+   "narration": "Add a capacitor across R f in the inverting amplifier, and it becomes an active low pass filter. At low frequencies, the capacitor is open, and the gain is minus R f over R in: minus two. At high frequencies, the capacitor shorts R f, and the gain falls. The cutoff is one over two pi R f C. Unlike passive filters, active filters can have gain and don't load the source. Butterworth and other higher order filters are built from such stages.",
+   "kind": "lpf"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Comparator",
+   "narration": "Now with no feedback, on purpose: the comparator. The output is plus eleven if V plus is greater than V minus, minus eleven otherwise. Here the input is compared with zero. But look: a noisy input crosses zero several times near each crossing, and the output chatters back and forth. That's a real problem in real circuits.",
+   "kind": "comp"
+  },
+  {
+   "type": "opamp",
+   "chapter": "Schmitt trigger",
+   "narration": "The fix: the Schmitt trigger. Add positive feedback from the output to the plus input. Now there are two thresholds. While the output is high, the input must fall below minus one volt to switch it low. While it's low, the input must rise above plus one volt to switch it high. Small noise can't cross the gap, called hysteresis, so the output switches cleanly once per crossing.",
+   "kind": "schmitt"
+  },
+  {
+   "type": "numerical",
+   "chapter": "Real op-amp limits",
+   "narration": "Real op amps aren't ideal. Slew rate: the fastest the output can change, like zero point five volts per microsecond for the classic seven four one. Ask for a big, fast sine wave and it turns into a triangle. Gain bandwidth product: gain times bandwidth is constant, about one megahertz. So with a gain of a hundred, the bandwidth is only ten kilohertz. Input offset voltage: a few millivolts of error even with zero input. And input bias current, and finite C M R R. Datasheets list them all.",
+   "title": "REAL OP-AMP LIMITS (741)",
+   "given": [
+    "SR = 0.5 V/µs",
+    "GBW = 1 MHz"
+   ],
+   "lines": [
+    "max f for 10 V peak: SR ÷ (2π Vp) = 8 kHz",
+    "gain 100 → BW = 1 MHz ÷ 100 = 10 kHz",
+    "offset ≈ 1-5 mV, bias current ≈ 80 nA",
+    "CMRR ≈ 90 dB"
+   ]
+  },
+  {
+   "type": "numerical",
+   "chapter": "Numericals: op-amps",
+   "narration": "Placement questions. One: inverting amplifier, R in two k, R f forty seven k, input zero point one volts. Output? Minus forty seven over two times zero point one: minus two point three five volts. Two: non-inverting, R f nine k, R g one k, input one point five volts, supply plus minus twelve. Output? Fifteen volts? No: it saturates near eleven volts. Always check the rails. Three: a summing amplifier with all resistors ten k and inputs one, two and three volts. Output: minus six volts. Four: why must there be negative feedback for the virtual short? Because only negative feedback makes the op amp drive its inputs together. Without it, the output goes to a rail.",
+   "title": "NUMERICALS · OP-AMPS",
+   "given": [
+    "±12 V supply"
+   ],
+   "lines": [
+    "inv: −(47k/2k) × 0.1 = −2.35 V",
+    "non-inv: 10 × 1.5 = 15 V → clips at ≈ +11 V",
+    "sum: −(1 + 2 + 3) = −6 V",
+    "virtual short needs negative feedback"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 20 recap",
+   "narration": "Recap. An op amp amplifies V plus minus V minus by about two hundred thousand. With negative feedback, two golden rules: the inputs are equal, and they draw no current. Inverting gain minus R f over R in, non-inverting one plus R f over R g, follower one. Summing, difference, instrumentation, integrator, differentiator, active filters. Without feedback it's a comparator, and with positive feedback a Schmitt trigger. Watch the rails, the slew rate and the gain bandwidth product. Next: the five five five timer.",
+   "title": "CHAPTER 20 COMPLETE",
+   "lines": [
+    "Golden rules: V+ = V−, no input current",
+    "Inv −Rf/Rin · Non-inv 1 + Rf/Rg · follower 1",
+    "Σ, diff, inst-amp, ∫, d/dt, active filter",
+    "No feedback: comparator · + feedback: Schmitt"
+   ],
+   "cta": "Next: 555 timer"
+  }
+ ]
+}

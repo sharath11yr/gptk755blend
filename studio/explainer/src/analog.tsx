@@ -3653,3 +3653,98 @@ export const FrespScene: React.FC<any> = ({ dur, mode = "sweep" }) => {
   </svg></AbsoluteFill>;
 };
 ANALOG_SCENES.fresp = FrespScene;
+
+// ------------------------------------------------------------------ Op-amp engine: every basic circuit with live input/output waves
+/** {"type":"opamp","kind":"open"|"inv"|"noninv"|"buffer"|"sum"|"diff"|"integ"|"diffr"|"comp"|"schmitt"|"lpf"} ±12 V rails */
+export const OpampScene: React.FC<any> = ({ dur, kind = "inv" }) => {
+  const fr = useCurrentFrame(); const t = fr / 30;
+  const p = interpolate(fr, [dur * 0.04, dur * 0.96], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string, c = L.wire) => <polyline points={pts} fill="none" stroke={c} strokeWidth={6} strokeLinejoin="round" />;
+  const SAT = 11;
+  const oa = (x: number, y: number) => <g><polygon points={`${x},${y - 110} ${x},${y + 110} ${x + 190},${y}`} fill={L.bg0} stroke={L.amber} strokeWidth={6} />
+    <text x={x + 18} y={y - 50} {...T1} fontSize={34} fill={L.electron}>−</text><text x={x + 18} y={y + 72} {...T1} fontSize={34} fill={L.red}>+</text>
+    <text x={x + 95} y={y - 80} {...T1} fontSize={20} fill={L.dim}>+12 V</text><text x={x + 95} y={y + 96} {...T1} fontSize={20} fill={L.dim}>−12 V</text></g>;
+  const X = 480, Y = 520, XO = X + 190; // op-amp body, output at (XO, Y)
+  const gnd = (x: number, y: number) => <g><line x1={x - 24} y1={y} x2={x + 24} y2={y} stroke={L.wire} strokeWidth={5} /><line x1={x - 14} y1={y + 10} x2={x + 14} y2={y + 10} stroke={L.wire} strokeWidth={5} /><line x1={x - 6} y1={y + 20} x2={x + 6} y2={y + 20} stroke={L.wire} strokeWidth={5} /></g>;
+  const capH = (x: number, y: number, lab: string) => <g><rect x={x - 18} y={y - 36} width={36} height={72} fill={L.bg0} /><line x1={x - 10} y1={y - 34} x2={x - 10} y2={y + 34} stroke={L.amber} strokeWidth={7} /><line x1={x + 10} y1={y - 34} x2={x + 10} y2={y + 34} stroke={L.amber} strokeWidth={7} /><text x={x} y={y - 46} textAnchor="middle" {...T1} fontSize={22}>{lab}</text></g>;
+  const src = (x: number, y: number, lab: string) => <g><circle cx={x} cy={y} r={34} fill={L.bg0} stroke={L.cyan} strokeWidth={5} /><path d={`M ${x - 20} ${y} q 10 -20 20 0 t 20 0`} fill="none" stroke={L.cyan} strokeWidth={4} /><text x={x} y={y + 64} textAnchor="middle" {...T1} fontSize={20} fill={L.cyan}>{lab}</text></g>;
+  // waveforms
+  const ph = 2 * Math.PI * 2;
+  let vin: (u: number) => number = (u) => Math.sin(ph * u), vout: (u: number) => number = (u) => 0, inL = "input", outL = "output", note = "", left: React.ReactNode = null;
+  const clamp = (v: number) => Math.max(-SAT, Math.min(SAT, v));
+  if (kind === "open") { vin = (u) => 0.5 * Math.sin(ph * u); vout = (u) => clamp(200000 * 0.5 * Math.sin(ph * u)); inL = "input ±0.5 V (no feedback)"; outL = "output: slams to the rails ±11 V"; note = "open loop gain ≈ 200 000 → saturates";
+    left = <g>{oa(X, Y)}{src(220, Y + 70, "vin")}{W(`254,${Y + 70} ${X},${Y + 70}`)}{W(`${X},${Y - 50} 360,${Y - 50} 360,${Y + 140}`)}{gnd(360, Y + 140)}{W(`${XO},${Y} 900,${Y}`)}</g>; }
+  else if (kind === "inv" || kind === "sum") { const sum = kind === "sum";
+    vin = (u) => Math.sin(ph * u); vout = sum ? (u) => clamp(-(Math.sin(ph * u) * 2 + 2 + 1)) : (u) => clamp(-10 * Math.sin(ph * u) * 0.8); inL = sum ? "V1 = sine 1 V, V2 = 2 V, V3 = 1 V" : "input 0.8 V peak"; outL = sum ? "output = −(2·V1 + V2 + V3) ÷ … (see right)" : "output: 8 V peak, INVERTED (gain −10)";
+    note = sum ? "virtual ground: currents ADD at the − pin" : "− pin held at 0 V: virtual ground";
+    left = <g>{oa(X, Y)}{W(`${X},${Y + 50} 420,${Y + 50} 420,${Y + 140}`)}{gnd(420, Y + 140)}
+      {sum ? [0, 1, 2].map((k) => <g key={k}>{src(120, Y - 260 + k * 150, `V${k + 1}`)}{W(`154,${Y - 260 + k * 150} 220,${Y - 260 + k * 150}`)}<Res x={290} y={Y - 260 + k * 150} ohm={k ? 10000 : 5000} label={`R${k + 1}`} horizontal />{W(`360,${Y - 260 + k * 150} 400,${Y - 260 + k * 150} 400,${Y - 50} ${X},${Y - 50}`)}</g>)
+        : <>{src(140, Y - 50, "vin")}{W(`174,${Y - 50} 230,${Y - 50}`)}<Res x={300} y={Y - 50} ohm={1000} label="Rin" horizontal />{W(`370,${Y - 50} ${X},${Y - 50}`)}</>}
+      {W(`420,${Y - 50} 420,${Y - 230} 560,${Y - 230}`)}<Res x={630} y={Y - 230} ohm={10000} label="Rf" horizontal />{W(`700,${Y - 230} 760,${Y - 230} 760,${Y} ${XO},${Y}`)}{W(`760,${Y} 900,${Y}`)}
+      <circle cx={420} cy={Y - 50} r={10} fill={L.green} /><text x={440} y={Y - 80} {...T1} fontSize={22} fill={L.green}>0 V</text></g>; }
+  else if (kind === "noninv" || kind === "buffer") { const buf = kind === "buffer";
+    vin = (u) => Math.sin(ph * u); vout = (u) => clamp((buf ? 1 : 10) * Math.sin(ph * u)); inL = "input 1 V peak"; outL = buf ? "output = input (gain 1), in phase" : "output: 10 V peak, in phase (gain 1 + 9k/1k = 10)"; note = buf ? "unity-gain buffer: huge Zin, tiny Zout" : "− pin follows + pin: virtual short";
+    left = <g>{oa(X, Y)}{buf ? <>{src(240, Y + 140, "vin")}{W(`240,${Y + 106} 240,${Y + 50} ${X},${Y + 50}`)}{W(`240,${Y + 174} 240,${Y + 240}`)}{gnd(240, Y + 240)}</>
+        : <>{src(330, Y + 200, "vin")}{W(`330,${Y + 166} 330,${Y + 50} ${X},${Y + 50}`)}{W(`330,${Y + 234} 330,${Y + 300}`)}{gnd(330, Y + 300)}</>}
+      {buf ? W(`${X},${Y - 50} 420,${Y - 50} 420,${Y - 200} 760,${Y - 200} 760,${Y}`) : <>{W(`${X},${Y - 50} 420,${Y - 50} 420,${Y - 230} 560,${Y - 230}`)}<Res x={630} y={Y - 230} ohm={9000} label="Rf" horizontal />{W(`700,${Y - 230} 760,${Y - 230} 760,${Y}`)}
+        {W(`420,${Y - 50} 330,${Y - 50}`)}<Res x={260} y={Y - 50} ohm={1000} label="Rg" horizontal />{W(`190,${Y - 50} 140,${Y - 50} 140,${Y + 300}`)}{gnd(140, Y + 300)}</>}
+      {W(`${XO},${Y} 900,${Y}`)}</g>; }
+  else if (kind === "diff") { vin = (u) => 2 + 0.5 * Math.sin(ph * u); vout = (u) => clamp(10 * (2 + 0.5 * Math.sin(ph * u) - 2)); inL = "V2 = 2 V + 0.5 V signal, V1 = 2 V"; outL = "output = 10 × (V2 − V1): only the DIFFERENCE"; note = "the common 2 V is rejected";
+    left = <g>{oa(X, Y)}{src(140, Y - 50, "V1")}{W(`174,${Y - 50} 230,${Y - 50}`)}<Res x={300} y={Y - 50} ohm={1000} label="R1" horizontal />{W(`370,${Y - 50} ${X},${Y - 50}`)}
+      {src(140, Y + 50 + 120, "V2")}{W(`174,${Y + 170} 230,${Y + 170}`)}<Res x={300} y={Y + 170} ohm={1000} label="R1" horizontal />{W(`370,${Y + 170} 420,${Y + 170} 420,${Y + 50} ${X},${Y + 50}`)}
+      {W(`420,${Y + 170} 420,${Y + 200}`)}<Res x={420} y={Y + 270} ohm={10000} label="R2" />{gnd(420, Y + 350)}
+      {W(`420,${Y - 50} 420,${Y - 230} 560,${Y - 230}`)}<Res x={630} y={Y - 230} ohm={10000} label="R2" horizontal />{W(`700,${Y - 230} 760,${Y - 230} 760,${Y} 900,${Y}`)}</g>; }
+  else if (kind === "integ" || kind === "diffr") { const ig = kind === "integ";
+    vin = ig ? (u) => ((u * 4) % 1 < 0.5 ? 1 : -1) : (u) => { const x = (u * 4) % 1; return x < 0.5 ? -1 + 4 * x : 3 - 4 * x; };
+    vout = ig ? (u) => { const x = (u * 4) % 1; return -(x < 0.5 ? -5 + 20 * x : 15 - 20 * x); } : (u) => ((u * 4) % 1 < 0.5 ? -8 : 8);
+    inL = ig ? "input: square wave" : "input: triangle wave"; outL = ig ? "output: triangle (inverted ramp)" : "output: square (slope of the input, inverted)"; note = ig ? "Vout = −(1/RC) ∫ vin dt" : "Vout = −RC × d(vin)/dt";
+    left = <g>{oa(X, Y)}{src(140, Y - 50, "vin")}{W(`174,${Y - 50} 230,${Y - 50}`)}{ig ? <Res x={300} y={Y - 50} ohm={10000} label="R" horizontal /> : capH(300, Y - 50, "C")}{W(`${ig ? 370 : 318},${Y - 50} ${X},${Y - 50}`)}
+      {W(`${X},${Y + 50} 420,${Y + 50} 420,${Y + 140}`)}{gnd(420, Y + 140)}{W(`420,${Y - 50} 420,${Y - 230} ${ig ? 612 : 560},${Y - 230}`)}{ig ? capH(630, Y - 230, "C") : <Res x={630} y={Y - 230} ohm={10000} label="R" horizontal />}{W(`${ig ? 648 : 700},${Y - 230} 760,${Y - 230} 760,${Y} 900,${Y}`)}</g>; }
+  else if (kind === "comp" || kind === "schmitt") { const sch = kind === "schmitt"; vin = (u) => 3 * Math.sin(ph * u) + (sch ? 0.6 * Math.sin(ph * u * 9) : 0.6 * Math.sin(ph * u * 9));
+    let st = SAT; vout = (u) => { const N = 400; let s = SAT; for (let k = 0; k <= Math.round(u * N); k++) { const v = vin(k / N); if (sch) { if (v > 1 && s < 0) s = SAT; else if (v > 1) s = SAT; if (v < -1) s = -SAT; } else s = v > 0 ? SAT : -SAT; } return sch ? s : (vin(u) > 0 ? SAT : -SAT); }; void st;
+    inL = "noisy input"; outL = sch ? "Schmitt: clean switching (thresholds ±1 V)" : "comparator: chatters on noise near 0 V"; note = sch ? "positive feedback creates two thresholds (hysteresis)" : "no feedback: output = sign(V+ − V−)";
+    left = <g>{oa(X, Y)}{src(220, Y + 50, "vin")}{W(`254,${Y + 50} ${X},${Y + 50}`)}{W(`${X},${Y - 50} 400,${Y - 50} 400,${Y + 200}`)}{gnd(400, Y + 200)}{W(`${XO},${Y} 900,${Y}`)}
+      {sch && <>{W(`760,${Y} 760,${Y + 260} 620,${Y + 260}`)}<Res x={550} y={Y + 260} ohm={110000} label="R2 (+ feedback)" horizontal />{W(`480,${Y + 260} 440,${Y + 260} 440,${Y + 50}`)}</>}</g>; }
+  else { vin = (u) => Math.sin(ph * u) + 0.5 * Math.sin(ph * u * 12); vout = (u) => clamp(-2 * Math.sin(ph * u)); inL = "input: 1 V tone + 0.5 V high-frequency noise"; outL = "output: tone × 2 (inverted), noise removed"; note = "active low-pass: fc = 1 ÷ (2π Rf C), gain −Rf/Rin";
+    left = <g>{oa(X, Y)}{src(140, Y - 50, "vin")}{W(`174,${Y - 50} 230,${Y - 50}`)}<Res x={300} y={Y - 50} ohm={10000} label="Rin" horizontal />{W(`370,${Y - 50} ${X},${Y - 50}`)}{W(`${X},${Y + 50} 420,${Y + 50} 420,${Y + 140}`)}{gnd(420, Y + 140)}
+      {W(`420,${Y - 50} 420,${Y - 300} 560,${Y - 300}`)}<Res x={630} y={Y - 300} ohm={20000} label="Rf" horizontal />{W(`700,${Y - 300} 760,${Y - 300} 760,${Y}`)}{W(`420,${Y - 170} 612,${Y - 170}`)}{capH(630, Y - 170, "C")}{W(`648,${Y - 170} 760,${Y - 170}`)}{W(`760,${Y} 900,${Y}`)}</g>; }
+  const GX = 1080, GW = 760;
+  const tr = (cy: number, fn: (u: number) => number, col: string, name: string, sc: number) => { const q: string[] = []; for (let k = 0; k <= 300; k++) { const u = k / 300; if (u > p) break; q.push(`${GX + GW * u},${cy - fn(u) * sc}`); }
+    return <g><line x1={GX} y1={cy} x2={GX + GW} y2={cy} stroke={L.dim} strokeWidth={2} /><text x={GX} y={cy - 130} fill={col} fontFamily={SANS} fontSize={26} fontWeight={800}>{name}</text><polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={5} /></g>; };
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{left}<circle cx={900} cy={Y} r={10} fill={L.green} /><text x={900} y={Y - 26} textAnchor="middle" {...T1} fontSize={24} fill={L.green}>vout</text>
+    {tr(330, vin, L.cyan, inL, kind === "diff" ? 30 : 40)}{tr(790, vout, L.green, outL, 9)}
+    <text x={540} y={990} textAnchor="middle" {...T1} fontSize={28} fill={L.amber}>{note}</text></svg></AbsoluteFill>;
+};
+ANALOG_SCENES.opamp = OpampScene;
+
+/** {"type":"osc","kind":"phase"|"wien"|"colpitts"|"hartley"|"crystal"} oscillators: circuit + output building up from noise */
+export const OscScene: React.FC<any> = ({ dur, kind = "phase" }) => {
+  const fr = useCurrentFrame();
+  const p = interpolate(fr, [dur * 0.04, dur * 0.96], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const W = (pts: string) => <polyline points={pts} fill="none" stroke={L.wire} strokeWidth={6} strokeLinejoin="round" />;
+  const capV = (x: number, y: number, lab: string) => <g><rect x={x - 36} y={y - 18} width={72} height={36} fill={L.bg0} /><line x1={x - 34} y1={y - 10} x2={x + 34} y2={y - 10} stroke={L.amber} strokeWidth={7} /><line x1={x - 34} y1={y + 10} x2={x + 34} y2={y + 10} stroke={L.amber} strokeWidth={7} /><text x={x + 44} y={y + 8} {...T1} fontSize={22}>{lab}</text></g>;
+  const capH = (x: number, y: number, lab: string) => <g><rect x={x - 18} y={y - 36} width={36} height={72} fill={L.bg0} /><line x1={x - 10} y1={y - 34} x2={x - 10} y2={y + 34} stroke={L.amber} strokeWidth={7} /><line x1={x + 10} y1={y - 34} x2={x + 10} y2={y + 34} stroke={L.amber} strokeWidth={7} /><text x={x} y={y - 46} textAnchor="middle" {...T1} fontSize={22}>{lab}</text></g>;
+  const coilV = (x: number, y: number, lab: string) => <g><path d={`M ${x} ${y - 64} ` + [0, 1, 2, 3].map(() => "a 16 16 0 1 1 0 32").join(" ")} fill="none" stroke={L.amber} strokeWidth={6} /><text x={x + 34} y={y + 8} {...T1} fontSize={22}>{lab}</text></g>;
+  const amp = <g><polygon points="760,240 760,440 940,340" fill={L.bg0} stroke={L.amber} strokeWidth={6} /><text x={820} y={350} {...T1} fontSize={26}>A</text><text x={850} y={220} textAnchor="middle" {...T1} fontSize={22} fill={L.dim}>amplifier</text></g>;
+  let net: React.ReactNode, info: string[] = [];
+  if (kind === "phase") { net = <g>{W("940,340 1000,340 1000,700 900,700")}{[0, 1, 2].map((k) => <g key={k}>{capH(820 - k * 220, 700, `C`)}{W(`${802 - k * 220},700 ${700 - k * 220 + 40},700`)}<Res x={740 - k * 220} y={780} ohm={10000} label="R" />{W(`${740 - k * 220},700 ${740 - k * 220},710`)}</g>)}{W("300,700 220,700 220,340 760,340")}</g>;
+    info = ["3 RC sections: 60° each → 180°", "amplifier inverts: another 180°", "total 360°: in phase → it sustains", "f = 1 ÷ (2π R C √6)", "needs gain |A| ≥ 29"]; }
+  else if (kind === "wien") { net = <g>{W("940,340 1000,340 1000,600 900,600")}<Res x={830} y={600} ohm={10000} label="R" horizontal />{capH(700, 600, "C")}{W("680,600 620,600 620,700")}<Res x={620} y={770} ohm={10000} label="R" />{W("540,700 540,700")}{capV(480, 770, "C")}{W("620,700 480,700 480,750")}{W("480,790 480,860 620,860 620,840")}{W("620,700 300,700 300,300 760,300")}</g>;
+    info = ["series RC + parallel RC network", "at f0: phase shift = 0°, feedback = 1/3", "amplifier gain = 3 (no inversion)", "f0 = 1 ÷ (2π R C)", "used in audio signal generators"]; }
+  else if (kind === "colpitts" || kind === "hartley") { const col = kind === "colpitts";
+    net = <g>{W("940,340 1000,340 1000,560 800,560")}{col ? <>{capV(700, 640, "C1")}{capV(900, 640, "C2")}{coilV(800, 520, "L")}</> : <>{coilV(700, 680, "L1")}{coilV(900, 680, "L2")}{capH(800, 560, "C")}</>}
+      {W("700,560 900,560")}{W("700,560 700,620")}{W("900,560 900,620")}{W("700,660 700,780 900,780 900,660")}{W("700,560 300,560 300,340 760,340")}<text x={800} y={830} textAnchor="middle" {...T1} fontSize={24} fill={L.dim}>LC tank: {col ? "split capacitor" : "split inductor"}</text></g>;
+    info = col ? ["tank: L with C1, C2 in series", "f0 = 1 ÷ (2π √(L C)), C = C1C2/(C1+C2)", "feedback from the C1–C2 tap", "RF: radios, up to hundreds of MHz"] : ["tank: L1 + L2 with C", "f0 = 1 ÷ (2π √((L1+L2) C))", "feedback from the L1–L2 tap", "RF oscillators, tunable with C"]; }
+  else { net = <g>{W("940,340 1000,340 1000,560 880,560")}<rect x={760} y={510} width={120} height={100} rx={10} fill="#d8dde8" stroke={L.amber} strokeWidth={5} /><line x1={750} y1={530} x2={750} y2={590} stroke={L.amber} strokeWidth={6} /><line x1={890} y1={530} x2={890} y2={590} stroke={L.amber} strokeWidth={6} />
+      <text x={820} y={570} textAnchor="middle" {...T1} fontSize={22}>quartz</text>{W("750,560 300,560 300,340 760,340")}</g>;
+    info = ["quartz crystal vibrates mechanically", "acts as an extremely high-Q tank", "frequency accuracy ~ 0.001 %", "every watch, phone, computer clock", "e.g. 32.768 kHz, 16 MHz"]; }
+  const GX = 1120, GW = 720; const q: string[] = []; for (let k = 0; k <= 300; k++) { const u = k / 300; if (u > p) break; const a = Math.min(1, 0.03 * Math.exp(u * 6)); q.push(`${GX + GW * u},${900 - a * 110 * Math.sin(2 * Math.PI * 10 * u)}`); }
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{amp}{net}
+    <text x={1480} y={170} textAnchor="middle" {...T1} fontSize={30}>{({ phase: "RC PHASE-SHIFT", wien: "WIEN BRIDGE", colpitts: "COLPITTS", hartley: "HARTLEY", crystal: "CRYSTAL" } as any)[kind]} OSCILLATOR</text>
+    {info.map((l, k) => <text key={k} x={1120} y={260 + k * 70} fill={L.text} fontFamily={SANS} fontSize={28} fontWeight={600}>• {l}</text>)}
+    <line x1={GX} y1={900} x2={GX + GW} y2={900} stroke={L.dim} strokeWidth={2} /><text x={GX} y={760} fill={L.green} fontFamily={SANS} fontSize={24} fontWeight={800}>output: grows from noise, then steadies</text>
+    <polyline points={q.join(" ")} fill="none" stroke={L.green} strokeWidth={5} /></svg></AbsoluteFill>;
+};
+ANALOG_SCENES.osc = OscScene;
