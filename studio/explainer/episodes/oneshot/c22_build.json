@@ -44,24 +44,26 @@
    "cap": true
   },
   {
-   "type": "zreg",
+   "type": "numerical",
    "chapter": "Design 1: the regulator",
    "narration": "Step four, the regulator: a seven eight oh five, which is a refined series regulator, gives a steady five volts. Its heat: eleven point three minus five, times half an amp, about three watts, so it needs a heat sink. Step five, small capacitors at its input and output, a third of a microfarad and a tenth, to keep it stable. And a fuse in the mains side. Every value came from a calculation we learned.",
-   "kind": "series",
-   "mode": "calc",
    "lines": [
     "7805: Vout = 5 V (needs ≈ 2-3 V headroom)",
     "heat = (11.3 − 5) × 0.5 = 3.2 W → heat sink",
     "0.33 µF in, 0.1 µF out (stability)",
     "fuse on the mains side"
+   ],
+   "title": "SUPPLY DESIGN: REGULATOR",
+   "given": [
+    "7805",
+    "0.5 A"
    ]
   },
   {
-   "type": "bjt",
+   "type": "app",
    "chapter": "Design 2: a transistor switch for a motor",
    "narration": "Design two: a microcontroller pin, five volts, must switch a twelve volt motor drawing two hundred milliamps. Choose an N P N transistor rated for well over two hundred milliamps, like the B C three three seven, with a minimum beta of about a hundred. For a solid switch we want saturation, so give it more base current than needed: needed is two hundred over a hundred, two milliamps; use five times more, ten milliamps. Base resistor: five minus zero point seven, over ten milliamps, four thirty ohms. Use four seventy. And across the motor, a flyback diode, because the motor is an inductor.",
-   "mode": "regions",
-   "bias": "basic"
+   "app": "relay"
   },
   {
    "type": "numerical",
@@ -107,10 +109,20 @@
    ]
   },
   {
-   "type": "t555",
+   "type": "numerical",
    "chapter": "Design 4: an LED blinker",
    "narration": "Design four: blink an L E D about once a second, with a five five five. For a one hertz astable with roughly equal on and off times, make R one small and R two large. Choose C equals ten microfarads. Then f equals one point four four over R one plus two R two, times C. For one hertz: R one plus two R two equals one hundred and forty four kilohms. Choose R one equals four point seven k and R two equals sixty eight k: f equals one point four four over one forty point seven k times ten micro, about one point zero two hertz. The L E D resistor: five minus two, over fifteen milliamps, two hundred ohms, use two twenty.",
-   "mode": "astable"
+   "title": "555 BLINKER: CHOOSING PARTS",
+   "given": [
+    "f ≈ 1 Hz",
+    "C = 10 µF"
+   ],
+   "lines": [
+    "f = 1.44 ÷ ((R1 + 2R2) C)",
+    "R1 small, R2 large → ~50% duty",
+    "R1 + 2R2 = 144 kΩ",
+    "LED: (5 − 2) ÷ 15 mA ≈ 220 Ω"
+   ]
   },
   {
    "type": "numerical",
