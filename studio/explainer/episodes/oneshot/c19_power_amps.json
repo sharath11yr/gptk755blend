@@ -1,0 +1,212 @@
+{
+ "title": "Analog One Shot Ch19",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 19: Power Amplifiers",
+   "narration": "Chapter nineteen: power amplifiers. Small signal amplifiers handle millivolts. Power amplifiers drive speakers and antennas with watts. They're grouped into classes by how long the transistor conducts in each cycle, and that decides their distortion and efficiency.",
+   "kicker": "CHAPTER 19",
+   "title": "POWER AMPLIFIERS",
+   "subtitle": "Class A, B, AB, C"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "How it works",
+   "narration": "Here's a Class A stage. Twenty volts, the load, twenty ohms, in the collector, and the transistor biased so that half an amp flows with no signal at all. That's the Q point, in the middle of the load line. When the signal arrives, the collector current swings up and down around half an amp, between almost zero and almost one amp. But it never stops. The transistor conducts for the full cycle, three hundred and sixty degrees. That's what Class A means.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Why it sounds clean",
+   "narration": "Because the transistor is always on, it never has to switch on or off. It stays in its smooth, linear region the whole time. The output is a faithful, complete copy of the input, with very low distortion. That's why some audio enthusiasts still love Class A amplifiers.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "The price: efficiency",
+   "narration": "But look at the efficiency. Even with no music playing, half an amp flows from twenty volts: ten watts, all the time. At the very most, the load gets two and a half watts of signal. Efficiency: two and a half over ten, twenty five percent. Three quarters of the power becomes heat.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Every number. Q point: I C Q is half an amp, V C E Q is twenty minus zero point five times twenty, ten volts. Power from the supply: twenty volts times half an amp, ten watts, constant. Biggest signal: the voltage can swing ten volts peak, and the current half an amp peak. Output power: ten over root two, times zero point five over root two, two point five watts. Efficiency: twenty five percent. At idle, the transistor burns ten volts times half an amp, five watts. With a transformer coupled load instead, the maximum rises to fifty percent.",
+   "cls": "a",
+   "lines": [
+    "ICQ = 0.5 A, VCEQ = 20 − 0.5 × 20 = 10 V",
+    "Pdc = VCC × ICQ = 20 × 0.5 = 10 W (always)",
+    "Pout(max) = (10 ÷ √2) × (0.5 ÷ √2) = 2.5 W",
+    "η = 2.5 ÷ 10 = 25 %",
+    "idle: P(transistor) = 10 V × 0.5 A = 5 W",
+    "transformer-coupled: η(max) = 50 %"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: boutique guitar amps",
+   "narration": "Class A amplifiers are rare today, but you'll still find them in boutique guitar amplifiers and high end headphone amps, where sound quality matters more than efficiency. They run hot, need big heat sinks, and drain power even when silent. For anything powered by a battery, Class A is out of the question.",
+   "title": "REAL WORLD: CLASS A GUITAR AMPS",
+   "sub": "prized for their clean, smooth sound, despite wasting most of their power as heat",
+   "src": "guitar",
+   "stage": "PREAMP",
+   "stage2": "CLASS A",
+   "sink": "speaker",
+   "note1": "small signal",
+   "note2": "always conducting, always hot",
+   "note3": "clean, rich tone"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking a Class A amplifier cools down when quiet. It's hottest at idle, when the transistor carries the full bias current with no signal going to the load. Two: biasing away from the middle of the load line. Then the output clips on one side first. Three: quoting fifty percent efficiency for a simple resistive load. That's only with transformer coupling. With a resistor, it's twenty five.",
+   "cls": "a"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Push-pull",
+   "narration": "Here's a Class B push pull stage. A plus twelve and a minus twelve volt supply. An N P N on top, a P N P below, their emitters joined at the output, which drives an eight ohm speaker. Both bases get the signal. On the positive half cycle, the N P N turns on and pushes current into the speaker. On the negative half, the P N P turns on and pulls current out. Each transistor conducts for exactly half the cycle, one hundred and eighty degrees. With no signal, neither conducts. No idle waste.",
+   "cls": "b"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Crossover distortion",
+   "narration": "But look closely at the output where the signal crosses zero. Each transistor needs zero point seven volts on its base before it turns on. So for small voltages around zero, between minus zero point seven and plus zero point seven, neither transistor conducts. The output goes flat. That kink is called crossover distortion, and it's very audible at low volume.",
+   "cls": "b"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Class AB: the fix",
+   "narration": "The fix: two diodes between the bases, with a small current through them. Each diode drops zero point seven volts, so the two bases are held one point four volts apart, each transistor already just at the edge of turning on. Now a tiny signal immediately turns one of them on. The dead zone disappears, and the output is smooth. Each transistor conducts for slightly more than half the cycle. That's Class A B.",
+   "cls": "ab"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "Efficiency",
+   "narration": "And the efficiency? In Class B, current is only drawn when there's signal. The theoretical maximum is pi over four, seventy eight point five percent. Class A B has a small idle current, so it's slightly lower, but still around seventy percent. Compare that with Class A's twenty five.",
+   "cls": "b"
+  },
+  {
+   "type": "pamp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers, at ten volts peak into eight ohms with plus and minus twelve volt supplies. Peak current: ten over eight, one point two five amps. Output power: V peak squared over two R L, a hundred over sixteen, six point two five watts. Supply power: two times V C C times I peak over pi, two times twelve times one point two five over pi, nine point five five watts. Efficiency: six point two five over nine point five five, sixty five percent. The two transistors share the remaining three point three watts as heat. At full swing, the maximum is seventy eight point five percent.",
+   "cls": "ab",
+   "lines": [
+    "Ip = Vp ÷ RL = 10 ÷ 8 = 1.25 A",
+    "Pout = Vp² ÷ (2 RL) = 100 ÷ 16 = 6.25 W",
+    "Pdc = 2 VCC Ip ÷ π = 2 × 12 × 1.25 ÷ π = 9.55 W",
+    "η = 6.25 ÷ 9.55 = 65 %",
+    "heat = 9.55 − 6.25 = 3.3 W (both)",
+    "η(max, Vp = VCC) = π ÷ 4 = 78.5 %"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: every audio amplifier",
+   "narration": "Your home stereo, your car audio, the amplifier in a powered speaker: most analog audio power amplifiers use a Class A B push pull output stage. It combines low distortion with good efficiency. Many modern compact speakers now use Class D, which switches like a buck converter, but Class A B is still the reference for clean sound.",
+   "title": "REAL WORLD: THE STEREO AMPLIFIER",
+   "sub": "a Class AB push-pull output stage drives the speaker with low distortion and good efficiency",
+   "src": "mic",
+   "stage": "PREAMP",
+   "stage2": "CLASS AB",
+   "sink": "speaker",
+   "note1": "line level",
+   "note2": "NPN pushes, PNP pulls",
+   "note3": "watts into 8 Ω"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: calling Class B distortion free. Its crossover distortion is a real problem, which is why pure Class B is rare in audio. Two: forgetting the second supply. A push pull stage needs plus and minus supplies, or a single supply with a large output capacitor. Three: biasing Class A B too hot. Too much idle current makes it behave like Class A, and the transistors can overheat and run away thermally.",
+   "cls": "b"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "How it works",
+   "narration": "Here's a Class C stage. The transistor's base is biased below cutoff, so it's off for most of the cycle. Only when the input reaches its peak does the transistor briefly turn on, giving a short, sharp pulse of current. Look at the collector current on the right: narrow pulses, much less than one hundred and eighty degrees each.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "The tank circuit",
+   "narration": "But pulses aren't a sine wave. How does the output come out clean? The collector load is a tuned tank: an inductor and a capacitor in parallel, resonating at the signal frequency. It's like a child on a swing. One short push at the right moment in every cycle keeps the swing going smoothly. Each current pulse tops up the tank's energy, and the tank rings out a clean sine wave.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "eff",
+   "chapter": "Why so efficient",
+   "narration": "Since the transistor is off almost all the time, and only conducts when its voltage is lowest, it wastes very little power. Class C amplifiers reach around ninety percent efficiency. Compare: Class A at twenty five percent, Class B at seventy eight point five.",
+   "cls": "c"
+  },
+  {
+   "type": "pamp",
+   "mode": "calc",
+   "chapter": "The trade-off",
+   "narration": "So why not use it everywhere? Because the output depends on the tank, not on the exact shape of the input. It can only amplify a single frequency, the one the tank is tuned to. It can't reproduce music or speech with many frequencies at once. It's useless for audio, but perfect for radio, where each transmitter sends one carrier frequency.",
+   "cls": "c",
+   "lines": [
+    "conduction angle: A 360°, B 180°, AB ~200°",
+    "C: < 180° (often ~120°)",
+    "tank: f0 = 1 ÷ (2π √(L C))",
+    "output: clean sine at f0 only",
+    "η ≈ 90 % (A 25 %, B 78.5 %)"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: radio transmitters",
+   "narration": "Every radio transmitter must turn its carrier into lots of power at one exact frequency: an F M station, a walkie talkie, a car key fob. Class C stages do it, with a tank tuned to the carrier. High efficiency means less heat and longer battery life, which matters a lot in a handheld radio.",
+   "title": "REAL WORLD: THE RADIO TRANSMITTER",
+   "sub": "a Class C stage drives the antenna with a single carrier frequency, efficiently",
+   "src": "sensor",
+   "stage": "OSCILLATOR",
+   "stage2": "CLASS C + TANK",
+   "sink": "speaker",
+   "note1": "message",
+   "note2": "pulses ring the tank at f0",
+   "note3": "to the antenna"
+  },
+  {
+   "type": "pamp",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using Class C for audio. It distorts the input completely, and only the tank's frequency comes out. Two: forgetting to tune the tank. If it's off frequency, the pulses don't arrive at the right moment and the output collapses. Three: thinking the collector current is a sine wave. It's a series of short pulses. The sine wave comes from the tank.",
+   "cls": "c"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 19 recap",
+   "narration": "Recap. Class A conducts all three sixty degrees: clean, but at most twenty five percent efficient. Class B uses a push pull pair, each conducting one eighty degrees: up to seventy eight point five percent, but with crossover distortion. Class A B pre biases the pair with diodes to remove it. Class C conducts in short pulses into a tuned tank: about ninety percent, for radio only. Next: op-amps.",
+   "title": "CHAPTER 19 COMPLETE",
+   "lines": [
+    "A: 360°, η ≤ 25%",
+    "B: 180° push-pull, η ≤ 78.5%, crossover",
+    "AB: diode pre-bias, no crossover",
+    "C: < 180°, tank, η ≈ 90% (RF)"
+   ],
+   "cta": "Next: op-amps"
+  }
+ ]
+}

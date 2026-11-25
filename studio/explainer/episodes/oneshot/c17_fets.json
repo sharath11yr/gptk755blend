@@ -1,0 +1,356 @@
+{
+ "title": "Analog One Shot Ch17",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 17: Field-Effect Transistors",
+   "narration": "Chapter seventeen: field effect transistors. Unlike the B J T, which is controlled by base current, a F E T is controlled by voltage, and its gate takes almost no current. We'll cover the J F E T, the MOSFET in depth, how it compares with the B J T, solved MOSFET problems, and the C M O S inverter inside every chip.",
+   "kicker": "CHAPTER 17",
+   "title": "FIELD-EFFECT TRANSISTORS",
+   "subtitle": "JFET, MOSFET, CMOS"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "Inside the JFET",
+   "narration": "An N channel J F E T is a bar of N type silicon, the channel. One end is the source, the other the drain. On both sides of the channel sit P type regions, connected together as the gate. With zero volts on the gate, the channel is wide open, and electrons flow freely from source to drain: ten milliamps. Now make the gate negative. The P N junctions are reverse biased, and their depletion regions grow into the channel, squeezing it. Watch: as V G S goes to minus four volts, the channel narrows, the current falls, and finally the channel is pinched off completely. Zero current.",
+   "kind": "jfet"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "Why no gate current",
+   "narration": "Here's the big advantage. The gate junctions are always reverse biased. So almost no current flows into the gate, typically a few nanoamps. The gate controls the channel with an electric field, not with current. That's why it's called a field effect transistor. Its input impedance is huge, hundreds of megohms.",
+   "kind": "jfet"
+  },
+  {
+   "type": "fet",
+   "mode": "transfer",
+   "chapter": "The transfer curve",
+   "narration": "Plot drain current against gate voltage, and we get the transfer curve. At V G S equals zero, the current is I D S S, the maximum, ten milliamps. At V G S equals V P, the pinch off voltage, minus four volts, it's zero. In between, it follows Shockley's equation: I D equals I D S S, times one minus V G S over V P, squared. A square law, not a straight line.",
+   "kind": "jfet"
+  },
+  {
+   "type": "fet",
+   "mode": "output",
+   "chapter": "The output curves",
+   "narration": "These are the output curves: drain current against drain source voltage, for different gate voltages. At low V D S, the channel acts like a resistor, the ohmic region. Above a certain voltage, the current flattens out: the saturation region, where the J F E T acts as a constant current source controlled by V G S. Amplifiers work in saturation. And notice, unlike a B J T, saturation here means constant current, not fully on.",
+   "kind": "jfet"
+  },
+  {
+   "type": "fet",
+   "mode": "circuit",
+   "chapter": "Self-bias",
+   "narration": "To bias it, we need a negative gate voltage, but we don't want a second supply. The trick: self bias. Put R S, five hundred ohms, in the source. The gate is held at zero volts through R G, one megohm, which carries no current. Drain current through R S lifts the source above zero, so the gate is negative relative to the source. Here: three point three six milliamps, giving V G S of minus one point six eight volts, and V D S of six point nine six volts.",
+   "kind": "jfet"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Solve it. V G S equals minus I D times R S. Put that into Shockley: I D equals ten milliamps times one minus I D times five hundred over four, squared. Solving, I D is three point three six milliamps. Check: V G S equals minus three point three six milliamps times five hundred, minus one point six eight volts, and ten times one minus one point six eight over four, squared, gives three point three six. V D S equals twelve minus three point three six milliamps times one point five k, six point nine six volts. The gain factor g m is two I D S S over V P, times one minus V G S over V P: two point nine milliamps per volt.",
+   "kind": "jfet",
+   "lines": [
+    "VGS = −ID × RS = −ID × 500",
+    "ID = 10 mA × (1 − VGS ÷ (−4))²",
+    "→ ID = 3.36 mA, VGS = −1.68 V",
+    "check: 10 × (1 − 1.68 ÷ 4)² = 3.36 mA ✓",
+    "VDS = 12 − 3.36 mA × (1k + 0.5k) = 6.96 V",
+    "gm = (2 × 10 mA ÷ 4) × (1 − 0.42) = 2.9 mA/V"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: guitar pedal input",
+   "narration": "An electric guitar pickup has a very high output impedance. Plug it into a low impedance input, and the high notes go dull. A J F E T input stage solves it: its gate draws almost no current, so it doesn't load the pickup at all. That's why many guitar pedals and high quality microphone preamps start with a J F E T.",
+   "title": "REAL WORLD: THE GUITAR PEDAL INPUT",
+   "sub": "a JFET gate draws no current, so it doesn't load the guitar's high-impedance pickup",
+   "src": "guitar",
+   "stage": "JFET INPUT",
+   "stage2": "EFFECT",
+   "sink": "speaker",
+   "note1": "high impedance",
+   "note2": "Zin ≈ 1 MΩ, no loading",
+   "note3": "bright, clear tone"
+  },
+  {
+   "type": "fet",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: making the gate of an N channel J F E T positive. That forward biases the gate junction, and current flows. Keep it between V P and zero. Two: treating the transfer curve as a straight line. It's a square law, so use Shockley's equation. Three: confusing J F E T saturation with B J T saturation. In a J F E T, saturation is the constant current region, where it amplifies.",
+   "kind": "jfet"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "How a MOSFET is built",
+   "narration": "An N channel enhancement MOSFET starts with a P type body. Two heavily doped N regions sit at the surface: the source and the drain. Between them, a very thin layer of glass, silicon dioxide, and on top of it, the metal gate. With zero volts on the gate, there's no channel. The P body blocks current. The MOSFET is off.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "Making a channel",
+   "narration": "Now raise the gate voltage. The positive gate attracts electrons to the surface just under the oxide. Above the threshold voltage, V T, two volts here, enough electrons gather to form a thin N type channel joining source and drain. Current flows. The higher the gate voltage, the deeper the channel, and the more current. And because the gate sits on glass, an insulator, no D C current flows into it at all.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "Switching a 1 A load",
+   "narration": "Let's switch a one amp load with each. A B J T needs base current, around twenty milliamps for one amp, and when on, it still has about zero point two volts across it: zero point two watts of heat. A power MOSFET needs zero gate current. When on, it behaves like a tiny resistor, R D S on, maybe zero point zero five ohms: one amp squared times zero point zero five, just zero point zero five watts. Four times less heat.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "The comparison",
+   "narration": "Here's the full picture. The B J T is current controlled, the MOSFET voltage controlled. The B J T needs drive current, the MOSFET almost none. The MOSFET wastes less power when switched on, and switches faster. So why keep B J Ts? They're cheap, they turn on reliably at just zero point seven volts, they have higher gain per stage for small analog signals, and they handle static electricity better. A MOSFET's thin gate oxide can be destroyed by a static spark.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers, for switching one amp. B J T: base current, one amp over beta of fifty, twenty milliamps. Heat: V C E sat times I C, zero point two volts times one amp, zero point two watts. MOSFET: gate current, zero. Heat: I squared times R D S on, one squared times zero point zero five, zero point zero five watts. And for the gate: the MOSFET only needs current while its gate capacitance charges, for a few nanoseconds, during each switch.",
+   "kind": "nmos",
+   "lines": [
+    "BJT: IB = 1 A ÷ β(50) = 20 mA",
+    "BJT heat = 0.2 V × 1 A = 0.2 W",
+    "MOSFET: IG = 0 (insulated gate)",
+    "MOSFET heat = I² × RDS(on)",
+    "            = 1² × 0.05 = 0.05 W",
+    "→ 4× less heat, no drive current"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: from a micro pin",
+   "narration": "For a microcontroller switching a fan, motor or L E D strip, the MOSFET is usually the better choice today. The pin just sets a voltage on the gate, draws no current, and the MOSFET switches amps with very little heat. A B J T would need a base resistor and would load the pin. But for small signals and simple, cheap circuits, the B J T is still everywhere."
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: driving a MOSFET from three point three volts when its threshold is near that. It only half turns on, and gets hot. Use a logic level MOSFET. Two: leaving the gate floating. With no current path, it can drift on. Always add a pull down resistor. Three: handling MOSFETs carelessly. Static electricity can punch through the thin gate oxide.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "The channel, step by step",
+   "narration": "Our N channel enhancement MOSFET: P body, N plus source and drain, thin oxide, metal gate. Watch the gate voltage rise. Below two volts, the threshold, there's no channel, and no current. At two volts, a thin layer of electrons, called an inversion layer, forms under the gate. Above it, the channel deepens, and the current grows quickly.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "transfer",
+   "chapter": "The square law",
+   "narration": "Plot it: drain current against gate voltage. Zero below the threshold. Above it, the current follows a square law: I D equals k times V G S minus V T, squared. With k equal to zero point five milliamps per volt squared: at three volts, zero point five milliamps. At four volts, two milliamps. At six volts, eight milliamps.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "output",
+   "chapter": "Ohmic and saturation",
+   "narration": "The output curves. At low drain voltage, the MOSFET acts as a resistor whose value the gate controls: the ohmic region. That's where it's used as a switch. Once V D S exceeds V G S minus V T, the channel pinches off at the drain end, and the current levels off: the saturation region. There, it's a voltage controlled current source, perfect for amplifying.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "structure",
+   "chapter": "Types of MOSFET",
+   "narration": "There are four types. Our N channel enhancement MOSFET is normally off, and needs a positive gate voltage. A P channel enhancement MOSFET is its mirror: normally off, and needs a negative gate voltage. A depletion MOSFET is built with a channel already there, so it's normally on, and the gate voltage can increase or reduce the current. Enhancement N and P channel types are by far the most common, and together they make C M O S, as we'll see.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "circuit",
+   "chapter": "Biasing it",
+   "narration": "To use it as an amplifier, we bias it in saturation. A voltage divider, two megohms and one megohm, sets the gate at four volts. No gate current flows, so the divider isn't loaded at all, and we can use huge resistors. R S, one kilohm, in the source gives stability. R D, six point eight kilohms, in the drain. The result: zero point seven six milliamps, V G S three point two four volts, and V D S six point zero four volts.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's solve it. V G is twelve times one megohm over three megohms, four volts. V G S equals V G minus I D R S, four minus I D times one k. Put that into the square law: I D equals zero point five milliamps times two minus I D times one k, squared. The solution: I D is zero point seven six four milliamps. So V G S is four minus zero point seven six four, three point two four volts. V D S equals twelve minus zero point seven six four times seven point eight k, six point zero four volts. Check saturation: V D S, six, is bigger than V G S minus V T, one point two four. Yes. The transconductance g m is two k times V G S minus V T, one point two four milliamps per volt. Gain: minus g m R D, minus eight point four.",
+   "kind": "nmos",
+   "lines": [
+    "VG = 12 × 1M ÷ 3M = 4 V (IG = 0)",
+    "VGS = 4 − ID × 1k",
+    "ID = 0.5m × (VGS − 2)² → ID = 0.764 mA",
+    "VGS = 3.24 V, VDS = 12 − 0.764 × 7.8 = 6.04 V",
+    "saturation? 6.04 > 3.24 − 2 = 1.24 ✓",
+    "gm = 2k(VGS − VT) = 1.24 mA/V",
+    "Av = −gm × RD = −1.24m × 6.8k = −8.4"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: powering processors",
+   "narration": "The buck converters that feed your laptop's processor are built from MOSFETs. They switch tens of amps, hundreds of thousands of times a second, with only milliohms of resistance when on. And the processor itself is built from billions of tiny MOSFETs. The MOSFET is the most manufactured device in human history."
+  },
+  {
+   "type": "fet",
+   "mode": "output",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using the square law in the ohmic region. It only applies in saturation, when V D S is at least V G S minus V T. Always check. Two: forgetting that the gate current is zero. With MOSFETs, the divider voltage is exact, no loading. Three: expecting MOSFET amplifiers to match B J T gain. Their transconductance is lower at the same current, so a single stage gives less gain.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 1: the square law",
+   "narration": "Problem one. V G S is five volts. Find I D in saturation. I D equals k times V G S minus V T, squared: zero point five milliamps times five minus two, squared, zero point five times nine, four point five milliamps.",
+   "kind": "nmos",
+   "lines": [
+    "VGS = 5 V, VT = 2 V, k = 0.5 mA/V²",
+    "ID = k (VGS − VT)²",
+    "   = 0.5m × (5 − 2)²",
+    "   = 0.5m × 9 = 4.5 mA"
+   ],
+   "base": "transfer"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 2: VDS and the saturation check",
+   "narration": "Problem two. Same five volts on the gate, R D one point five k, no source resistor. Find V D S and check the region. V D S equals twelve minus four point five milliamps times one point five k: twelve minus six point seven five, five point two five volts. Saturation needs V D S at least V G S minus V T, three volts. Five point two five is more than three, so it's saturated, and the answer is valid.",
+   "kind": "nmos",
+   "lines": [
+    "ID = 4.5 mA, RD = 1.5 kΩ",
+    "VDS = 12 − 4.5m × 1.5k = 5.25 V",
+    "need VDS ≥ VGS − VT = 3 V",
+    "5.25 ≥ 3 → SATURATION ✓"
+   ]
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 3: divider + source resistor",
+   "narration": "Problem three. Our biased amplifier: gate divider two megohms and one megohm, R S one k, R D six point eight k. V G is four volts. V G S equals four minus I D times one k. Substitute: I D equals zero point five milliamps times two minus one k I D, squared. Expand into a quadratic. In milliamps: I D squared minus six I D plus four equals zero. The roots are five point two four and zero point seven six four milliamps. The first would make V G S negative, below threshold, so it's impossible. I D is zero point seven six four milliamps.",
+   "kind": "nmos",
+   "lines": [
+    "VG = 4 V, VGS = 4 − ID (mA) × 1",
+    "ID = 0.5 (2 − ID)²",
+    "→ ID² − 6 ID + 4 = 0",
+    "ID = 5.24 mA (VGS < VT ✗) or 0.764 mA ✓",
+    "VGS = 3.24 V, VDS = 6.04 V"
+   ]
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Problem 4: gm and gain",
+   "narration": "Problem four. For problem three, find g m and the gain with the source resistor bypassed. g m equals two k times V G S minus V T: two times zero point five milliamps times one point two four, one point two four milliamps per volt. Gain equals minus g m times R D: minus one point two four milliamps times six point eight k, minus eight point four. Without the bypass capacitor, gain is minus g m R D over one plus g m R S: minus eight point four over two point two four, minus three point seven five.",
+   "kind": "nmos",
+   "lines": [
+    "gm = 2k (VGS − VT)",
+    "   = 2 × 0.5m × 1.24 = 1.24 mA/V",
+    "Av = −gm RD = −1.24m × 6.8k = −8.4",
+    "no bypass: Av = −gm RD ÷ (1 + gm RS)",
+    "          = −8.4 ÷ 2.24 = −3.75"
+   ]
+  },
+  {
+   "type": "fet",
+   "mode": "switch",
+   "chapter": "Problem 5: as a switch",
+   "narration": "Problem five. A MOSFET with R D S on of zero point zero five ohms switches a twelve ohm load from twelve volts. Find the current and the MOSFET's heat. The current is twelve over twelve point zero five, essentially one amp. The voltage across the MOSFET: one amp times zero point zero five, fifty millivolts. Heat: one squared times zero point zero five, zero point zero five watts. In the ohmic region, the square law doesn't apply. Use R D S on.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "Common mistakes",
+   "narration": "The mistakes that cost marks. One: picking the wrong root of the quadratic. Always check that V G S is above V T. Two: skipping the saturation check: V D S at least V G S minus V T. Three: using the square law for a MOSFET used as a switch. There, it's in the ohmic region, so use R D S on.",
+   "kind": "nmos",
+   "lines": [
+    "✓ pick the root with VGS > VT",
+    "✓ check VDS ≥ VGS − VT",
+    "✓ switch → use RDS(on), not the square law"
+   ]
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Building it",
+   "narration": "At the top, a P channel MOSFET, with its source connected to the supply, five volts. At the bottom, an N channel MOSFET, with its source connected to ground. Their drains meet in the middle: that's the output. And both gates are joined together: that's the input. C M O S stands for complementary MOS: one of each type, working as a pair.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Input low, output high",
+   "narration": "Start with the input at zero volts. For the N channel MOSFET, V G S is zero, below its threshold: off. For the P channel MOSFET, the gate is five volts below its source: it's fully on. So the output connects to the supply through the P channel transistor: five volts. Input low, output high. As the input rises past the switching point, around half the supply, the two swap. Input high: the N channel turns on, the P channel turns off, and the output connects to ground: zero volts. Input high, output low. That's an inverter: a NOT gate.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Almost no power",
+   "narration": "Here's why the whole world uses it. In either steady state, one transistor is always off. So there's no path from the supply to ground, and almost no current flows. A C M O S chip sitting still uses almost no power. Current only flows briefly while switching, to charge and discharge the tiny capacitance of the next gate.",
+   "kind": "nmos"
+  },
+  {
+   "type": "fet",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "So the power depends on switching. Each switch charges a capacitance C to the supply voltage V. The dynamic power is C times V squared times f. For one gate driving one femtofarad at one volt and one gigahertz: ten to the minus fifteen, times one, times ten to the nine, one microwatt. A billion such gates switching all the time would need a thousand watts. That's why chips run at about one volt, and only a fraction of gates switch at once. Halving the voltage cuts the power by four.",
+   "kind": "nmos",
+   "lines": [
+    "P = C × V² × f",
+    "C = 1 fF, V = 1 V, f = 1 GHz",
+    "P = 10⁻¹⁵ × 1² × 10⁹ = 1 µW per gate",
+    "× 10⁹ gates all switching = 1000 W!",
+    "halve V → P ÷ 4"
+   ],
+   "base": "cmos"
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Other gates",
+   "narration": "Inverters are just the start. Put two N channel MOSFETs in series and two P channel MOSFETs in parallel, and you get a NAND gate. Swap them, and you get a NOR gate. With NAND gates alone you can build any logic circuit: adders, memories, entire processors. All from the same complementary idea.",
+   "kind": "nmos"
+  },
+  {
+   "type": "app",
+   "app": "cpu",
+   "chapter": "Real world: billions in your processor",
+   "narration": "A modern processor contains tens of billions of transistors, nearly all arranged as C M O S gates. That's why the buck converters around it supply about one volt: lower voltage means less power per switch, by V squared. And it's why your phone's battery lasts all day when idle: C M O S barely uses any power when it isn't switching."
+  },
+  {
+   "type": "fet",
+   "mode": "cmos",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: putting the P channel MOSFET at the bottom. The P channel goes to the supply, the N channel to ground. Two: thinking C M O S uses no power. It uses power whenever it switches, C V squared f. Three: leaving a C M O S input floating. It can drift to the switching point, where both transistors conduct at once, and the chip heats up.",
+   "kind": "nmos"
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 17 recap",
+   "narration": "Recap. A J F E T's reverse biased gate squeezes the channel: I D equals I D S S times one minus V G S over V P, squared. A MOSFET's insulated gate creates a channel above V T: I D equals k times V G S minus V T, squared, in saturation. MOSFETs need no gate current and switch with low loss. C M O S pairs a P and an N MOSFET so one is always off. Next: feedback and oscillators.",
+   "title": "CHAPTER 17 COMPLETE",
+   "lines": [
+    "JFET: ID = IDSS (1 − VGS/VP)²",
+    "MOSFET: ID = k (VGS − VT)², IG = 0",
+    "gm = 2k(VGS − VT), Av = −gm RD",
+    "CMOS: idle power ≈ 0, P = C V² f"
+   ],
+   "cta": "Next: feedback & oscillators"
+  }
+ ]
+}

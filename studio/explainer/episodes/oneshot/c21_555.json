@@ -1,0 +1,103 @@
+{
+ "title": "Analog One Shot Ch21",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 21: The 555 Timer",
+   "narration": "Chapter twenty one: the five five five timer, the most popular chip ever made.",
+   "kicker": "CHAPTER 21",
+   "title": "THE 555 TIMER",
+   "subtitle": "Astable and monostable"
+  },
+  {
+   "type": "t555",
+   "mode": "inside",
+   "chapter": "Inside the chip",
+   "narration": "Inside are just a few parts. Three five kilohm resistors in series across the supply. That's where the name five five five comes from, according to the popular story. With nine volts, they make two reference voltages: six volts, two thirds of the supply, and three volts, one third. Then two comparators. One asks: is the threshold pin above six volts? The other asks: is the trigger pin below three volts? They set and reset a flip flop, which drives the output. And a discharge transistor that empties the timing capacitor when the output goes low."
+  },
+  {
+   "type": "t555",
+   "mode": "astable",
+   "chapter": "Astable: a blinking LED",
+   "narration": "Now the astable mode, where it oscillates by itself. R one, one kilohm, and R two, ten kilohms, charge the capacitor, ten microfarads. The output, pin three, drives an L E D. Watch the capacitor voltage, slowed down twenty times. While it charges from three volts up to six, the output is high and the L E D is on. At six volts, the upper comparator flips the flip flop. The output goes low, and the discharge transistor drains the capacitor through R two. When it falls to three volts, the lower comparator flips it back. Charge, discharge, forever."
+  },
+  {
+   "type": "t555",
+   "mode": "astable",
+   "chapter": "High time and low time",
+   "narration": "Notice the high time is a little longer than the low time. Charging goes through both R one and R two. Discharging goes through only R two. So with R one much smaller than R two, the duty cycle is close to fifty percent: here fifty two point four."
+  },
+  {
+   "type": "t555",
+   "mode": "calc",
+   "chapter": "The astable calculations",
+   "narration": "The formulas come from the capacitor charging between one third and two thirds of the supply, which always takes zero point six nine three time constants. High time: zero point six nine three times R one plus R two, times C. Zero point six nine three times eleven k times ten micro, seventy six milliseconds. Low time: zero point six nine three times R two times C, sixty nine milliseconds. Frequency: one point four four over R one plus two R two, times C: one point four four over zero point two one, six point eight six hertz. Duty cycle: R one plus R two over R one plus two R two, eleven over twenty one, fifty two percent.",
+   "lines": [
+    "tH = 0.693 (R1 + R2) C",
+    "   = 0.693 × 11k × 10µ = 76.2 ms",
+    "tL = 0.693 R2 C = 69.3 ms",
+    "f = 1.44 ÷ ((R1 + 2R2) C) = 6.86 Hz",
+    "duty = 11k ÷ 21k = 52.4 %"
+   ]
+  },
+  {
+   "type": "t555",
+   "mode": "mono",
+   "chapter": "Monostable: one pulse per press",
+   "narration": "Now the monostable mode. Press the button: the trigger pin dips below three volts, and the output goes high. The capacitor charges through R, a hundred kilohms. When it reaches six volts, two thirds of the supply, the output goes low and the capacitor is discharged. One press, one pulse, always the same length, however long you press. The length is one point one times R C: one point one times a hundred k times ten micro, one point one seconds."
+  },
+  {
+   "type": "t555",
+   "mode": "calc",
+   "chapter": "The monostable calculation",
+   "narration": "Why one point one? The capacitor charges from zero to two thirds of the supply. That takes R C times the natural log of three, which is one point zero nine nine, about one point one. So T equals one point one R C. With a hundred kilohms and ten microfarads, one point one seconds. For a ten second delay, use a megohm and nine point one microfarads.",
+   "lines": [
+    "charge 0 → ⅔ VCC: t = RC × ln 3 = 1.099 RC",
+    "T = 1.1 R C",
+    "= 1.1 × 100k × 10µ = 1.1 s",
+    "10 s delay: R = 1 MΩ, C ≈ 9.1 µF"
+   ],
+   "base": "mono"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: blinkers, alarms and buzzers",
+   "narration": "The five five five is everywhere a simple timer is needed. Bicycle and warning lights blink with its astable mode. Change the capacitor to a few nanofarads and it oscillates at audio frequencies, driving a buzzer or an alarm siren. Its monostable mode debounces buttons, and makes the delay in a stair light that switches itself off.",
+   "title": "REAL WORLD: BLINKERS, BUZZERS AND DELAYS",
+   "sub": "change R and C, and the same chip blinks a light, sounds a buzzer, or times a delay",
+   "src": "sensor",
+   "stage": "555 TIMER",
+   "sink": "speaker",
+   "note1": "button / sensor",
+   "note2": "astable: tone or blink",
+   "note3": "buzzer at ~1 kHz with nF caps"
+  },
+  {
+   "type": "t555",
+   "mode": "astable",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: making R one zero in astable mode. Then the discharge transistor shorts the supply when it turns on. Always keep R one at least one kilohm. Two: expecting exactly fifty percent duty. The high time always includes R one, so it's always a bit longer. Three: leaving the reset pin floating. Tie pin four to the supply, or the timer may stop randomly."
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 21 recap",
+   "narration": "Recap. Inside the five five five, comparators at one third and two thirds of the supply drive a flip flop. Astable: high time zero point six nine three R one plus R two, C; low time zero point six nine three R two C. Monostable: one pulse of one point one R C. Next: building your own circuits.",
+   "title": "CHAPTER 21 COMPLETE",
+   "lines": [
+    "Comparators at ⅓ and ⅔ VCC",
+    "tH = 0.693(R1+R2)C, tL = 0.693 R2 C",
+    "Mono: T = 1.1 R C"
+   ],
+   "cta": "Next: build your own circuits"
+  }
+ ]
+}
