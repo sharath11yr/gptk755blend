@@ -1,0 +1,1097 @@
+{
+ "title": "Analog One Shot Ch16",
+ "style": "lab",
+ "theme": "ece",
+ "badge": "GETYR ECE",
+ "engine": "kokoro",
+ "kokoro_voice": "af_heart",
+ "speed": 1.0,
+ "checked": true,
+ "plain_titles": true,
+ "tag": "GETYR ECE",
+ "scenes": [
+  {
+   "type": "lab-title",
+   "chapter": "Chapter 16: The BJT",
+   "narration": "Chapter sixteen, the biggest chapter: the bipolar junction transistor. How it works inside, all its regions, every biasing method and how stable each one is, the load line, the three amplifier configurations, the small signal model and h parameters, the capacitors around an amplifier, multistage amplifiers and frequency response, the Darlington pair and the current mirror. Plus the placement questions that are asked again and again.",
+   "kicker": "CHAPTER 16",
+   "title": "THE BJT",
+   "subtitle": "From inside the transistor to complete amplifiers"
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Three layers",
+   "narration": "A B J T is a sandwich of three layers of semiconductor. In an N P N transistor: N type, then P type, then N type. The first N layer is the emitter. It's heavily doped, so it's packed with free electrons, ready to send them out. The middle P layer is the base. It's very thin and lightly doped. The last N layer is the collector. It's the biggest, and it collects the electrons. Watch the electrons. They rush out of the emitter, and because the base is so thin, almost all of them shoot straight through it into the collector. Only about one in a hundred gets caught in the base and leaves through the base wire."
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Two junctions, two jobs",
+   "narration": "So there are two junctions. Between the base and emitter, a P N junction, just like a diode. We forward bias it, about zero point seven volts, so the emitter can send electrons. Between the collector and base, another junction, which we reverse bias. That reverse voltage pulls the electrons that reach the base across into the collector. Remember this rule: B E forward, C B reverse. That's how a transistor amplifies."
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "A small current controls a big one",
+   "narration": "Now the magic. Here's the transistor symbol. The arrow is on the emitter, pointing out, which tells us it's N P N. We push a small current into the base, I B. Watch: as the base current rises from ten to forty microamps, the collector current rises from one milliamp to four milliamps. Always one hundred times bigger. That number is the current gain, beta. I C equals beta times I B. A tiny current at the base controls a current a hundred times bigger."
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "Where the current goes",
+   "narration": "And all of it leaves through the emitter. The emitter current is the base current plus the collector current. I E equals I B plus I C. With twenty microamps in the base and two milliamps in the collector, the emitter carries two point zero two milliamps. The base current is so small that I E and I C are almost equal.",
+   "ibx": 2e-05
+  },
+  {
+   "type": "bjt",
+   "mode": "regions",
+   "chapter": "Cutoff, active, saturation",
+   "narration": "Now let's build a real circuit. Twelve volts on top, a two kilohm resistor R C to the collector, and the base fed from an adjustable voltage through two hundred and fifteen kilohms. Watch as we raise the base voltage from zero. Below zero point seven volts, no base current flows, and no collector current. The transistor is off. This is cutoff. Above zero point seven, base current flows, and the collector current follows it, one hundred times bigger. This is the active region, where it amplifies. But keep going: R C limits the collector current to about five point nine milliamps. Even with more base current, the collector can't take more. The transistor is fully on, with only about zero point two volts across it. That's saturation.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's calculate the active region at five volts on the base. Base current: five minus zero point seven, over two hundred and fifteen kilohms, twenty microamps. Collector current: beta times I B, one hundred times twenty microamps, two milliamps. Emitter current: I B plus I C, two point zero two milliamps. Voltage across R C: two milliamps times two kilohms, four volts. So V C E is twelve minus four, eight volts. And the most collector current R C allows: twelve minus zero point two, over two kilohms, five point nine milliamps.",
+   "bias": "basic",
+   "lines": [
+    "IB = (5 − 0.7) ÷ 215 kΩ = 20 µA",
+    "IC = β × IB = 100 × 20 µA = 2 mA",
+    "IE = IB + IC = 2.02 mA",
+    "V(RC) = 2 mA × 2 kΩ = 4 V",
+    "VCE = 12 − 4 = 8 V",
+    "IC(sat) = (12 − 0.2) ÷ 2 kΩ = 5.9 mA",
+    "active: 0.2 V < VCE < 12 V"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: a pin switching a fan",
+   "narration": "Here's the most common use of all. A microcontroller pin can only give about one milliamp. A relay or a fan motor needs one hundred milliamps or more. So the pin drives the base of a transistor. Pin low: cutoff, fan off. Pin high: enough base current to drive the transistor into saturation, fully on, and the fan spins. One transistor turns a tiny signal into real power."
+  },
+  {
+   "type": "bjt",
+   "mode": "regions",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: thinking the transistor creates current. It doesn't. The collector current comes from the supply. The transistor only controls how much flows. Two: forgetting the base resistor. Connect the base straight to a voltage source and the base emitter diode takes a huge current and burns out. Three: assuming I C always equals beta times I B. That's only true in the active region. In saturation, R C limits the current, and more base current changes nothing.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Following the electrons",
+   "narration": "Inside the N P N, the emitter is N type, packed with electrons. Forward biasing the base emitter junction pushes them into the base. The base is P type, so an electron there could fall into a hole and recombine. But the base is so thin that almost none have time to. The collector base junction is reverse biased, and its electric field sweeps the electrons into the collector. About ninety nine percent make it."
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "The three currents",
+   "narration": "Let's measure. Twenty microamps into the base. Two milliamps into the collector. And two point zero two milliamps out of the emitter. Notice the direction: conventional current flows into the base and collector, and out of the emitter. That's why the arrow on the N P N symbol points out of the emitter.",
+   "ibx": 2e-05
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "Beta",
+   "narration": "Beta is the ratio of collector current to base current. I C over I B. Two milliamps over twenty microamps, one hundred. Watch the base current change: whatever it is, the collector current is one hundred times bigger. Real transistors have betas from about fifty to several hundred. Even two transistors of the same part number can differ a lot, which will matter when we bias them."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "A real NPN circuit",
+   "narration": "Here's a complete circuit. A five volt source drives the base through two hundred and fifteen kilohms. The collector connects to twelve volts through two kilohms. The base current is twenty microamps, the collector current is two milliamps, and V C E is eight volts. The transistor sits nicely in the active region, ready to amplify.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "The output characteristics",
+   "narration": "This graph shows the transistor's output characteristics: collector current against V C E, for different base currents. Each blue line is one base current: ten, twenty, thirty, forty, fifty microamps. Notice they're almost flat. The collector current depends on the base current, not on V C E. Our circuit's load line runs from twelve volts at zero current to six milliamps at zero volts. Where it crosses the twenty microamp line is the operating point: eight volts, two milliamps.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Alpha and beta",
+   "narration": "Now alpha. Alpha is the collector current over the emitter current: the fraction of electrons that make it across. Two over two point zero two, zero point nine nine. They're linked: alpha equals beta over beta plus one, a hundred over a hundred and one, zero point nine nine. And beta equals alpha over one minus alpha, zero point nine nine over zero point zero one, about a hundred. Small changes in alpha make huge changes in beta: alpha of zero point nine nine five gives beta of one hundred and ninety nine.",
+   "bias": "basic",
+   "lines": [
+    "β = IC ÷ IB = 2 mA ÷ 20 µA = 100",
+    "α = IC ÷ IE = 2 ÷ 2.02 = 0.990",
+    "α = β ÷ (β + 1) = 100 ÷ 101 = 0.990",
+    "β = α ÷ (1 − α) = 0.99 ÷ 0.01 ≈ 100",
+    "α = 0.995 → β = 0.995 ÷ 0.005 = 199",
+    "IE = (β + 1) × IB = 101 × 20 µA = 2.02 mA"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: switching a fan",
+   "narration": "The N P N is the go-to transistor for switching loads from logic. Its emitter goes to ground, and the load sits between the supply and the collector. That's called a low side switch. When the microcontroller pin goes high, base current flows, the transistor saturates, and the fan gets the full supply."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: drawing current flowing into the emitter of an N P N. Conventional current flows out of the emitter, the way the arrow points. Two: using alpha and beta interchangeably. Alpha is just under one, beta is around a hundred. Three: designing a circuit that depends on an exact beta. Beta varies from part to part and with temperature, so good designs, as we'll see, work for any beta.",
+   "bias": "basic"
+  },
+  {
+   "type": "bjt",
+   "mode": "layers",
+   "chapter": "Three layers, reversed",
+   "narration": "A P N P is P type, N type, P type. The emitter is P type, full of holes. The base is a thin N layer. The collector is P type. Now the holes are the carriers. They flow from the emitter, through the thin base, into the collector. Just like electrons in the N P N, about ninety nine percent make it through.",
+   "kind": "pnp"
+  },
+  {
+   "type": "bjt",
+   "mode": "control",
+   "chapter": "The currents reverse",
+   "narration": "So the currents reverse too. In a P N P, conventional current flows into the emitter, and out of the base and the collector. That's why the arrow on the P N P symbol points in, toward the base. Pointing In: P N P. The same beta applies: twenty microamps out of the base, two milliamps out of the collector.",
+   "kind": "pnp",
+   "ibx": 2e-05
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "A PNP circuit",
+   "narration": "Here's a P N P circuit. The emitter goes to plus twelve volts. The collector goes down through R C, two kilohms, to ground. And to turn it on, we pull the base down, through R B, five hundred and sixty five kilohms, to ground. The base sits zero point seven volts below the emitter, at eleven point three volts. Base current flows out of the base, twenty microamps, and the collector current is two milliamps, flowing down through R C.",
+   "kind": "pnp",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. The base emitter voltage is reversed: the base sits zero point seven volts below the emitter. Base current: twelve minus zero point seven, over five hundred and sixty five kilohms, twenty microamps. Collector current: one hundred times that, two milliamps. Voltage across R C: two milliamps times two kilohms, four volts, so the collector sits at four volts. V E C, emitter to collector, is twelve minus four, eight volts. Same numbers as the N P N, just upside down.",
+   "kind": "pnp",
+   "bias": "fixed",
+   "lines": [
+    "VB = VE − 0.7 = 12 − 0.7 = 11.3 V",
+    "IB = 11.3 ÷ 565 kΩ = 20 µA (out of base)",
+    "IC = β × IB = 100 × 20 µA = 2 mA",
+    "VC = IC × RC = 2 mA × 2 kΩ = 4 V",
+    "VEC = 12 − 4 = 8 V",
+    "NPN: VCE = +8 V · PNP: VCE = −8 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Turning it on and off",
+   "narration": "For a P N P, on and off are reversed too. Base pulled near the supply: no base current, cutoff, off. Base pulled down, more than zero point seven volts below the emitter: base current flows, and it turns on. Pull it down hard enough, and it saturates.",
+   "kind": "pnp",
+   "bias": "fixed"
+  },
+  {
+   "type": "app",
+   "app": "relay",
+   "chapter": "Real world: high-side switches",
+   "narration": "So why use P N P at all? Sometimes the load must connect to ground, and the switch has to go between the supply and the load. That's a high side switch, and a P N P is perfect for it, with its emitter on the supply. Battery protection circuits, power switches for sensors, and the output stages of many amplifiers use P N P transistors, often paired with N P N ones."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: drawing the arrow the wrong way. N P N, Not Pointing iN. P N P, Points iN. Two: grounding the emitter of a P N P like an N P N. Its emitter goes to the positive side. Three: driving the base high to turn it on. A P N P turns on when the base goes low, below the emitter.",
+   "kind": "pnp",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Building it",
+   "narration": "Here's fixed bias. The supply is twelve volts. R C, two kilohms, from the supply to the collector. The emitter goes straight to ground. And one resistor, R B, five hundred and sixty five kilohms, from the supply straight to the base. That's it. The base current is fixed by R B and the supply. Watch the currents: twenty microamps into the base, two milliamps through the collector, and V C E is eight volts.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "The Q-point",
+   "narration": "This resting point is called the Q point, the quiescent, or quiet, point. On the output characteristics, the load line runs from twelve volts at zero current to six milliamps at zero volts. Our Q point sits at eight volts and two milliamps. When a signal comes in, the operating point swings up and down along this line. Ideally the Q point should sit near the middle, so the signal has room to swing both ways without hitting cutoff or saturation.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's calculate it. Going round the base loop: the supply, minus the drop across R B, minus V B E, equals zero. So I B is V C C minus V B E, over R B. Twelve minus zero point seven, over five hundred and sixty five kilohms, twenty microamps. I C is beta times I B, two milliamps. V C E is V C C minus I C times R C: twelve minus two milliamps times two kilohms, eight volts. And the transistor dissipates eight volts times two milliamps, sixteen milliwatts.",
+   "bias": "fixed",
+   "lines": [
+    "IB = (VCC − VBE) ÷ RB",
+    "   = (12 − 0.7) ÷ 565 kΩ = 20 µA",
+    "IC = β × IB = 100 × 20 µA = 2 mA",
+    "VCE = VCC − IC × RC",
+    "    = 12 − 2 mA × 2 kΩ = 8 V",
+    "P = VCE × IC = 8 × 2 mA = 16 mW",
+    "Q-point: (8 V, 2 mA)"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "The big problem: β",
+   "narration": "Now the problem. Beta isn't a fixed number. Two transistors with the same part number can have betas of fifty or two hundred, and beta rises as the transistor warms up. Watch what happens as beta changes from fifty to two hundred. The base current stays at twenty microamps, because R B fixes it. So the collector current follows beta: one milliamp at beta fifty, two at a hundred, three at one fifty, four at two hundred. V C E falls from ten volts to four. The Q point wanders all over the load line.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "Why it matters",
+   "narration": "Why does that matter? If the Q point moves up near saturation, the top of the output signal gets clipped. If it moves down near cutoff, the bottom gets clipped. Either way, the signal is distorted. A four to one change in the collector current is far too much for a reliable amplifier. Fixed bias is simple, but it's the least stable bias there is.",
+   "bias": "fixed",
+   "beta": 200
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: an amplifier warming up",
+   "narration": "Here's what that looks like in practice. An audio amplifier starts cold, and as it warms up, the transistor's beta rises. With fixed bias, the collector current climbs with it, the Q point drifts, and soon the output clips: you hear distortion. With a better bias circuit, which we'll build next, the collector current hardly changes, and the sound stays clean."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting V B E. The base current is V C C minus zero point seven, over R B, not V C C over R B. Two: trusting beta from the datasheet as an exact number. It's a range, often fifty to three hundred. Three: placing the Q point near one end of the load line. Then even a small signal clips. Aim for V C E around half of V C C.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "chapter": "Emitter bias",
+   "narration": "A step up from fixed bias: emitter bias. Keep R B from the supply, now four hundred and thirty kilohms, but add R E, one kilohm, in the emitter. The emitter current through R E raises the emitter voltage. If the collector current tries to rise, the emitter voltage rises, the base current falls, and the current is pulled back. Here: twenty one point three microamps, two point one three milliamps, and V C E five point six volts.",
+   "mode": "circuit",
+   "bias": "eb"
+  },
+  {
+   "type": "bjt",
+   "chapter": "Emitter bias: the β test",
+   "narration": "The beta test. Fixed bias went from one to four milliamps. Emitter bias: one point one seven milliamps at beta fifty, three point five eight at two hundred. Better, because of R E's feedback, but still not great, since R B is large compared with beta times R E.",
+   "mode": "beta",
+   "bias": "eb"
+  },
+  {
+   "type": "bjt",
+   "chapter": "Emitter bias: the calculation",
+   "narration": "The calculation. Round the base loop: V C C equals I B R B plus V B E plus I E R E, and I E is beta plus one times I B. So I B equals V C C minus zero point seven, over R B plus beta plus one times R E. Eleven point three over four thirty k plus one hundred and one k, twenty one point three microamps. I C, two point one three milliamps. V C E: twelve minus two point one three times two, minus two point one five times one, five point six volts.",
+   "mode": "calc",
+   "bias": "eb",
+   "lines": [
+    "VCC = IB RB + 0.7 + IE RE, IE = (β+1) IB",
+    "IB = 11.3 ÷ (430k + 101 × 1k) = 21.3 µA",
+    "IC = 100 × 21.3 µA = 2.13 mA",
+    "VCE = 12 − 2.13×2 − 2.15×1 = 5.6 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Building it",
+   "narration": "Here's the circuit. Twelve volts, R C two kilohms to the collector, emitter to ground. And now R B, three hundred and sixty three kilohms, goes from the collector to the base. That's the only change. Watch the values: twenty microamps of base current, two milliamps of collector current, and V C E almost eight volts. The same Q point as before.",
+   "bias": "cf"
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "How the feedback works",
+   "narration": "Here's the clever part. Suppose the collector current tries to rise. More current through R C means a bigger voltage drop across it, so the collector voltage falls. But R B gets its current from the collector. A lower collector voltage means less base current. And less base current pulls the collector current back down. The circuit fights any change. That's negative feedback.",
+   "bias": "cf"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "The β test",
+   "narration": "Let's run the same test as before. Beta goes from fifty to two hundred. With fixed bias, the collector current went from one to four milliamps. Now watch: one point two two milliamps at fifty, two at a hundred, two point five five at one fifty, and two point nine five at two hundred. Still changes, but much less. As beta rises, the base current automatically drops, from twenty four microamps to under fifteen.",
+   "bias": "cf"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Let's derive it. Round the loop from the supply: through R C carrying I C plus I B, which is beta plus one times I B, then through R B carrying I B, then V B E. So V C C equals beta plus one, times I B, times R C, plus I B R B, plus zero point seven. Solve: I B equals V C C minus V B E, over R B plus beta plus one times R C. Eleven point three over three hundred and sixty three k plus two hundred and two k: twenty microamps. I C, two milliamps. V C E is V C C minus I E R C, twelve minus two point zero two milliamps times two k, seven point nine six volts.",
+   "bias": "cf",
+   "lines": [
+    "VCC = (β+1) IB RC + IB RB + VBE",
+    "IB = (VCC − VBE) ÷ (RB + (β+1) RC)",
+    "   = 11.3 ÷ (363k + 101 × 2k) = 20 µA",
+    "IC = 100 × 20 µA = 2 mA",
+    "VCE = 12 − 2.02 mA × 2 kΩ = 7.96 V",
+    "β = 200: IB = 11.3 ÷ 765k = 14.8 µA",
+    "→ IC = 2.95 mA (fixed bias: 4 mA)"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "On the load line",
+   "narration": "On the load line, the Q point sits at about eight volts and two milliamps. With fixed bias, a beta change of four times moved the Q point from ten volts all the way to four. Now it only moves between about nine and a half and six volts. Better, but not perfect.",
+   "bias": "cf"
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: a self-correcting amplifier",
+   "narration": "Collector feedback is used in simple single transistor amplifiers, because it's cheap: still only two resistors, but much more stable. As the amplifier warms up and beta rises, the feedback pulls the base current down and keeps the sound cleaner. For the best stability, though, engineers use the voltage divider bias, coming next."
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using I C instead of I C plus I B through R C. R C carries both, because R B takes its current from the collector node. Two: thinking the feedback makes I C completely independent of beta. It only reduces the effect. Three: forgetting that this feedback also reduces the amplifier's A C gain, because the signal feeds back too.",
+   "bias": "cf"
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Building it",
+   "narration": "Twelve volt supply. R C, two kilohms, to the collector. Now two resistors make a voltage divider for the base: R one, thirty three kilohms, from the supply to the base, and R two, ten kilohms, from the base to ground. And one new part: R E, one kilohm, between the emitter and ground. The results: nineteen microamps of base current, one point nine two milliamps of collector current, and V C E six point two volts. Right near the middle of the twelve volt supply.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "circuit",
+   "chapter": "Why it's so stable",
+   "narration": "Here's why it works. The divider holds the base at a fairly fixed voltage, about two point six volts. The emitter sits zero point seven below that, at about one point nine volts. So the voltage across R E is fixed, which fixes the emitter current: about one point nine volts over one kilohm, roughly one point nine milliamps. Notice: beta isn't in that reasoning at all. And R E gives feedback: if I C rises, the emitter voltage rises, the base emitter voltage shrinks, and the current is pulled back.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "The β test",
+   "narration": "The test. Beta from fifty to two hundred. Fixed bias: one to four milliamps. Collector feedback: one point two to three. Now voltage divider bias: one point seven eight milliamps at beta fifty, one point nine two at a hundred, one point nine eight at one fifty, two point zero zero at two hundred. Almost flat. A four times change in beta changes the collector current by only about twelve percent.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Exact: the Thevenin method",
+   "narration": "The exact calculation uses Thevenin. Replace the divider with one voltage and one resistor. V T H is twelve times ten over forty three, two point seven nine volts. R T H is thirty three k in parallel with ten k, seven point six seven k. Then the base loop: I B equals V T H minus zero point seven, over R T H plus beta plus one times R E. Two point zero nine over seven point six seven k plus one hundred and one k: nineteen point two microamps. I C is one point nine two milliamps, I E one point nine four. V C E equals twelve minus one point nine two times two, minus one point nine four times one: six point two one volts.",
+   "bias": "vd",
+   "lines": [
+    "VTH = 12 × 10k ÷ 43k = 2.79 V",
+    "RTH = 33k ∥ 10k = 7.67 kΩ",
+    "IB = (VTH − 0.7) ÷ (RTH + (β+1) RE)",
+    "   = 2.09 ÷ (7.67k + 101k) = 19.2 µA",
+    "IC = 1.92 mA, IE = 1.94 mA",
+    "VCE = 12 − 1.92×2 − 1.94×1 = 6.21 V",
+    "β = 200 → IC = 2.00 mA"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Quick: the approximate method",
+   "narration": "There's a quicker way, good when beta times R E is much bigger than ten times R two. Here, a hundred times one k is a hundred k, which is ten times R two. So ignore the base current. V B is just the divider: two point seven nine volts. V E is two point seven nine minus zero point seven, two point zero nine volts. I E is two point zero nine over one k, two point zero nine milliamps. V C E is twelve minus two point zero nine times three k, about five point seven volts. Close to the exact answer, in four lines.",
+   "bias": "vd",
+   "lines": [
+    "check: β RE ≥ 10 R2 → 100k ≥ 100k ✓",
+    "VB ≈ 12 × 10k ÷ 43k = 2.79 V",
+    "VE = 2.79 − 0.7 = 2.09 V",
+    "IE ≈ IC = 2.09 V ÷ 1 kΩ = 2.09 mA",
+    "VCE ≈ 12 − 2.09 mA × 3 kΩ = 5.73 V",
+    "(exact: 1.92 mA, 6.21 V)"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: stable amplifiers",
+   "narration": "This is why audio preamplifiers, radio front ends, and sensor amplifiers built from single transistors almost always use voltage divider bias. As the transistor warms up and beta climbs, the collector current hardly moves. The Q point stays where the designer put it, and the signal stays clean. And when the A C gain matters, a capacitor across R E, the bypass capacitor, keeps the gain high. We'll see that soon."
+  },
+  {
+   "type": "bjt",
+   "mode": "beta",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using the approximate method when the condition fails. If beta times R E isn't much bigger than R two, use Thevenin. Two: forgetting R E in the V C E calculation. V C E is V C C minus I C R C minus I E R E. Three: making R one and R two too large. Then the base current loads the divider, and the stability is lost. Keep the divider current at least ten times the base current.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "chapter": "Stability factor and thermal runaway",
+   "narration": "How do we measure stability? The stability factor S: how much the collector current changes for a change in the leakage current, which doubles every ten degrees. For fixed bias, S equals one plus beta: one hundred and one, very unstable. For voltage divider bias, S is about one plus beta, times one plus R T H over R E, over one plus beta plus R T H over R E: about eight. Lower is better. Why does it matter? Thermal runaway. A transistor heats up, its leakage and beta rise, its current rises, so it heats up more, and so on, until it destroys itself. A low stability factor breaks that loop.",
+   "mode": "beta",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "chapter": "Stability factor: numbers",
+   "narration": "The numbers. Fixed bias, beta one hundred: S equals one hundred and one. Voltage divider, R T H seven point six seven k, R E one k: R T H over R E is seven point six seven. S equals one hundred and one times eight point six seven, over one hundred and eight point six seven: eight point zero six. Twelve times more stable. Rule: the closer S is to one, the better. Make R E large and R T H small.",
+   "mode": "calc",
+   "bias": "vd",
+   "lines": [
+    "S = ΔIC ÷ ΔICO",
+    "fixed: S = 1 + β = 101",
+    "VDB: S = (1+β)(1 + RTH/RE) ÷ (1 + β + RTH/RE)",
+    "= 101 × 8.67 ÷ 108.67 = 8.06",
+    "ideal S = 1 → big RE, small RTH"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Two easy points",
+   "narration": "The load line comes from the collector loop: V C E equals V C C minus I C times R C. It's a straight line, so we only need two points. First, cutoff: if I C is zero, V C E equals V C C, twelve volts. That's the point on the right. Second, saturation: if V C E is zero, I C equals V C C over R C, twelve over two k, six milliamps. That's the point at the top. Join them. Every possible state of this circuit lies on that line.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Adding the transistor curves",
+   "narration": "The blue lines are the transistor's output curves, one for each base current: ten, twenty, thirty, forty, fifty microamps. The load line says what the circuit allows. The curves say what the transistor does. The Q point is where they meet. For fixed bias with twenty microamps of base current, that's eight volts and two milliamps.",
+   "bias": "fixed"
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "β moves the Q-point",
+   "narration": "Now remember the beta problem. With beta at two hundred, the same twenty microamps gives four milliamps. The Q point slides up the load line to four volts. With beta at fifty, it slides down to ten volts and one milliamp. The load line never changes. Only the point on it moves.",
+   "bias": "fixed",
+   "beta": 200
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Voltage-divider bias",
+   "narration": "With voltage divider bias, R E is in the loop too, so the load line uses R C plus R E, three kilohms. Saturation: twelve over three k, four milliamps. Cutoff: still twelve volts. The Q point sits at six point two volts and one point nine two milliamps, almost exactly in the middle. And it stays there whatever the beta.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Why the middle?",
+   "narration": "Why the middle? A signal makes the operating point swing both ways along the line. From a Q point at six volts on a twelve volt line, it can swing six volts down and six up before hitting saturation or cutoff. That's the biggest possible undistorted swing. Put the Q point at ten volts instead, and it can only swing two volts up before cutoff clips it.",
+   "bias": "vd",
+   "lines": [
+    "Load line: VCE = VCC − IC (RC + RE)",
+    "cutoff: IC = 0 → VCE = 12 V",
+    "saturation: VCE = 0 → IC = 12 ÷ 3k = 4 mA",
+    "Q-point: (6.21 V, 1.92 mA)",
+    "swing room: ≈ 6 V either way",
+    "Q at 10 V: only 2 V before cutoff"
+   ]
+  },
+  {
+   "type": "app",
+   "app": "thermal",
+   "chapter": "Real world: headroom",
+   "narration": "Audio engineers call this headroom. An amplifier with its Q point in the middle can handle a loud passage cleanly. One with a badly placed or drifting Q point clips on the peaks, which sounds harsh and distorted. That's why designers draw the load line first, and choose resistors that put the Q point near the centre."
+  },
+  {
+   "type": "bjt",
+   "mode": "loadline",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting R E in the load line. With voltage divider bias, saturation current is V C C over R C plus R E. Two: thinking the load line depends on the transistor. It doesn't. It depends only on V C C and the resistors. The transistor picks the point on it. Three: placing the Q point at saturation for an amplifier. That's fine for a switch, but an amplifier needs room to swing.",
+   "bias": "vd"
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 1: fixed bias, β = 150",
+   "narration": "Problem one. Fixed bias, R B five hundred and sixty five k, R C two k, and beta one fifty. Find I B, I C and V C E. Step one, the base loop: I B equals twelve minus zero point seven, over five hundred and sixty five k, twenty microamps. Step two: I C equals one fifty times twenty microamps, three milliamps. Step three: V C E equals twelve minus three milliamps times two k, six volts. Check: V C E is between zero point two and twelve, so it's active.",
+   "bias": "fixed",
+   "beta": 150,
+   "lines": [
+    "Given: VCC 12 V, RB 565k, RC 2k, β 150",
+    "IB = (12 − 0.7) ÷ 565k = 20 µA",
+    "IC = 150 × 20 µA = 3 mA",
+    "VCE = 12 − 3 mA × 2k = 6 V",
+    "0.2 < 6 < 12 → ACTIVE ✓"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 2: collector-feedback, β = 150",
+   "narration": "Problem two. Collector feedback, R B three hundred and sixty three k, R C two k, beta one fifty. I B equals eleven point three, over R B plus beta plus one times R C. That's three sixty three k plus one fifty one times two k, six hundred and sixty five k. I B, seventeen microamps. I C, one fifty times that, two point five five milliamps. V C E equals twelve minus I E times R C, twelve minus two point five seven times two, six point eight seven volts.",
+   "bias": "cf",
+   "beta": 150,
+   "lines": [
+    "Given: RB 363k (from C), RC 2k, β 150",
+    "IB = 11.3 ÷ (363k + 151 × 2k)",
+    "   = 11.3 ÷ 665k = 17.0 µA",
+    "IC = 150 × 17.0 µA = 2.55 mA",
+    "IE = 2.57 mA",
+    "VCE = 12 − 2.57 × 2 = 6.87 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 3: voltage-divider, β = 150",
+   "narration": "Problem three. Voltage divider bias: R one thirty three k, R two ten k, R C two k, R E one k, beta one fifty. Thevenin first: V T H, twelve times ten over forty three, two point seven nine volts. R T H, thirty three k parallel ten k, seven point six seven k. I B equals two point zero nine over seven point six seven k plus one fifty one k, thirteen point two microamps. I C, one point nine eight milliamps. I E, one point nine nine. V C E equals twelve minus three point nine five minus one point nine nine, six point zero six volts.",
+   "bias": "vd",
+   "beta": 150,
+   "lines": [
+    "VTH = 2.79 V, RTH = 7.67k",
+    "IB = 2.09 ÷ (7.67k + 151k) = 13.2 µA",
+    "IC = 150 × 13.2 µA = 1.98 mA",
+    "IE = 1.99 mA",
+    "VCE = 12 − 1.98×2 − 1.99×1",
+    "    = 6.06 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 4: is it saturated?",
+   "narration": "Problem four. Fixed bias again, but beta is three hundred. I B is still twenty microamps. Beta times I B would be six milliamps. But the most R C allows is twelve minus zero point two, over two k, five point nine milliamps. Six is more than five point nine, so the transistor is saturated. The real I C is five point nine milliamps, and V C E is about zero point two volts. Always check this. If beta I B is more than I C sat, the formula is wrong, and the transistor is fully on.",
+   "bias": "fixed",
+   "beta": 300,
+   "lines": [
+    "IB = 20 µA, β = 300",
+    "β × IB = 6 mA",
+    "IC(sat) = (12 − 0.2) ÷ 2k = 5.9 mA",
+    "6 mA > 5.9 mA → SATURATED",
+    "IC = 5.9 mA, VCE ≈ 0.2 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "calc",
+   "chapter": "Problem 5: design RB",
+   "narration": "Problem five, a design. We want I C equals two milliamps with fixed bias, R C two k, beta one hundred. Find R B. I B must be two milliamps over a hundred, twenty microamps. R B equals V C C minus V B E, over I B: eleven point three over twenty microamps, five hundred and sixty five k. Then V C E will be twelve minus two times two, eight volts. In practice, pick the nearest standard value, five hundred and sixty k.",
+   "bias": "fixed",
+   "lines": [
+    "Want IC = 2 mA, β = 100",
+    "IB = 2 mA ÷ 100 = 20 µA",
+    "RB = (12 − 0.7) ÷ 20 µA = 565 kΩ",
+    "nearest standard: 560 kΩ",
+    "VCE = 12 − 2 × 2 = 8 V"
+   ]
+  },
+  {
+   "type": "bjt",
+   "mode": "regions",
+   "chapter": "Common mistakes",
+   "narration": "The mistakes students make most in these problems. One: forgetting zero point seven in the base loop. Two: using I C instead of I E across R E, or across R C in collector feedback. Three: never checking for saturation. If beta times I B is more than V C C over the collector loop resistance, the transistor is saturated, and you must use I C sat instead.",
+   "bias": "basic"
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "We start with our voltage divider bias: R one thirty three k, R two ten k, R C two k, R E one k, giving one point nine four milliamps of emitter current. Now three capacitors. C in couples the signal into the base. It passes A C but blocks D C, so the source can't upset the bias. C out couples the output from the collector to the next stage, also blocking D C. And C E, the bypass capacitor, across R E. For A C signals, it shorts R E to ground. We'll see why that matters. The emitter is common to input and output, for A C, which gives the amplifier its name.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Running it",
+   "narration": "Now the signal. Ten millivolts peak goes into the base. Watch the output at the collector: one point four nine volts peak. A gain of a hundred and forty nine. But look carefully: when the input goes up, the output goes down. The output is inverted, a hundred and eighty degrees out of phase. That's the minus sign in the gain: minus one hundred and forty nine.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Why it inverts",
+   "narration": "Why upside down? When the input rises, the base current rises, so the collector current rises. More current through R C means a bigger voltage drop across it. And the collector voltage is twelve volts minus that drop. So the collector voltage falls. Input up, output down.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "The re model",
+   "narration": "To calculate the gain, we use the small signal model. For small signals, the base emitter junction acts like a small resistor, called r e. It equals twenty six millivolts over the emitter current. Here, twenty six millivolts over one point nine four milliamps, thirteen point four ohms. Looking into the base, you see beta times r e, one point three four k. And the collector acts as a current source, beta times the base current.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "Now every value. r e equals twenty six millivolts over one point nine four milliamps, thirteen point four ohms. The voltage gain is minus R C over r e: minus two thousand over thirteen point four, minus one hundred and forty nine. So ten millivolts in gives one point four nine volts out. The input impedance is R one, parallel R two, parallel beta r e: seven point six seven k parallel one point three four k, about one point one four k. The output impedance is about R C, two k.",
+   "cfg": "ce",
+   "lines": [
+    "re = 26 mV ÷ IE = 26 mV ÷ 1.94 mA = 13.4 Ω",
+    "Av = −RC ÷ re = −2000 ÷ 13.4 = −149",
+    "vout = 149 × 10 mV = 1.49 V (inverted)",
+    "Zin = R1 ∥ R2 ∥ βre",
+    "    = 7.67k ∥ 1.34k = 1.14 kΩ",
+    "Zout ≈ RC = 2 kΩ"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "bypass",
+   "chapter": "Remove the bypass capacitor",
+   "narration": "Watch what happens when we remove C E. Without it, R E is back in the signal path, and the gain becomes minus R C over r e plus R E: two thousand over one thousand and thirteen, just minus one point nine seven. The gain collapses from one forty nine to two. But it's very stable, and the input impedance rises. Designers often bypass only part of R E to choose a gain in between.",
+   "cfg": "ce"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: the microphone preamp",
+   "narration": "A microphone gives only a few millivolts. Before anything else can use that signal, a recording interface, a phone, or an amplifier, it needs a preamplifier. A common emitter stage is the classic choice: it can multiply those few millivolts by a hundred or more, enough for the next stage to work with.",
+   "title": "REAL WORLD: THE MICROPHONE PREAMP",
+   "sub": "a few millivolts from the mic, boosted about 100× by a common emitter stage",
+   "src": "mic",
+   "stage": "COMMON EMITTER",
+   "sink": "speaker",
+   "note1": "~10 mV",
+   "note2": "gain ≈ −149",
+   "note3": "≈ 1.5 V"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the minus sign. A common emitter inverts. Two: using the D C bias current for r e but with the wrong units. It's twenty six millivolts over the emitter current in amps, or twenty six over milliamps gives ohms. Three: expecting a gain of a hundred and forty nine with no bypass capacitor. Without C E, the gain is only about R C over R E, two.",
+   "cfg": "ce",
+   "lines": [
+    "Av is NEGATIVE (180° phase shift)",
+    "re = 26 mV ÷ IE (26 ÷ 1.94 mA = 13.4 Ω)",
+    "no CE: Av = −RC ÷ (re + RE) = −1.97"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "The same voltage divider bias: R one, R two, R C, R E. But now a capacitor C B connects the base to ground. For D C, the base still sits at its bias voltage. For A C signals, the base is held at ground. The input signal goes into the emitter through C in, and the output comes from the collector through C out. The base is common to input and output.",
+   "cfg": "cb"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Running it",
+   "narration": "Ten millivolts into the emitter. The output: one point four nine volts, and look, in phase with the input. No inversion. When the emitter voltage goes up, the base emitter voltage gets smaller, since the base is fixed. Less current flows, less drop across R C, and the collector voltage rises. Input up, output up. The gain is plus one hundred and forty nine.",
+   "cfg": "cb"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. r e is the same, thirteen point four ohms. Voltage gain equals R C over r e, plus one hundred and forty nine. But the input impedance is just r e, thirteen point four ohms. Tiny! The source has to supply the whole emitter current. And the current gain is alpha, just under one. So the common base amplifies voltage, but not current.",
+   "cfg": "cb",
+   "lines": [
+    "re = 26 mV ÷ 1.94 mA = 13.4 Ω",
+    "Av = +RC ÷ re = +149 (in phase)",
+    "Zin ≈ re = 13.4 Ω (very low!)",
+    "Zout ≈ RC = 2 kΩ",
+    "current gain Ai = α ≈ 0.99"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "compare",
+   "chapter": "Why use it?",
+   "narration": "So why use it? Its low input impedance makes it hard to drive from most sources. But it has one huge advantage: high frequencies. In a common emitter, a tiny capacitance between collector and base gets multiplied by the gain, the Miller effect, and kills the high frequency response. In a common base, the base is grounded, so that capacitance does no harm. Common base stages work up to hundreds of megahertz.",
+   "cfg": "cb"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: radio front ends",
+   "narration": "That's why common base stages appear in radio receivers. An antenna has a low impedance, around fifty or seventy five ohms, which matches the common base input well. And radio signals are at very high frequencies, where a common base stage keeps its gain. Many designs combine a common emitter and a common base into one stage, called a cascode, to get the best of both.",
+   "title": "REAL WORLD: THE RADIO FRONT END",
+   "sub": "a low-impedance antenna into a common base stage that keeps its gain at high frequency",
+   "src": "antenna",
+   "stage": "COMMON BASE",
+   "sink": "adc",
+   "note1": "~50 Ω, µV-mV",
+   "note2": "gain ≈ +149, fast",
+   "note3": "to the tuner"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: forgetting the base capacitor. Without C B, the base isn't grounded for A C, and the circuit doesn't work as common base. Two: expecting it to invert. It doesn't. Common base gain is positive. Three: driving it from a high impedance source. With only thirteen ohms of input impedance, most of a high impedance source's signal would be lost.",
+   "cfg": "cb"
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Our bias again: R one, R two, and R E. But now there's no R C. The collector goes straight to the supply. For A C, the supply is ground, so the collector is common. The input goes into the base through C in, and the output comes from the emitter, through C out.",
+   "cfg": "cc"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Running it",
+   "narration": "Ten millivolts in. Out of the emitter: nine point eight seven millivolts, in phase. The emitter just follows the base, always about zero point seven volts below it. When the base rises by ten millivolts, the emitter rises by almost ten millivolts. Gain zero point nine eight seven.",
+   "cfg": "cc"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "So what's the point? Impedance. The voltage gain is R E over r e plus R E: one thousand over one thousand and thirteen, zero point nine eight seven. The input impedance: looking into the base, you see beta times r e plus R E, a hundred and one k, in parallel with the divider's seven point six seven k: about seven point one k. And the output impedance is roughly r e, about thirteen ohms. High impedance in, low impedance out.",
+   "cfg": "cc",
+   "lines": [
+    "Av = RE ÷ (re + RE) = 1000 ÷ 1013 = 0.987",
+    "Zb = β (re + RE) = 100 × 1013 = 101 kΩ",
+    "Zin = 7.67k ∥ 101k = 7.13 kΩ",
+    "Zout ≈ re = 13.4 Ω (plus source ÷ β)",
+    "current gain ≈ β + 1 = 101"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "compare",
+   "chapter": "Why gain of one is useful",
+   "narration": "Think of it as a buffer. A weak source, like a sensor with a high internal resistance, can't drive a low impedance load like a speaker or headphones: its voltage would collapse. Put an emitter follower in between. The source sees a high input impedance and barely has to work. The load sees a low output impedance and gets all the current it needs. Same voltage, but a hundred times more current.",
+   "cfg": "cc"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: driving headphones",
+   "narration": "Here's a classic. A preamp stage makes a good signal, but its output impedance is a few kilohms. Headphones are around thirty two ohms. Connected directly, the signal would almost vanish. An emitter follower in between takes the voltage as it is, and supplies the current the headphones need. Many headphone amplifiers end with an emitter follower stage.",
+   "title": "REAL WORLD: DRIVING HEADPHONES",
+   "sub": "a high-impedance preamp output buffered by an emitter follower to drive a 32 Ω load",
+   "src": "mic",
+   "stage": "CE PREAMP",
+   "stage2": "EMITTER FOLLOWER",
+   "sink": "headphones",
+   "note1": "10 mV",
+   "note2": "voltage gain, then current gain",
+   "note3": "32 Ω headphones"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: expecting a voltage gain above one. An emitter follower is always just below one. Two: forgetting the zero point seven volt offset. The D C output sits about zero point seven volts below the base. Three: thinking it's useless because the voltage doesn't grow. Its job is current gain and impedance matching, and it's essential.",
+   "cfg": "cc"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "DC and AC, separately",
+   "narration": "An amplifier carries two things at once. The D C bias, which sets the Q point, and the small A C signal riding on top. The trick is to analyse them separately. First, D C: we did that with biasing, and got one point nine four milliamps of emitter current. Then A C, with the small signal model.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "The re model",
+   "narration": "For small signals, the base emitter diode behaves like a small resistor. Its value depends on the D C current through it: r e equals twenty six millivolts over I E. Twenty six millivolts over one point nine four milliamps is thirteen point four ohms. Looking into the base, that resistance appears beta times bigger, because the base current is beta times smaller: beta r e, one point three four kilohms. And the collector is a current source, beta times the base current.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "The hybrid-π view",
+   "narration": "You'll also see this called the hybrid pi model. It's the same idea, with different names. r pi is the resistance from base to emitter, beta times r e, one point three four k. And g m, the transconductance, says how much collector current changes per volt at the base: I C over twenty six millivolts, one point nine two milliamps over twenty six millivolts, about seventy four milliamps per volt. The collector current source is g m times v b e.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Building the AC circuit",
+   "narration": "To draw the A C equivalent circuit, follow two rules. One: large capacitors become short circuits, because at signal frequencies their reactance is tiny. Two: the D C supply becomes ground, because it has no A C on it. So R C now goes from the collector to ground, R one and R two are in parallel from base to ground, and with C E, the emitter goes straight to ground. Then replace the transistor with the model.",
+   "cfg": "ce",
+   "lines": [
+    "AC rules:",
+    "1. big capacitors → short circuits",
+    "2. DC supply (+12 V) → ground",
+    "R1 ∥ R2 = 7.67 kΩ (base to ground)",
+    "RC: collector to ground",
+    "CE shorts RE → emitter grounded"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Using it: CE gain",
+   "narration": "Now the gain falls out. The input voltage appears across beta r e, so the base current is v in over beta r e. The collector current is beta times that: v in over r e. That current flows through R C, giving v out equals minus R C over r e, times v in. Minus two thousand over thirteen point four, minus one hundred and forty nine. Exactly what we used.",
+   "cfg": "ce",
+   "lines": [
+    "ib = vin ÷ (β re)",
+    "ic = β ib = vin ÷ re",
+    "vout = −ic × RC = −(RC ÷ re) × vin",
+    "Av = −2000 ÷ 13.4 = −149",
+    "gm = IC ÷ 26 mV = 74 mA/V",
+    "Av = −gm × RC = −0.074 × 2000 = −149"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Using it: CC and CB",
+   "narration": "The same model gives the others. For the emitter follower, the output is across R E, so the gain is R E over r e plus R E, zero point nine eight seven, and the input impedance is beta times r e plus R E. For common base, the input sees r e directly, thirteen point four ohms, and the gain is R C over r e, plus one forty nine. One model, every configuration.",
+   "cfg": "cc",
+   "lines": [
+    "CC: Av = RE ÷ (re + RE) = 0.987",
+    "CC: Zb = β (re + RE) = 101 kΩ",
+    "CB: Zin = re = 13.4 Ω",
+    "CB: Av = RC ÷ re = +149",
+    "one model → every configuration"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: designing a sensor amplifier",
+   "narration": "Every engineer designing an amplifier, for a sensor, a microphone or a radio, does exactly this. First, set the D C bias. Then draw the small signal model and calculate the gain and impedances. And circuit simulators like SPICE use these same models, with more detail, to predict how real circuits will behave before anyone builds them.",
+   "title": "REAL WORLD: DESIGNING A SENSOR AMPLIFIER",
+   "sub": "bias first, then the small-signal model predicts gain and impedance before anything is built",
+   "src": "sensor",
+   "stage": "BIAS + MODEL",
+   "stage2": "AMPLIFIER",
+   "sink": "adc",
+   "note1": "millivolts",
+   "note2": "predicted gain −149",
+   "note3": "to the ADC"
+  },
+  {
+   "type": "amp",
+   "mode": "model",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using the small signal model for big signals. It only holds when the signal is small, a few millivolts at the base. Two: calculating r e from the wrong current. It uses the D C emitter current from the bias, not the signal current. Three: forgetting to short the supply in the A C circuit. R C goes to ground for A C, not to twelve volts.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "chapter": "h-parameters",
+   "narration": "Many textbooks and exams use h parameters instead of r e. They're the same model with different names. h i e, the input resistance, is beta times r e: one point three four kilohms. h f e, the current gain, is beta: one hundred. h r e, the reverse voltage feedback, is so small it's taken as zero. And h o e, the output conductance, is also nearly zero. So the common emitter gain is minus h f e times R C over h i e: minus one hundred times two k over one point three four k, minus one forty nine. The same answer.",
+   "cfg": "ce",
+   "mode": "calc",
+   "lines": [
+    "hie = β re = 100 × 13.4 = 1.34 kΩ",
+    "hfe = β = 100",
+    "hre ≈ 0, hoe ≈ 0",
+    "Av = −hfe RC ÷ hie",
+    "   = −100 × 2k ÷ 1.34k = −149"
+   ]
+  },
+  {
+   "type": "amp",
+   "mode": "build",
+   "chapter": "Where they sit",
+   "narration": "Here's our common emitter amplifier. C in sits between the source and the base. C out sits between the collector and the next stage. Those two are coupling capacitors. C E sits across the emitter resistor. That's the bypass capacitor. And though it isn't drawn, every real amplifier also has capacitors from the supply to ground, called decoupling capacitors.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "run",
+   "chapter": "Coupling: pass AC, block DC",
+   "narration": "Why couple through a capacitor? The base sits at about two point six volts D C, set by the bias. If we connected the source directly, its own D C level would shift the base and wreck the Q point. A capacitor blocks D C completely, but lets the A C signal through. So the signal gets in, and the bias stays put. Same at the output: the next stage doesn't see the collector's six volts, only the signal.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "xc",
+   "chapter": "Choosing a coupling capacitor",
+   "narration": "How big? A capacitor's reactance rises at low frequencies: X C equals one over two pi f C. If X C is too big at the lowest frequency, it eats the signal, and the bass is lost. Rule of thumb: at the lowest frequency, X C should be at most a tenth of the input impedance it feeds. Our input impedance is one point one four k, so we want X C under one hundred and fourteen ohms at twenty hertz. A hundred microfarads gives eighty ohms. Good.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "bypass",
+   "chapter": "Bypass: get the gain back",
+   "narration": "The bypass capacitor's job is different. R E is great for D C stability, but for A C it kills the gain. With C E across it, A C signals go around R E. Watch: with C E, the gain is minus a hundred and forty nine. Remove it, and the gain drops to minus two. The bypass capacitor lets us have D C stability and A C gain at the same time.",
+   "cfg": "ce"
+  },
+  {
+   "type": "amp",
+   "mode": "calc",
+   "chapter": "Choosing the values",
+   "narration": "The calculations. Coupling capacitor: X C should be at most Z in over ten, one hundred and fourteen ohms at twenty hertz. C equals one over two pi times twenty times one hundred and fourteen, about seventy microfarads. Use a hundred. The bypass capacitor must short something much smaller, r e, thirteen point four ohms. For X C equal to r e at twenty hertz, C is one over two pi times twenty times thirteen point four, about six hundred microfarads. Use six hundred and eighty. That's why bypass capacitors are the biggest in the circuit.",
+   "cfg": "ce",
+   "lines": [
+    "Cin: XC ≤ Zin ÷ 10 = 114 Ω at 20 Hz",
+    "C ≥ 1 ÷ (2π × 20 × 114) = 70 µF → 100 µF",
+    "check: XC = 1 ÷ (2π × 20 × 100µ) = 80 Ω",
+    "CE: XC ≤ re = 13.4 Ω at 20 Hz",
+    "C ≥ 1 ÷ (2π × 20 × 13.4) = 594 µF → 680 µF",
+    "decoupling: 100 nF + 10-100 µF on supply"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: decoupling the supply",
+   "narration": "The third job: decoupling. A real supply has long wires with resistance and inductance. When the amplifier draws a sudden burst of current, the supply voltage dips, and that dip feeds into every stage, causing noise or even oscillation. A small capacitor, often one hundred nanofarads, right at each stage's supply pin, plus a larger one nearby, supplies those bursts locally. Look at any circuit board: those little capacitors next to every chip are decoupling capacitors.",
+   "title": "REAL WORLD: DECOUPLING EVERY STAGE",
+   "sub": "small capacitors beside each stage keep the supply clean, so noise doesn't travel between stages",
+   "src": "guitar",
+   "stage": "STAGE 1 + 100 nF",
+   "stage2": "STAGE 2 + 100 nF",
+   "sink": "speaker",
+   "note1": "weak signal",
+   "note2": "each stage has its own decoupling",
+   "note3": "clean, no hum or howl"
+  },
+  {
+   "type": "amp",
+   "mode": "bypass",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: coupling capacitors too small. The low frequencies vanish, and music sounds thin. Two: putting an electrolytic capacitor in backwards. Its positive side must face the higher D C voltage. At the input, that's the base side. Three: leaving out decoupling. The circuit may work on the bench, then hum, or squeal, when another stage is connected.",
+   "cfg": "ce"
+  },
+  {
+   "type": "fresp",
+   "chapter": "Frequency response",
+   "narration": "No amplifier amplifies all frequencies equally. Here's our common emitter amplifier's gain against frequency. In the middle band, it's flat: one hundred and forty nine, forty three point five decibels. At low frequencies, the coupling and bypass capacitors' reactance grows, and the gain falls: the lower cutoff, here twenty hertz. At high frequencies, the transistor's own tiny internal capacitances short the signal away: the upper cutoff, here two hundred kilohertz. Between the two three d B points is the bandwidth.",
+   "mode": "sweep"
+  },
+  {
+   "type": "chain",
+   "chapter": "Multistage amplifiers",
+   "narration": "One stage often isn't enough, so we connect stages in a chain. The output of one feeds the input of the next. In an R C coupled amplifier, a coupling capacitor joins them, blocking D C so each stage keeps its own bias. In a direct coupled amplifier, the stages connect with a wire, which also amplifies D C, used inside chips. In a transformer coupled amplifier, a transformer joins them, matching impedances, used in older radios.",
+   "title": "MULTISTAGE: RC-COUPLED AMPLIFIER",
+   "sub": "stage 1 → coupling capacitor → stage 2: each stage keeps its own bias",
+   "src": "mic",
+   "stage": "CE STAGE 1",
+   "stage2": "CE STAGE 2",
+   "sink": "speaker",
+   "note1": "10 mV",
+   "note2": "gains multiply",
+   "note3": "large output"
+  },
+  {
+   "type": "fresp",
+   "chapter": "Gains multiply, decibels add",
+   "narration": "With two stages, the voltage gains multiply: one forty nine times one forty nine, about twenty two thousand. In decibels they simply add: forty three point five plus forty three point five, eighty seven decibels. That's why engineers love decibels. But the second stage loads the first, so in practice the first stage's gain is a bit lower, and the bandwidth gets narrower with each stage.",
+   "mode": "stages"
+  },
+  {
+   "type": "pair",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Twelve volts. First transistor, Q one, with its base fed through R B, one point zero six megohms. Now the key connection: Q one's emitter goes straight into the base of Q two. Q two's emitter goes to ground. Both collectors connect together, to the load, a fifty ohm motor or relay, from the supply.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "How the current grows",
+   "narration": "Follow the current. Ten microamps into Q one's base. Q one multiplies it by about a hundred, and its emitter carries one point zero one milliamps. That becomes Q two's base current. Q two multiplies it by a hundred again. The load current: a hundred milliamps. Ten microamps in, a hundred milliamps out. Ten thousand times.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "sweep",
+   "chapter": "Controlling it",
+   "narration": "Watch as the input current changes from two to ten microamps. The load current follows, from twenty to a hundred milliamps. A tiny change at the input makes a huge change at the output.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. The base loop now has two base emitter drops: zero point seven plus zero point seven, one point four volts. So I B one is twelve minus one point four, over one point zero six megohms, ten microamps. Q one's emitter current is beta plus one times that, one point zero one milliamps, which is Q two's base current. Q two's collector current: a hundred times one point zero one, about a hundred milliamps. The overall gain is about beta one times beta two, ten thousand. And V C E is twelve minus a hundred milliamps times fifty ohms, seven volts.",
+   "kind": "darlington",
+   "lines": [
+    "VBE(total) = 0.7 + 0.7 = 1.4 V",
+    "IB1 = (12 − 1.4) ÷ 1.06 MΩ = 10 µA",
+    "IB2 = IE1 = 101 × 10 µA = 1.01 mA",
+    "IC ≈ 100 × 1.01 mA ≈ 100 mA",
+    "β(total) ≈ β1 × β2 = 10 000",
+    "VCE = 12 − 0.1 × 50 = 7 V"
+   ]
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "The trade-offs",
+   "narration": "There's a price. One: the input needs one point four volts to turn on, not zero point seven. Two: when fully on, the Darlington can't saturate as hard as one transistor. Q two's collector can't go lower than Q one's V C E sat plus Q two's V B E, about zero point nine volts. At high current, that wastes power as heat. Three: it switches off more slowly, because Q two's base has no easy path to discharge.",
+   "kind": "darlington"
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: driving motors from a sensor",
+   "narration": "Darlingtons are perfect when a weak signal must drive a heavy load. A light sensor or a microcontroller pin, giving microamps, can drive a motor, a solenoid, or a string of relays directly. Chips like the ULN two thousand and three contain seven Darlington pairs, and they're used in printers, stepper motors and industrial controllers.",
+   "title": "REAL WORLD: A WEAK SIGNAL DRIVING A MOTOR",
+   "sub": "microamps from a sensor, ×10 000 through a Darlington, enough to spin a motor",
+   "src": "sensor",
+   "stage": "DARLINGTON",
+   "sink": "speaker",
+   "note1": "~10 µA",
+   "note2": "β ≈ 10 000",
+   "note3": "~100 mA load"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using zero point seven volts for the base emitter drop. A Darlington needs one point four. Two: expecting a saturation voltage of zero point two volts. It's closer to one volt, so it heats up more at high currents. Three: using it in fast switching circuits. Its slow turn off makes it a poor choice above a few kilohertz.",
+   "kind": "darlington"
+  },
+  {
+   "type": "pair",
+   "mode": "build",
+   "chapter": "Building it",
+   "narration": "Two matched transistors, side by side, with their bases joined and both emitters to ground. On the left, a resistor R, eleven point three kilohms, from twelve volts to Q one's collector. And here's the trick: Q one's collector is tied to its own base. Now Q one behaves like a diode. On the right, Q two's collector goes to the load.",
+   "kind": "mirror"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "How it copies",
+   "narration": "Twelve volts across R and Q one's base emitter drop sets the reference current: twelve minus zero point seven, over eleven point three k, one milliamp. That current gives Q one a base emitter voltage of about zero point seven volts. Q two's base is connected to the same point, so it has exactly the same base emitter voltage. Two identical transistors with the same V B E carry the same current. So Q two copies it: about one milliamp through the load.",
+   "kind": "mirror"
+  },
+  {
+   "type": "pair",
+   "mode": "sweep",
+   "chapter": "Change the load",
+   "narration": "Now the real test. Change the load from one kilohm to fourteen. The output current stays at zero point nine eight milliamps, flat, whatever the load. That's a current source. Until the load gets so big that Q two runs out of voltage: at about twelve kilohms, Q two saturates, and the current finally falls.",
+   "kind": "mirror"
+  },
+  {
+   "type": "pair",
+   "mode": "calc",
+   "chapter": "The calculations",
+   "narration": "The numbers. I ref equals V C C minus V B E, over R: eleven point three over eleven point three k, one milliamp. The two base currents come out of I ref, so the output is slightly less: I out equals I ref times beta over beta plus two, a hundred over a hundred and two, zero point nine eight milliamps. The maximum load: Q two needs about zero point two volts, so R L max is twelve minus zero point two, over zero point nine eight milliamps, about twelve kilohms.",
+   "kind": "mirror",
+   "lines": [
+    "Iref = (12 − 0.7) ÷ 11.3 kΩ = 1 mA",
+    "Iout = Iref × β ÷ (β + 2)",
+    "     = 1 mA × 100 ÷ 102 = 0.98 mA",
+    "RL(max) = (12 − 0.2) ÷ 0.98 mA",
+    "        ≈ 12 kΩ",
+    "Iout ≈ Iref, whatever the load"
+   ]
+  },
+  {
+   "type": "chain",
+   "chapter": "Real world: inside every op-amp",
+   "narration": "Open up an op amp chip and you'll find current mirrors everywhere. They bias the input stage, act as active loads that give huge gain, and set the currents of every stage from one reference. On a chip, the transistors are made side by side at the same moment, so they match almost perfectly, which is exactly what a mirror needs.",
+   "title": "REAL WORLD: INSIDE EVERY OP-AMP CHIP",
+   "sub": "current mirrors bias the stages and act as active loads, all from one reference current",
+   "src": "sensor",
+   "stage": "MIRRORS + DIFF PAIR",
+   "stage2": "GAIN STAGE",
+   "sink": "adc",
+   "note1": "tiny input",
+   "note2": "every stage biased by mirrors",
+   "note3": "huge gain"
+  },
+  {
+   "type": "pair",
+   "mode": "run",
+   "chapter": "Common mistakes",
+   "narration": "Three common mistakes. One: using two transistors that aren't matched. If their V B E differ by just a few millivolts, the currents differ a lot. That's why mirrors are built on chips, or from matched pairs. Two: forgetting the base currents. I out is I ref times beta over beta plus two, slightly less than I ref. Three: letting the load get too big. Once Q two saturates, it's no longer a current source.",
+   "kind": "mirror"
+  },
+  {
+   "type": "bjt",
+   "chapter": "Placement questions: BJT",
+   "narration": "Placement rapid fire. One: base current twenty microamps, beta one fifty. Collector current? Three milliamps. Emitter current? Three point zero two. Two: alpha is zero point nine nine. Beta? Ninety nine. Three: which configuration has the highest input impedance? Common collector. Highest voltage gain with no inversion? Common base. Which inverts? Common emitter. Four: why is voltage divider bias most used? It makes the Q point independent of beta. Five: a transistor used as a switch works in which regions? Cutoff and saturation. Six: what's the purpose of the bypass capacitor? To restore the A C gain lost to R E.",
+   "mode": "calc",
+   "bias": "basic",
+   "lines": [
+    "IB 20 µA, β 150 → IC = 3 mA, IE = 3.02 mA",
+    "α = 0.99 → β = 0.99 ÷ 0.01 = 99",
+    "highest Zin: CC · non-inverting gain: CB · inverts: CE",
+    "VDB: Q-point independent of β",
+    "switch: cutoff ↔ saturation",
+    "bypass C: restores AC gain"
+   ]
+  },
+  {
+   "type": "lab-outro",
+   "chapter": "Chapter 16 recap",
+   "narration": "Recap of the B J T. I C equals beta I B, I E equals I B plus I C, alpha equals beta over beta plus one. Cutoff, active, saturation. Biasing from least to most stable: fixed, emitter, collector feedback, voltage divider. The load line runs from V C C over R to V C C. The C E amplifier gain is minus R C over r e, inverted. C B has the same gain, not inverted, with low input impedance. C C has unity gain and high input impedance. Capacitors couple, bypass and decouple. Gains multiply across stages. Next: field effect transistors.",
+   "title": "CHAPTER 16 COMPLETE",
+   "lines": [
+    "IC = β IB, IE = IB + IC, α = β ÷ (β+1)",
+    "Stability: fixed < emitter < CF < VDB",
+    "CE −RC/re · CB +RC/re · CC ≈ 1",
+    "re = 26 mV ÷ IE, hie = β re"
+   ],
+   "cta": "Next: FETs"
+  }
+ ]
+}

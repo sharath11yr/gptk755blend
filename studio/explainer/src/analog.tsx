@@ -2323,6 +2323,7 @@ export const bjtSolve = (bias: string, b: number) => {
   let ib = 0, re = 0;
   if (bias === "basic") ib = (5 - BJ.VBE) / 215e3;
   else if (bias === "fixed") ib = (BJ.VCC - BJ.VBE) / 565e3;
+  else if (bias === "eb") { re = 1000; ib = (BJ.VCC - BJ.VBE) / (430e3 + (b + 1) * re); }
   else if (bias === "cf") ib = (BJ.VCC - BJ.VBE) / (363e3 + (b + 1) * BJ.RC);
   else { const vth = BJ.VCC * 10 / 43, rth = 33e3 * 10e3 / 43e3; re = 1000; ib = (vth - BJ.VBE) / (rth + (b + 1) * re); }
   let ic = b * ib; const icsat = (BJ.VCC - BJ.VSAT) / (BJ.RC + re); let sat = false;
@@ -2379,7 +2380,7 @@ export const BjtScene: React.FC<any> = ({ dur, mode = "circuit", kind = "npn", b
       <text x={XC + 40} y={rail + 60} {...T1} fontSize={28} fill={L.electron}>IC = {mAs(ic)}</text>
       <text x={XC + 40} y={gnd - 40} {...T1} fontSize={28}>IE = IB + IC</text></g>;
   } else {
-    const bOn = true; const showRE = bias === "vd";
+    const bOn = true; const showRE = bias === "vd" || bias === "eb";
     const ieY = showRE ? 760 : gnd;
     left = <g>
       <line x1={120} y1={rail} x2={900} y2={rail} stroke={L.red} strokeWidth={6} /><text x={120} y={rail - 20} {...T1} fontSize={28} fill={L.red}>+12 V</text>
@@ -2388,7 +2389,7 @@ export const BjtScene: React.FC<any> = ({ dur, mode = "circuit", kind = "npn", b
         : <>{W(`${XC},${rail} ${XC},${YQ - 70}`)}<Res x={XC} y={780} ohm={BJ.RC} label="RC" /></>}
       {Q(XQ, YQ, mode === "regions" ? (s.sat ? 1 : 0.4) : 0)}
       {!npn ? <g>{W(`${XC},${YQ + 70} ${XC},710`)}{W(`${XC},850 ${XC},${gnd}`)}</g> : showRE ? <g><Res x={XC} y={ieY - 30} ohm={1000} label="RE" />{W(`${XC},${YQ + 70} ${XC},${ieY - 100}`)}{W(`${XC},${ieY + 40} ${XC},${gnd}`)}</g> : W(`${XC},${YQ + 70} ${XC},${gnd}`)}
-      {bias === "fixed" && npn && <g><Res x={420} y={380} ohm={565e3} label="RB" />{W(`420,${rail} 420,310`)}{W(`420,450 420,${YQ} ${XQ - 70},${YQ}`)}</g>}
+      {(bias === "fixed" || bias === "eb") && npn && <g><Res x={420} y={380} ohm={bias === "eb" ? 430e3 : 565e3} label="RB" />{W(`420,${rail} 420,310`)}{W(`420,450 420,${YQ} ${XQ - 70},${YQ}`)}</g>}
       {bias === "fixed" && !npn && <g><Res x={420} y={740} ohm={565e3} label="RB" />{W(`420,${gnd} 420,810`)}{W(`420,670 420,${YQ} ${XQ - 70},${YQ}`)}
         <text x={260} y={500} fill={L.amber} fontFamily={SANS} fontSize={22} fontWeight={700}>RB pulls the base DOWN</text></g>}
       {bias === "basic" && <g><Battery x={250} y={720} v={vbb} />{W(`250,680 250,${YQ} 330,${YQ}`)}{W(`250,760 250,${gnd}`)}<Res x={400} y={YQ} ohm={215e3} label="RB" horizontal />{W(`470,${YQ} ${XQ - 70},${YQ}`)}</g>}
@@ -2444,7 +2445,7 @@ export const BjtScene: React.FC<any> = ({ dur, mode = "circuit", kind = "npn", b
   else if (mode === "regions") { const reg = s.sat ? "SATURATION" : s.ic < 1e-6 ? "CUTOFF" : "ACTIVE";
     right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>REGION: {reg}</text>
       {row(330, "β", `${B.toFixed(0)}`, L.text)}{row(420, "IB", uA(s.ib), L.cyan)}{row(510, "IC", mAs(s.ic), L.electron)}{row(600, "VCE", `${s.vce.toFixed(2)} V`, L.green)}</g>; }
-  else right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>{({ basic: "BASIC BIAS", fixed: "FIXED BIAS", cf: "COLLECTOR-FEEDBACK BIAS", vd: "VOLTAGE-DIVIDER BIAS" } as any)[bias]}</text>
+  else right = <g><text x={GX + GW / 2} y={200} textAnchor="middle" {...T1} fontSize={32}>{({ basic: "BASIC BIAS", fixed: "FIXED BIAS", eb: "EMITTER BIAS", cf: "COLLECTOR-FEEDBACK BIAS", vd: "VOLTAGE-DIVIDER BIAS" } as any)[bias]}</text>
     {row(320, "β", `${B.toFixed(0)}`, L.text)}{row(410, "base current IB", uA(s.ib), L.cyan)}{row(500, "collector current IC", mAs(s.ic), L.electron)}
     {row(590, "emitter current IE", mAs(s.ie), L.text)}{row(680, "VCE", `${s.vce.toFixed(2)} V`, L.green)}
     {row(770, "power in transistor", `${(s.vce * s.ic * 1000).toFixed(1)} mW`, L.red)}</g>;
@@ -3626,3 +3627,29 @@ export const ClampScene: React.FC<any> = ({ dur, dir = "pos", vb = 0, tau = 50, 
   return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">{left}{right}</svg></AbsoluteFill>;
 };
 ANALOG_SCENES.clamp = ClampScene;
+
+/** {"type":"fresp","mode":"sweep"|"stages"} amplifier frequency response: midband gain 149 (43.5 dB), fL 20 Hz, fH 200 kHz */
+export const FrespScene: React.FC<any> = ({ dur, mode = "sweep" }) => {
+  const fr = useCurrentFrame();
+  const p = interpolate(fr, [dur * 0.06, dur * 0.94], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const T1 = { fill: L.text, fontFamily: MONO, fontWeight: 700 } as const;
+  const fL = 20, fH = 2e5, A = 149;
+  const g = (f: number, n = 1) => Math.pow(A * (f / fL) / Math.sqrt(1 + (f / fL) ** 2) / Math.sqrt(1 + (f / fH) ** 2) / A, n) * A ** n;
+  const X0 = 200, GW = 1500, Y0 = 860, fx = (f: number) => X0 + (Math.log10(f)) / 7 * GW, dy = (db: number) => Y0 - db * 7;
+  const two = mode === "stages";
+  const curve = (n: number, col: string) => { const q: string[] = []; for (let k = 0; k <= 300; k++) { const f = Math.pow(10, 7 * k / 300); if (k / 300 > p * 1.1) break; q.push(`${fx(f)},${dy(Math.max(0, 20 * Math.log10(g(f, n))))}`); } return <polyline points={q.join(" ")} fill="none" stroke={col} strokeWidth={6} />; };
+  return <AbsoluteFill><svg viewBox="0 0 1920 1080" width="100%" height="100%">
+    <text x={960} y={130} textAnchor="middle" {...T1} fontSize={32}>{two ? "TWO STAGES: GAINS MULTIPLY, dB ADD, BANDWIDTH SHRINKS" : "AMPLIFIER GAIN vs FREQUENCY"}</text>
+    <line x1={X0} y1={Y0} x2={X0 + GW} y2={Y0} stroke={L.dim} strokeWidth={3} /><line x1={X0} y1={Y0} x2={X0} y2={150} stroke={L.dim} strokeWidth={3} />
+    {[1, 10, 100, 1e3, 1e4, 1e5, 1e6, 1e7].map((f) => <text key={f} x={fx(f)} y={Y0 + 40} textAnchor="middle" fill={L.dim} fontFamily={MONO} fontSize={22}>{f >= 1e6 ? f / 1e6 + "M" : f >= 1e3 ? f / 1e3 + "k" : f}</text>)}
+    {[0, 20, 40, 60, 80].map((d) => <text key={d} x={X0 - 12} y={dy(d) + 8} textAnchor="end" fill={L.dim} fontFamily={MONO} fontSize={22}>{d} dB</text>)}
+    {curve(1, L.green)}{two && curve(2, L.amber)}
+    <line x1={fx(fL)} y1={Y0} x2={fx(fL)} y2={200} stroke={L.red} strokeDasharray="8 8" strokeWidth={3} /><line x1={fx(fH)} y1={Y0} x2={fx(fH)} y2={200} stroke={L.red} strokeDasharray="8 8" strokeWidth={3} />
+    <text x={fx(fL) + 10} y={230} {...T1} fontSize={24} fill={L.red}>fL = 20 Hz (coupling & bypass Cs)</text>
+    <text x={fx(fH) - 10} y={230} textAnchor="end" {...T1} fontSize={24} fill={L.red}>fH = 200 kHz (transistor's internal Cs)</text>
+    <text x={fx(2000)} y={dy(43.5) - 20} textAnchor="middle" {...T1} fontSize={26} fill={L.green}>midband: 149 = 43.5 dB</text>
+    {two && <text x={fx(2000)} y={dy(87) - 20} textAnchor="middle" {...T1} fontSize={26} fill={L.amber}>2 stages: 149 × 149 = 22 201 = 87 dB</text>}
+    <text x={960} y={980} textAnchor="middle" {...T1} fontSize={28}>bandwidth = fH − fL ≈ 200 kHz · at fL and fH the gain is 3 dB down (70.7%)</text>
+  </svg></AbsoluteFill>;
+};
+ANALOG_SCENES.fresp = FrespScene;
