@@ -73,15 +73,42 @@
   },
   {
    "type": "semi",
-   "chapter": "Forward bias",
-   "narration": "Connect a battery with plus to the P side and minus to the N side. The positive terminal pushes holes toward the junction, the negative terminal pushes electrons toward it. The depletion region shrinks. Once the battery exceeds about zero point seven volts, the barrier is overcome, and carriers flood across. A large current flows. This is forward bias: the junction conducts.",
+   "chapter": "Forward bias: what happens inside, step by step",
+   "narration": "Let's go inside, very slowly, because this is the heart of every diode and transistor. Connect the battery's plus terminal to the P side and its minus terminal to the N side. Step one: the plus terminal repels the holes in the P side, because like charges repel. The holes are pushed toward the junction. Step two: the minus terminal repels the free electrons in the N side, pushing them toward the junction too. Step three: as holes and electrons crowd in from both sides, they fill the depletion region from its edges. The fixed ions get neutralised, and the depletion region becomes thinner. The barrier gets lower.",
    "mode": "forward"
   },
   {
    "type": "semi",
-   "chapter": "Reverse bias",
-   "narration": "Now reverse the battery: plus to the N side, minus to the P side. Now the battery pulls electrons and holes away from the junction. The depletion region gets wider, and the barrier taller. Almost no current flows, just a tiny leakage from the few minority carriers, a few nanoamps. This is reverse bias: the junction blocks. One way it conducts, the other way it blocks. That's a diode, and it's next.",
+   "chapter": "Forward bias: crossing the junction",
+   "narration": "Step four: once the battery voltage passes about zero point seven volts, it cancels the barrier. Now electrons from the N side can cross into the P side, and holes from the P side can cross into the N side. When an electron crossing into the P side meets a hole, they recombine: the electron drops into the hole and both disappear. Step five, the part students miss: why doesn't it stop? Because the battery keeps replacing them. For every electron that recombines, the battery's minus terminal pushes a new electron into the N side. And at the P side, the battery's plus terminal pulls an electron out of a bond, which creates a new hole. So electrons flow in at the N end, holes are created at the P end, they meet and recombine in the middle, and the battery keeps it going. That's a continuous current. Conventional current flows from P to N, from anode to cathode, exactly the way the diode's arrow points.",
+   "mode": "forward"
+  },
+  {
+   "type": "semi",
+   "chapter": "Reverse bias: why it blocks",
+   "narration": "Now reverse the battery: plus to the N side, minus to the P side. Step one: the plus terminal attracts the free electrons in the N side, pulling them away from the junction, toward the battery. Step two: the minus terminal attracts the holes in the P side, also pulling them away from the junction. Step three: with the majority carriers pulled away, more fixed ions are uncovered on both sides. The depletion region grows wider, and the barrier grows taller, by exactly the battery voltage. Step four: the majority carriers can't cross this taller barrier. And once they've moved back, they just stop: there's no way to continue round the loop, because no carriers are crossing the junction. So no steady current flows. That's why a diode blocks in reverse.",
    "mode": "reverse"
+  },
+  {
+   "type": "semi",
+   "chapter": "Reverse bias: the tiny leakage, and breakdown",
+   "narration": "Is the reverse current exactly zero? Almost. Heat keeps creating a few electron hole pairs everywhere. A few of these are minority carriers: electrons in the P side and holes in the N side. For them, the junction's field is downhill, so they are swept across. That makes a tiny reverse saturation current, a few nanoamps in silicon, which doubles for every ten degrees hotter. And if we keep raising the reverse voltage, eventually the field becomes so strong that it rips electrons out of bonds, or fast electrons knock others loose in a chain reaction. The current suddenly shoots up: that's breakdown. Normal diodes can be destroyed by it. Zener diodes are designed to use it.",
+   "mode": "reverse"
+  },
+  {
+   "type": "split",
+   "chapter": "Forward vs reverse, side by side",
+   "narration": "So here's the whole answer, side by side. Forward bias: the battery pushes the majority carriers toward the junction, the depletion region shrinks, the barrier falls below the battery voltage, carriers cross and recombine, and the battery keeps supplying new ones: a big, continuous current. Reverse bias: the battery pulls the majority carriers away from the junction, the depletion region widens, the barrier rises, nothing crosses except a few minority carriers: almost no current. Same junction, opposite push. That one-way behaviour is the diode.",
+   "a": {
+    "type": "semi",
+    "mode": "forward"
+   },
+   "b": {
+    "type": "semi",
+    "mode": "reverse"
+   },
+   "la": "FORWARD: carriers pushed IN → current",
+   "lb": "REVERSE: carriers pulled OUT → blocked"
   },
   {
    "type": "numerical",
